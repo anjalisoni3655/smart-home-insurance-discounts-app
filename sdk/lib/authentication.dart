@@ -1,27 +1,18 @@
 library sdk;
-import 'dart:async';
 
+import 'dart:async';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sdk/User.dart';
+
 //import 'package:sdk/user.dart';
 
 class Authentication {
-  static const int LOGIN_TIMEOUT_DURATION = 60; // User will have to enter email and password
+  static const int LOGIN_TIMEOUT_DURATION =
+      60; // User will have to enter email and password
   static const int LOGOUT_TIMEOUT_DURATION = 3;
-
 
   int testing;
   GoogleSignInAPI googleSignInAPI;
-  GoogleSignInAccount _currentUser;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account){
-      setState(() {
-        _currentUser = account;
-      });
-    });
-    _googleSignIn.signInSilently();
 
   Authentication({this.testing = 0}) {
     googleSignInAPI = GoogleSignInAPI(testing: testing);
@@ -29,39 +20,38 @@ class Authentication {
 
   Future<String> login() async {
     // returns status "login successful", "login failed", "login time-out", "already logged in"
-    try{
-      await googleSignInAPI.signIn().timeout(const Duration(seconds: LOGIN_TIMEOUT_DURATION));
+    if (await googleSignInAPI.isSignedIn()) {
+      return "already logged in";
+    }
+    try {
+      await googleSignInAPI
+          .signIn()
+          .timeout(const Duration(seconds: LOGIN_TIMEOUT_DURATION));
       return "login successful";
     } catch (error) {
+      print(error);
       return "login failed";
     }
-    if(_currentUser!=null){
-      try{
-        signout;
-        //return "not logged in"
-      }
-      catch(error){
-        return "already logged in";
-      }
-    }
-
   }
+
   Future<String> logout() async {
     // returns status "logout successful", "logout failed", "logout timed-out", "not logged in"
+    if(!(await googleSignInAPI.isSignedIn())) {
+      return "not logged in";
+    }
     try {
-      await googleSignInAPI.disconnect().timeout(const Duration(seconds: LOGOUT_TIMEOUT_DURATION));
-
+      await googleSignInAPI
+          .disconnect()
+          .timeout(const Duration(seconds: LOGOUT_TIMEOUT_DURATION));
       return "logout successful";
-
     } catch (error) {
       return "logout failed";
     }
-
-
   }
-//  User getUserDetails() {
-//    // returns an instance of class User
-//  }
+  Future<User> getUserDetails() async {
+    if(!(await googleSignInAPI.isSignedIn())) return null;
+    return googleSignInAPI.currentUser;
+  }
 }
 
 // For testing purpose
@@ -70,25 +60,50 @@ class Authentication {
 class GoogleSignInAPI {
   GoogleSignIn _googleSignIn;
   int testing;
+  bool signedIn;
+
   GoogleSignInAPI({this.testing = 0}) {
-    if(testing == 0) {
+    if (testing == 0) {
       _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
     }
+    signedIn = false;
   }
 
   Future<void> signIn() async {
-    if(testing == 0) {
+    if (testing == 0) {
       await _googleSignIn.signIn();
     }
-
-  Future<void> disconnect() async {
-    if(testing == 0) {
-      await _googleSignIn.disconnect();
-    }
-    if(testing == 1) {
+    else if(testing == 1) {
+      signedIn = true;
       return;
     }
+  }
 
+  Future<void> disconnect() async {
+    if (testing == 0) {
+      await _googleSignIn.disconnect();
+    } else if (testing == 1) {
+      signedIn = false;
+      return;
+    }
+  }
+
+  Future<bool> isSignedIn() async {
+    if(testing == 0) {
+      return _googleSignIn.isSignedIn();
+    }
+    else if(testing == 1) {
+      return signedIn;
+    }
+  }
+
+  User get currentUser {
+    if(testing == 0) {
+      return new User(displayName: _googleSignIn.currentUser.displayName, email:  _googleSignIn.currentUser.email, photoUrl: _googleSignIn.currentUser.photoUrl);
+    }
+    else if(testing == 1) {
+      return new User(displayName: "Osheen Sachdev", email: "osheen@google.com", photoUrl: "someurl.com");
+    }
   }
 
 }
