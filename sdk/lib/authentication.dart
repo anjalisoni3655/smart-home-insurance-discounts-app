@@ -50,6 +50,9 @@ class Authentication {
     // returns status "logout successful", "logout failed", "logout timed-out", "not logged in"
     try {
       await googleSignInAPI.disconnect().timeout(const Duration(seconds: LOGOUT_TIMEOUT_DURATION));
+
+      return "logout successful";
+
     } catch (error) {
       return "logout failed";
     }
@@ -77,11 +80,15 @@ class GoogleSignInAPI {
     if(testing == 0) {
       await _googleSignIn.signIn();
     }
-  }
-  Future<void> signout() async {
+
+  Future<void> disconnect() async {
     if(testing == 0) {
       await _googleSignIn.disconnect();
     }
+    if(testing == 1) {
+      return;
+    }
+
   }
 
 }
