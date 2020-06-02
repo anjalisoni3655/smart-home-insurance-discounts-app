@@ -7,17 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class Authentication {
   static const int LOGIN_TIMEOUT_DURATION = 60; // User will have to enter email and password
   static const int LOGOUT_TIMEOUT_DURATION = 3;
-  Future<void> _handleSignIn() async{
-    try{
-      await _googleSignIn.signIn();
-    }catch(error){
-      print(error);
-    }
-  }
 
-  Future<void> _handleSignOut() async{
-    _googleSignIn.disconnect();
-  }
 
   int testing;
   GoogleSignInAPI googleSignInAPI;
@@ -47,8 +37,8 @@ class Authentication {
     }
     if(_currentUser!=null){
       try{
-        _handsignout;
-        return "not logged in"
+        signout;
+        //return "not logged in"
       }
       catch(error){
         return "already logged in";
@@ -88,7 +78,7 @@ class GoogleSignInAPI {
       await _googleSignIn.signIn();
     }
   }
-  Future<void> disconnect() async {
+  Future<void> signout() async {
     if(testing == 0) {
       await _googleSignIn.disconnect();
     }
