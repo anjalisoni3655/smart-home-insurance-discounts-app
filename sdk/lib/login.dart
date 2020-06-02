@@ -6,7 +6,7 @@ import 'package:sdk/User.dart';
 
 //import 'package:sdk/user.dart';
 
-class Authentication {
+class Login {
   static const int LOGIN_TIMEOUT_DURATION =
       60; // User will have to enter email and password
   static const int LOGOUT_TIMEOUT_DURATION = 3;
@@ -14,7 +14,7 @@ class Authentication {
   int testing;
   GoogleSignInAPI googleSignInAPI;
 
-  Authentication({this.testing = 0}) {
+  Login({this.testing = 0}) {
     googleSignInAPI = GoogleSignInAPI(testing: testing);
   }
 
