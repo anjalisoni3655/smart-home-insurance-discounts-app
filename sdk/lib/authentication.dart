@@ -7,29 +7,91 @@ import 'package:google_sign_in/google_sign_in.dart';
 class Authentication {
   static const int LOGIN_TIMEOUT_DURATION = 60; // User will have to enter email and password
   static const int LOGOUT_TIMEOUT_DURATION = 3;
+  Future<void> _handleSignIn() async{
+    try{
+      await _googleSignIn.signIn();
+    }catch(error){
+      print(error);
+    }
+  }
 
-  GoogleSignIn _googleSignIn;
+  Future<void> _handleSignOut() async{
+    _googleSignIn.disconnect();
+  }
 
-  Authentication() {
-    _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
+  int testing;
+  GoogleSignInAPI googleSignInAPI;
+  GoogleSignInAccount _currentUser;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account){
+      setState(() {
+        _currentUser = account;
+      });
+    });
+    _googleSignIn.signInSilently();
+
+  Authentication({this.testing = 0}) {
+    googleSignInAPI = GoogleSignInAPI(testing: testing);
   }
 
   Future<String> login() async {
     // returns status "login successful", "login failed", "login time-out", "already logged in"
     try{
-      await _googleSignIn.signIn().timeout(const Duration(seconds: LOGIN_TIMEOUT_DURATION));
+      await googleSignInAPI.signIn().timeout(const Duration(seconds: LOGIN_TIMEOUT_DURATION));
       return "login successful";
     } catch (error) {
       return "login failed";
+    }
+    if(_currentUser!=null){
+      try{
+        _handsignout;
+        return "not logged in"
+      }
+      catch(error){
+        return "already logged in";
+      }
     }
 
   }
   Future<String> logout() async {
     // returns status "logout successful", "logout failed", "logout timed-out", "not logged in"
-    await _googleSignIn.disconnect().timeout(const Duration(seconds: LOGOUT_TIMEOUT_DURATION));
+    try {
+      await googleSignInAPI.disconnect().timeout(const Duration(seconds: LOGOUT_TIMEOUT_DURATION));
+    } catch (error) {
+      return "logout failed";
+    }
+
 
   }
 //  User getUserDetails() {
 //    // returns an instance of class User
 //  }
+}
+
+// For testing purpose
+// Behaves exactly like GoogleSignIn object if testing = 0
+// Behaves otherwise if testing != 0 (can define test cases for them)
+class GoogleSignInAPI {
+  GoogleSignIn _googleSignIn;
+  int testing;
+  GoogleSignInAPI({this.testing = 0}) {
+    if(testing == 0) {
+      _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
+    }
+  }
+
+  Future<void> signIn() async {
+    if(testing == 0) {
+      await _googleSignIn.signIn();
+    }
+  }
+  Future<void> disconnect() async {
+    if(testing == 0) {
+      await _googleSignIn.disconnect();
+    }
+  }
+
 }
