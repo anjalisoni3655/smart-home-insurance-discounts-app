@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
 GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
 
 class Profile extends StatefulWidget {
@@ -22,23 +23,24 @@ class _ProfileState extends State<Profile> {
     });
     _googleSignIn.signInSilently();
   }
+
   @override
   Widget build(BuildContext context) {
     //if(_currentUser!=null) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          ListTile(
-            leading: GoogleUserCircleAvatar(
-              identity: _currentUser,
-            ),
-            title: Text(_currentUser.displayName ?? ''),
-            subtitle: Text(_currentUser.email ?? ''),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        ListTile(
+          leading: GoogleUserCircleAvatar(
+            identity: _currentUser,
           ),
-        ],
-      );
+          title: Text(_currentUser.displayName ?? ''),
+          subtitle: Text(_currentUser.email ?? ''),
+        ),
+      ],
+    );
     //}
   }
 }

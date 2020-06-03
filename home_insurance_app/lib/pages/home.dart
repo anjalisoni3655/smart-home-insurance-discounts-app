@@ -16,20 +16,16 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-
 class _HomePageState extends State<HomePage> {
-
-  void onClick(String value) async{
-    if(value=='Logout') {
-
-
-    }
-else{
+  void onClick(String value) async {
+    if (value == 'Logout') {
+    } else {
       setState(() {
         Navigator.pushNamed(context, Profile.id);
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
