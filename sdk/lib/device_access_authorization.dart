@@ -4,25 +4,24 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:googleapis_auth/auth_io.dart';
 
 
-class urlMaker{
+class ResourcePicker {
   String _accessToken;
   String _refreshToken;
   String _clientId;
   String _clientSecret;
   String _resourcePickerURL;
   List<String> _scope;
-  String EnterpriseId;
-  String PCM_url="https://nestservices.google.com/partnerconnections";
-  String redirect_URL ="urn:ietf:wg:oauth:2.0:oob";
-   String url ;
+  String _enterpriseId;
+  String _pcmUrl="https://nestservices.google.com/partnerconnections";
+  String _redirectURL ="urn:ietf:wg:oauth:2.0:oob";
 
 
-  urlMaker(String clientId, String clientSecret, List<String> scope, String enterpriseId) {
+  ResourcePicker(String clientId, String clientSecret, List<String> scope, String enterpriseId) {
     this._clientId = clientId;
     this._clientSecret = clientSecret;
     this._scope = scope;
-    this.enterpriseId = enterpriseId;
-    url ="$PCM_url/enterpriseId/auth?client_id=$_clientId&redirect_uri=$redirect_URL&response_type=code&scope=$_scope&state=state";
+    this._enterpriseId = enterpriseId;
+    String url ="$_pcmUrl/$_enterpriseId/auth?client_id=$_clientId&redirect_uri=$_redirectURL&response_type=code&scope=$_scope&state=state";
     Uri.parse(url);
   }
 
