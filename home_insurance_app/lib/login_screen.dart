@@ -41,7 +41,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   Widget _buildBody() {
-
     /* if (_currentUser != null) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -87,37 +86,27 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ),
         Text('Log in to Continue'),
         RoundedButton(
-          title:'LOG IN',
+          title: 'LOG IN',
           colour: Colors.brown,
           onPressed: _handleSignIn,
           //child: Text('SIGN OUT'),
         ),
-
       ],
     );
     //}
   }
 
-  Future<void> _handleSignIn() async{
-    try{
-      await _googleSignIn.signIn().whenComplete((){
+  Future<void> _handleSignIn() async {
+    try {
+      await _googleSignIn.signIn().whenComplete(() {
         Navigator.pushNamed(context, HomePage.id);
       });
-
-
-
-    }catch(error){
+    } catch (error) {
       print(error);
     }
   }
 
-  Future<void> _handleSignOut() async{
+  Future<void> _handleSignOut() async {
     _googleSignIn.disconnect();
   }
 }
-
-
-
-
-
-
