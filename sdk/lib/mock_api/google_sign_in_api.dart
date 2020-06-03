@@ -1,5 +1,6 @@
 library sdk;
 
+import 'dart:async';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sdk/User.dart';
 
@@ -36,6 +37,15 @@ class GoogleSignInAPI {
       signedIn = true;
       return;
     }
+    else if(testing == 4) {
+      await Future.delayed(const Duration(milliseconds: 2));
+      signedIn = true;
+      return;
+    }
+    else if(testing == 5) {
+      signedIn = true;
+      return;
+    }
   }
 
   Future<void> disconnect() async {
@@ -52,16 +62,28 @@ class GoogleSignInAPI {
     else if(testing == 3) {
       throw new Exception();
     }
+    else if(testing == 4) {
+      await Future.delayed(const Duration(milliseconds: 2));
+      signedIn = false;
+      return;
+    }
+    else if(testing == 5) {
+      signedIn = false;
+      return;
+    }
   }
 
   Future<bool> isSignedIn() async {
     if(testing == 0) {
       return _googleSignIn.isSignedIn();
     }
+    else if(testing == 5) {
+      await Future.delayed(new Duration(milliseconds: 2));
+      return signedIn;
+    }
     else {
       return signedIn;
     }
-
   }
 
   User get currentUser {
