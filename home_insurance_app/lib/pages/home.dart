@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:homeinsuranceapp/main.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:ui';
+import 'package:homeinsuranceapp/pages/profile.dart';
 //import 'package:homeinsuranceapp/pages/circle_image.dart';
 import 'package:homeinsuranceapp/login_screen.dart';
+
+GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
 
 class HomePage extends StatefulWidget {
   static const String id = 'home_screen';
@@ -10,15 +16,18 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+
 class _HomePageState extends State<HomePage> {
 
   void onClick(String value) async{
-    switch (value) {
-      case 'Logout':
+    if(value=='Logout') {
 
-        break;
-      case 'My Profile':
-        break;
+
+    }
+else{
+      setState(() {
+        Navigator.pushNamed(context, Profile.id);
+      });
     }
   }
   @override
