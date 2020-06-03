@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
+import 'package:homeinsuranceapp/pages/choose_policy.dart';
 void main()  {
   runApp(MyApp());
 }
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
       routes:{
         '/':(context)=>HomePage(),
         '/gethomedetails':(context)=>HomeDetails(),
+        '/choosepolicy':(context)=>DisplayPolicies(),
       },
     );
   }

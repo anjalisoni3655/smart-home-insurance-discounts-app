@@ -130,6 +130,11 @@ class _HomeDetailsState extends State<HomeDetails> {
                     Policy pin_to_policy = Policy(pincode);
                     //Available policies corresponding to the pincode is saved in list . 
                     List<String> available_policies = pin_to_policy.get_policies();
+                    // Available policies sent to the next for user selection .
+                     Navigator.pushReplacementNamed(context, '/choosepolicy',arguments:{
+                      'policies':available_policies,
+                    });
+
                   },
 
                   splashColor: Colors.blueGrey,
