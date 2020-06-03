@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
       case 'Logout':
 
         break;
-      case 'Settings':
+      case 'My Profile':
         break;
     }
   }
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
             child: Icon(Icons.accessibility),
             onSelected: onClick,
             itemBuilder: (BuildContext context) {
-              return {'Logout', 'Settings'}.map((String choice) {
+              return {'Logout', 'My Profile'}.map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice),

@@ -42,7 +42,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   Widget _buildBody() {
 
-   /* if (_currentUser != null) {
+    /* if (_currentUser != null) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,28 +73,28 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       );
     }
     else{*/
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          TypewriterAnimatedTextKit(
-            text: ['Smart Home'],
-            textStyle: TextStyle(
-              fontSize: 45.0,
-              fontWeight: FontWeight.w900,
-            ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        TypewriterAnimatedTextKit(
+          text: ['Smart Home'],
+          textStyle: TextStyle(
+            fontSize: 45.0,
+            fontWeight: FontWeight.w900,
           ),
-          Text('Log in to Continue'),
-          RoundedButton(
-            title:'LOG IN',
-            colour: Colors.brown,
-            onPressed: _handleSignIn,
-            //child: Text('SIGN OUT'),
-          ),
+        ),
+        Text('Log in to Continue'),
+        RoundedButton(
+          title:'LOG IN',
+          colour: Colors.brown,
+          onPressed: _handleSignIn,
+          //child: Text('SIGN OUT'),
+        ),
 
-        ],
-      );
+      ],
+    );
     //}
   }
 
@@ -105,7 +105,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       });
 
 
-      
+
     }catch(error){
       print(error);
     }
@@ -115,8 +115,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     _googleSignIn.disconnect();
   }
 }
-
-
 
 
 
