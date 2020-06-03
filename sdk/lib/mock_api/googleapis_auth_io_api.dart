@@ -3,12 +3,15 @@ library sdk;
 import 'package:googleapis_auth/auth.dart';
 import 'package:googleapis_auth/auth_io.dart';
 
-dynamic clientViaUserConsentAPI(ClientId clientId, List _scope, dynamic function,  int testing) {
+dynamic clientViaUserConsentAPI(ClientId clientId, List _scope, dynamic function,  int testing) async {
   if(testing == 0) {
     dynamic authClient = clientViaUserConsent(clientId, _scope, function);
   }
-  else {
+  else if(testing == 1){
     return AuthClientMock("accessTokenTest", "refreshTokenTest");
+  }
+  else if(testing == 2) {
+    await Future.delayed(new Duration(milliseconds: 200));
   }
 }
 
