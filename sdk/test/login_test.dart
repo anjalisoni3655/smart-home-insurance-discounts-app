@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sdk/User.dart';
-import 'package:sdk/login.dart';
+import 'package:sdk/functionality/login.dart';
 
 void main() {
   test('test 1: api logging in and loggin out properly', () async {
