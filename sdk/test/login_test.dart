@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sdk/User.dart';
-import 'package:sdk/login.dart';
+import 'package:sdk/functionality/login.dart';
 
 void main() {
   test('test 1: api logging in and loggin out properly', () async {
@@ -29,5 +29,18 @@ void main() {
     expect(await login.logout(), "logout failed");
     expect(await login.getUserDetails(), new User(displayName: "Osheen Sachdev", email: "osheen@google.com", photoUrl: "someurl.com"));
   });
-
+  test("test 3: api taking 2 ms to login and 2 ms to logout than timeout set", () async {
+    Login login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 1));
+    expect(await login.login(), "login failed");
+    login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 3), logoutTimeoutDuration: new Duration(milliseconds: 1));
+    expect(await login.login(), "login successful");
+    expect(await login.logout(), "logout failed");
+    login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 3), logoutTimeoutDuration: new Duration(milliseconds: 3));
+    expect(await login.login(), "login successful");
+    expect(await login.logout(), "logout successful");
+  });
+  test("test 5: api taking 2 ms to respond to isSignedIn", () async {
+    Login login = new Login(testing: 5, isSignedInTimeoutDuration: new Duration(milliseconds: 1));
+    expect(await login.login(), "login failed");
+  });
 }
