@@ -33,6 +33,7 @@ class ResourcePicker {
       _refreshToken = authClient.credentials.refreshToken.data;
       return "authorization successful";
     } catch(error) {
+      print(error);
       return "authorization failed";
     }
   }

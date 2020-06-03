@@ -3,6 +3,16 @@ library sdk;
 import 'package:googleapis_auth/auth.dart';
 import 'package:googleapis_auth/auth_io.dart';
 
+dynamic clientViaUserConsentAPI(ClientId clientId, List _scope, dynamic function,  int testing) {
+  if(testing == 0) {
+    dynamic authClient = clientViaUserConsent(clientId, _scope, function);
+  }
+  else {
+    return AuthClientMock("accessTokenTest", "refreshTokenTest");
+  }
+}
+
+// Mocking AuthClient Class
 class AccessTokenMock {
   String _data;
 
@@ -32,13 +42,4 @@ class AuthClientMock {
   }
 
   Credentials get credentials => _credentials;
-}
-
-dynamic clientViaUserConsentAPI(ClientId clientId, List _scope, dynamic function,  int testing) {
-  if(testing == 0) {
-    dynamic authClient = clientViaUserConsent(clientId, _scope, function);
-  }
-  else {
-    return new AuthClientMock("accessTokenTest", "refreshTokenTest");
-  }
 }
