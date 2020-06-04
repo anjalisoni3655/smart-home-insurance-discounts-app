@@ -5,14 +5,17 @@ import 'dart:io';
 import 'package:sdk/mock_api/http_client.dart';
 
 class AccessDevices {
-  static const String URL = "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/";
+  static const String URL =
+      "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/";
 
   String _accessToken;
   String _enterpriseId;
   int testing;
   Duration accessDevicesTimeoutDuration;
 
-  AccessDevices(String accessToken, String enterpriseId, {this.testing, this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
+  AccessDevices(String accessToken, String enterpriseId,
+      {this.testing,
+      this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
     this._accessToken = accessToken;
     this._enterpriseId = enterpriseId;
   }
@@ -30,6 +33,7 @@ class AccessDevices {
       return null;
     }
   }
+
   Future<dynamic> getAllStructures() async {
     try {
       final client = new HttpClient(testing: testing);
@@ -43,6 +47,7 @@ class AccessDevices {
       return null;
     }
   }
+
   Future<dynamic> getDeviceStatus(String deviceId) async {
     try {
       final client = new HttpClient(testing: testing);
@@ -51,11 +56,10 @@ class AccessDevices {
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       response = jsonDecode(response.body);
-      return response["traits"]["sdm.devices.traits.DeviceConnectivityTrait"]["status"];
+      return response["traits"]["sdm.devices.traits.DeviceConnectivityTrait"]
+          ["status"];
     } catch (error) {
       return null;
     }
   }
-
-
 }
