@@ -26,21 +26,27 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    //if(_currentUser!=null) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        ListTile(
-          leading: GoogleUserCircleAvatar(
-            identity: _currentUser,
-          ),
-          title: Text(_currentUser.displayName ?? ''),
-          subtitle: Text(_currentUser.email ?? ''),
+    //if(_currentUser=null) {
+    return Scaffold(
+      backgroundColor: Colors.grey,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            if (_currentUser != null)
+              ListTile(
+                leading: GoogleUserCircleAvatar(
+                  identity: _currentUser,
+                ),
+                title: Text(_currentUser.displayName ?? ''),
+                subtitle: Text(_currentUser.email ?? ''),
+              ),
+          ],
         ),
-      ],
+      ),
     );
-    //}
+    // }
   }
 }
