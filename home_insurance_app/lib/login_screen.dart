@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
 import 'package:homeinsuranceapp/components/rounded_buttons.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 
-GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
+//GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'welcome_screen';
@@ -14,9 +14,9 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  GoogleSignInAccount _currentUser;
+  // GoogleSignInAccount _currentUser;
 
-  @override
+  /*@override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -26,7 +26,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       });
     });
     _googleSignIn.signInSilently();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     //}
   }
 
-  Future<void> _handleSignIn() async {
+  /* Future<void> _handleSignIn() async {
     try {
       await _googleSignIn.signIn().whenComplete(() {
         Navigator.pushNamed(context, HomePage.id);
@@ -106,7 +106,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     } catch (error) {
       print(error);
     }
-  }
+  }*/
 
   /*Future<void> _handleSignOut() async{
     _googleSignIn.disconnect();

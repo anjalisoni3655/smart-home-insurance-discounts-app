@@ -11,16 +11,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  void onClick(String value) async{
+  void onClick(String value) async {
     switch (value) {
       case 'Logout':
-
         break;
       case 'My Profile':
         break;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
