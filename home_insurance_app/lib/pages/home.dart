@@ -6,10 +6,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/profile.dart';
 //import 'package:homeinsuranceapp/pages/circle_image.dart';
+//import 'package:homeinsuranceapp/login_screen.dart';
 import 'package:homeinsuranceapp/login_screen.dart';
 import 'package:homeinsuranceapp/login_screen.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
+
 
 class HomePage extends StatefulWidget {
   static const String id = '/home_screen';
