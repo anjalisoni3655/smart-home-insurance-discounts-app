@@ -30,7 +30,7 @@ void main() {
     expect(await login.getUserDetails(), new User(displayName: "Osheen Sachdev", email: "osheen@google.com", photoUrl: "someurl.com"));
   });
   test("test 3: api taking 200 ms to login and 200 ms to logout than timeout set", () async {
-    Login login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 1));
+    Login login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 100));
     expect(await login.login(), "login failed");
     login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 300), logoutTimeoutDuration: new Duration(milliseconds: 100));
     expect(await login.login(), "login successful");

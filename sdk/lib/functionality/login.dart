@@ -16,6 +16,7 @@ class Login {
       this.loginTimeoutDuration = const Duration(minutes: 1),
       this.logoutTimeoutDuration = const Duration(seconds: 1),
       this.isSignedInTimeoutDuration = const Duration(seconds: 1)}) {
+<<<<<<< HEAD
     if (loginTimeoutDuration == null) {
       loginTimeoutDuration = const Duration(minutes: 1);
     }
@@ -25,11 +26,13 @@ class Login {
     if (isSignedInTimeoutDuration == null) {
       isSignedInTimeoutDuration = const Duration(seconds: 1);
     }
+=======
+>>>>>>> 54777173b8ee69a627b602930fe6dc88f41fe8ac
     googleSignInAPI = GoogleSignInAPI(testing: testing);
   }
 
   Future<String> login() async {
-    // returns status "login successful", "login failed", "login time-out", "already logged in"
+    // returns status "login successful", "login failed", "already logged in"
     try {
       if (await googleSignInAPI
           .isSignedIn()
@@ -44,7 +47,7 @@ class Login {
   }
 
   Future<String> logout() async {
-    // returns status "logout successful", "logout failed", "logout timed-out", "not logged in"
+    // returns status "logout successful", "logout failed", "not logged in"
     try {
       if (!(await googleSignInAPI
           .isSignedIn()
@@ -59,7 +62,11 @@ class Login {
   }
 
   Future<User> getUserDetails() async {
-    if (!(await googleSignInAPI.isSignedIn())) return null;
-    return googleSignInAPI.currentUser;
+    try {
+      if (!(await googleSignInAPI.isSignedIn().timeout(isSignedInTimeoutDuration))) return null;
+      return googleSignInAPI.currentUser;
+    } catch (error) {
+      return null;
+    }
   }
 }

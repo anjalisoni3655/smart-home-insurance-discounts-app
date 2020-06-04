@@ -77,4 +77,3 @@ class SDK {
       return await _accessDevices.getDeviceStatus(deviceId);
     }
   }
-}
