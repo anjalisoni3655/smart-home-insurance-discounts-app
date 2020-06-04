@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 import 'login_screen.dart';
 import 'package:homeinsuranceapp/pages/contact.dart';
+import 'package:homeinsuranceapp/pages/my_devices.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         HomePage.id: (context) => HomePage(),
         Contact.id: (context) => Contact(),
+        MyDevices.id:(context)=>MyDevices(),
       },
     );
   }

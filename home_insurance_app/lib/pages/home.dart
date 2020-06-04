@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 //import 'package:homeinsuranceapp/pages/circle_image.dart';
-import 'package:homeinsuranceapp/login_screen.dart';
+//import 'package:homeinsuranceapp/login_screen.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'home_screen';
