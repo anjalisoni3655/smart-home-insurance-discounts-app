@@ -1,5 +1,3 @@
-library sdk;
-
 import 'dart:async';
 import 'package:sdk/User.dart';
 import 'package:sdk/mock_api/google_sign_in_api.dart';
@@ -14,6 +12,15 @@ class Login {
   GoogleSignInAPI googleSignInAPI;
 
   Login({this.testing = 0, this.loginTimeoutDuration = const Duration(minutes: 1), this.logoutTimeoutDuration = const Duration(seconds: 1), this.isSignedInTimeoutDuration = const Duration(seconds: 1)}) {
+    if(loginTimeoutDuration == null) {
+      loginTimeoutDuration = const Duration(minutes: 1);
+    }
+    if(logoutTimeoutDuration == null) {
+      logoutTimeoutDuration = const Duration(seconds: 1);
+    }
+    if(isSignedInTimeoutDuration == null) {
+      isSignedInTimeoutDuration = const Duration(seconds: 1);
+    }
     googleSignInAPI = GoogleSignInAPI(testing: testing);
   }
 
@@ -46,6 +53,7 @@ class Login {
       return "logout failed";
     }
   }
+
   Future<User> getUserDetails() async {
     if(!(await googleSignInAPI.isSignedIn())) return null;
     return googleSignInAPI.currentUser;

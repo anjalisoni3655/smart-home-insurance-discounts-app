@@ -1,5 +1,3 @@
-library sdk;
-
 import 'dart:io';
 import 'package:sdk/mock_api/http_client.dart';
 

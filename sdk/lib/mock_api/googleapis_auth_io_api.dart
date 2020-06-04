@@ -1,5 +1,3 @@
-library sdk;
-
 import 'package:googleapis_auth/auth.dart';
 import 'package:googleapis_auth/auth_io.dart';
 

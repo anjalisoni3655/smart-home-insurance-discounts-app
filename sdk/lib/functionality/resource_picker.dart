@@ -1,5 +1,3 @@
-library sdk;
-
 import 'package:url_launcher/url_launcher.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:sdk/mock_api/googleapis_auth_io_api.dart';
