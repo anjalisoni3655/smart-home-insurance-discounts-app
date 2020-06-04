@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:sdk/mock_api/google_sign_in_api.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Login {
   // Time allowed for Http requests or API calls that will require some user interaction or interference (input)
@@ -8,24 +8,29 @@ class Login {
   Duration nonUserInteractiveFlowTimeout;
 
   int testing;
-  GoogleSignInAPI googleSignInAPI;
+  GoogleSignIn _googleSignIn;
 
   Login(
-      {this.testing = 0,
-      this.userInteractiveFlowTimeout = const Duration(minutes: 1),
+      {this.userInteractiveFlowTimeout = const Duration(minutes: 1),
       this.nonUserInteractiveFlowTimeout = const Duration(seconds: 1)}) {
-    googleSignInAPI = GoogleSignInAPI(testing: testing);
+    _googleSignIn = GoogleSignIn();
+  }
+  Login.test(
+      GoogleSignIn googleSignIn,
+      {this.userInteractiveFlowTimeout = const Duration(minutes: 1),
+        this.nonUserInteractiveFlowTimeout = const Duration(seconds: 1)}) {
+    _googleSignIn = googleSignIn;
   }
 
   Future<String> login() async {
     // returns status "login successful", "login failed", "already logged in"
     try {
-      if (await googleSignInAPI
+      if (await _googleSignIn
           .isSignedIn()
           .timeout(nonUserInteractiveFlowTimeout)) {
         return "already logged in";
       }
-      await googleSignInAPI.signIn().timeout(userInteractiveFlowTimeout);
+      await _googleSignIn.signIn().timeout(userInteractiveFlowTimeout);
       return "login successful";
     } catch (error) {
       return "login failed";
@@ -35,12 +40,12 @@ class Login {
   Future<String> logout() async {
     // returns status "logout successful", "logout failed", "not logged in"
     try {
-      if (!(await googleSignInAPI
+      if (!(await _googleSignIn
           .isSignedIn()
           .timeout(nonUserInteractiveFlowTimeout))) {
         return "not logged in";
       }
-      await googleSignInAPI.disconnect().timeout(nonUserInteractiveFlowTimeout);
+      await _googleSignIn.signOut().timeout(nonUserInteractiveFlowTimeout);
       return "logout successful";
     } catch (error) {
       return "logout failed";
@@ -49,8 +54,12 @@ class Login {
 
   Future<Map> getUserDetails() async {
     try {
-      if (!(await googleSignInAPI.isSignedIn().timeout(nonUserInteractiveFlowTimeout))) return null;
-      return googleSignInAPI.currentUser;
+      if (!(await _googleSignIn.isSignedIn().timeout(nonUserInteractiveFlowTimeout))) return null;
+      return {
+        "displayName": _googleSignIn.currentUser.displayName,
+        "email": _googleSignIn.currentUser.email,
+        "photoUrl": _googleSignIn.currentUser.photoUrl
+      };
     } catch (error) {
       return null;
     }
