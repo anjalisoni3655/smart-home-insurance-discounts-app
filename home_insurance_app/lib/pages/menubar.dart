@@ -41,7 +41,7 @@ class _AppDrawerState extends State<AppDrawer> {
               }),
           ListTile(
               leading: Icon(Icons.phone),
-              title: Text('Connect Us'),
+              title: Text('Contact Us'),
               onTap: () {
                 Navigator.pushNamed(context, Contact.id);
               }),
