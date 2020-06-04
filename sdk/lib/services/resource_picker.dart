@@ -29,6 +29,7 @@ class ResourcePicker {
         "$_pcmUrl/auth?client_id=$_clientId&redirect_uri=$_redirectURL&response_type=code&scope=$_scope&state=state";
   }
 
+  // Testing constructor
   ResourcePicker.test(String clientId, String clientSecret, String enterpriseId,
       String redirectURL, Function clientViaUserConsent,
       {this.resourcePickerTimeoutDuration = const Duration(minutes: 5)}) {
@@ -38,10 +39,11 @@ class ResourcePicker {
     this._enterpriseId = enterpriseId;
     this._redirectURL = redirectURL;
     _resourcePickerURL =
-    "$_pcmUrl/auth?client_id=$_clientId&redirect_uri=$_redirectURL&response_type=code&scope=$_scope&state=state";
+        "$_pcmUrl/auth?client_id=$_clientId&redirect_uri=$_redirectURL&response_type=code&scope=$_scope&state=state";
   }
 
   Future<String> askForAuthorization() async {
+    // Launch URL for the resource picker and get back the access token that it returns
     try {
       var authClient = await _launchResourcePicker(_resourcePickerURL)
           .timeout(resourcePickerTimeoutDuration);
