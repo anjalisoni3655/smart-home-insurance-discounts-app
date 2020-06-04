@@ -10,6 +10,7 @@ String city ;
 String state ;
 int  pincode;
 
+// Widget for getting , validating and storing User Adrress
 class HomeDetails extends StatefulWidget {
   @override
  
@@ -34,7 +35,7 @@ class _HomeDetailsState extends State<HomeDetails> {
   }
   Widget _buildAddressSecondLine(){
     return TextFormField(
-      decoration:InputDecoration(labelText: "Second Line Of Address"),//validator is not required
+      decoration:InputDecoration(labelText: "Second Line Of Address"),//validator is not required as this field can be left empty 
       onSaved:(String value){
       secondLineOfAddress = value;
       }) ;
