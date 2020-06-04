@@ -4,11 +4,11 @@ import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/company_policies.dart';
 
 
-String address ;
+String firstLineOfAddress ;
+String secondLineOfAddress ;
+String city ;
 String state ;
 int  pincode;
-int periodOfInsurance ;
-int mobileNo ;
 
 class HomeDetails extends StatefulWidget {
   @override
@@ -20,19 +20,39 @@ class _HomeDetailsState extends State<HomeDetails> {
   
   
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Widget _buildaddress(){
+  Widget _buildAddressFirstLine(){
     return TextFormField(
-      decoration:InputDecoration(labelText: "Address"),
+      decoration:InputDecoration(labelText: "First Line Of Address"),
       validator:(String value){
         if(value.isEmpty){
           return 'Address is Required' ;
         }
       },
       onSaved:(String value){
-      address = value;
+      firstLineOfAddress = value;
       }) ;
   }
-  Widget _buildstate(){
+  Widget _buildAddressSecondLine(){
+    return TextFormField(
+      decoration:InputDecoration(labelText: "Second Line Of Address"),//validator is not required
+      onSaved:(String value){
+      secondLineOfAddress = value;
+      }) ;
+  }
+  Widget _buildCity(){
+    return TextFormField(
+      decoration:InputDecoration(labelText: " City "),
+      validator:(String value){
+        if(value.isEmpty){
+          return 'City is Required' ;
+        }
+      },
+      onSaved:(String value){
+      city = value;
+      }) ;
+  }
+
+  Widget _buildState(){
     return TextFormField(
       decoration:InputDecoration(labelText: "State/Union Territory"),
       validator:(String value){
@@ -44,7 +64,7 @@ class _HomeDetailsState extends State<HomeDetails> {
       state = value;
       }) ;
   }
-  Widget _buildpincode(){
+  Widget _buildPincode(){
     return TextFormField(
       decoration:InputDecoration(labelText: "Pincode"),
       keyboardType : TextInputType.number,
@@ -58,34 +78,8 @@ class _HomeDetailsState extends State<HomeDetails> {
       pincode = int.tryParse(value);
       }) ;
   }
-  Widget _buildperiodOfInsurance(){
-    return TextFormField(
-      decoration:InputDecoration(labelText: "Period Of Insurance (1-15 years)"),
-      keyboardType : TextInputType.number,
-      validator:(String value){
-        int period = int.tryParse(value);
-        if(value.isEmpty||period<0||period>15){      
-          return 'Please enter a valid Period ' ; 
-        }
-      },
-      onSaved:(String value){
-      periodOfInsurance =int.tryParse(value);
-      }) ;       //DropDown list 
-  }
-  Widget _buildmobileNo(){
-    return TextFormField(
-      decoration:InputDecoration(labelText: "Mobile Number"),
-      keyboardType : TextInputType.number ,
-      validator:(String value){
-        int phoneno = int.tryParse(value);
-        if(value.isEmpty||(phoneno>9999999999)){
-            return 'Enter a valid Mobile Number' ; 
-        }
-      },
-      onSaved:(String value){
-      mobileNo =int.tryParse(value);
-      }) ;
-  }
+  
+  
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +96,7 @@ class _HomeDetailsState extends State<HomeDetails> {
           child:Column(
             children: <Widget>[
               Text(
-                'Address Details',
+                'Enter Your Address Details ',
                 style:TextStyle(
                   fontSize:20.0,
                   fontWeight:FontWeight.bold,
@@ -114,11 +108,11 @@ class _HomeDetailsState extends State<HomeDetails> {
                 child: Column(
                 mainAxisAlignment:MainAxisAlignment.center,
                 children: <Widget>[
-                _buildaddress(),
-                _buildstate(),
-                _buildpincode(),
-                _buildmobileNo(),
-                _buildperiodOfInsurance(),
+                _buildAddressFirstLine(),
+                _buildAddressSecondLine(),
+                _buildCity(),
+                _buildState(),
+                 _buildPincode(),
                 SizedBox(height:100),
                 RaisedButton(
                   onPressed:(){
@@ -127,8 +121,8 @@ class _HomeDetailsState extends State<HomeDetails> {
                     }
                     // If the form is valid , all the values are saved in respective variables
                     _formKey.currentState.save(); 
-                    //User Home details object is sent to User Home Details class 
-                    UserDetails curr_user = UserDetails(address , state , pincode , periodOfInsurance ,mobileNo );
+                    //User Address object is sent to User Address class 
+                    UserAddress curr_user = UserAddress( firstLineOfAddress , secondLineOfAddress , city , state , pincode );
                     CompanyPolicies pin_to_policy = CompanyPolicies(pincode);
                     //Available policies corresponding to the pincode is saved in list . 
                     List<Policy> available_policies = pin_to_policy.get_policies();
