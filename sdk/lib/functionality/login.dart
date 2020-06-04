@@ -1,7 +1,4 @@
-library sdk;
-
 import 'dart:async';
-import 'package:sdk/User.dart';
 import 'package:sdk/mock_api/google_sign_in_api.dart';
 
 class Login {
@@ -50,7 +47,7 @@ class Login {
     }
   }
 
-  Future<User> getUserDetails() async {
+  Future<Map> getUserDetails() async {
     try {
       if (!(await googleSignInAPI.isSignedIn().timeout(nonUserInteractiveFlowTimeout))) return null;
       return googleSignInAPI.currentUser;

@@ -3,7 +3,6 @@ library sdk;
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sdk/User.dart';
 import 'package:sdk/functionality/login.dart';
 
 void main() {
@@ -12,7 +11,7 @@ void main() {
     expect(await login.logout(), "not logged in");
     expect(await login.getUserDetails(), null);
     expect(await login.login(), "login successful");
-    expect(await login.getUserDetails(), new User(displayName: "Osheen Sachdev", email: "osheen@google.com", photoUrl: "someurl.com"));
+    expect(await login.getUserDetails(), {'displayName': "Osheen Sachdev", 'email': "osheen@google.com", 'photoUrl': "someurl.com"});
     expect(await login.login(), "already logged in");
     expect(await login.logout(), "logout successful");
     expect(await login.getUserDetails(), null);
@@ -25,9 +24,9 @@ void main() {
   test('test 3: api throwing an error on logging out', () async {
     Login login = new Login(testing: 3);
     expect(await login.login(), "login successful");
-    expect(await login.getUserDetails(), new User(displayName: "Osheen Sachdev", email: "osheen@google.com", photoUrl: "someurl.com"));
+    expect(await login.getUserDetails(), {'displayName': "Osheen Sachdev", 'email': "osheen@google.com", 'photoUrl': "someurl.com"});
     expect(await login.logout(), "logout failed");
-    expect(await login.getUserDetails(), new User(displayName: "Osheen Sachdev", email: "osheen@google.com", photoUrl: "someurl.com"));
+    expect(await login.getUserDetails(), {'displayName': "Osheen Sachdev", 'email': "osheen@google.com", 'photoUrl': "someurl.com"});
   });
   test("test 3: api taking 200 ms to login and 200 ms to logout than timeout set", () async {
     Login login = new Login(testing: 4, userInteractiveFlowTimeout: new Duration(milliseconds: 100));
