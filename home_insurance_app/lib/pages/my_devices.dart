@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/main.dart';
+
 List<ItemVO> mainList = List();
 List<ItemVO> thermostats = [
-
   ItemVO("1", "nest hub"),
   ItemVO("2", "nest mini"),
   ItemVO("3", "chromecast")
 ];
-List<ItemVO> camera= [
+List<ItemVO> camera = [
   ItemVO("1", "smoke alarm"),
   ItemVO("2", "nest cam"),
   ItemVO("3", "home mini")
 ];
-List<ItemVO> smokeDetector= [
+List<ItemVO> smokeDetector = [
   ItemVO("1", "home max"),
   ItemVO("2", "home duo"),
   ItemVO("3", "thermostat")
 ];
 
-List<ItemVO>home =[
+List<ItemVO> home = [
   ItemVO("1", "a"),
   ItemVO("2", "b"),
   ItemVO("3", "c"),
-
-
-
 ];
+
 class MyDevices extends StatefulWidget {
-
-
   static const String id = 'my_devices';
   @override
   State<StatefulWidget> createState() {
@@ -45,24 +41,19 @@ class _MyDevicesState extends State<MyDevices> {
 
   @override
   Widget build(BuildContext context) {
-    theme: ThemeData.dark();
+    theme:
+    ThemeData.dark();
 
     return Material(
-
-
       child: Stack(
-
         children: <Widget>[
           ListView.builder(
-
             itemBuilder: (BuildContext context, index) {
               return getCard(index);
             },
             itemCount: mainList.length,
           ),
           Container(
-
-
             margin: EdgeInsets.only(bottom: 20),
             alignment: Alignment.bottomCenter,
             child: Row(
@@ -87,7 +78,6 @@ class _MyDevicesState extends State<MyDevices> {
                     });
                   },
                   heroTag: "btn2",
-
                   child: new Icon(Icons.camera_alt),
                   backgroundColor: new Color(0xFFE57373),
                 ),
@@ -113,7 +103,6 @@ class _MyDevicesState extends State<MyDevices> {
                   child: new Icon(Icons.home),
                   backgroundColor: new Color(0xFFE57373),
                 )
-
               ],
             ),
           ),
@@ -126,29 +115,24 @@ class _MyDevicesState extends State<MyDevices> {
     Get the card item for a list
    */
   getCard(int position) {
-
     ItemVO model = mainList[position];
     return Card(
-
       child: Container(
-
         color: Colors.lightBlueAccent,
         //child: Text("Flutter CheatSheet."),
         height: 50,
         alignment: Alignment.center,
         child: Row(
-
           //Text("Flutter CheatSheet."),
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
 //            Text(
 //              "ID:: "+model._id,
 //              style: TextStyle(fontSize: 18, color: Colors.black),
 //            ),
-            Padding(padding: EdgeInsets.only(left: 5,right: 5)),
+            Padding(padding: EdgeInsets.only(left: 5, right: 5)),
             Text(
-              " "+model._name,
+              " " + model._name,
               style: TextStyle(fontSize: 18, color: Colors.black),
             )
           ],

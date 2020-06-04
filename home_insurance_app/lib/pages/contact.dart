@@ -8,7 +8,6 @@ class Contact extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-
         backgroundColor: Colors.teal,
         body: ContactUs(
           cardColor: Colors.white,
@@ -21,8 +20,6 @@ class Contact extends StatelessWidget {
           website: 'https://www.policybazaar.com/home-insurance/',
           tagLine: 'Policy Bazaar',
           taglineColor: Colors.black,
-
-
         ),
       ),
     );
