@@ -13,19 +13,23 @@ class Login {
   int testing;
   GoogleSignInAPI googleSignInAPI;
 
-  Login({this.testing = 0, this.loginTimeoutDuration = const Duration(minutes: 1), this.logoutTimeoutDuration = const Duration(seconds: 1), this.isSignedInTimeoutDuration = const Duration(seconds: 1)}) {
+  Login(
+      {this.testing = 0,
+      this.loginTimeoutDuration = const Duration(minutes: 1),
+      this.logoutTimeoutDuration = const Duration(seconds: 1),
+      this.isSignedInTimeoutDuration = const Duration(seconds: 1)}) {
     googleSignInAPI = GoogleSignInAPI(testing: testing);
   }
 
   Future<String> login() async {
     // returns status "login successful", "login failed", "login time-out", "already logged in"
     try {
-      if (await googleSignInAPI.isSignedIn().timeout(isSignedInTimeoutDuration)) {
+      if (await googleSignInAPI
+          .isSignedIn()
+          .timeout(isSignedInTimeoutDuration)) {
         return "already logged in";
       }
-      await googleSignInAPI
-          .signIn()
-          .timeout(loginTimeoutDuration);
+      await googleSignInAPI.signIn().timeout(loginTimeoutDuration);
       return "login successful";
     } catch (error) {
       return "login failed";
@@ -35,19 +39,20 @@ class Login {
   Future<String> logout() async {
     // returns status "logout successful", "logout failed", "logout timed-out", "not logged in"
     try {
-      if(!(await googleSignInAPI.isSignedIn().timeout(isSignedInTimeoutDuration))) {
+      if (!(await googleSignInAPI
+          .isSignedIn()
+          .timeout(isSignedInTimeoutDuration))) {
         return "not logged in";
       }
-      await googleSignInAPI
-          .disconnect()
-          .timeout(logoutTimeoutDuration);
+      await googleSignInAPI.disconnect().timeout(logoutTimeoutDuration);
       return "logout successful";
     } catch (error) {
       return "logout failed";
     }
   }
+
   Future<User> getUserDetails() async {
-    if(!(await googleSignInAPI.isSignedIn())) return null;
+    if (!(await googleSignInAPI.isSignedIn())) return null;
     return googleSignInAPI.currentUser;
   }
 }
