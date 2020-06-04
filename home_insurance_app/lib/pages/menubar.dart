@@ -38,6 +38,9 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('My Devices'),
               onTap: () {
                 launch("https://nestservices.google.com/partnerconnections");
+
+                Navigator.of(context).pop();
+
               }),
           ListTile(
               leading: Icon(Icons.phone),

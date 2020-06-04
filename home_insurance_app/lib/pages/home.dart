@@ -28,14 +28,21 @@ Future<void> signOut(BuildContext context) async {
 }
 
 class _HomePageState extends State<HomePage> {
+
   void onClick(String value, BuildContext context) async {
+
+
     if (value == 'Logout') {
       //Navigator.pushNamed(context,WelcomeScreen.id);
       signOut(context);
     } else {
+
       //print(1);
 
       Navigator.pushNamed(context, Profile.id);
+
+
+
     }
   }
 
