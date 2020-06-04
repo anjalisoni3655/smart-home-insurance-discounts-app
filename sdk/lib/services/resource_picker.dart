@@ -1,8 +1,7 @@
 library sdk;
 
 import 'package:url_launcher/url_launcher.dart';
-import 'package:googleapis_auth/auth_io.dart';
-import 'package:sdk/mock_api/googleapis_auth_io_api.dart';
+import 'package:googleapis_auth/auth_io.dart' as auth;
 
 class ResourcePicker {
   String _accessToken;
@@ -16,11 +15,12 @@ class ResourcePicker {
   String _redirectURL;
   Duration resourcePickerTimeoutDuration;
   int testing;
+  Function clientViaUserConsent;
 
   ResourcePicker(String clientId, String clientSecret, String enterpriseId,
       String redirectURL,
-      {this.resourcePickerTimeoutDuration = const Duration(minutes: 5),
-      this.testing = 0}) {
+      {this.resourcePickerTimeoutDuration = const Duration(minutes: 5)}) {
+    this.clientViaUserConsent = auth.clientViaUserConsent;
     this._clientId = clientId;
     this._clientSecret = clientSecret;
     this._enterpriseId = enterpriseId;
@@ -29,28 +29,40 @@ class ResourcePicker {
         "$_pcmUrl/auth?client_id=$_clientId&redirect_uri=$_redirectURL&response_type=code&scope=$_scope&state=state";
   }
 
+  ResourcePicker.test(String clientId, String clientSecret, String enterpriseId,
+      String redirectURL, Function clientViaUserConsent,
+      {this.resourcePickerTimeoutDuration = const Duration(minutes: 5)}) {
+    this.clientViaUserConsent = clientViaUserConsent;
+    this._clientId = clientId;
+    this._clientSecret = clientSecret;
+    this._enterpriseId = enterpriseId;
+    this._redirectURL = redirectURL;
+    _resourcePickerURL =
+    "$_pcmUrl/auth?client_id=$_clientId&redirect_uri=$_redirectURL&response_type=code&scope=$_scope&state=state";
+  }
+
   Future<String> askForAuthorization() async {
     try {
       var authClient = await _launchResourcePicker(_resourcePickerURL)
           .timeout(resourcePickerTimeoutDuration);
       _accessToken = authClient.credentials.accessToken.data;
-      _refreshToken = authClient.credentials.refreshToken.data;
+      _refreshToken = authClient.credentials.refreshToken;
       return "authorization successful";
     } catch (error) {
-      print(error);
       return "authorization failed";
     }
   }
 
   Future<dynamic> _launchResourcePicker(String resourcePickerURL) async {
-    var authClient = await clientViaUserConsentAPI(
-        ClientId(_clientId, _clientSecret), [_scope], (resourcePickerURL) {
+    var authClient = await clientViaUserConsent(
+        auth.ClientId(_clientId, _clientSecret), [_scope], () {
       launch(resourcePickerURL);
-    }, testing);
+    });
     return authClient;
   }
 
   String get accessToken => _accessToken;
+  String get refreshToken => _refreshToken;
 
   String get resourcePickerURL => _resourcePickerURL;
 }
