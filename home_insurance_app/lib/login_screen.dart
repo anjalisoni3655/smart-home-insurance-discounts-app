@@ -84,7 +84,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             fontWeight: FontWeight.w900,
           ),
         ),
+        SizedBox(
+          height: 24.0,
+        ),
         Text('Log in to Continue'),
+        SizedBox(
+          height: 24.0,
+        ),
         RoundedButton(
           title: 'LOG IN',
           colour: Colors.brown,
@@ -97,6 +103,5 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
     //}
   }
-
 
 
