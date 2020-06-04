@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
-import 'package:homeinsuranceapp/data/policies.dart';
+import 'package:homeinsuranceapp/data/policy.dart';
+import 'package:homeinsuranceapp/data/company_policies.dart';
 
 
 String address ;
@@ -8,6 +9,7 @@ String state ;
 int  pincode;
 int periodOfInsurance ;
 int mobileNo ;
+
 class HomeDetails extends StatefulWidget {
   @override
  
@@ -127,9 +129,9 @@ class _HomeDetailsState extends State<HomeDetails> {
                     _formKey.currentState.save(); 
                     //User Home details object is sent to User Home Details class 
                     UserDetails curr_user = UserDetails(address , state , pincode , periodOfInsurance ,mobileNo );
-                    Policy pin_to_policy = Policy(pincode);
+                    CompanyPolicies pin_to_policy = CompanyPolicies(pincode);
                     //Available policies corresponding to the pincode is saved in list . 
-                    List<String> available_policies = pin_to_policy.get_policies();
+                    List<Policy> available_policies = pin_to_policy.get_policies();
                   },
 
                   splashColor: Colors.blueGrey,
