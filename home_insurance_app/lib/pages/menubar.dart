@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/pages/contact.dart';
 
 class AppDrawer  extends StatefulWidget {
   @override
@@ -11,7 +12,15 @@ class _AppDrawerState extends State<AppDrawer> {
     return Drawer(
       child:ListView(children: <Widget>[
         DrawerHeader(
-          child:null,
+         // child: Center('Smart Home',textScaleFactor: 3.0,)),
+
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/HomePage.jpg"),
+                  fit: BoxFit.cover)
+
+          ),
+
           ),
           ListTile(
             leading:Icon(Icons.home),
@@ -33,9 +42,9 @@ class _AppDrawerState extends State<AppDrawer> {
             }),
           ListTile(
             leading:Icon(Icons.phone),
-            title:Text('Connect With Us'),
+            title:Text('Connect Us'),
             onTap:(){
-              Navigator.of(context).pop();
+              Navigator.pushNamed(context, Contact.id);
             }),
 
       ],
