@@ -1,22 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:homeinsuranceapp/main.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:ui';
+import 'package:homeinsuranceapp/pages/profile.dart';
 //import 'package:homeinsuranceapp/pages/circle_image.dart';
 //import 'package:homeinsuranceapp/login_screen.dart';
+import 'package:homeinsuranceapp/login_screen.dart';
+import 'package:homeinsuranceapp/login_screen.dart';
+
+GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
+
 
 class HomePage extends StatefulWidget {
-  static const String id = 'home_screen';
+  static const String id = '/home_screen';
   @override
   _HomePageState createState() => _HomePageState();
 }
 
+Future<void> signOut(BuildContext context) async {
+  try {
+    await _googleSignIn.signOut().whenComplete(() {
+      Navigator.pushNamed(context, WelcomeScreen.id);
+    });
+  } catch (error) {
+    print(error);
+  }
+}
+
 class _HomePageState extends State<HomePage> {
-  void onClick(String value) async {
-    switch (value) {
-      case 'Logout':
-        break;
-      case 'My Profile':
-        break;
+
+  void onClick(String value, BuildContext context) async {
+
+
+    if (value == 'Logout') {
+      //Navigator.pushNamed(context,WelcomeScreen.id);
+      signOut(context);
+    } else {
+
+      //print(1);
+
+      Navigator.pushNamed(context, Profile.id);
+
+
+
     }
   }
 
@@ -33,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           PopupMenuButton<String>(
             child: Icon(Icons.accessibility),
-            onSelected: onClick,
+            onSelected: (_) => onClick(_, context),
             itemBuilder: (BuildContext context) {
               return {'Logout', 'My Profile'}.map((String choice) {
                 return PopupMenuItem<String>(

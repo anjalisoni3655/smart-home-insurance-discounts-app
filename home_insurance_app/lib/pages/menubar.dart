@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/contact.dart';
 import 'package:homeinsuranceapp/pages/my_devices.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -14,8 +15,8 @@ class _AppDrawerState extends State<AppDrawer> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            //child: Center('Smart Home',textScaleFactor: 3.0,)),
-            child: null,
+            // child: Center('Smart Home',textScaleFactor: 3.0,)),
+
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/HomePage.jpg"),
@@ -41,9 +42,15 @@ class _AppDrawerState extends State<AppDrawer> {
               }),
           ListTile(
               leading: Icon(Icons.phone),
-              title: Text('Connect Us'),
+              title: Text('Contact Us'),
               onTap: () {
                 Navigator.pushNamed(context, Contact.id);
+              }),
+          ListTile(
+              leading: Icon(Icons.perm_device_information),
+              title: Text('Disable access'),
+              onTap: () {
+                launch("https://myaccount.google.com/permissions");
               }),
         ],
       ),
