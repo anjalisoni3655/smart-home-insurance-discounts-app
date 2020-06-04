@@ -15,10 +15,9 @@ class Login {
       this.nonUserInteractiveFlowTimeout = const Duration(seconds: 1)}) {
     _googleSignIn = GoogleSignIn();
   }
-  Login.test(
-      GoogleSignIn googleSignIn,
+  Login.test(GoogleSignIn googleSignIn,
       {this.userInteractiveFlowTimeout = const Duration(minutes: 1),
-        this.nonUserInteractiveFlowTimeout = const Duration(seconds: 1)}) {
+      this.nonUserInteractiveFlowTimeout = const Duration(seconds: 1)}) {
     _googleSignIn = googleSignIn;
   }
 
@@ -54,7 +53,9 @@ class Login {
 
   Future<Map> getUserDetails() async {
     try {
-      if (!(await _googleSignIn.isSignedIn().timeout(nonUserInteractiveFlowTimeout))) return null;
+      if (!(await _googleSignIn
+          .isSignedIn()
+          .timeout(nonUserInteractiveFlowTimeout))) return null;
       return {
         "displayName": _googleSignIn.currentUser.displayName,
         "email": _googleSignIn.currentUser.email,
@@ -63,6 +64,5 @@ class Login {
     } catch (error) {
       return null;
     }
-
   }
 }
