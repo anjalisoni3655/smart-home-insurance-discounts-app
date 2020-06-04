@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sdk/User.dart';
 
 // For testing purpose
 // Behaves exactly like GoogleSignIn object if testing = 0
@@ -71,17 +70,19 @@ class GoogleSignInAPI {
     }
   }
 
-  User get currentUser {
+  Map get currentUser {
     if (testing == 0) {
-      return new User(
-          displayName: _googleSignIn.currentUser.displayName,
-          email: _googleSignIn.currentUser.email,
-          photoUrl: _googleSignIn.currentUser.photoUrl);
+      return {
+          'displayName': _googleSignIn.currentUser.displayName,
+          'email': _googleSignIn.currentUser.email,
+          'photoUrl': _googleSignIn.currentUser.photoUrl
+      };
     } else {
-      return new User(
-          displayName: "Osheen Sachdev",
-          email: "osheen@google.com",
-          photoUrl: "someurl.com");
+      return {
+          'displayName': "Osheen Sachdev",
+          'email': "osheen@google.com",
+          'photoUrl': "someurl.com"
+      };
     }
   }
 }

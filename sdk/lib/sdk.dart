@@ -3,7 +3,6 @@ library sdk;
 import 'package:sdk/functionality/access_devices.dart';
 import 'package:sdk/functionality/login.dart';
 import 'package:sdk/functionality/resource_picker.dart';
-import 'package:sdk/User.dart';
 
 class SDK {
   Login _login;
@@ -33,9 +32,8 @@ class SDK {
     this.redirectURL = redirectURL;
 
     _login = new Login(
-        logoutTimeoutDuration: logoutTimeoutDuration,
-        loginTimeoutDuration: loginTimeoutDuration,
-        isSignedInTimeoutDuration: isSignedInTimeoutDuration);
+        userInteractiveFlowTimeout: loginTimeoutDuration,
+        nonUserInteractiveFlowTimeout: isSignedInTimeoutDuration);
     _resourcePicker = new ResourcePicker(
         clientId, clientSecret, enterpriseId, redirectURL,
         resourcePickerTimeoutDuration: resourcePickerTimeoutDuration);
@@ -45,7 +43,7 @@ class SDK {
 
   Future<String> logout() => _login.logout();
 
-  Future<User> getUserDetails() => _login.getUserDetails();
+  Future<Map> getUserDetails() => _login.getUserDetails();
 
   Future<String> requestDeviceAccess() async {
     String status = await _resourcePicker.askForAuthorization();
