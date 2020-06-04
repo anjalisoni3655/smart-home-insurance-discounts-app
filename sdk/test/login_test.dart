@@ -106,6 +106,29 @@ void main() {
     expect(await login.getUserDetails(), {'displayName': "Osheen Sachdev", 'email': "osheen@google.com", 'photoUrl': "someurl.com"});
   });
 
+  test('test 4: api throwing an error on isSignedIn request', () async {
+
+    MockGoogleSignIn mockGoogleSignIn = new MockGoogleSignIn();
+    MockGoogleSignInAccount mockGoogleSignInAccount = new MockGoogleSignInAccount();
+
+
+    Future<GoogleSignInAccount> futureMockAccount(Invocation invocation) async => mockGoogleSignInAccount;
+    Future<bool> futureTrueInstance(Invocation invocation) async => true;
+    Future<bool> futureFalseInstance(Invocation invocation) async => false;
+
+    // Defining the behavior of mockGoogleSignIn.
+    // Throws an error on isSignedIn
+    when(mockGoogleSignIn.signIn()).thenAnswer(futureMockAccount);
+    when(mockGoogleSignIn.isSignedIn()).thenThrow(new Exception());
+    when(mockGoogleSignIn.currentUser).thenReturn(mockGoogleSignInAccount);
+
+
+    Login login = new Login.test(mockGoogleSignIn);
+    // Expected output:
+    expect(await login.login(), "login failed");
+    expect(await login.getUserDetails(), null);
+  });
+
   test('test 5: api takes longer to respond on signIn request than set timeout', () async {
 
     MockGoogleSignIn mockGoogleSignIn = new MockGoogleSignIn();
@@ -159,7 +182,7 @@ void main() {
     when(mockGoogleSignInAccount.photoUrl).thenReturn("someurl.com");
     when(mockGoogleSignIn.isSignedIn()).thenAnswer(futureFalseInstance);
 
-    // Set timeout duration for non user interactive queries to 100 ms (sign in is a non user interactive query)
+    // Set timeout duration for non user interactive queries to 100 ms (sign out is a non user interactive query)
     Login login = new Login.test(mockGoogleSignIn, nonUserInteractiveFlowTimeout: new Duration(milliseconds: 100));
     // Expected output:
     expect(await login.login(), "login successful");
@@ -170,5 +193,31 @@ void main() {
     expect(await login.logout(), "logout failed");
     expect(await login.getUserDetails(), {'displayName': "Osheen Sachdev", 'email': "osheen@google.com", 'photoUrl': "someurl.com"});
 
+  });
+
+  test('test 7: api takes longer to respond on isSignedIn request than set timeout', () async {
+
+    MockGoogleSignIn mockGoogleSignIn = new MockGoogleSignIn();
+    MockGoogleSignInAccount mockGoogleSignInAccount = new MockGoogleSignInAccount();
+
+
+    Future<GoogleSignInAccount> futureMockAccount(Invocation invocation) async => mockGoogleSignInAccount;
+    Future<bool> futureTrueInstance(Invocation invocation) async => true;
+    Future<bool> futureFalseInstance(Invocation invocation) async => false;
+
+    // Defining the behavior of mockGoogleSignIn.
+    // Takes 200 ms to check isSignedIn
+    when(mockGoogleSignIn.isSignedIn()).thenAnswer((_) async {
+      await Future.delayed(new Duration(milliseconds: 200));
+      return false;
+    });
+    when(mockGoogleSignIn.isSignedIn()).thenAnswer(futureFalseInstance);
+    when(mockGoogleSignIn.currentUser).thenReturn(mockGoogleSignInAccount);
+
+    // Set timeout duration for non-user interactive queries to 100 ms (isSignedin is a non-user interactive query)
+    Login login = new Login.test(mockGoogleSignIn, nonUserInteractiveFlowTimeout: new Duration(milliseconds: 100));
+    // Expected output:
+    expect(await login.login(), "login failed");
+    expect(await login.getUserDetails(), null);
   });
 }
