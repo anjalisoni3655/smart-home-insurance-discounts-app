@@ -9,11 +9,8 @@ class SDK {
   ResourcePicker _resourcePicker;
   AccessDevices _accessDevices;
 
-  Duration loginTimeoutDuration;
-  Duration logoutTimeoutDuration;
-  Duration isSignedInTimeoutDuration;
-  Duration resourcePickerTimeoutDuration;
-  Duration accessDevicesTimeoutDuration;
+  Duration userInteractiveFlowTimeout;
+  Duration nonUserInteractiveFlowTimeout;
 
   String clientId;
   String clientSecret;
@@ -22,21 +19,19 @@ class SDK {
 
   SDK(String clientId, String clientSecret, String enterpriseId,
       String redirectURL,
-      {this.loginTimeoutDuration,
-        this.logoutTimeoutDuration,
-        this.isSignedInTimeoutDuration,
-        this.resourcePickerTimeoutDuration}) {
+      {this.userInteractiveFlowTimeout,
+        this.nonUserInteractiveFlowTimeout}) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.enterpriseId = enterpriseId;
     this.redirectURL = redirectURL;
 
     _login = new Login(
-        userInteractiveFlowTimeout: loginTimeoutDuration,
-        nonUserInteractiveFlowTimeout: isSignedInTimeoutDuration);
+        userInteractiveFlowTimeout: userInteractiveFlowTimeout,
+        nonUserInteractiveFlowTimeout: nonUserInteractiveFlowTimeout);
     _resourcePicker = new ResourcePicker(
         clientId, clientSecret, enterpriseId, redirectURL,
-        resourcePickerTimeoutDuration: resourcePickerTimeoutDuration);
+        resourcePickerTimeoutDuration: userInteractiveFlowTimeout);
   }
 
   Future<String> login() => _login.login();
@@ -49,7 +44,7 @@ class SDK {
     String status = await _resourcePicker.askForAuthorization();
     if (status == "authentication successful") {
       _accessDevices =
-      new AccessDevices(_resourcePicker.accessToken, this.enterpriseId);
+      new AccessDevices(_resourcePicker.accessToken, this.enterpriseId, accessDevicesTimeoutDuration: nonUserInteractiveFlowTimeout);
     }
     return status;
   }
