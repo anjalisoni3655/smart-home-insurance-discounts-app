@@ -22,7 +22,7 @@ class Login {
   }
 
   Future<String> login() async {
-    // returns status "login successful", "login failed", "login time-out", "already logged in"
+    // returns status "login successful", "login failed", "already logged in"
     try {
       if (await googleSignInAPI
           .isSignedIn()
@@ -37,7 +37,7 @@ class Login {
   }
 
   Future<String> logout() async {
-    // returns status "logout successful", "logout failed", "logout timed-out", "not logged in"
+    // returns status "logout successful", "logout failed", "not logged in"
     try {
       if (!(await googleSignInAPI
           .isSignedIn()
@@ -52,7 +52,12 @@ class Login {
   }
 
   Future<User> getUserDetails() async {
-    if (!(await googleSignInAPI.isSignedIn())) return null;
-    return googleSignInAPI.currentUser;
+    try {
+      if (!(await googleSignInAPI.isSignedIn().timeout(isSignedInTimeoutDuration))) return null;
+      return googleSignInAPI.currentUser;
+    } catch (error) {
+      return null;
+    }
+
   }
 }
