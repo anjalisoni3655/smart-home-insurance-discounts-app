@@ -19,8 +19,7 @@ class SDK {
 
   SDK(String clientId, String clientSecret, String enterpriseId,
       String redirectURL,
-      {this.userInteractiveFlowTimeout,
-        this.nonUserInteractiveFlowTimeout}) {
+      {this.userInteractiveFlowTimeout, this.nonUserInteractiveFlowTimeout}) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.enterpriseId = enterpriseId;
@@ -43,8 +42,9 @@ class SDK {
   Future<String> requestDeviceAccess() async {
     String status = await _resourcePicker.askForAuthorization();
     if (status == "authentication successful") {
-      _accessDevices =
-      new AccessDevices(_resourcePicker.accessToken, this.enterpriseId, accessDevicesTimeoutDuration: nonUserInteractiveFlowTimeout);
+      _accessDevices = new AccessDevices(
+          _resourcePicker.accessToken, this.enterpriseId,
+          accessDevicesTimeoutDuration: nonUserInteractiveFlowTimeout);
     }
     return status;
   }
@@ -73,4 +73,3 @@ class SDK {
     }
   }
 }
-
