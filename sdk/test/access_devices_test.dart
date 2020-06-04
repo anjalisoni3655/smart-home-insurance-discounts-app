@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sdk/functionality/access_devices.dart';
+import 'package:sdk/services/access_devices.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
