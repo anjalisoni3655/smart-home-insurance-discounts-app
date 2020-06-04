@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         HomePage.id: (context) => HomePage(),
         Contact.id: (context) => Contact(),
-        // Profile.id:(context)=>Profile(),
+
       },
     );
   }

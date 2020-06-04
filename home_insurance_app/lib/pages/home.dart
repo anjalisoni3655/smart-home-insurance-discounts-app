@@ -18,11 +18,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
+
     if (value == 'Logout') {
     } else {
       setState(() {
         Navigator.pushNamed(context, Profile.id);
       });
+
     }
   }
 
