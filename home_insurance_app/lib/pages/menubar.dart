@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/contact.dart';
+import 'package:homeinsuranceapp/pages/my_devices.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -37,10 +38,7 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.devices),
               title: Text('My Devices'),
               onTap: () {
-                launch("https://nestservices.google.com/partnerconnections");
-
-                Navigator.of(context).pop();
-
+                Navigator.pushNamed(context, MyDevices.id);
               }),
           ListTile(
               leading: Icon(Icons.phone),
