@@ -29,18 +29,18 @@ void main() {
     expect(await login.logout(), "logout failed");
     expect(await login.getUserDetails(), new User(displayName: "Osheen Sachdev", email: "osheen@google.com", photoUrl: "someurl.com"));
   });
-  test("test 3: api taking 2 ms to login and 2 ms to logout than timeout set", () async {
-    Login login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 1));
+  test("test 3: api taking 200 ms to login and 200 ms to logout than timeout set", () async {
+    Login login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 100));
     expect(await login.login(), "login failed");
-    login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 3), logoutTimeoutDuration: new Duration(milliseconds: 1));
+    login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 300), logoutTimeoutDuration: new Duration(milliseconds: 100));
     expect(await login.login(), "login successful");
     expect(await login.logout(), "logout failed");
-    login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 3), logoutTimeoutDuration: new Duration(milliseconds: 3));
+    login = new Login(testing: 4, loginTimeoutDuration: new Duration(milliseconds: 300), logoutTimeoutDuration: new Duration(milliseconds: 300));
     expect(await login.login(), "login successful");
     expect(await login.logout(), "logout successful");
   });
-  test("test 5: api taking 2 ms to respond to isSignedIn", () async {
-    Login login = new Login(testing: 5, isSignedInTimeoutDuration: new Duration(milliseconds: 1));
+  test("test 5: api taking 200 ms to respond to isSignedIn", () async {
+    Login login = new Login(testing: 5, isSignedInTimeoutDuration: new Duration(milliseconds: 100));
     expect(await login.login(), "login failed");
   });
 }
