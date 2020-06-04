@@ -98,17 +98,5 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     //}
   }
 
-  /* Future<void> _handleSignIn() async {
-    try {
-      await _googleSignIn.signIn().whenComplete(() {
-        Navigator.pushNamed(context, HomePage.id);
-      });
-    } catch (error) {
-      print(error);
-    }
-  }*/
 
-  /*Future<void> _handleSignOut() async{
-    _googleSignIn.disconnect();
-  }*/
-}
+
