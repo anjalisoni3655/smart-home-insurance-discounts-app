@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sdk/functionality/resource_picker.dart';
+import 'package:sdk/services/resource_picker.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
