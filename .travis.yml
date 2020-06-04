@@ -12,13 +12,13 @@ before_script:
   - git clone https://github.com/flutter/flutter.git -b beta
   - ./flutter/bin/flutter doctor
 jobs:
-  - job: test app
+  - name: test app
     script: cd home_insurance_app; ../flutter/bin/flutter test;
-  - job: format app
+  - name: format app
     script: ./flutter/bin/flutter format -n --set-exit-if-changed home_insurance_app/lib/* home_insurance_app/test/*
-  - job: test sdk
+  - name: test sdk
     script: cd sdk; ../flutter/bin/flutter test;
-  - job: format sdk
+  - name: format sdk
     script: ./flutter/bin/flutter format -n --set-exit-if-changed sdk/lib/* sdk/test/*
 
 cache:
