@@ -50,5 +50,19 @@ class SDK {
       return await _accessDevices.getAllDevices();
     }
   }
+  Future<String> getAllStructures() async {
+    if(_accessDevices == null) {
+      return null;
+    } else {
+      return await _accessDevices.getAllStructures();
+    }
+  }
+  Future<String> getDeviceStatus(String deviceId) async {
+    if(_accessDevices == null) {
+      return null;
+    } else {
+      return await _accessDevices.getDeviceStatus(deviceId);
+    }
+  }
 
 }

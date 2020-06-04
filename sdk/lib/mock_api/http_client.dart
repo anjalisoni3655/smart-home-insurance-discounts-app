@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class HttpClient {
@@ -10,7 +11,17 @@ class HttpClient {
       return client.post(url, headers: headers);
     }
     else if(testing == 1) {
-      return new MockResponse("list");
+      if(headers[HttpHeaders.authorizationHeader] != "Bearer accessToken") {
+        throw Exception("incorrect headers");
+      }
+      if(url == "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices") {
+        return new MockResponse("list of devices");
+      } else if(url == "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/structures") {
+        return new MockResponse("list of structures");
+      } else if(url == "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices/deviceId") {
+        return new MockResponse('{"name" : "/enterprises/enterprise-id/devices/device-id","type" : "sdm.devices.types.device-type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}}}');
+      }
+      throw Exception("incorrect url");
     }
     else if(testing == 2) {
       throw Exception();
