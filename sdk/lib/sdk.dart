@@ -24,9 +24,9 @@ class SDK {
   SDK(String clientId, String clientSecret, String enterpriseId,
       String redirectURL,
       {this.loginTimeoutDuration,
-      this.logoutTimeoutDuration,
-      this.isSignedInTimeoutDuration,
-      this.resourcePickerTimeoutDuration}) {
+        this.logoutTimeoutDuration,
+        this.isSignedInTimeoutDuration,
+        this.resourcePickerTimeoutDuration}) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.enterpriseId = enterpriseId;
@@ -42,14 +42,16 @@ class SDK {
   }
 
   Future<String> login() => _login.login();
+
   Future<String> logout() => _login.logout();
+
   Future<User> getUserDetails() => _login.getUserDetails();
 
   Future<String> requestDeviceAccess() async {
     String status = await _resourcePicker.askForAuthorization();
     if (status == "authentication successful") {
       _accessDevices =
-          new AccessDevices(_resourcePicker.accessToken, this.enterpriseId);
+      new AccessDevices(_resourcePicker.accessToken, this.enterpriseId);
     }
     return status;
   }
@@ -77,3 +79,4 @@ class SDK {
       return await _accessDevices.getDeviceStatus(deviceId);
     }
   }
+}

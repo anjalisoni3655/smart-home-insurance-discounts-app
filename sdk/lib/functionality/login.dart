@@ -16,7 +16,6 @@ class Login {
       this.loginTimeoutDuration = const Duration(minutes: 1),
       this.logoutTimeoutDuration = const Duration(seconds: 1),
       this.isSignedInTimeoutDuration = const Duration(seconds: 1)}) {
-<<<<<<< HEAD
     if (loginTimeoutDuration == null) {
       loginTimeoutDuration = const Duration(minutes: 1);
     }
@@ -26,8 +25,6 @@ class Login {
     if (isSignedInTimeoutDuration == null) {
       isSignedInTimeoutDuration = const Duration(seconds: 1);
     }
-=======
->>>>>>> 54777173b8ee69a627b602930fe6dc88f41fe8ac
     googleSignInAPI = GoogleSignInAPI(testing: testing);
   }
 
