@@ -13,10 +13,14 @@ before_script:
   - ./flutter/bin/flutter doctor
 jobs:
   include:
-    - stage: test
+    - stage: test app
       script: cd home_insurance_app; ../flutter/bin/flutter test;
-    - stage: format
+    - stage: format app
       script: ./flutter/bin/flutter format -n --set-exit-if-changed home_insurance_app/lib/*
+    - stage: test sdk
+      script: cd sdk; ../flutter/bin/flutter test;
+    - stage: format sdk
+      script: ./flutter/bin/flutter format -n --set-exit-if-changed sdk/lib/*
 
 cache:
   directories:
