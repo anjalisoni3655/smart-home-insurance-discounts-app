@@ -31,6 +31,7 @@ class Login {
       await _googleSignIn.signIn().timeout(interactiveFlowTimeout);
       return "login successful";
     } catch (error) {
+      print(error);
       return "login failed";
     }
   }
