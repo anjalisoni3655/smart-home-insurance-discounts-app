@@ -8,10 +8,9 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
     // Verify that our home page includes the introduction text .
-    expect(find.text("All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available "), findsOneWidget);
-
-
-    
+    expect(
+        find.text(
+            "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available "),
+        findsOneWidget);
   });
 }
-
