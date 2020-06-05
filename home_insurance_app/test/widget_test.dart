@@ -13,8 +13,5 @@ void main() {
             "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available "),
         findsOneWidget);
 
-    // Test that icon button in the drawer is working - TODO
-    /*final drawerOpenButton = find.byTooltip("Open navigation menu");
-    await driver.waitFor(drawerOpenButton);*/
   });
 }
