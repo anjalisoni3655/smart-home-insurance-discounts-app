@@ -12,6 +12,5 @@ void main() {
         find.text(
             "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available "),
         findsOneWidget);
-
   });
 }

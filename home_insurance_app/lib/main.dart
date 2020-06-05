@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
 import 'package:homeinsuranceapp/pages/choose_policy.dart';
-void main()  {
+
+void main() {
   runApp(MyApp());
 }
 
@@ -10,10 +11,10 @@ void main()  {
 class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes:{
-        '/':(context)=>HomePage(),
-        '/gethomedetails':(context)=>HomeDetails(),
-        '/choosepolicy':(context)=>DisplayPolicies(),
+      routes: {
+        '/': (context) => HomePage(),
+        '/gethomedetails': (context) => HomeDetails(),
+        '/choosepolicy': (context) => DisplayPolicies(),
       },
     );
   }
