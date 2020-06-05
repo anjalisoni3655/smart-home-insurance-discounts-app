@@ -2,7 +2,7 @@ library sdk;
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:sdk/mock_api/http_client.dart';
+import 'package:http/http.dart' as http;
 
 class AccessDevices {
   static const String URL =
@@ -10,20 +10,27 @@ class AccessDevices {
 
   String _accessToken;
   String _enterpriseId;
-  int testing;
   Duration accessDevicesTimeoutDuration;
+  http.Client _client;
 
   AccessDevices(String accessToken, String enterpriseId,
-      {this.testing,
-      this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
+      {this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
     this._accessToken = accessToken;
     this._enterpriseId = enterpriseId;
+    _client = new http.Client();
+  }
+
+  // Passing an http client to accessAdevices while testing (will be a mock object)
+  AccessDevices.test(String accessToken, String enterpriseId, http.Client client,
+      {this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
+    this._accessToken = accessToken;
+    this._enterpriseId = enterpriseId;
+    _client = client;
   }
 
   Future<dynamic> getAllDevices() async {
     try {
-      final client = new HttpClient(testing: testing);
-      final response = await client.post(
+      final response = await _client.post(
         URL + "enterprises/" + _enterpriseId + "/devices",
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
@@ -36,8 +43,7 @@ class AccessDevices {
 
   Future<dynamic> getAllStructures() async {
     try {
-      final client = new HttpClient(testing: testing);
-      final response = await client.post(
+      final response = await _client.post(
         URL + "enterprises/" + _enterpriseId + "/structures",
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
@@ -50,13 +56,12 @@ class AccessDevices {
 
   Future<dynamic> getDeviceStatus(String deviceId) async {
     try {
-      final client = new HttpClient(testing: testing);
-      var response = await client.post(
+      http.Response response = await _client.post(
         URL + "enterprises/" + _enterpriseId + "/devices/" + deviceId,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
-      response = jsonDecode(response.body);
-      return response["traits"]["sdm.devices.traits.DeviceConnectivityTrait"]
+      var result = jsonDecode(response.body);
+      return result["traits"]["sdm.devices.traits.DeviceConnectivityTrait"]
           ["status"];
     } catch (error) {
       return null;
