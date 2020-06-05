@@ -19,10 +19,7 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('Purchase Policy'),
               onTap: () {
                 Navigator.of(context).pop();
-<<<<<<< HEAD
-=======
                 Navigator.of(context).pushNamed('/gethomedetails');
->>>>>>> 179547f03470db4ab5ffbcb1200b215828c0a61e
               }),
           ListTile(
               leading: Icon(Icons.money_off),
