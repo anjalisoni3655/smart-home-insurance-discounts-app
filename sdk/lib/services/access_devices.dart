@@ -21,7 +21,8 @@ class AccessDevices {
   }
 
   // Passing an http client to accessAdevices while testing (will be a mock object)
-  AccessDevices.test(String accessToken, String enterpriseId, http.Client client,
+  AccessDevices.test(
+      String accessToken, String enterpriseId, http.Client client,
       {this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
     this._accessToken = accessToken;
     this._enterpriseId = enterpriseId;
