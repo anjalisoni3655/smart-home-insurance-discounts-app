@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
+import 'package:homeinsuranceapp/pages/login_screen.dart';
+import 'package:homeinsuranceapp/pages/profile.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'home_screen';
@@ -10,6 +12,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void onClick(String value) async {
+    if (value == 'Logout') {
+      Navigator.pushNamed(context, LoginScreen.id);
+      //TODO: call SDK library's signout function
+
+    } else {
+      Navigator.pushNamed(context, Profile.id);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -20,6 +32,20 @@ class _HomePageState extends State<HomePage> {
         title: Text('Home Insurance Company'),
         centerTitle: true,
         backgroundColor: Colors.brown,
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            child: Icon(Icons.accessibility),
+            onSelected: onClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout', 'My Profile'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: Stack(
         children: <Widget>[
