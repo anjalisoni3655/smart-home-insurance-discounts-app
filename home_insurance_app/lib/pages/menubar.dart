@@ -15,12 +15,12 @@ class _AppDrawerState extends State<AppDrawer> {
             child: null,
           ),
           ListTile(
-            leading:Icon(Icons.home),
-            title:Text('Purchase Policy'),
-            onTap:(){
-              Navigator.of(context).pop();
-              Navigator.of(context).pushNamed('/gethomedetails');
-            }),
+              leading: Icon(Icons.home),
+              title: Text('Purchase Policy'),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed('/gethomedetails');
+              }),
           ListTile(
               leading: Icon(Icons.money_off),
               title: Text('Smart Devices Discounts'),
