@@ -8,7 +8,7 @@ class Contact extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.teal,
+        backgroundColor: new Color(0xFFE57373),
         body: ContactUs(
           cardColor: Colors.white,
           textColor: Colors.black,
