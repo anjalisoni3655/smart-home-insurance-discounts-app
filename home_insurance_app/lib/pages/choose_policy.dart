@@ -112,7 +112,7 @@ class _RadioGroupState extends State<RadioGroup> {
                           Expanded(
                             flex: 8,
                             child: Text(
-                              '${data.user_choice.policyName} \nValid for ${data.user_choice.validity} years',
+                              '\n${data.user_choice.policyName} \nValid for ${data.user_choice.validity} years',
                               style: TextStyle(
                                 color: Colors.brown,
                                 fontSize: 17.0,
