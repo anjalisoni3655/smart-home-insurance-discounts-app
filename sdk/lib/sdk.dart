@@ -1,16 +1,16 @@
 library sdk;
 
-import 'package:sdk/functionality/access_devices.dart';
-import 'package:sdk/functionality/login.dart';
-import 'package:sdk/functionality/resource_picker.dart';
+import 'package:sdk/services/access_devices.dart';
+import 'package:sdk/services/login.dart';
+import 'package:sdk/services/resource_picker.dart';
 
 class SDK {
   Login _login;
   ResourcePicker _resourcePicker;
   AccessDevices _accessDevices;
 
-  Duration userInteractiveFlowTimeout;
-  Duration nonUserInteractiveFlowTimeout;
+  Duration interactiveFlowTimeout;
+  Duration nonInteractiveFlowTimout;
 
   String clientId;
   String clientSecret;
@@ -19,18 +19,18 @@ class SDK {
 
   SDK(String clientId, String clientSecret, String enterpriseId,
       String redirectURL,
-      {this.userInteractiveFlowTimeout, this.nonUserInteractiveFlowTimeout}) {
+      {this.interactiveFlowTimeout, this.nonInteractiveFlowTimout}) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.enterpriseId = enterpriseId;
     this.redirectURL = redirectURL;
 
     _login = new Login(
-        userInteractiveFlowTimeout: userInteractiveFlowTimeout,
-        nonUserInteractiveFlowTimeout: nonUserInteractiveFlowTimeout);
+        interactiveFlowTimeout: interactiveFlowTimeout,
+        nonInteractiveFlowTimeout: nonInteractiveFlowTimout);
     _resourcePicker = new ResourcePicker(
         clientId, clientSecret, enterpriseId, redirectURL,
-        resourcePickerTimeoutDuration: userInteractiveFlowTimeout);
+        resourcePickerTimeoutDuration: interactiveFlowTimeout);
   }
 
   Future<String> login() => _login.login();
@@ -44,7 +44,7 @@ class SDK {
     if (status == "authentication successful") {
       _accessDevices = new AccessDevices(
           _resourcePicker.accessToken, this.enterpriseId,
-          accessDevicesTimeoutDuration: nonUserInteractiveFlowTimeout);
+          accessDevicesTimeoutDuration: nonInteractiveFlowTimout);
     }
     return status;
   }
