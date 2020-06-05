@@ -1,0 +1,28 @@
+os:
+  - linux
+sudo: false
+addons:
+  apt:
+    # Flutter depends on /usr/lib/x86_64-linux-gnu/libstdc++.so.6 version GLIBCXX_3.4.18
+    sources:
+      - ubuntu-toolchain-r-test # if we don't specify this, the libstdc++6 we get is the wrong version
+    packages:
+      - libstdc++6
+before_script:
+  - git clone https://github.com/flutter/flutter.git -b beta
+  - ./flutter/bin/flutter doctor
+jobs:
+  include:
+    - stage: test app
+      script: cd home_insurance_app; ../flutter/bin/flutter test;
+    - stage: format app
+      script: ./flutter/bin/flutter format -n --set-exit-if-changed home_insurance_app/lib/*
+    - stage: test sdk
+      script: cd sdk; ../flutter/bin/flutter test;
+    - stage: format sdk
+      script: ./flutter/bin/flutter format -n --set-exit-if-changed sdk/lib/*
+
+cache:
+  directories:
+    - $HOME/.pub-cache
+
