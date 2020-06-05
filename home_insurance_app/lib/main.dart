@@ -6,7 +6,6 @@ void main()  {
 }
 // This class is used to store all routes and taked the user to the page corresponding to initial route ('/)
 class MyApp extends StatelessWidget {
-  
   Widget build(BuildContext context) {
     return MaterialApp(
       routes:{
