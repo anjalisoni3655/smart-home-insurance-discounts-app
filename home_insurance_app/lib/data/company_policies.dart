@@ -2,7 +2,7 @@ import 'package:homeinsuranceapp/data/policy.dart';
 
 class CompanyPolicies {
   int pincode;
-  final List<Policy> policies1 = [
+  static List<Policy> policies1 = [
     Policy("Tenant's Home Insurance", 6, 2000),
     Policy('Contents Insurance', 6, 3000),
     Policy('Burglary and Theft', 7, 5000),
@@ -11,7 +11,7 @@ class CompanyPolicies {
     Policy("Loss In Natural Disaster", 3, 4000),
     Policy("Landlord's Insurance", 5, 5000)
   ];
-  final List<Policy> policies2 = [
+  static List<Policy> policies2 = [
     Policy("Public Liability Coverage", 6, 5000),
     Policy('Contents Insurance', 6, 3000),
     Policy('Burglary and Theft', 7, 2000),
@@ -19,7 +19,7 @@ class CompanyPolicies {
     Policy("Loss In Natural Disaster", 3, 7000),
     Policy("Landlord's Insurance", 5, 5000)
   ];
-  final List<Policy> policies3 = [
+  static List<Policy> policies3 = [
     Policy("Standard Fire and Perils Policy", 6, 7000),
     Policy("Tenant's Home Insurance", 6, 2000),
     Policy('Burglary and Theft', 7, 5000),
@@ -28,7 +28,7 @@ class CompanyPolicies {
     Policy("Loss In Natural Disaster", 3, 4000),
     Policy("Landlord's Insurance", 5, 5000)
   ];
-  final List<Policy> policies4 = [
+  static List<Policy> policies4 = [
     Policy("Tenant's Home Insurance", 6, 2000),
     Policy('Contents Insurance', 6, 6000),
     Policy('Personal Accident', 7, 1000),
