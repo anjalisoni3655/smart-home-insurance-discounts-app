@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/my_devices.dart';
+import 'package:homeinsuranceapp/pages/contact.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -41,7 +42,7 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.phone),
               title: Text('Contact Us'),
               onTap: () {
-                Navigator.of(context).pop();
+                Navigator.pushNamed(context, Contact.id);
               }),
         ],
       ),
