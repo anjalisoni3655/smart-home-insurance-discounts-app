@@ -3,20 +3,20 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class Login {
   // Time allowed for Http requests or API calls that are independent of user interactions
-  Duration nonUserInteractiveFlowTimeout;
+  Duration nonInteractiveFlowTimeout;
   // Time allowed for Http requests or API calls that will require some user interaction or interference (input)
-  Duration userInteractiveFlowTimeout;
+  Duration interactiveFlowTimeout;
   int testing;
   GoogleSignIn _googleSignIn;
 
   Login(
-      {this.userInteractiveFlowTimeout = const Duration(minutes: 1),
-      this.nonUserInteractiveFlowTimeout = const Duration(seconds: 1)}) {
+      {this.interactiveFlowTimeout = const Duration(minutes: 1),
+      this.nonInteractiveFlowTimeout = const Duration(seconds: 1)}) {
     _googleSignIn = GoogleSignIn();
   }
   Login.test(GoogleSignIn googleSignIn,
-      {this.userInteractiveFlowTimeout = const Duration(minutes: 1),
-      this.nonUserInteractiveFlowTimeout = const Duration(seconds: 1)}) {
+      {this.interactiveFlowTimeout = const Duration(minutes: 1),
+      this.nonInteractiveFlowTimeout = const Duration(seconds: 1)}) {
     _googleSignIn = googleSignIn;
   }
 
@@ -25,10 +25,10 @@ class Login {
     try {
       if (await _googleSignIn
           .isSignedIn()
-          .timeout(nonUserInteractiveFlowTimeout)) {
+          .timeout(nonInteractiveFlowTimeout)) {
         return "already logged in";
       }
-      await _googleSignIn.signIn().timeout(userInteractiveFlowTimeout);
+      await _googleSignIn.signIn().timeout(interactiveFlowTimeout);
       return "login successful";
     } catch (error) {
       return "login failed";
@@ -40,10 +40,10 @@ class Login {
     try {
       if (!(await _googleSignIn
           .isSignedIn()
-          .timeout(nonUserInteractiveFlowTimeout))) {
+          .timeout(nonInteractiveFlowTimeout))) {
         return "not logged in";
       }
-      await _googleSignIn.signOut().timeout(nonUserInteractiveFlowTimeout);
+      await _googleSignIn.signOut().timeout(nonInteractiveFlowTimeout);
       return "logout successful";
     } catch (error) {
       return "logout failed";
@@ -54,7 +54,7 @@ class Login {
     try {
       if (!(await _googleSignIn
           .isSignedIn()
-          .timeout(nonUserInteractiveFlowTimeout))) return null;
+          .timeout(nonInteractiveFlowTimeout))) return null;
       return {
         "displayName": _googleSignIn.currentUser.displayName,
         "email": _googleSignIn.currentUser.email,

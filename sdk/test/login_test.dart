@@ -150,7 +150,7 @@ void main() {
 
 
     // Set timeout duration for user interactive queries to 100 ms (sign in is a user interactive query)
-    Login login = new Login.test(mockGoogleSignIn, userInteractiveFlowTimeout: new Duration(milliseconds: 100));
+    Login login = new Login.test(mockGoogleSignIn, interactiveFlowTimeout: new Duration(milliseconds: 100));
     // Expected output:
     expect(await login.login(), "login failed");
     expect(await login.getUserDetails(), null);
@@ -183,7 +183,7 @@ void main() {
     when(mockGoogleSignIn.isSignedIn()).thenAnswer(futureFalseInstance);
 
     // Set timeout duration for non user interactive queries to 100 ms (sign out is a non user interactive query)
-    Login login = new Login.test(mockGoogleSignIn, nonUserInteractiveFlowTimeout: new Duration(milliseconds: 100));
+    Login login = new Login.test(mockGoogleSignIn, nonInteractiveFlowTimeout: new Duration(milliseconds: 100));
     // Expected output:
     expect(await login.login(), "login successful");
     // Behaviour update: After successful login the isSignedIn function should return true
@@ -215,7 +215,7 @@ void main() {
     when(mockGoogleSignIn.currentUser).thenReturn(mockGoogleSignInAccount);
 
     // Set timeout duration for non-user interactive queries to 100 ms (isSignedin is a non-user interactive query)
-    Login login = new Login.test(mockGoogleSignIn, nonUserInteractiveFlowTimeout: new Duration(milliseconds: 100));
+    Login login = new Login.test(mockGoogleSignIn, nonInteractiveFlowTimeout: new Duration(milliseconds: 100));
     // Expected output:
     expect(await login.login(), "login failed");
     expect(await login.getUserDetails(), null);
