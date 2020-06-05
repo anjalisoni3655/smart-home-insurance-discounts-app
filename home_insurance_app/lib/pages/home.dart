@@ -12,7 +12,6 @@ import 'package:homeinsuranceapp/login_screen.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
 
-
 class HomePage extends StatefulWidget {
   static const String id = '/home_screen';
   @override
@@ -30,21 +29,11 @@ Future<void> signOut(BuildContext context) async {
 }
 
 class _HomePageState extends State<HomePage> {
-
   void onClick(String value, BuildContext context) async {
-
-
     if (value == 'Logout') {
-      //Navigator.pushNamed(context,WelcomeScreen.id);
       signOut(context);
     } else {
-
-      //print(1);
-
       Navigator.pushNamed(context, Profile.id);
-
-
-
     }
   }
 

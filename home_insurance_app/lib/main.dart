@@ -5,7 +5,6 @@ import 'package:homeinsuranceapp/pages/contact.dart';
 import 'package:homeinsuranceapp/pages/my_devices.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
 
-
 void main() {
   runApp(MyApp());
 }
@@ -24,9 +23,7 @@ class MyApp extends StatelessWidget {
 
         MyDevices.id: (context) => MyDevices(),
 
-
         Profile.id: (context) => Profile(),
-
       },
     );
   }
