@@ -38,13 +38,13 @@ class Login {
   Future<String> logout() async {
     // returns status "logout successful", "logout failed", "not logged in"
     try {
-      if (!(await _googleSignIn
+      if (await _googleSignIn
           .isSignedIn()
-          .timeout(nonInteractiveFlowTimeout))) {
-        return "not logged in";
+          .timeout(nonInteractiveFlowTimeout)) {
+        await _googleSignIn.signOut().timeout(nonInteractiveFlowTimeout);
+        return "logout successful";
       }
-      await _googleSignIn.signOut().timeout(nonInteractiveFlowTimeout);
-      return "logout successful";
+      return "not logged in";
     } catch (error) {
       return "logout failed";
     }
