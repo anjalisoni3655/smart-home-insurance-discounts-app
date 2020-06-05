@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/components/rounded_buttons.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
-import 'package:sdk/services/login.dart';
+import 'package:sdk/sdk.dart';
 
-Login login = new Login();
+SDK sdk = new SDK('482460250779-ttu9png19vnc3g0u7lr6cgi7vm8dh66m.apps.googleusercontent.com', 'dKwkb7wOrXqbJdA_U_9fCoNK', 'akashag-step-interns-test', "urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob");
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
           title: 'LOG IN',
           colour: Colors.brown,
           onPressed: () async {
-            print(await login.login());
+            print(await sdk.login());
 //            Navigator.pushNamed(context, HomePage.id);
             //TODO: import sdk library to use the google login function
           },
