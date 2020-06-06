@@ -52,10 +52,19 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30.0,
+                  fontFamily: 'PTSerifBI',
                 ),
               ),
             ),
-            SizedBox(height: 50.0),
+            const Divider(
+              color:Colors.brown,
+              height:10.0,
+              thickness:5,
+              indent:5,
+              endIndent:5,
+
+            ),
+            SizedBox(height:20.0),
             GestureDetector(
               onTap: () => print(
                   "Get smart device discounts"), // Goes to the smart device discounts page
@@ -83,15 +92,14 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
   }
 }
 
-// This class is used to display a list of policies preceded by the radio buttons 
+// This class is used to display a list of policies preceded by the radio buttons
 class RadioGroup extends StatefulWidget {
   @override
   _RadioGroupState createState() => _RadioGroupState();
 }
 
 class _RadioGroupState extends State<RadioGroup> {
-  Policy userChoice = data['policies']
-      [0]; //By default the first policy will be displayed as selected  .
+  Policy userChoice = data['policies'][0]; //By default the first policy will be displayed as selected  .
   int choosenIndex = 0;
   List<Mapping> choices = new List<Mapping>();
   @override
@@ -104,56 +112,71 @@ class _RadioGroupState extends State<RadioGroup> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          child: Column(
-            children: choices
-                .map((data) => RadioListTile(
-                      title: Row(
-                        children: <Widget>[
-                          Expanded(
-                            flex: 8,
-                            child: Text(
-                              '\n${data.policyOption.policyName} \nValid for ${data.policyOption.validity} years',
-                              style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 17.0,
-                              ),
+  double screenWidth = MediaQuery.of(context).size.width;
+  double screenHeight = MediaQuery.of(context).size.height;
+    
+    return Container(    // Wraping ListView inside Container to assign scrollable screen a height and width 
+      width:screenWidth,
+      height:screenHeight/2,  // list should not over
+        child: ListView(    
+        scrollDirection:Axis.vertical,
+              children: choices.map((data) => RadioListTile(
+                        title: Row(
+                          children: <Widget>[
+                            Expanded(
+                                flex: 8,
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      '\n${data.policyOption.policyName}',
+                                      style: TextStyle(
+                                        color: Colors.black87,
+                                        fontWeight:FontWeight.bold,
+                                        fontSize: 17.0,
+                                        fontFamily:'PTSerifR',
+                                      ),
+                                    ),
+                                    Text(
+                                      'Valid for ${data.policyOption.validity} years',
+                                      style: TextStyle(
+                                        color: Colors.blueAccent[500],
+                                        fontSize: 13.0,
+                                        fontFamily:'PTSerifR',
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                            Expanded(
+                                flex: 1,
+                                child: InkWell(
+                                  child: Icon(
+                                    Icons.attach_money,
+                                    color: Colors.blueAccent,
+                                    size: 20.0,
+                                  ),
+                                )),
+                            Expanded(
+                              flex: 2,
+                              child: Text('${data.policyOption.cost}'),
                             ),
-                          ),
-                          Expanded(
-                              flex: 1,
-                              child: InkWell(
-                                child: Icon(
-                                  Icons.attach_money,
-                                  color: Colors.blueAccent,
-                                  size: 20.0,
-                                ),
-                              )),
-                          Expanded(
-                            flex: 2,
-                            child: Text('${data.policyOption.cost}'),
-                          ),
-                        ],
-                      ),
-                      groupValue: choosenIndex,
-                      activeColor: Colors.blue[500],
-                      value: data.index,
-                      onChanged: (value) {
-                        // A radio button gets selected only when groupValue is equal to value of the respective radio button
-                        setState(() {
-                          userChoice = data.policyOption;
-                          //To make groupValue equal to value for the radio button .
-                          choosenIndex = value;
-                          print(userChoice.policyName);
-                        });
-                      },
-                    ))
-                .toList(),
-          ),
-        ),
-      ],
+                          ],
+                        ),
+                        groupValue: choosenIndex,
+                        activeColor: Colors.blue[500],
+                        value: data.index,
+                        onChanged: (value) {
+                          // A radio button gets selected only when groupValue is equal to value of the respective radio button
+                          setState(() {
+                            userChoice = data.policyOption;
+                            //To make groupValue equal to value for the radio button .
+                            choosenIndex = value;
+                            print(userChoice.policyName);
+                          });
+                        },
+                      ))
+                  .toList(),
+        
+      ),
     );
   }
 }
