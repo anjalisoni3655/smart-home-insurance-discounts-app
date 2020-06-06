@@ -50,8 +50,12 @@ class _LoginScreenState extends State<LoginScreen> {
           title: 'LOG IN',
           colour: Colors.brown,
           onPressed: () async {
-            print(await login.login());
-//            Navigator.pushNamed(context, HomePage.id);
+String a = await login.login();
+           // print();
+            if(a=='already logged in'){
+            Navigator.pushNamed(context, HomePage.id);
+            }
+//
             //TODO: import sdk library to use the google login function
           },
           //child: Text('SIGN OUT'),
