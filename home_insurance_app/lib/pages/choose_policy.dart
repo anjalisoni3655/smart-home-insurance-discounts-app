@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 
+//This class maps each policy to a index value which is used in selecting radio buttons
 class Mapping {
-  Policy user_choice;
+  Policy policyOption;
   int index;
-  Mapping(int index, Policy user_choice) {
+  Mapping(int index, Policy policyOption) {
     this.index = index;
-    this.user_choice = user_choice;
+    this.policyOption = policyOption;
   }
 }
 
@@ -82,14 +83,16 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
   }
 }
 
+// This class is used to display a list of policies preceded by the radio buttons 
 class RadioGroup extends StatefulWidget {
   @override
   _RadioGroupState createState() => _RadioGroupState();
 }
 
 class _RadioGroupState extends State<RadioGroup> {
-  Policy default_choice = data['policies'][0];
-  int default_index = 0;
+  Policy userChoice = data['policies']
+      [0]; //By default the first policy will be displayed as selected  .
+  int choosenIndex = 0;
   List<Mapping> choices = new List<Mapping>();
   @override
   void initState() {
@@ -112,7 +115,7 @@ class _RadioGroupState extends State<RadioGroup> {
                           Expanded(
                             flex: 8,
                             child: Text(
-                              '\n${data.user_choice.policyName} \nValid for ${data.user_choice.validity} years',
+                              '\n${data.policyOption.policyName} \nValid for ${data.policyOption.validity} years',
                               style: TextStyle(
                                 color: Colors.brown,
                                 fontSize: 17.0,
@@ -130,19 +133,20 @@ class _RadioGroupState extends State<RadioGroup> {
                               )),
                           Expanded(
                             flex: 2,
-                            child: Text('${data.user_choice.cost}'),
+                            child: Text('${data.policyOption.cost}'),
                           ),
                         ],
                       ),
-                      groupValue: default_index,
+                      groupValue: choosenIndex,
                       activeColor: Colors.blue[500],
                       value: data.index,
                       onChanged: (value) {
                         // A radio button gets selected only when groupValue is equal to value of the respective radio button
                         setState(() {
-                          default_choice = data.user_choice;
-                          default_index =
-                              value; //To make groupValue equal to value for the radio button .
+                          userChoice = data.policyOption;
+                          //To make groupValue equal to value for the radio button .
+                          choosenIndex = value;
+                          print(userChoice.policyName);
                         });
                       },
                     ))
