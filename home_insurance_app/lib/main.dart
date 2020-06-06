@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomePage(),
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),
-        '/showdiscounts':(context)=> DisplayDiscounts(),
+        '/showdiscounts': (context) => DisplayDiscounts(),
       },
     );
   }
