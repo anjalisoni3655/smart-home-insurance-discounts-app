@@ -88,7 +88,9 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
                   heroTag: "pay",
-                  onPressed: () {}, // Goes to the payment page
+                  onPressed: () {
+                    Navigator.pop(context); // For now it goes to the home page
+                  },  
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
@@ -146,6 +148,7 @@ class _RadioGroupState extends State<RadioGroup> {
                       Expanded(
                           flex: 8,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
                                 '\n${data.policyOption.policyName}',
