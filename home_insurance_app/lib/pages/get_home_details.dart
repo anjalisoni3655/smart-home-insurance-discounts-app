@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/company_policies.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 String firstLineOfAddress;
 String secondLineOfAddress;
@@ -17,6 +18,8 @@ class HomeDetails extends StatefulWidget {
 
 class _HomeDetailsState extends State<HomeDetails> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _firestoreDB = Firestore.instance;
+
   Widget _buildAddressFirstLine() {
     return TextFormField(
         decoration: InputDecoration(labelText: "First Line Of Address"),
@@ -34,7 +37,7 @@ class _HomeDetailsState extends State<HomeDetails> {
     return TextFormField(
         decoration: InputDecoration(
             labelText:
-                "Second Line Of Address"), //validator is not required as this field can be left empty
+            "Second Line Of Address"), //validator is not required as this field can be left empty
         onSaved: (String value) {
           secondLineOfAddress = value;
         });
@@ -114,25 +117,36 @@ class _HomeDetailsState extends State<HomeDetails> {
                     _buildPincode(),
                     SizedBox(height: 100),
                     RaisedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
                         // If the form is valid , all the values are saved in respective variables
                         _formKey.currentState.save();
                         //User Address object is sent to User Address class
-                        UserAddress curr_user = UserAddress(firstLineOfAddress,
-                            secondLineOfAddress, city, state, pincode);
-                        CompanyPolicies pin_to_policy =
-                            CompanyPolicies(pincode);
+                        UserAddress curr_user = UserAddress(
+                            firstLineOfAddress, secondLineOfAddress, city, state, pincode);
+                        CompanyPolicies pin_to_policy = CompanyPolicies(pincode);
                         //Available policies corresponding to the pincode is saved in list .
-                        List<Policy> available_policies =
-                            pin_to_policy.get_policies();
+                        List<Policy> available_policies = pin_to_policy.get_policies();
+
+                        // Pincode saved to the Firestore database
+                        await _firestoreDB
+                            .collection('devices')
+                            .document('user_details')
+                            .setData({'pincode': pincode, 'userName': '$pincode'})
+                            .then((value) => print("Document successfully written"));
+                        final document = await _firestoreDB.collection('devices').document('user_details').get();
+                        print(document.data);
+                           // .catchError(() {
+                        //  print("Error writing document");
+                        //}
+                       // );
+
                         // Available policies sent to the next for user selection .
-                        Navigator.pushReplacementNamed(context, '/choosepolicy',
-                            arguments: {
-                              'policies': available_policies,
-                            });
+                        Navigator.pushReplacementNamed(context, '/choosepolicy', arguments: {
+                          'policies': available_policies,
+                        });
                       },
                       splashColor: Colors.blueGrey,
                       child: Text(

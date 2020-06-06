@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/pages/smart_discounts.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.money_off),
               title: Text('Smart Devices Discounts'),
               onTap: () {
-                Navigator.of(context).pop();
+                Navigator.pushNamed(context, SmartDiscounts.id);
               }),
           ListTile(
               leading: Icon(Icons.devices),
