@@ -11,12 +11,16 @@ class Mapping {
   }
 }
 
+Map data = {};
+Policy userChoice  ;
+
+
 class DisplayPolicies extends StatefulWidget {
   @override
   _DisplayPoliciesState createState() => _DisplayPoliciesState();
 }
 
-Map data = {};
+
 
 class _DisplayPoliciesState extends State<DisplayPolicies> {
   @override
@@ -24,7 +28,6 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
     // data stores the policies available for the user as a key-value pair.
     data = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      
       appBar: AppBar(
         title: Text('Home Insurance Company '),
         centerTitle: true,
@@ -62,7 +65,12 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
                   heroTag: "View",
-                  onPressed: () {}, // Goes to the payment page
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/showdiscounts',arguments:{
+                   'selectedPolicy':userChoice ,
+                    }
+                  );
+                  }, 
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
@@ -109,13 +117,12 @@ class RadioGroup extends StatefulWidget {
 }
 
 class _RadioGroupState extends State<RadioGroup> {
-  Policy userChoice = data['policies']
-      [0]; //By default the first policy will be displayed as selected  .
   int choosenIndex = 0;
   List<Mapping> choices = new List<Mapping>();
   @override
   void initState() {
     super.initState();
+    userChoice = data['policies'][0]; //By default the first policy will be displayed as selected  .
     for (int i = 0; i < data['policies'].length; i++) {
       choices.add(new Mapping(i, data['policies'][i]));
     }
