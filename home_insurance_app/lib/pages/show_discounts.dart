@@ -62,7 +62,25 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
               endIndent: 5,
             ),
             SizedBox(height: 50.0),
-            Expanded(
+           AllDiscounts(), 
+           SizedBox(height:70.0), //So that the last discount does not get hidden behind the floating button 
+          ],
+        ),
+      ),
+    );
+    
+  }
+}
+
+class AllDiscounts extends StatefulWidget {
+  @override
+  _AllDiscountsState createState() => _AllDiscountsState();
+}
+
+class _AllDiscountsState extends State<AllDiscounts> {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
               child: ListView.builder(
                   itemCount: offers.availableOffers
                       .length, // available offers is static variable
@@ -126,11 +144,6 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                       ),
                     );
                   }),
-            ),
-          ],
-        ),
-      ),
-    );
-    ;
+            );
   }
 }
