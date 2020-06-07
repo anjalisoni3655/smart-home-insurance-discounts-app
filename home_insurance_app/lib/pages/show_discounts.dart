@@ -3,7 +3,7 @@ import 'package:homeinsuranceapp/data/company_offers.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 
 Map data;
-Offer selectedOffer ;
+Offer selectedOffer;
 CompanyOffers offers = new CompanyOffers();
 
 class DisplayDiscounts extends StatefulWidget {
@@ -14,28 +14,17 @@ class DisplayDiscounts extends StatefulWidget {
 class DisplayDiscountsState extends State<DisplayDiscounts> {
   @override
   Widget build(BuildContext context) {
-    data = ModalRoute.of(context).settings.arguments; // data stores the policy selected by the user as a key/value pair  
+    data = ModalRoute.of(context)
+        .settings
+        .arguments; // data stores the policy selected by the user as a key/value pair
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Insurance Company '),
         centerTitle: true,
         backgroundColor: Colors.brown,
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        icon: Icon(Icons.arrow_forward),
-        label: Text(
-          'Get Discounts',
-          style: TextStyle(
-            color: Colors.black87,
-            fontSize: 15.0,
-            fontWeight: FontWeight.w900,
-            fontFamily:"PTSerifBI",
-          ),
-        ),
-        onPressed: () {}, // resource picker url is launched
-        backgroundColor: Colors.lightBlueAccent,
-      ),
-      body: Center(
+      body: Container(
+        margin: EdgeInsets.all(15.0),
         child: Column(
           children: <Widget>[
             Padding(
@@ -56,11 +45,51 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
               indent: 5,
               endIndent: 5,
             ),
-            SizedBox(height: 50.0),
+            SizedBox(height: 20.0),
             AllDiscounts(),
             SizedBox(
                 height:
-                    70.0), //So that the last discount does not get hidden behind the floating button
+                    10.0), //So that the last discount does not get hidden behind the floating button
+            Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: FloatingActionButton.extended(
+                    heroTag: 'Discounts',
+                    icon: Icon(Icons.money_off),
+                    label: Text(
+                      'Get Discounts',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w900,
+                        fontFamily: "PTSerifBI",
+                      ),
+                    ),
+                    onPressed: () {}, // resource picker url is launched
+                    backgroundColor: Colors.lightBlueAccent,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: FloatingActionButton.extended(
+                    heroTag: 'Payment',
+                    icon: Icon(Icons.arrow_forward),
+                    label: Text(
+                      'Go to Payment',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w900,
+                        fontFamily: "PTSerifBI",
+                      ),
+                    ),
+                    onPressed: () {}, // resource picker url is launched
+                    backgroundColor: Colors.lightBlueAccent,
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
@@ -68,15 +97,15 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
   }
 }
 
-
 class AllDiscounts extends StatefulWidget {
   @override
   _AllDiscountsState createState() => _AllDiscountsState();
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
-  List<bool> isSelected = List.filled(offers.availableOffers.length,false) ; // If a policy is selected then its corresponding container will have different color .
-  int curSelected = 0 ;
+  List<bool> isSelected = List.filled(offers.availableOffers.length,
+      false); // If a policy is selected then its corresponding container will have different color .
+  int curSelected = 0;
 
   Widget build(BuildContext context) {
     return Expanded(
@@ -87,7 +116,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               child: Card(
-                color:isSelected[index] ? Colors.teal[100]:Colors.white,
+                color: isSelected[index] ? Colors.teal[100] : Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                   side: BorderSide(
@@ -98,11 +127,11 @@ class _AllDiscountsState extends State<AllDiscounts> {
                 //  color: Colors.lightBlueAccent[100],
                 child: InkWell(
                   onTap: () {
-                    setState((){
-                      isSelected[curSelected] =false;
-                      curSelected=index;
-                      isSelected[curSelected]=true;
-                      selectedOffer=offers.availableOffers[index];
+                    setState(() {
+                      isSelected[curSelected] = false;
+                      curSelected = index;
+                      isSelected[curSelected] = true;
+                      selectedOffer = offers.availableOffers[index];
                     });
                   },
                   child: Container(
