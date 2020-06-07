@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/company_offers.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 
-Map data;
+Map data={};
 //Offers selected by the user 
 List<Offer> selectedOffers = new List<Offer>();
 // Offers displayed by the company 
@@ -32,7 +32,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Text(
-                'Available Policies',
+                'Available Discounts',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30.0,
@@ -87,20 +87,22 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                       ),
                     ),
                     onPressed: () {
-                      //calculate total discount
+                      // if data is null , it means that user has not selected any policy and user just wants to view the discounts .
+                     if(data!=null){
+                     //calculate total discount
                       int totalDiscount = offers.getTotalDiscount(selectedOffers);
                       // get total Maount paid 
                       double finalAmount = offers.getFinalCost(data['selectedPolicy'].cost,totalDiscount);
                       //pops the current page 
                       Navigator.pop(context); 
-                      //Pops the previous page in the stack which is choose_policy page. These are are send to the 
-                      //home page 
+                      //Pops the previous page in the stack which is choose_policy page.
+                      //For now all these argumenst are  send to the home page   
                       Navigator.pop(context,{
                       'totalDiscount' : totalDiscount , 
                       'amountpaid' : finalAmount,
                       'selectedPolicy':data['selectedPolicy'],
                       });
-
+                      }
                     },
                     backgroundColor: Colors.lightBlueAccent,
                   ),
@@ -171,9 +173,6 @@ class _AllDiscountsState extends State<AllDiscounts> {
                                       child: Container(
                                           margin: EdgeInsets.all(0.0),
                                           padding: EdgeInsets.all(10.0),
-                                          decoration: BoxDecoration(
-                                              // color: Colors.lightBlueAccent[100],
-                                              ),
                                           child: Text(
                                             '${entry.key} : ${entry.value}',
                                             textAlign: TextAlign.left,
