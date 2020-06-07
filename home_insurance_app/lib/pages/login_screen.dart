@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/components/rounded_buttons.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
+import 'package:sdk/sdk.dart';
 import 'package:sdk/services/login.dart';
 
 Login login = new Login();
