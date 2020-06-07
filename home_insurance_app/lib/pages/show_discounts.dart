@@ -52,7 +52,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
               ),
             ),
             SizedBox(height: 50.0),
-          /*  Expanded(
+            Expanded(
               child: ListView.builder(
                   itemCount: 10,//CompanyOffers.availableOffers.length , // available offers is static variable
                   itemBuilder: (context, index) {
@@ -74,7 +74,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                       ),
                     );
                   }),
-            ),*/
+            ),
           ],
         ),
       ),
