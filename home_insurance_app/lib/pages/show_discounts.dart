@@ -3,7 +3,9 @@ import 'package:homeinsuranceapp/data/company_offers.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 
 Map data;
+//Offers selected by the user 
 List<Offer> selectedOffers = new List<Offer>();
+//Offers displayed by the company 
 CompanyOffers offers = new CompanyOffers();
 
 class DisplayDiscounts extends StatefulWidget {
@@ -30,7 +32,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Text(
-                'Available Policies',
+                'Available Discounts',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30.0,
