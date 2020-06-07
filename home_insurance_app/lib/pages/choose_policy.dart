@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/payment.dart';
+import 'package:homeinsuranceapp/pages/smart_discounts.dart';
 
 class Mapping {
   Policy user_choice;
@@ -62,7 +63,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
             SizedBox(height: 50.0),
             GestureDetector(
               onTap: () =>
-                  Navigator.of(context).pushNamed('/smartdiscount'), // Goes to the smart device discounts page
+                  Navigator.of(context).pushNamed(SmartDiscounts.id), // Goes to the smart device discounts page
               child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),

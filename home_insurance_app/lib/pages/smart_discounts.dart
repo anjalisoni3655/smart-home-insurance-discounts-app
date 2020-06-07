@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/pages/payment.dart';
 
 class SmartDiscounts extends StatefulWidget {
   static const id = 'smart_discounts';
@@ -57,7 +58,7 @@ class _SmartDiscountsState extends State<SmartDiscounts> {
     //print("Uploading done");
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home Insurance App"),
+       title: Text("Home Insurance App"),
         centerTitle: true,
       ),
       body: Container(
@@ -131,7 +132,11 @@ class _SmartDiscountsState extends State<SmartDiscounts> {
                       ListTile(
                         title: Center(
                           child: Text("Proceed To Payment"),
+
                         ),
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Payment.id);
+                        },
                       ),
                     ],
                   ),
