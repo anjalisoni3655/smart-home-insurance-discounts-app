@@ -134,7 +134,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                         await _firestoreDB
                             .collection('devices')
                             .document('user_details')
-                            .setData({'pincode': pincode, 'userName': '$pincode'})
+                            .setData({'pincode': pincode, 'userName': '$pincode'}, merge: true)
                             .then((value) => print("Document successfully written"));
                         final document = await _firestoreDB.collection('devices').document('user_details').get();
                         print(document.data);

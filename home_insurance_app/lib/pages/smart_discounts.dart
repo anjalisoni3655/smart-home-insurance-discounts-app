@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/payment.dart';
 
 class SmartDiscounts extends StatefulWidget {
+ // static const id = '/smartdiscount';
   static const id = 'smart_discounts';
   // final _firestoreDb = Firestore().instance;
   static const double dis =
