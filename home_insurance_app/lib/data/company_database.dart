@@ -1,7 +1,7 @@
 import 'package:homeinsuranceapp/data/offer.dart';
 
 // This class contains all teh discounts offered by the insurance company
-class CompanyOffers {
+class CompanyDataBase {
   
   List<Offer> availableOffers = [
     new Offer(

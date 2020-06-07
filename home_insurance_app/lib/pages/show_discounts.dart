@@ -6,7 +6,7 @@ Map data={};
 //Offers selected by the user 
 List<Offer> selectedOffers = new List<Offer>();
 // Offers displayed by the company 
-CompanyOffers offers = new CompanyOffers();
+CompanyDataBase offers = new CompanyDataBase();
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -91,7 +91,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                      if(data!=null){
                      //calculate total discount
                       int totalDiscount = offers.getTotalDiscount(selectedOffers);
-                      // get total Maount paid 
+                      // get total Amount paid 
                       double finalAmount = offers.getFinalCost(data['selectedPolicy'].cost,totalDiscount);
                       //pops the current page 
                       Navigator.pop(context); 
