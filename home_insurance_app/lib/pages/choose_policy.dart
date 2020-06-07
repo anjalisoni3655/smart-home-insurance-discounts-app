@@ -12,15 +12,12 @@ class Mapping {
 }
 
 Map data = {};
-Policy userChoice  ;
-
+Policy userChoice;
 
 class DisplayPolicies extends StatefulWidget {
   @override
   _DisplayPoliciesState createState() => _DisplayPoliciesState();
 }
-
-
 
 class _DisplayPoliciesState extends State<DisplayPolicies> {
   @override
@@ -66,11 +63,10 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 child: FloatingActionButton.extended(
                   heroTag: "View",
                   onPressed: () {
-                    Navigator.pushNamed(context, '/showdiscounts',arguments:{
-                   'selectedPolicy':userChoice ,
-                    }
-                  );
-                  }, 
+                    Navigator.pushNamed(context, '/showdiscounts', arguments: {
+                      'selectedPolicy': userChoice,
+                    });
+                  },
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
@@ -90,7 +86,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   heroTag: "pay",
                   onPressed: () {
                     Navigator.pop(context); // For now it goes to the home page
-                  },  
+                  },
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
@@ -124,7 +120,8 @@ class _RadioGroupState extends State<RadioGroup> {
   @override
   void initState() {
     super.initState();
-    userChoice = data['policies'][0]; //By default the first policy will be displayed as selected  .
+    userChoice = data['policies']
+        [0]; //By default the first policy will be displayed as selected  .
     for (int i = 0; i < data['policies'].length; i++) {
       choices.add(new Mapping(i, data['policies'][i]));
     }
