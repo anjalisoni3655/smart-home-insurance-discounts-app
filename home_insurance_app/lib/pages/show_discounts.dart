@@ -97,49 +97,56 @@ class _AllDiscountsState extends State<AllDiscounts> {
                           ),
                         ),
                         //  color: Colors.lightBlueAccent[100],
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 10,
-                              child: Column(
-                                  children: (offers.availableOffers[index])
-                                      .requirements
-                                      .entries
-                                      .map(
-                                        (entry) => Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Container(
-                                              margin: EdgeInsets.all(0.0),
-                                              padding: EdgeInsets.all(10.0),
-                                              decoration: BoxDecoration(
-                                                  // color: Colors.lightBlueAccent[100],
-                                                  ),
-                                              child: Text(
-                                                '${entry.key} : ${entry.value}',
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: "PTSerifBI",
-                                                  fontSize: 17,
-                                                ),
-                                              )),
-                                        ),
-                                      )
-                                      .toList()),
-                            ),
-                            Expanded(
-                              flex:2,
-                              child: Text(
-                                '${offers.availableOffers[index].discount} %',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20.0,
+                        child:InkWell(
+                          onTap:(){
+                            print("hello");
+                          },
+                          child: Container(
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 10,
+                                  child: Column(
+                                      children: (offers.availableOffers[index])
+                                          .requirements
+                                          .entries
+                                          .map(
+                                            (entry) => Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Container(
+                                                  margin: EdgeInsets.all(0.0),
+                                                  padding: EdgeInsets.all(10.0),
+                                                  decoration: BoxDecoration(
+                                                      // color: Colors.lightBlueAccent[100],
+                                                      ),
+                                                  child: Text(
+                                                    '${entry.key} : ${entry.value}',
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontFamily: "PTSerifBI",
+                                                      fontSize: 17,
+                                                    ),
+                                                  )),
+                                            ),
+                                          )
+                                          .toList()),
                                 ),
-                              ),
-                              
-                            )
-                          ],
+                                Expanded(
+                                  flex:2,
+                                  child: Text(
+                                    '${offers.availableOffers[index].discount} %',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20.0,
+                                    ),
+                                  ),
+                                  
+                                )
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     );
