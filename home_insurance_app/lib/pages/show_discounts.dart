@@ -3,7 +3,7 @@ import 'package:homeinsuranceapp/data/company_offers.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 
 Map data;
-Offer selectedOffer;
+List<Offer> selectedOffers = new List<Offer>();
 CompanyOffers offers = new CompanyOffers();
 
 class DisplayDiscounts extends StatefulWidget {
@@ -104,8 +104,7 @@ class AllDiscounts extends StatefulWidget {
 
 class _AllDiscountsState extends State<AllDiscounts> {
   List<bool> isSelected = List.filled(offers.availableOffers.length,
-      false); // If a policy is selected then its corresponding container will have different color .
-  int curSelected = 0;
+      false); // Initially all policies are deselected
 
   Widget build(BuildContext context) {
     return Expanded(
@@ -124,14 +123,17 @@ class _AllDiscountsState extends State<AllDiscounts> {
                     width: 5.0,
                   ),
                 ),
-                //  color: Colors.lightBlueAccent[100],
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      isSelected[curSelected] = false;
-                      curSelected = index;
-                      isSelected[curSelected] = true;
-                      selectedOffer = offers.availableOffers[index];
+                      isSelected[index] = !isSelected[index];
+                      if (isSelected[index] == true)
+                        selectedOffers.add(offers.availableOffers[index]);
+                      else {
+                        // It is deselected , so remove from list
+                        selectedOffers.removeAt(selectedOffers
+                            .indexOf(offers.availableOffers[index]));
+                      }
                     });
                   },
                   child: Container(
