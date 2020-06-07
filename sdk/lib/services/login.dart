@@ -9,15 +9,10 @@ class Login {
   int testing;
   GoogleSignIn _googleSignIn;
 
-  Login(
-      {this.interactiveFlowTimeout = const Duration(minutes: 1),
-      this.nonInteractiveFlowTimeout = const Duration(seconds: 1)}) {
-    _googleSignIn = GoogleSignIn();
-  }
-  Login.test(GoogleSignIn googleSignIn,
-      {this.interactiveFlowTimeout = const Duration(minutes: 1),
-      this.nonInteractiveFlowTimeout = const Duration(seconds: 1)}) {
-    _googleSignIn = googleSignIn;
+  Login._builder(LoginBuilder loginBuilder) {
+    this.nonInteractiveFlowTimeout = loginBuilder.nonInteractiveFlowTimeout;
+    this.interactiveFlowTimeout = loginBuilder.interactiveFlowTimeout;
+    _googleSignIn = loginBuilder._googleSignIn;
   }
 
   Future<String> login() async {
@@ -59,5 +54,26 @@ class Login {
     } catch (error) {
       return null;
     }
+  }
+}
+
+class LoginBuilder {
+  Duration interactiveFlowTimeout;
+  Duration nonInteractiveFlowTimeout;
+  GoogleSignIn _googleSignIn;
+
+  LoginBuilder({this.interactiveFlowTimeout = const Duration(minutes: 1),
+    this.nonInteractiveFlowTimeout = const Duration(seconds: 1)}) {
+    _googleSignIn = new  GoogleSignIn();
+  }
+
+  LoginBuilder.test(GoogleSignIn googleSignIn,
+      {this.interactiveFlowTimeout = const Duration(minutes: 1),
+        this.nonInteractiveFlowTimeout = const Duration(seconds: 1)}) {
+    _googleSignIn = googleSignIn;
+  }
+
+  Login build() {
+    return new Login._builder(this);
   }
 }
