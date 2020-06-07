@@ -3,7 +3,9 @@ import 'package:homeinsuranceapp/data/company_offers.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 
 Map data;
+//Offers selected by the user 
 List<Offer> selectedOffers = new List<Offer>();
+// Offers displayed by the company 
 CompanyOffers offers = new CompanyOffers();
 
 class DisplayDiscounts extends StatefulWidget {
@@ -84,7 +86,22 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                         fontFamily: "PTSerifBI",
                       ),
                     ),
-                    onPressed: () {}, // Payment is initiated
+                    onPressed: () {
+                      //calculate total discount
+                      int totalDiscount = offers.getTotalDiscount(selectedOffers);
+                      // get total Maount paid 
+                      double finalAmount = offers.getFinalCost(data['selectedPolicy'].cost,totalDiscount);
+                      //pops the current page 
+                      Navigator.pop(context); 
+                      //Pops the previous page in the stack which is choose_policy page. These are are send to the 
+                      //home page 
+                      Navigator.pop(context,{
+                      'totalDiscount' : totalDiscount , 
+                      'amountpaid' : finalAmount,
+                      'selectedPolicy':data['selectedPolicy'],
+                      });
+
+                    },
                     backgroundColor: Colors.lightBlueAccent,
                   ),
                 ),

@@ -13,4 +13,16 @@ class CompanyOffers {
     new Offer({'Nest X Yale Lock': 1}, 8),
     new Offer({'Nest X Yale Lock': 1}, 8)
   ];
+
+ int getTotalDiscount(List<Offer> userChoice){
+   int totalDiscount = 0 ; 
+   for(int i=0;i<userChoice.length;i++){
+        totalDiscount+=(userChoice[i].discount);
+   }
+   return(totalDiscount);
+
+ }
+ double getFinalCost(int policyCost , int totalDiscount){
+   return(((100-totalDiscount)/100)*policyCost);
+ }
 }
