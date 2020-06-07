@@ -84,7 +84,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                         fontFamily: "PTSerifBI",
                       ),
                     ),
-                    onPressed: () {}, // resource picker url is launched
+                    onPressed: () {}, // Payment is initiated
                     backgroundColor: Colors.lightBlueAccent,
                   ),
                 ),
@@ -109,13 +109,15 @@ class _AllDiscountsState extends State<AllDiscounts> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-          itemCount: offers
-              .availableOffers.length, // available offers is static variable
+          itemCount: offers.availableOffers.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               child: Card(
-                color: isSelected[index] ? Colors.teal[100] : Colors.white,
+                color: isSelected[index]
+                    ? Colors.teal[100]
+                    : Colors
+                        .white, // If selected then color of card is teal else no change in color
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                   side: BorderSide(
@@ -126,6 +128,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                 child: InkWell(
                   onTap: () {
                     setState(() {
+                      //Current Selected state of corresponding discount is reversed
                       isSelected[index] = !isSelected[index];
                       if (isSelected[index] == true)
                         selectedOffers.add(offers.availableOffers[index]);
