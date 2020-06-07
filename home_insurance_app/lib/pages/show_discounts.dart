@@ -3,9 +3,9 @@ import 'package:homeinsuranceapp/data/company_offers.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 
 Map data;
-//Offers selected by the user 
+//Offers selected by the user
 List<Offer> selectedOffers = new List<Offer>();
-//Offers displayed by the company 
+//Offers displayed by the company
 CompanyOffers offers = new CompanyOffers();
 
 class DisplayDiscounts extends StatefulWidget {

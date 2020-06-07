@@ -2,7 +2,6 @@ import 'package:homeinsuranceapp/data/offer.dart';
 
 // This class contains all teh discounts offered by the insurance company
 class CompanyOffers {
-  
   List<Offer> availableOffers = [
     new Offer(
         {'Nest Hello Doorbell': 1, 'Nest Protect - Smoke + CO alarm': 1}, 50),
