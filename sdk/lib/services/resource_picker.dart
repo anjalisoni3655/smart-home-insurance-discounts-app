@@ -1,13 +1,6 @@
-<<<<<<< HEAD
-library sdk;
-
-import 'package:url_launcher/url_launcher.dart';
-import 'package:googleapis_auth/auth_io.dart' as auth;
-=======
 import 'package:url_launcher/url_launcher.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:http/http.dart' as http;
->>>>>>> 4094f779ffde4d8a1e2d5da07e704157b5d7be70
 
 // Provides the service of launching the resource picker and returning the access token obtained
 class ResourcePicker {
