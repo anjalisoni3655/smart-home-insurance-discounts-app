@@ -59,7 +59,8 @@ class AccessDevices {
 
   Future<dynamic> getDeviceStatus(String deviceId) async {
     try {
-      String request = URL + "enterprises/" + _enterpriseId + "/devices/" + deviceId;
+      String request =
+          URL + "enterprises/" + _enterpriseId + "/devices/" + deviceId;
       http.Response response = await _client.post(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
