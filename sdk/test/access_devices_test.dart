@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:optional/optional.dart';
 import 'package:sdk/services/access_devices.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
@@ -43,7 +44,7 @@ void main() {
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
-    expect(await accessDevices.getAllDevices(), "list of devices");
+    expect((await accessDevices.getAllDevices()).value, "list of devices");
   });
 
   test("test 1.2: get all devices exception on http request", () async {
@@ -57,7 +58,7 @@ void main() {
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
-    expect(await accessDevices.getAllDevices(), null);
+    expect((await accessDevices.getAllDevices()).isEmpty, true);
   });
 
   test("test 1.3: get all devices timeout on http request", () async {
@@ -76,7 +77,7 @@ void main() {
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
 
     // testing
-    expect(await accessDevices.getAllDevices(), null);
+    expect((await accessDevices.getAllDevices()).isEmpty, true);
   });
 
   test("test 2.1: get all structures successful http request", () async {
@@ -88,7 +89,7 @@ void main() {
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
-    expect(await accessDevices.getAllStructures(), "list of structures");
+    expect((await accessDevices.getAllStructures()).value, "list of structures");
   });
 
   test("test 2.2: get all structures exception on http request", () async {
@@ -102,7 +103,7 @@ void main() {
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
-    expect(await accessDevices.getAllStructures(), null);
+    expect((await accessDevices.getAllStructures()).isEmpty, true);
   });
 
   test(
@@ -123,7 +124,7 @@ void main() {
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
 
     // testing
-    expect(await accessDevices.getAllStructures(), null);
+    expect((await accessDevices.getAllStructures()).isEmpty, true);
   });
 
   test("test 3.1: get device status successful http request", () async {
@@ -136,7 +137,7 @@ void main() {
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
-    expect(await accessDevices.getDeviceStatus("deviceId"), "ONLINE");
+    expect((await accessDevices.getDeviceStatus("deviceId")).value, "ONLINE");
   });
 
   test("test 3.2: get devices status exception on http request", () async {
@@ -150,7 +151,7 @@ void main() {
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
-    expect(await accessDevices.getDeviceStatus("deviceId"), null);
+    expect((await accessDevices.getDeviceStatus("deviceId")).isEmpty, true);
   });
 
   test(
@@ -172,6 +173,6 @@ void main() {
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
 
     // testing
-    expect(await accessDevices.getDeviceStatus("deviceId"), null);
+    expect((await accessDevices.getDeviceStatus("deviceId")).isEmpty, true);
   });
 }

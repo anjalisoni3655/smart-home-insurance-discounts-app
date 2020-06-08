@@ -3,6 +3,7 @@ library sdk;
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:optional/optional.dart';
 
 // Provides helper functions to get list of devices, structures, status of devices etc.
 class AccessDevices {
@@ -29,7 +30,7 @@ class AccessDevices {
     _client = client;
   }
 
-  Future<dynamic> getAllDevices() async {
+  Future<Optional<String>> getAllDevices() async {
     try {
       String request = URL + "enterprises/" + _enterpriseId + "/devices";
       final response = await _client.post(
@@ -37,13 +38,13 @@ class AccessDevices {
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       // TODO: convert response body to list of devices, can be done once format of response is known
-      return response.body;
+      return Optional.of(response.body);
     } catch (error) {
-      return null;
+      return Optional.empty();
     }
   }
 
-  Future<dynamic> getAllStructures() async {
+  Future<Optional<String>> getAllStructures() async {
     try {
       String request = URL + "enterprises/" + _enterpriseId + "/structures";
       final response = await _client.post(
@@ -51,13 +52,13 @@ class AccessDevices {
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       // TODO: convert response body to list of structures, can be done once format of response is known
-      return response.body;
+      return Optional.of(response.body);
     } catch (error) {
-      return null;
+      return Optional.empty();
     }
   }
 
-  Future<dynamic> getDeviceStatus(String deviceId) async {
+  Future<Optional<String>> getDeviceStatus(String deviceId) async {
     try {
       String request =
           URL + "enterprises/" + _enterpriseId + "/devices/" + deviceId;
@@ -66,10 +67,10 @@ class AccessDevices {
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       var result = jsonDecode(response.body);
-      return result["traits"]["sdm.devices.traits.DeviceConnectivityTrait"]
-          ["status"];
+      return Optional.of(result["traits"]["sdm.devices.traits.DeviceConnectivityTrait"]
+          ["status"]);
     } catch (error) {
-      return null;
+      return Optional.empty();
     }
   }
 }
