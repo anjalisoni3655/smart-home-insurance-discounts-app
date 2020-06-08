@@ -11,23 +11,27 @@ class MockResponse extends Mock implements http.Response {}
 MockClient mockClient;
 MockResponse mockResponse;
 
+const String getAllDevicesUrl = "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices";
+const String getAllStructuresUrl = "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/structures";
+const String getDeviceStatusUrl = "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices/deviceId";
+
 void main() {
   // Default setup
   setUp(() {
     mockClient = new MockClient();
     mockResponse = new MockResponse();
     when(mockClient.post(
-        "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices",
+        getAllDevicesUrl,
         headers: {
           HttpHeaders.authorizationHeader: "Bearer accessToken"
         })).thenAnswer((_) => Future.value(mockResponse));
     when(mockClient.post(
-        "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/structures",
+      getAllStructuresUrl,
         headers: {
           HttpHeaders.authorizationHeader: "Bearer accessToken"
         })).thenAnswer((_) => Future.value(mockResponse));
     when(mockClient.post(
-        "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices/deviceId",
+      getDeviceStatusUrl,
         headers: {
           HttpHeaders.authorizationHeader: "Bearer accessToken"
         })).thenAnswer((_) => Future.value(mockResponse));
@@ -43,7 +47,7 @@ void main() {
   test("test 1.2: get all devices exception on http request", () async {
     // Defining behaviour: throws error
     when(mockClient.post(
-        "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices",
+        getAllDevicesUrl,
         headers: {
           HttpHeaders.authorizationHeader: "Bearer accessToken"
         })).thenThrow(new Exception());
@@ -55,7 +59,7 @@ void main() {
   test("test 1.3: get all devices timeout on http request", () async {
     // Defining behaviour: returns a response after 200 ms
     when(mockClient.post(
-        "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices",
+        getAllDevicesUrl,
         headers: {
           HttpHeaders.authorizationHeader: "Bearer accessToken"
         })).thenAnswer((_) async {
@@ -81,7 +85,7 @@ void main() {
   test("test 2.2: get all structures exception on http request", () async {
     // Defining behaviour: throws error
     when(mockClient.post(
-        "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/structures",
+        getAllStructuresUrl,
         headers: {
           HttpHeaders.authorizationHeader: "Bearer accessToken"
         })).thenThrow(new Exception());
@@ -95,7 +99,7 @@ void main() {
       () async {
     // Defining behaviour: throws error
     when(mockClient.post(
-        "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/structures",
+        getAllStructuresUrl,
         headers: {
           HttpHeaders.authorizationHeader: "Bearer accessToken"
         })).thenAnswer((_) async {
@@ -121,7 +125,7 @@ void main() {
   test("test 3.2: get devices status exception on http request", () async {
     // Defining behaviour: throws error
     when(mockClient.post(
-        "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices/deviceId",
+        getDeviceStatusUrl,
         headers: {
           HttpHeaders.authorizationHeader: "Bearer accessToken"
         })).thenThrow(new Exception());
@@ -134,7 +138,7 @@ void main() {
       "test 3.3: get devices status returns response on http request in 200 ms",
       () async {
     when(mockClient.post(
-        "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices/deviceId",
+        getDeviceStatusUrl,
         headers: {
           HttpHeaders.authorizationHeader: "Bearer accessToken"
         })).thenAnswer((_) async {

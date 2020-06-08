@@ -9,7 +9,7 @@ class ResourcePicker {
   String _clientId;
   String _clientSecret;
   String _scope = "https://www.googleapis.com/auth/sdm.service";
-  Duration resourcePickerTimeoutDuration;
+  final Duration resourcePickerTimeoutDuration;
   Function clientViaUserConsent;
 
   ResourcePicker(String clientId, String clientSecret,
