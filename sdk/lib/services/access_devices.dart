@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
+// Provides helper functions to get list of devices, structures, status of devices etc.
 class AccessDevices {
   static const String URL =
       "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/";
@@ -20,7 +21,6 @@ class AccessDevices {
     _client = new http.Client();
   }
 
-  // Passing an http client to accessAdevices while testing (will be a mock object)
   AccessDevices.test(
       String accessToken, String enterpriseId, http.Client client,
       {this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
