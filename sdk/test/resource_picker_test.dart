@@ -13,7 +13,8 @@ MockAuthClient mockAuthClient;
 MockAccessCredentials mockAccessCredentials;
 MockAccessToken mockAccessToken;
 MockAccessToken mockRefreshToken;
-String resourcePickerUrl = "https://accounts.google.com/o/oauth2/auth?client_id=client_id&redirect_uri=redirect_url&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fsdm.service&state=state";
+String resourcePickerUrl =
+    "https://accounts.google.com/o/oauth2/auth?client_id=client_id&redirect_uri=redirect_url&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fsdm.service&state=state";
 
 // setup the mock objects
 void setup() {
