@@ -15,8 +15,6 @@ MockAuthClient mockAuthClient;
 MockAccessCredentials mockAccessCredentials;
 MockAccessToken mockAccessToken;
 MockAccessToken mockRefreshToken;
-String resourcePickerUrl =
-    "https://accounts.google.com/o/oauth2/auth?client_id=client_id&redirect_uri=redirect_url&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fsdm.service&state=state";
 
 // setup the mock objects
 
@@ -37,19 +35,14 @@ void main() {
   test('test 1: API function returns AuthClient', () async {
     // Creating a mock AuthClient that gives an access token
     // Defining the dummy function that will be passed on the resource picker to replace API call
-    AuthClient mockClientViaUserConsent(
-        ClientId clientId, List<String> scope, Function launchFunction()) {
+    Future<AuthClient> mockClientViaUserConsent(ClientId clientId,
+        List<String> scope, void launchFunction(String url)) async {
       return mockAuthClient;
     }
 
     ResourcePicker resourcePicker = new ResourcePicker.test(
-        "client_id",
-        "client_secret",
-        "enterprise_id",
-        "redirect_url",
-        mockClientViaUserConsent);
+        "client_id", "client_secret", mockClientViaUserConsent);
     // Expected results:
-    expect(resourcePicker.resourcePickerURL, resourcePickerUrl);
     expect(
         await resourcePicker.askForAuthorization(), "authorization successful");
     expect(resourcePicker.accessToken, "accessTokenTest");
@@ -58,35 +51,27 @@ void main() {
   test('test 2: API function throws error', () async {
     // Defining behaviour: throws an error on calling
     AuthClient mockClientViaUserConsent(
-        ClientId clientId, List<String> scope, Function launchFunction()) {
+        ClientId clientId, List<String> scope, Function launchFunction) {
       throw new Exception();
     }
 
     // Expected behaviour
     ResourcePicker resourcePicker = new ResourcePicker.test(
-        "client_id",
-        "client_secret",
-        "enterprise_id",
-        "redirect_url",
-        mockClientViaUserConsent);
+        "client_id", "client_secret", mockClientViaUserConsent);
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });
 
   test('test 3: API function takes longer than timeout set', () async {
     // Defining behaviour: throws an error on calling
-    Future<AuthClient> mockClientViaUserConsent(ClientId clientId,
-        List<String> scope, Function launchFunction()) async {
+    Future<AuthClient> mockClientViaUserConsent(
+        ClientId clientId, List<String> scope, Function launchFunction) async {
       await Future.delayed(new Duration(milliseconds: 200));
       return mockAuthClient;
     }
 
     // Expected behaviour
     ResourcePicker resourcePicker = new ResourcePicker.test(
-        "client_id",
-        "client_secret",
-        "enterprise_id",
-        "redirect_url",
-        mockClientViaUserConsent,
+        "client_id", "client_secret", mockClientViaUserConsent,
         resourcePickerTimeoutDuration: new Duration(milliseconds: 100));
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });
