@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 
-//Information derived from API calls
+//List of structures that would be derived from API call
 List<String> structures = ["Home1", "Home2", "Home3", "Home4"];
-//List<String> devices =[];
-
-class MyDevices extends StatefulWidget {
-  @override
-  _MyDevicesState createState() => _MyDevicesState();
-}
-
+//List of devices present in each selected structure - derived from API call.
 List<String> devices = [
   "ThermostatT1",
   "ThermostatT2",
@@ -22,7 +16,22 @@ List<String> devices = [
   "Smoke DetectorSD2",
 ];
 
+class MyDevices extends StatefulWidget {
+  @override
+  _MyDevicesState createState() => _MyDevicesState();
+}
+
+
+
 class _MyDevicesState extends State<MyDevices> {
+  // Data structures required to display which home is selected 
+  // Each home has a boolean value maintaining whether the home is selected or not 
+List<bool> isSelected = List.filled(structures.length,false);
+// Current home selected 
+String home_selected ="Home1";
+
+
+
   @override
   void initState() {
     super.initState();
@@ -51,18 +60,35 @@ class _MyDevicesState extends State<MyDevices> {
               ),
             ),
             SizedBox(height: 10.0),
+            Divider(
+              height:10.0,
+              color:Colors.brown[50],
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: structures.map((home) {
                 return Column(
                   children: <Widget>[
-                    RawMaterialButton(
-                      onPressed: () {},
-                      shape: CircleBorder(
-                          //color:Colors.red,
-                          ),
-                      elevation: 4.0,
-                      fillColor: Colors.white,
+                    OutlineButton(
+                      onPressed: () {
+                       // Change the current home selected 
+                        setState((){
+                          // unselect the previous home
+                         isSelected[structures.indexOf(home_selected)]= false  ;
+                         // change the home_selected to current home
+                         home_selected=home;
+                         isSelected[structures.indexOf(home)]=true;
+                        }
+                        );
+                        // get the devices corresponding to this structure 
+                        // By default home 1 devices will be displayed 
+                        //devices=[];
+                      },
+                      shape: CircleBorder(),
+                      borderSide: BorderSide( 
+                        color:isSelected[structures.indexOf(home)]?Colors.black:Colors.blue,
+                        width:3.0,
+                        ),
                       child: Icon(Icons.home, size: 50.0, color: Colors.blue),
                     ),
                     SizedBox(height: 10.0),
@@ -78,7 +104,11 @@ class _MyDevicesState extends State<MyDevices> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 20.0),
+           Divider(
+              height:10.0,
+              color:Colors.blueAccent[50],
+            ),
+            SizedBox(height: 10.0),
             Expanded(
               child: ListView.builder(
                   itemCount: devices.length,
