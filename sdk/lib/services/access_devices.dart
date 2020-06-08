@@ -29,8 +29,11 @@ class AccessDevices {
 
   Future<dynamic> getAllDevices() async {
     try {
+      String request = URL + "enterprises/" + _enterpriseId + "/devices";
+      print(request);
+      print(_accessToken);
       final response = await _client.post(
-        URL + "enterprises/" + _enterpriseId + "/devices",
+        request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       // TODO: convert response body to list of devices, can be done once format of response is known

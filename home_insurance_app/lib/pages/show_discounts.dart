@@ -11,7 +11,6 @@ List<Offer> selectedOffers = new List<Offer>();
 // Offers displayed by the company 
 CompanyDataBase offers = new CompanyDataBase();
 
-SDK sdk = new SDK(); // add credentials
 
 class DisplayDiscounts extends StatefulWidget {
   @override

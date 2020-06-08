@@ -17,7 +17,7 @@ class SDK {
   String enterpriseId;
   String redirectURL;
 
-  SDK(String clientId, String clientSecret, String enterpriseId, String redirectURL, {this.interactiveFlowTimeout = const Duration(minutes: 5), this.nonInteractiveFlowTimout = const Duration(seconds: 1)}) {
+  SDK(String clientId, String clientSecret, String enterpriseId, {this.interactiveFlowTimeout = const Duration(minutes: 5), this.nonInteractiveFlowTimout = const Duration(seconds: 3)}) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.enterpriseId = enterpriseId;
