@@ -15,8 +15,6 @@ MockAuthClient mockAuthClient;
 MockAccessCredentials mockAccessCredentials;
 MockAccessToken mockAccessToken;
 MockAccessToken mockRefreshToken;
-String resourcePickerUrl =
-    "https://accounts.google.com/o/oauth2/auth?client_id=client_id&redirect_uri=redirect_url&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fsdm.service&state=state";
 
 // setup the mock objects
 
@@ -45,11 +43,8 @@ void main() {
     ResourcePicker resourcePicker = new ResourcePicker.test(
         "client_id",
         "client_secret",
-        "enterprise_id",
-        "redirect_url",
         mockClientViaUserConsent);
     // Expected results:
-    expect(resourcePicker.resourcePickerURL, resourcePickerUrl);
     expect(
         await resourcePicker.askForAuthorization(), "authorization successful");
     expect(resourcePicker.accessToken, "accessTokenTest");
@@ -66,8 +61,6 @@ void main() {
     ResourcePicker resourcePicker = new ResourcePicker.test(
         "client_id",
         "client_secret",
-        "enterprise_id",
-        "redirect_url",
         mockClientViaUserConsent);
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });
@@ -84,8 +77,6 @@ void main() {
     ResourcePicker resourcePicker = new ResourcePicker.test(
         "client_id",
         "client_secret",
-        "enterprise_id",
-        "redirect_url",
         mockClientViaUserConsent,
         resourcePickerTimeoutDuration: new Duration(milliseconds: 100));
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
