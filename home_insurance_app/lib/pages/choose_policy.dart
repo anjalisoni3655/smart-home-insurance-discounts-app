@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
 //This class maps each policy to a index value which is used in selecting radio buttons
 class Mapping {
@@ -24,11 +25,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
     // data stores the policies available for the user as a key-value pair.
     data = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Insurance Company '),
-        centerTitle: true,
-        backgroundColor: Colors.brown,
-      ),
+      appBar: CommonAppBar(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {}, // Goes to the payment page
         backgroundColor: Colors.lightBlueAccent,

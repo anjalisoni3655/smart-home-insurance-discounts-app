@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'dart:ui';
 
 class HomePage extends StatefulWidget {
@@ -14,11 +15,7 @@ class _HomePageState extends State<HomePage> {
     double screenwidth = mediaQuery.size.width;
     return Scaffold(
       drawer: AppDrawer(), // Sidebar
-      appBar: AppBar(
-        title: Text('Home Insurance Company'),
-        centerTitle: true,
-        backgroundColor: Colors.brown,
-      ),
+      appBar: CommonAppBar(),
       body: Stack(
         children: <Widget>[
           Container(
