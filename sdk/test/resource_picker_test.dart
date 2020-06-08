@@ -9,20 +9,29 @@ class MockAccessCredentials extends Mock implements AccessCredentials {}
 
 class MockAccessToken extends Mock implements AccessToken {}
 
+MockAuthClient mockAuthClient;
+MockAccessCredentials mockAccessCredentials;
+MockAccessToken mockAccessToken;
+MockAccessToken mockRefreshToken;
+String resourcePickerUrl = "https://accounts.google.com/o/oauth2/auth?client_id=client_id&redirect_uri=redirect_url&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fsdm.service&state=state";
+
+// setup the mock objects
+void setup() {
+  mockAuthClient = new MockAuthClient();
+  mockAccessCredentials = new MockAccessCredentials();
+  mockAccessToken = new MockAccessToken();
+  mockRefreshToken = new MockAccessToken();
+
+  when(mockAuthClient.credentials).thenReturn(mockAccessCredentials);
+  when(mockAccessCredentials.accessToken).thenReturn(mockAccessToken);
+  when(mockAccessCredentials.refreshToken).thenReturn("refreshTokenTest");
+  when(mockAccessToken.data).thenReturn("accessTokenTest");
+}
+
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
   test('test 1: API function returns AuthClient', () async {
+    setup();
     // Creating a mock AuthClient that gives an access token
-    MockAuthClient mockAuthClient = new MockAuthClient();
-    MockAccessCredentials mockAccessCredentials = new MockAccessCredentials();
-    MockAccessToken mockAccessToken = new MockAccessToken();
-    MockAccessToken mockRefreshToken = new MockAccessToken();
-
-    when(mockAuthClient.credentials).thenReturn(mockAccessCredentials);
-    when(mockAccessCredentials.accessToken).thenReturn(mockAccessToken);
-    when(mockAccessCredentials.refreshToken).thenReturn("refreshTokenTest");
-    when(mockAccessToken.data).thenReturn("accessTokenTest");
-
     // Defining the dummy function that will be passed on the resource picker to replace API call
     AuthClient mockClientViaUserConsent(
         ClientId clientId, List<String> scope, Function launchFunction()) {
@@ -36,24 +45,14 @@ void main() {
         "redirect_url",
         mockClientViaUserConsent);
     // Expected results:
-    expect(resourcePicker.resourcePickerURL,
-        "https://accounts.google.com/o/oauth2/auth?client_id=client_id&redirect_uri=redirect_url&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fsdm.service&state=state");
+    expect(resourcePicker.resourcePickerURL, resourcePickerUrl);
     expect(
         await resourcePicker.askForAuthorization(), "authorization successful");
     expect(resourcePicker.accessToken, "accessTokenTest");
     expect(resourcePicker.refreshToken, "refreshTokenTest");
   });
   test('test 2: API function throws error', () async {
-    MockAuthClient mockAuthClient = new MockAuthClient();
-    MockAccessCredentials mockAccessCredentials = new MockAccessCredentials();
-    MockAccessToken mockAccessToken = new MockAccessToken();
-    MockAccessToken mockRefreshToken = new MockAccessToken();
-
-    when(mockAuthClient.credentials).thenReturn(mockAccessCredentials);
-    when(mockAccessCredentials.accessToken).thenReturn(mockAccessToken);
-    when(mockAccessCredentials.refreshToken).thenReturn("refreshTokenTest");
-    when(mockAccessToken.data).thenReturn("accessTokenTest");
-
+    setup();
     // Defining behaviour: throws an error on calling
     AuthClient mockClientViaUserConsent(
         ClientId clientId, List<String> scope, Function launchFunction()) {
@@ -67,8 +66,6 @@ void main() {
         "enterprise_id",
         "redirect_url",
         mockClientViaUserConsent);
-    expect(resourcePicker.resourcePickerURL,
-        "https://accounts.google.com/o/oauth2/auth?client_id=client_id&redirect_uri=redirect_url&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fsdm.service&state=state");
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });
 
@@ -98,8 +95,6 @@ void main() {
         "redirect_url",
         mockClientViaUserConsent,
         resourcePickerTimeoutDuration: new Duration(milliseconds: 100));
-    expect(resourcePicker.resourcePickerURL,
-        "https://accounts.google.com/o/oauth2/auth?client_id=client_id&redirect_uri=redirect_url&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fsdm.service&state=state");
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });
 }

@@ -3,6 +3,7 @@ library sdk;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 
+// Provides the service of launching the resource picker and returning the access token obtained
 class ResourcePicker {
   String _accessToken;
   String _refreshToken;
@@ -14,7 +15,6 @@ class ResourcePicker {
   String _pcmUrl = "https://accounts.google.com/o/oauth2";
   String _redirectURL;
   Duration resourcePickerTimeoutDuration;
-  int testing;
   Function clientViaUserConsent;
 
   ResourcePicker(String clientId, String clientSecret, String enterpriseId,
