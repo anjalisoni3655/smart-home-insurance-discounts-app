@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
+import 'package:homeinsuranceapp/pages/get_home_details.dart';
+
 
 void main() {
   runApp(MyApp());
 }
 
+// This class is used to store all routes and takes the user to the page corresponding to initial route ('/)
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,6 +20,9 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         HomePage.id: (context) => HomePage(),
         Profile.id: (context) => Profile(),
+        '/': (context) => HomePage(),
+        '/gethomedetails': (context) => HomeDetails(),
+
       },
     );
   }
