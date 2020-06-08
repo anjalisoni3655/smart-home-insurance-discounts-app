@@ -52,7 +52,7 @@ class SDK {
 
   Future<Optional<String>> getAllDevices() async {
     if (_accessDevices == null) {
-      return null;
+      return Optional.empty();
     } else {
       return await _accessDevices.getAllDevices();
     }
@@ -60,7 +60,7 @@ class SDK {
 
   Future<Optional<String>> getAllStructures() async {
     if (_accessDevices == null) {
-      return null;
+      return Optional.empty();
     } else {
       return await _accessDevices.getAllStructures();
     }
@@ -68,7 +68,7 @@ class SDK {
 
   Future<Optional<String>> getDeviceStatus(String deviceId) async {
     if (_accessDevices == null) {
-      return null;
+      return Optional.empty();
     } else {
       return await _accessDevices.getDeviceStatus(deviceId);
     }
