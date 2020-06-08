@@ -36,15 +36,13 @@ void main() {
   test('test 1: API function returns AuthClient', () async {
     // Creating a mock AuthClient that gives an access token
     // Defining the dummy function that will be passed on the resource picker to replace API call
-    Future<AuthClient> mockClientViaUserConsent(
-        ClientId clientId, List<String> scope, void launchFunction(String url)) async {
+    Future<AuthClient> mockClientViaUserConsent(ClientId clientId,
+        List<String> scope, void launchFunction(String url)) async {
       return mockAuthClient;
     }
 
     ResourcePicker resourcePicker = new ResourcePicker.test(
-        "client_id",
-        "client_secret",
-        mockClientViaUserConsent);
+        "client_id", "client_secret", mockClientViaUserConsent);
     // Expected results:
     expect(
         await resourcePicker.askForAuthorization(), "authorization successful");
@@ -60,25 +58,21 @@ void main() {
 
     // Expected behaviour
     ResourcePicker resourcePicker = new ResourcePicker.test(
-        "client_id",
-        "client_secret",
-        mockClientViaUserConsent);
+        "client_id", "client_secret", mockClientViaUserConsent);
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });
 
   test('test 3: API function takes longer than timeout set', () async {
     // Defining behaviour: throws an error on calling
-    Future<AuthClient> mockClientViaUserConsent(ClientId clientId,
-        List<String> scope, Function launchFunction) async {
+    Future<AuthClient> mockClientViaUserConsent(
+        ClientId clientId, List<String> scope, Function launchFunction) async {
       await Future.delayed(new Duration(milliseconds: 200));
       return mockAuthClient;
     }
 
     // Expected behaviour
     ResourcePicker resourcePicker = new ResourcePicker.test(
-        "client_id",
-        "client_secret",
-        mockClientViaUserConsent,
+        "client_id", "client_secret", mockClientViaUserConsent,
         resourcePickerTimeoutDuration: new Duration(milliseconds: 100));
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });

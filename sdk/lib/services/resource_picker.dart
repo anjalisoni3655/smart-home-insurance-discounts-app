@@ -20,8 +20,8 @@ class ResourcePicker {
   }
 
   // Testing constructor
-  ResourcePicker.test(String clientId, String clientSecret,
-      Function clientViaUserConsent,
+  ResourcePicker.test(
+      String clientId, String clientSecret, Function clientViaUserConsent,
       {this.resourcePickerTimeoutDuration = const Duration(minutes: 5)}) {
     this.clientViaUserConsent = clientViaUserConsent;
     this._clientId = clientId;
