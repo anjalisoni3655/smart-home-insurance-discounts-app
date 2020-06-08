@@ -11,9 +11,7 @@ class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {}
 MockGoogleSignIn mockGoogleSignIn;
 MockGoogleSignInAccount mockGoogleSignInAccount;
 
-
 void main() {
-
   setUp(() {
     mockGoogleSignIn = MockGoogleSignIn();
     mockGoogleSignInAccount = MockGoogleSignInAccount();

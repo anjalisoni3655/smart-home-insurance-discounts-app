@@ -21,7 +21,6 @@ String resourcePickerUrl =
 // setup the mock objects
 
 void main() {
-
   // Set up initialising mock objects
   setUp(() {
     mockAuthClient = new MockAuthClient();
