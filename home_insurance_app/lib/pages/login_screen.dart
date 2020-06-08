@@ -53,6 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
             String status = await login.login();
             if(status == 'already logged in' || status == "login successful"){
               Navigator.pushNamed(context, '/');
+            } else {
+              print(status);
             }
           },
           //child: Text('SIGN OUT'),
