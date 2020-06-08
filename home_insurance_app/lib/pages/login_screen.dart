@@ -3,9 +3,8 @@ import 'package:homeinsuranceapp/components/rounded_buttons.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:sdk/sdk.dart';
-import 'package:sdk/services/login.dart';
 
-Login login = new Login();
+SDK sdk = new SDK(...);//add arguments
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -49,8 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
           title: 'LOG IN',
           colour: Colors.brown,
           onPressed: () async {
-            await login.login();
-            String status = await login.login();
+            String status = await sdk.login();
             if(status == 'already logged in' || status == "login successful"){
               Navigator.pushNamed(context, '/');
             } else {
