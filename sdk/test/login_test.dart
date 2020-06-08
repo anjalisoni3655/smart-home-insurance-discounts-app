@@ -17,8 +17,10 @@ void setup() {
 
   // Defining the behavior of mockGoogleSignIn.
   // Should not throw any error and return smoothly
-  when(mockGoogleSignIn.signIn()).thenAnswer((_) => Future.value(mockGoogleSignInAccount));
-  when(mockGoogleSignIn.signOut()).thenAnswer((_) => Future.value(mockGoogleSignInAccount));
+  when(mockGoogleSignIn.signIn())
+      .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
+  when(mockGoogleSignIn.signOut())
+      .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
   when(mockGoogleSignIn.currentUser).thenReturn(mockGoogleSignInAccount);
 
   // The account should return the following dummy details
@@ -26,7 +28,6 @@ void setup() {
   when(mockGoogleSignInAccount.email).thenReturn("osheen@google.com");
   when(mockGoogleSignInAccount.photoUrl).thenReturn("someurl.com");
   when(mockGoogleSignIn.isSignedIn()).thenAnswer((_) => Future.value(false));
-
 }
 
 void main() {
@@ -56,11 +57,16 @@ void main() {
     expect(await login.login(), "login failed");
   });
 
-  test('test 1.4: api takes longer than timeout set on signIn attempt', () async {
+  test('test 1.4: api takes longer than timeout set on signIn attempt',
+      () async {
     setup();
-    Login login = new Login.test(mockGoogleSignIn, interactiveFlowTimeout: new Duration(milliseconds: 100));
+    Login login = new Login.test(mockGoogleSignIn,
+        interactiveFlowTimeout: new Duration(milliseconds: 100));
     // update signIn to respond after 200 ms, timeout set to 100 ms
-    when(mockGoogleSignIn.signIn()).thenAnswer((_) async { await Future.delayed(new Duration(milliseconds: 200)); return mockGoogleSignInAccount;});
+    when(mockGoogleSignIn.signIn()).thenAnswer((_) async {
+      await Future.delayed(new Duration(milliseconds: 200));
+      return mockGoogleSignInAccount;
+    });
     // Expected result : login should fail
     expect(await login.login(), "login failed");
   });
@@ -75,7 +81,6 @@ void main() {
   });
 
   test('test 2.2: not logged in', () async {
-
     setup();
     Login login = new Login.test(mockGoogleSignIn);
     // Default configuration fit. No extra update on behaviour required
@@ -94,13 +99,18 @@ void main() {
     expect(await login.logout(), "logout failed");
   });
 
-  test('test 2.4: api takes longer than timeout set on signOut attempt', () async {
+  test('test 2.4: api takes longer than timeout set on signOut attempt',
+      () async {
     setup();
-    Login login = new Login.test(mockGoogleSignIn, nonInteractiveFlowTimeout: new Duration(milliseconds: 100));
+    Login login = new Login.test(mockGoogleSignIn,
+        nonInteractiveFlowTimeout: new Duration(milliseconds: 100));
     // Update isSignedIn API method to return true since should be already logged in for logout attempt
     when(mockGoogleSignIn.isSignedIn()).thenAnswer((_) => Future.value(true));
     // update signOut to respond after 200 ms, timeout set to 100 ms
-    when(mockGoogleSignIn.signOut()).thenAnswer((_) async { await Future.delayed(new Duration(milliseconds: 200)); return mockGoogleSignInAccount;});
+    when(mockGoogleSignIn.signOut()).thenAnswer((_) async {
+      await Future.delayed(new Duration(milliseconds: 200));
+      return mockGoogleSignInAccount;
+    });
     // Expected result : logout should fail
     expect(await login.logout(), "logout failed");
   });
@@ -111,10 +121,15 @@ void main() {
     // Update isSignedIn API method to return true since should be already logged in for successful getUserDetails
     when(mockGoogleSignIn.isSignedIn()).thenAnswer((_) => Future.value(true));
     // Expected result: getUserDetails should return mock details
-    expect(await login.getUserDetails(), {'displayName': "Osheen Sachdev", 'email': "osheen@google.com", 'photoUrl': "someurl.com"});
+    expect(await login.getUserDetails(), {
+      'displayName': "Osheen Sachdev",
+      'email': "osheen@google.com",
+      'photoUrl': "someurl.com"
+    });
   });
 
-  test('test 3.2: api throws exception on getting current user attempt', () async {
+  test('test 3.2: api throws exception on getting current user attempt',
+      () async {
     setup();
     Login login = new Login.test(mockGoogleSignIn);
     // update signIn to throw error on call
@@ -123,11 +138,16 @@ void main() {
     expect(await login.getUserDetails(), null);
   });
 
-  test('test 3.4: api takes longer than timeout to check isSignedIn attempt', () async {
+  test('test 3.4: api takes longer than timeout to check isSignedIn attempt',
+      () async {
     setup();
-    Login login = new Login.test(mockGoogleSignIn, nonInteractiveFlowTimeout: new Duration(milliseconds: 100));
+    Login login = new Login.test(mockGoogleSignIn,
+        nonInteractiveFlowTimeout: new Duration(milliseconds: 100));
     // update signIn to respond after 200 ms, timeout set to 100 ms
-    when(mockGoogleSignIn.isSignedIn()).thenAnswer((_) async { await Future.delayed(new Duration(milliseconds: 200)); return true;});
+    when(mockGoogleSignIn.isSignedIn()).thenAnswer((_) async {
+      await Future.delayed(new Duration(milliseconds: 200));
+      return true;
+    });
     // Expected result : getUserDetails should return null
     expect(await login.getUserDetails(), null);
   });
