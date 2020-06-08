@@ -35,9 +35,14 @@ void main() {
   });
 
   test("test 1.1: get all devices successful http request", () async {
+    // defining behaviour
+    when(mockResponse.body).thenReturn("list of devices");
+
+    // initialising class (behaviour same as setup)
     AccessDevices accessDevices =
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
-    when(mockResponse.body).thenReturn("list of devices");
+
+    // testing
     expect(await accessDevices.getAllDevices(), "list of devices");
   });
 
@@ -46,8 +51,12 @@ void main() {
     when(mockClient.post(getAllDevicesUrl,
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenThrow(new Exception());
+
+    // initialising class
     AccessDevices accessDevices =
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
+
+    // testing
     expect(await accessDevices.getAllDevices(), null);
   });
 
@@ -61,17 +70,24 @@ void main() {
     }); // Mock response returns a body
     when(mockResponse.body).thenReturn("list of devices");
 
+    // initialising class
     AccessDevices accessDevices = new AccessDevices.test(
         "accessToken", "enterpriseId", mockClient,
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
 
+    // testing
     expect(await accessDevices.getAllDevices(), null);
   });
 
   test("test 2.1: get all structures successful http request", () async {
+    // Defining behaviour
+    when(mockResponse.body).thenReturn("list of structures");
+
+    // initialising class
     AccessDevices accessDevices =
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
-    when(mockResponse.body).thenReturn("list of structures");
+
+    // testing
     expect(await accessDevices.getAllStructures(), "list of structures");
   });
 
@@ -80,8 +96,12 @@ void main() {
     when(mockClient.post(getAllStructuresUrl,
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenThrow(new Exception());
+
+    // initialising class
     AccessDevices accessDevices =
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
+
+    // testing
     expect(await accessDevices.getAllStructures(), null);
   });
 
@@ -96,18 +116,26 @@ void main() {
       return Future.value(mockResponse);
     });
     when(mockResponse.body).thenReturn("list of structures");
+
+    // initialising class
     AccessDevices accessDevices = new AccessDevices.test(
         "accessToken", "enterpriseId", mockClient,
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
+
+    // testing
     expect(await accessDevices.getAllStructures(), null);
   });
 
   test("test 3.1: get device status successful http request", () async {
-    AccessDevices accessDevices =
-        new AccessDevices.test("accessToken", "enterpriseId", mockClient);
+    // Defining behaviour
     when(mockResponse.body).thenReturn(
         '{"name" : "/enterprises/enterprise-id/devices/device-id","type" : "sdm.devices.types.device-type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}}}');
-    // Expected output
+
+    // initialising class
+    AccessDevices accessDevices =
+        new AccessDevices.test("accessToken", "enterpriseId", mockClient);
+
+    // testing
     expect(await accessDevices.getDeviceStatus("deviceId"), "ONLINE");
   });
 
@@ -116,14 +144,19 @@ void main() {
     when(mockClient.post(getDeviceStatusUrl,
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenThrow(new Exception());
+
+    // initialising class
     AccessDevices accessDevices =
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
+
+    // testing
     expect(await accessDevices.getDeviceStatus("deviceId"), null);
   });
 
   test(
       "test 3.3: get devices status returns response on http request in 200 ms",
       () async {
+    // defining behaviour
     when(mockClient.post(getDeviceStatusUrl,
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenAnswer((_) async {
@@ -133,9 +166,12 @@ void main() {
     when(mockResponse.body).thenReturn(
         '{"name" : "/enterprises/enterprise-id/devices/device-id","type" : "sdm.devices.types.device-type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}}}');
 
+    // initialising class
     AccessDevices accessDevices = new AccessDevices.test(
         "accessToken", "enterpriseId", mockClient,
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
+
+    // testing
     expect(await accessDevices.getDeviceStatus("deviceId"), null);
   });
 }
