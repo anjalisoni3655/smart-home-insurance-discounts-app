@@ -1,5 +1,6 @@
 library sdk;
 
+import 'package:optional/optional.dart';
 import 'package:sdk/services/access_devices.dart';
 import 'package:sdk/services/login.dart';
 import 'package:sdk/services/resource_picker.dart';
@@ -19,7 +20,8 @@ class SDK {
 
   SDK(String clientId, String clientSecret, String enterpriseId,
       String redirectURL,
-      {this.interactiveFlowTimeout = const Duration(minutes: 5), this.nonInteractiveFlowTimout = const Duration(seconds: 1)}) {
+      {this.interactiveFlowTimeout = const Duration(minutes: 5),
+      this.nonInteractiveFlowTimout = const Duration(seconds: 1)}) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.enterpriseId = enterpriseId;
@@ -28,8 +30,7 @@ class SDK {
     _login = new Login(
         interactiveFlowTimeout: interactiveFlowTimeout,
         nonInteractiveFlowTimeout: nonInteractiveFlowTimout);
-    _resourcePicker = new ResourcePicker(
-        clientId, clientSecret,
+    _resourcePicker = new ResourcePicker(clientId, clientSecret,
         resourcePickerTimeoutDuration: interactiveFlowTimeout);
   }
 
@@ -49,7 +50,7 @@ class SDK {
     return status;
   }
 
-  Future<String> getAllDevices() async {
+  Future<Optional<String>> getAllDevices() async {
     if (_accessDevices == null) {
       return null;
     } else {
@@ -57,7 +58,7 @@ class SDK {
     }
   }
 
-  Future<String> getAllStructures() async {
+  Future<Optional<String>> getAllStructures() async {
     if (_accessDevices == null) {
       return null;
     } else {
@@ -65,7 +66,7 @@ class SDK {
     }
   }
 
-  Future<String> getDeviceStatus(String deviceId) async {
+  Future<Optional<String>> getDeviceStatus(String deviceId) async {
     if (_accessDevices == null) {
       return null;
     } else {

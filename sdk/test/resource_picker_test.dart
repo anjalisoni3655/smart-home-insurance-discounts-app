@@ -62,7 +62,6 @@ void main() {
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });
 
-
   test('test 3: API function takes longer than timeout set', () async {
     // Defining behaviour: throws an error on calling
     Future<AuthClient> mockClientViaUserConsent(
