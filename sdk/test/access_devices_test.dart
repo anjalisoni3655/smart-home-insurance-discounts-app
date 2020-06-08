@@ -11,30 +11,27 @@ class MockResponse extends Mock implements http.Response {}
 MockClient mockClient;
 MockResponse mockResponse;
 
-const String getAllDevicesUrl = "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices";
-const String getAllStructuresUrl = "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/structures";
-const String getDeviceStatusUrl = "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices/deviceId";
+const String getAllDevicesUrl =
+    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices";
+const String getAllStructuresUrl =
+    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/structures";
+const String getDeviceStatusUrl =
+    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices/deviceId";
 
 void main() {
   // Default setup
   setUp(() {
     mockClient = new MockClient();
     mockResponse = new MockResponse();
-    when(mockClient.post(
-        getAllDevicesUrl,
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer accessToken"
-        })).thenAnswer((_) => Future.value(mockResponse));
-    when(mockClient.post(
-      getAllStructuresUrl,
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer accessToken"
-        })).thenAnswer((_) => Future.value(mockResponse));
-    when(mockClient.post(
-      getDeviceStatusUrl,
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer accessToken"
-        })).thenAnswer((_) => Future.value(mockResponse));
+    when(mockClient.post(getAllDevicesUrl,
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+        .thenAnswer((_) => Future.value(mockResponse));
+    when(mockClient.post(getAllStructuresUrl,
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+        .thenAnswer((_) => Future.value(mockResponse));
+    when(mockClient.post(getDeviceStatusUrl,
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+        .thenAnswer((_) => Future.value(mockResponse));
   });
 
   test("test 1.1: get all devices successful http request", () async {
@@ -46,11 +43,9 @@ void main() {
 
   test("test 1.2: get all devices exception on http request", () async {
     // Defining behaviour: throws error
-    when(mockClient.post(
-        getAllDevicesUrl,
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer accessToken"
-        })).thenThrow(new Exception());
+    when(mockClient.post(getAllDevicesUrl,
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+        .thenThrow(new Exception());
     AccessDevices accessDevices =
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
     expect(await accessDevices.getAllDevices(), null);
@@ -58,11 +53,9 @@ void main() {
 
   test("test 1.3: get all devices timeout on http request", () async {
     // Defining behaviour: returns a response after 200 ms
-    when(mockClient.post(
-        getAllDevicesUrl,
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer accessToken"
-        })).thenAnswer((_) async {
+    when(mockClient.post(getAllDevicesUrl,
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+        .thenAnswer((_) async {
       await Future.delayed(new Duration(milliseconds: 200));
       return Future.value(mockResponse);
     }); // Mock response returns a body
@@ -84,11 +77,9 @@ void main() {
 
   test("test 2.2: get all structures exception on http request", () async {
     // Defining behaviour: throws error
-    when(mockClient.post(
-        getAllStructuresUrl,
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer accessToken"
-        })).thenThrow(new Exception());
+    when(mockClient.post(getAllStructuresUrl,
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+        .thenThrow(new Exception());
     AccessDevices accessDevices =
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
     expect(await accessDevices.getAllStructures(), null);
@@ -98,11 +89,9 @@ void main() {
       "test 2.3: get all structures returns response on http request in 200 ms",
       () async {
     // Defining behaviour: throws error
-    when(mockClient.post(
-        getAllStructuresUrl,
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer accessToken"
-        })).thenAnswer((_) async {
+    when(mockClient.post(getAllStructuresUrl,
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+        .thenAnswer((_) async {
       await Future.delayed(new Duration(milliseconds: 200));
       return Future.value(mockResponse);
     });
@@ -124,11 +113,9 @@ void main() {
 
   test("test 3.2: get devices status exception on http request", () async {
     // Defining behaviour: throws error
-    when(mockClient.post(
-        getDeviceStatusUrl,
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer accessToken"
-        })).thenThrow(new Exception());
+    when(mockClient.post(getDeviceStatusUrl,
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+        .thenThrow(new Exception());
     AccessDevices accessDevices =
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
     expect(await accessDevices.getDeviceStatus("deviceId"), null);
@@ -137,11 +124,9 @@ void main() {
   test(
       "test 3.3: get devices status returns response on http request in 200 ms",
       () async {
-    when(mockClient.post(
-        getDeviceStatusUrl,
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer accessToken"
-        })).thenAnswer((_) async {
+    when(mockClient.post(getDeviceStatusUrl,
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+        .thenAnswer((_) async {
       await Future.delayed(new Duration(milliseconds: 200));
       return Future.value(mockResponse);
     });
