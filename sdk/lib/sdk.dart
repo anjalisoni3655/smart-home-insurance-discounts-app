@@ -9,8 +9,8 @@ class SDK {
   ResourcePicker _resourcePicker;
   AccessDevices _accessDevices;
 
-  Duration interactiveFlowTimeout;
-  Duration nonInteractiveFlowTimout;
+  final Duration interactiveFlowTimeout;
+  final Duration nonInteractiveFlowTimout;
 
   String clientId;
   String clientSecret;
@@ -19,7 +19,7 @@ class SDK {
 
   SDK(String clientId, String clientSecret, String enterpriseId,
       String redirectURL,
-      {this.interactiveFlowTimeout, this.nonInteractiveFlowTimout}) {
+      {this.interactiveFlowTimeout = const Duration(minutes: 5), this.nonInteractiveFlowTimout = const Duration(seconds: 1)}) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.enterpriseId = enterpriseId;
