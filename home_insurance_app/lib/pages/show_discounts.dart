@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/company_offers.dart';
+import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
+import 'package:sdk/sdk.dart';
 
 Map data={};
 //Offers selected by the user 
 List<Offer> selectedOffers = new List<Offer>();
 // Offers displayed by the company 
 CompanyDataBase offers = new CompanyDataBase();
+
+SDK sdk = new SDK(); // add credentials
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -68,7 +73,13 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                         fontFamily: "PTSerifBI",
                       ),
                     ),
-                    onPressed: () {}, // resource picker url is launched
+                    onPressed: () async {
+                      String status = await sdk.requestDeviceAccess();
+                      print(status);
+                      if(status == "authorization successful") {
+                        print(await sdk.getAllDevices());
+                      }
+                    }, // resource picker url is launched
                     backgroundColor: Colors.lightBlueAccent,
                   ),
                 ),

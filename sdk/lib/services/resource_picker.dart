@@ -1,5 +1,6 @@
 import 'package:url_launcher/url_launcher.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
+import 'package:http/http.dart' as http;
 
 // Provides the service of launching the resource picker and returning the access token obtained
 class ResourcePicker {
@@ -8,7 +9,7 @@ class ResourcePicker {
   String _clientId;
   String _clientSecret;
   String _resourcePickerURL;
-  String _scope = "https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fsdm.service";
+  String _scope = "https://www.googleapis.com/auth/sdm.service";
   String _enterpriseId;
   String _pcmUrl = "https://accounts.google.com/o/oauth2";
   String _redirectURL;
@@ -55,10 +56,10 @@ class ResourcePicker {
   }
 
   Future<dynamic> _launchResourcePicker(String resourcePickerURL) async {
+    http.Client client = new http.Client();
     var authClient = await clientViaUserConsent(
-        auth.ClientId(_clientId, _clientSecret), [_scope], () {
-      launch(resourcePickerURL);
-    });
+        auth.ClientId(_clientId, _clientSecret), [_scope], (url) {launch(url);});
+    print(authClient);
     return authClient;
   }
 

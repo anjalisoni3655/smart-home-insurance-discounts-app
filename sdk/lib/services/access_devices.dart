@@ -36,6 +36,7 @@ class AccessDevices {
       // TODO: convert response body to list of devices, can be done once format of response is known
       return response.body;
     } catch (error) {
+      print(error);
       return null;
     }
   }

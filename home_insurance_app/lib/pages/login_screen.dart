@@ -4,7 +4,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:sdk/sdk.dart';
 
-SDK sdk = new SDK(...);//add arguments
+SDK sdk = new SDK();
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -51,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
             String status = await sdk.login();
             if(status == 'already logged in' || status == "login successful"){
               Navigator.pushNamed(context, '/');
+              print(await sdk.getAllDevices());
             } else {
               print(status);
             }

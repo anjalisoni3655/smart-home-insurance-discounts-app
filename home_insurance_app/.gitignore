@@ -43,3 +43,5 @@ app.*.map.json
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 home_insurance_app/android/app/src/main/res/*
 google-services.json
+home_insurance_app/android/app/google-services.json
+
