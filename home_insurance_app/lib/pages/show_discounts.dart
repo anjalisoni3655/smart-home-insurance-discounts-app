@@ -131,7 +131,8 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       //Current Selected state of corresponding discount is reversed
                       isSelected[index] = !isSelected[index];
                       if (isSelected[index] == true)
-                        selectedOffers.add(CompanyOffers.availableOffers[index]);
+                        selectedOffers
+                            .add(CompanyOffers.availableOffers[index]);
                       else {
                         // It is deselected , so remove from list
                         selectedOffers.removeAt(selectedOffers
