@@ -57,7 +57,15 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               SizedBox(height: 10.0),
               SizedBox(height: 20.0),
               RadioGroup(),
-              SizedBox(height: 30.0),
+              SizedBox(height: 10.0),
+              Text(
+                'Scroll Down',
+                style: TextStyle(
+                  fontFamily: 'PTSerifR',
+                  fontSize: 10.0,
+                ),
+              ),
+              SizedBox(height: 20.0),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
