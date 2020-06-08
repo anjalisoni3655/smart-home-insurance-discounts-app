@@ -20,7 +20,6 @@ MockAccessToken mockRefreshToken;
 
 void main() {
   // Set up initialising mock objects
-
   setUp(() {
     mockAuthClient = new MockAuthClient();
     mockAccessCredentials = new MockAccessCredentials();
