@@ -8,6 +8,6 @@ class DisplayDiscounts extends StatefulWidget {
 class DisplayDiscountsState extends State<DisplayDiscounts> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text('Display Discounts'));
+    return Container(child: Text('Available Discounts'));
   }
 }
