@@ -42,7 +42,7 @@ class SDK {
 
   Future<String> requestDeviceAccess() async {
     String status = await _resourcePicker.askForAuthorization();
-    if (status == "authentication successful") {
+    if (status == "authorization successful") {
       _accessDevices = new AccessDevices(
           _resourcePicker.accessToken, this.enterpriseId,
           accessDevicesTimeoutDuration: nonInteractiveFlowTimout);
