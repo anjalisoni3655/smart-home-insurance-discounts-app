@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/company_offers.dart';
+import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 
-Map data={};
-//Offers selected by the user 
+Map data = {};
+//Offers selected by the user
 List<Offer> selectedOffers = new List<Offer>();
-// Offers displayed by the company 
+// Offers displayed by the company
 CompanyDataBase offers = new CompanyDataBase();
 
 class DisplayDiscounts extends StatefulWidget {
@@ -88,20 +88,22 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                     ),
                     onPressed: () {
                       // if data is null , it means that user has not selected any policy and user just wants to view the discounts .
-                     if(data!=null){
-                     //calculate total discount
-                      int totalDiscount = offers.getTotalDiscount(selectedOffers);
-                      // get total Amount paid 
-                      double finalAmount = offers.getFinalCost(data['selectedPolicy'].cost,totalDiscount);
-                      //pops the current page 
-                      Navigator.pop(context); 
-                      //Pops the previous page in the stack which is choose_policy page.
-                      //For now all these argumenst are  send to the home page   
-                      Navigator.pop(context,{
-                      'totalDiscount' : totalDiscount , 
-                      'amountpaid' : finalAmount,
-                      'selectedPolicy':data['selectedPolicy'],
-                      });
+                      if (data != null) {
+                        //calculate total discount
+                        int totalDiscount =
+                            offers.getTotalDiscount(selectedOffers);
+                        // get total Amount paid
+                        double finalAmount = offers.getFinalCost(
+                            data['selectedPolicy'].cost, totalDiscount);
+                        //pops the current page
+                        Navigator.pop(context);
+                        //Pops the previous page in the stack which is choose_policy page.
+                        //For now all these argumenst are  send to the home page
+                        Navigator.pop(context, {
+                          'totalDiscount': totalDiscount,
+                          'amountpaid': finalAmount,
+                          'selectedPolicy': data['selectedPolicy'],
+                        });
                       }
                     },
                     backgroundColor: Colors.lightBlueAccent,
@@ -122,13 +124,13 @@ class AllDiscounts extends StatefulWidget {
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
-  List<bool> isSelected = List.filled(offers.availableOffers.length,
+  List<bool> isSelected = List.filled(CompanyDataBase.availableOffers.length,
       false); // Initially all policies are deselected
 
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-          itemCount: offers.availableOffers.length,
+          itemCount: CompanyDataBase.availableOffers.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -150,11 +152,12 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       //Current Selected state of corresponding discount is reversed
                       isSelected[index] = !isSelected[index];
                       if (isSelected[index] == true)
-                        selectedOffers.add(offers.availableOffers[index]);
+                        selectedOffers
+                            .add(CompanyDataBase.availableOffers[index]);
                       else {
                         // It is deselected , so remove from list
                         selectedOffers.removeAt(selectedOffers
-                            .indexOf(offers.availableOffers[index]));
+                            .indexOf(CompanyDataBase.availableOffers[index]));
                       }
                     });
                   },
@@ -164,7 +167,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 10,
                           child: Column(
-                              children: (offers.availableOffers[index])
+                              children: (CompanyDataBase.availableOffers[index])
                                   .requirements
                                   .entries
                                   .map(
@@ -189,7 +192,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 2,
                           child: Text(
-                            '${offers.availableOffers[index].discount} %',
+                            '${CompanyDataBase.availableOffers[index].discount} %',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
