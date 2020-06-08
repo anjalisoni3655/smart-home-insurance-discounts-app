@@ -67,8 +67,8 @@ class AccessDevices {
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       var result = jsonDecode(response.body);
-      return Optional.of(result["traits"]["sdm.devices.traits.DeviceConnectivityTrait"]
-          ["status"]);
+      return Optional.of(result["traits"]
+          ["sdm.devices.traits.DeviceConnectivityTrait"]["status"]);
     } catch (error) {
       return Optional.empty();
     }

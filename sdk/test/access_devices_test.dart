@@ -89,7 +89,8 @@ void main() {
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
-    expect((await accessDevices.getAllStructures()).value, "list of structures");
+    expect(
+        (await accessDevices.getAllStructures()).value, "list of structures");
   });
 
   test("test 2.2: get all structures exception on http request", () async {
