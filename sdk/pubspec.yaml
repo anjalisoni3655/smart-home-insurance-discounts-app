@@ -10,11 +10,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+<<<<<<< HEAD
 
+=======
+  google_sign_in: ^4.5.1
+  googleapis: any
+  googleapis_auth: any
+  url_launcher: ^5.1.2
+  mockito: ^4.1.1
+>>>>>>> d0d61ca0e004471d36b4b538f2ab67119075bcab
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+<<<<<<< HEAD
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -51,3 +60,6 @@ flutter:
   #
   # For details regarding fonts in packages, see
   # https://flutter.dev/custom-fonts/#from-packages
+=======
+flutter:
+>>>>>>> d0d61ca0e004471d36b4b538f2ab67119075bcab

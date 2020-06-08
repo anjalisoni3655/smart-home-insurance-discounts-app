@@ -83,7 +83,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
   }
 }
 
-// This class is used to display a list of policies preceded by the radio buttons 
+// This class is used to display a list of policies preceded by the radio buttons
 class RadioGroup extends StatefulWidget {
   @override
   _RadioGroupState createState() => _RadioGroupState();
