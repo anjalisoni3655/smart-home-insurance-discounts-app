@@ -13,3 +13,10 @@ to enable home insurance providers give discounts to home owners if they have ce
 4. Go to settings -> flutter and add the path to flutter SDK if not already present.
 5. Connect device/ emulator and run the app.
 
+** To setup the credentials  for the OAuth2.0 flow**
+1. Add the latest version of flutter_config package in the pubspec.yaml file below the dev_dependencies section.
+2. Create a .env file in the root of the project and store all the credentials:
+API_ID= abdff
+API_URL=https://github.com
+3.Also add this .env file in gitignore file once done and then test the app in the local device, then we can push the code to github safely.
+For detailed instruction on how to setup environment variables in the project follow this link:https://github.com/ByneappLLC/flutter_config
