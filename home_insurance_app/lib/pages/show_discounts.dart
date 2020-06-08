@@ -5,8 +5,6 @@ import 'package:homeinsuranceapp/data/offer.dart';
 Map data;
 //Offers selected by the user
 List<Offer> selectedOffers = new List<Offer>();
-//Offers displayed by the company
-CompanyOffers offers = new CompanyOffers();
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -105,13 +103,13 @@ class AllDiscounts extends StatefulWidget {
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
-  List<bool> isSelected = List.filled(offers.availableOffers.length,
+  List<bool> isSelected = List.filled(CompanyOffers.availableOffers.length,
       false); // Initially all policies are deselected
 
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-          itemCount: offers.availableOffers.length,
+          itemCount: CompanyOffers.availableOffers.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -133,11 +131,11 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       //Current Selected state of corresponding discount is reversed
                       isSelected[index] = !isSelected[index];
                       if (isSelected[index] == true)
-                        selectedOffers.add(offers.availableOffers[index]);
+                        selectedOffers.add(CompanyOffers.availableOffers[index]);
                       else {
                         // It is deselected , so remove from list
                         selectedOffers.removeAt(selectedOffers
-                            .indexOf(offers.availableOffers[index]));
+                            .indexOf(CompanyOffers.availableOffers[index]));
                       }
                     });
                   },
@@ -147,7 +145,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 10,
                           child: Column(
-                              children: (offers.availableOffers[index])
+                              children: (CompanyOffers.availableOffers[index])
                                   .requirements
                                   .entries
                                   .map(
@@ -175,7 +173,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 2,
                           child: Text(
-                            '${offers.availableOffers[index].discount} %',
+                            '${CompanyOffers.availableOffers[index].discount} %',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
