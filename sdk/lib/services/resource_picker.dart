@@ -9,7 +9,6 @@ class ResourcePicker {
   String _clientId;
   String _clientSecret;
   String _scope = "https://www.googleapis.com/auth/sdm.service";
-//  String _redirectURL = "urn:ietf:wg:oauth:2.0:oob:auto";
   Duration resourcePickerTimeoutDuration;
   Function clientViaUserConsent;
 
@@ -32,7 +31,7 @@ class ResourcePicker {
   Future<String> askForAuthorization() async {
     // Launch URL for the resource picker and get back the access token that it returns
     try {
-      var authClient = await clientViaUserConsent(
+      auth.AuthClient authClient = await clientViaUserConsent(
           auth.ClientId(_clientId, _clientSecret), [_scope], (url) {
         launch(url);
       }).timeout(resourcePickerTimeoutDuration);

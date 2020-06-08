@@ -20,6 +20,7 @@ MockAccessToken mockRefreshToken;
 
 void main() {
   // Set up initialising mock objects
+
   setUp(() {
     mockAuthClient = new MockAuthClient();
     mockAccessCredentials = new MockAccessCredentials();
@@ -35,8 +36,8 @@ void main() {
   test('test 1: API function returns AuthClient', () async {
     // Creating a mock AuthClient that gives an access token
     // Defining the dummy function that will be passed on the resource picker to replace API call
-    AuthClient mockClientViaUserConsent(
-        ClientId clientId, List<String> scope, Function launchFunction()) {
+    Future<AuthClient> mockClientViaUserConsent(
+        ClientId clientId, List<String> scope, void launchFunction(String url)) async {
       return mockAuthClient;
     }
 
@@ -53,7 +54,7 @@ void main() {
   test('test 2: API function throws error', () async {
     // Defining behaviour: throws an error on calling
     AuthClient mockClientViaUserConsent(
-        ClientId clientId, List<String> scope, Function launchFunction()) {
+        ClientId clientId, List<String> scope, Function launchFunction) {
       throw new Exception();
     }
 
@@ -68,7 +69,7 @@ void main() {
   test('test 3: API function takes longer than timeout set', () async {
     // Defining behaviour: throws an error on calling
     Future<AuthClient> mockClientViaUserConsent(ClientId clientId,
-        List<String> scope, Function launchFunction()) async {
+        List<String> scope, Function launchFunction) async {
       await Future.delayed(new Duration(milliseconds: 200));
       return mockAuthClient;
     }
