@@ -16,13 +16,18 @@ to enable home insurance providers give discounts to home owners if they have ce
 **To setup the credentials  for the OAuth2.0 flow**
 To get the access to SDM API, one can follow the detailed instructions given in SDM API official documentation. Here is the link for the same https://developers.google.com/home/smart-device-management/consumer/get-started
 
-1. Add the latest version of flutter_config package in the pubspec.yaml file below the dev_dependencies section.
+1.Add the latest version of flutter_config package in the pubspec.yaml file below the dev_dependencies section.
 
-2. Create a .env file in the root of the project and store all the credentials:
+2.Create a .env file in the root of the project and store all the credentials:
+
 API_URL= url used for resource picker and OAuth flow
+
 API_URL2= url used for SDM API call
+
 API_CLIENTID=some client id from the OAuth token
+
 API_CLIENTSECRET= the client secret from the OAuth token.
+
 API_SCOPE= the scope string for SDM API
 
 3.Also add this .env file in gitignore file once done and then test the app in the local device, then we can push the code to github safely.
