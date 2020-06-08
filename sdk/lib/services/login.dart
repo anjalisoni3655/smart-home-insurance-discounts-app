@@ -23,9 +23,7 @@ class Login {
   Future<String> login() async {
     // returns status "login successful", "login failed", "already logged in"
     try {
-      if (await _googleSignIn
-          .isSignedIn()
-          .timeout(nonInteractiveFlowTimeout)) {
+      if (await _googleSignIn.isSignedIn().timeout(nonInteractiveFlowTimeout)) {
         return "already logged in";
       }
       await _googleSignIn.signIn().timeout(interactiveFlowTimeout);
@@ -39,9 +37,7 @@ class Login {
   Future<String> logout() async {
     // returns status "logout successful", "logout failed", "not logged in"
     try {
-      if (await _googleSignIn
-          .isSignedIn()
-          .timeout(nonInteractiveFlowTimeout)) {
+      if (await _googleSignIn.isSignedIn().timeout(nonInteractiveFlowTimeout)) {
         await _googleSignIn.signOut().timeout(nonInteractiveFlowTimeout);
         return "logout successful";
       }

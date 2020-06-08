@@ -3,8 +3,6 @@ import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 
 class HomePage extends StatefulWidget {
-  static const String id = 'home_screen';
-
   @override
   _HomePageState createState() => _HomePageState();
 }

@@ -8,8 +8,6 @@ import 'package:sdk/services/login.dart';
 Login login = new Login();
 
 class LoginScreen extends StatefulWidget {
-  static const String id = 'login_screen';
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -52,13 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
           colour: Colors.brown,
           onPressed: () async {
             await login.login();
-String a = await login.login();
-            print(' logged in');
-           if(a=='already logged in'){
-            Navigator.pushNamed(context, HomePage.id);
-           }
-////
-            //TODO: import sdk library to use the google login function
+            String status = await login.login();
+            if(status == 'already logged in' || status == "login successful"){
+              Navigator.pushNamed(context, '/');
+            }
           },
           //child: Text('SIGN OUT'),
         ),
