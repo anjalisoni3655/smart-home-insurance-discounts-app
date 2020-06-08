@@ -31,8 +31,9 @@ class AccessDevices {
 
   Future<dynamic> getAllDevices() async {
     try {
+      String request = URL + "enterprises/" + _enterpriseId + "/devices";
       final response = await _client.post(
-        URL + "enterprises/" + _enterpriseId + "/devices",
+        request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       // TODO: convert response body to list of devices, can be done once format of response is known
@@ -44,8 +45,9 @@ class AccessDevices {
 
   Future<dynamic> getAllStructures() async {
     try {
+      String request = URL + "enterprises/" + _enterpriseId + "/structures";
       final response = await _client.post(
-        URL + "enterprises/" + _enterpriseId + "/structures",
+        request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       // TODO: convert response body to list of structures, can be done once format of response is known
@@ -57,8 +59,9 @@ class AccessDevices {
 
   Future<dynamic> getDeviceStatus(String deviceId) async {
     try {
+      String request = URL + "enterprises/" + _enterpriseId + "/structures";
       http.Response response = await _client.post(
-        URL + "enterprises/" + _enterpriseId + "/devices/" + deviceId,
+        request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       var result = jsonDecode(response.body);
