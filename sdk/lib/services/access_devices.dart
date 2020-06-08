@@ -10,7 +10,7 @@ class AccessDevices {
 
   String _accessToken;
   String _enterpriseId;
-  Duration accessDevicesTimeoutDuration;
+  final Duration accessDevicesTimeoutDuration;
   http.Client _client;
 
   AccessDevices(String accessToken, String enterpriseId,
@@ -59,7 +59,7 @@ class AccessDevices {
 
   Future<dynamic> getDeviceStatus(String deviceId) async {
     try {
-      String request = URL + "enterprises/" + _enterpriseId + "/structures";
+      String request = URL + "enterprises/" + _enterpriseId + "/devices/" + deviceId;
       http.Response response = await _client.post(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
