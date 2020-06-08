@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
+// Provides helper functions to get list of devices, structures, status of devices etc.
 class AccessDevices {
   static const String URL =
       "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/";
 
   String _accessToken;
   String _enterpriseId;
-  Duration accessDevicesTimeoutDuration;
+  final Duration accessDevicesTimeoutDuration;
   http.Client _client;
 
   AccessDevices(String accessToken, String enterpriseId,
@@ -18,7 +19,6 @@ class AccessDevices {
     _client = new http.Client();
   }
 
-  // Passing an http client to accessAdevices while testing (will be a mock object)
   AccessDevices.test(
       String accessToken, String enterpriseId, http.Client client,
       {this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
@@ -29,8 +29,9 @@ class AccessDevices {
 
   Future<dynamic> getAllDevices() async {
     try {
+      String request = URL + "enterprises/" + _enterpriseId + "/devices";
       final response = await _client.post(
-        URL + "enterprises/" + _enterpriseId + "/devices",
+        request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       // TODO: convert response body to list of devices, can be done once format of response is known
@@ -42,8 +43,9 @@ class AccessDevices {
 
   Future<dynamic> getAllStructures() async {
     try {
+      String request = URL + "enterprises/" + _enterpriseId + "/structures";
       final response = await _client.post(
-        URL + "enterprises/" + _enterpriseId + "/structures",
+        request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       // TODO: convert response body to list of structures, can be done once format of response is known
@@ -55,8 +57,10 @@ class AccessDevices {
 
   Future<dynamic> getDeviceStatus(String deviceId) async {
     try {
+      String request =
+          URL + "enterprises/" + _enterpriseId + "/devices/" + deviceId;
       http.Response response = await _client.post(
-        URL + "enterprises/" + _enterpriseId + "/devices/" + deviceId,
+        request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
       var result = jsonDecode(response.body);

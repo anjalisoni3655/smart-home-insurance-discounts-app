@@ -29,7 +29,7 @@ class SDK {
         interactiveFlowTimeout: interactiveFlowTimeout,
         nonInteractiveFlowTimeout: nonInteractiveFlowTimout);
     _resourcePicker = new ResourcePicker(
-        clientId, clientSecret, enterpriseId, redirectURL,
+        clientId, clientSecret,
         resourcePickerTimeoutDuration: interactiveFlowTimeout);
   }
 
