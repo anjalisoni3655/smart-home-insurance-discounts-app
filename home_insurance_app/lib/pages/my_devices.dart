@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 //List of structures that would be derived from API call
 List<String> structures = ["Home1", "Home2", "Home3"];
-//List of devices present in each selected structure - derived from API call.
+//List of devices present in  selected structure - derived from API call.
 List<String> devices = [
   "ThermostatT1",
   "ThermostatT2",
