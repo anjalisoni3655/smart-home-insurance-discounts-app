@@ -10,7 +10,7 @@ String city;
 String state;
 int pincode;
 
-// Widget for getting , validating and storing User Adrress
+// Widget for getting , validating and storing User Address
 class HomeDetails extends StatefulWidget {
   @override
   _HomeDetailsState createState() => _HomeDetailsState();

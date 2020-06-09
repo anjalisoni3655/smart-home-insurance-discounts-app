@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
+import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
 import 'package:homeinsuranceapp/pages/choose_policy.dart';
 
+import 'pages/home.dart';
+
+// this is the root of our application
 void main() {
   runApp(MyApp());
 }
 
-// This class is used to store all routes and takes the user to the page corresponding to initial route ('/)
+// MyApp is used to store all routes and takes the user to the page corresponding to initial route ('/)
 class MyApp extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Smart Home',
+      initialRoute: LoginScreen.id,
       routes: {
-        '/': (context) => HomePage(),
+        LoginScreen.id: (context) => LoginScreen(),
+        HomePage.id: (context) => HomePage(),
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),
       },
