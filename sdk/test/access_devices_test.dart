@@ -41,7 +41,6 @@ const structureList = [
   }
 ];
 
-
 void main() {
   // Default setup
   setUp(() {
