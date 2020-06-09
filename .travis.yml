@@ -12,18 +12,13 @@ before_script:
   - git clone https://github.com/flutter/flutter.git -b beta
   - ./flutter/bin/flutter doctor
 jobs:
-  - name: test app
-    if: event = pr
-    script: cd home_insurance_app; ../flutter/bin/flutter test;
+    script: 'if [ "$TRAVIS_PULL_REQUEST" != "true" ]; then cd home_insurance_app; ../flutter/bin/flutter test; fi';
   - name: format app
-    if: event = pr
-    script: ./flutter/bin/flutter format -n --set-exit-if-changed home_insurance_app/lib/* home_insurance_app/test/*
+    script: 'if [ "$TRAVIS_PULL_REQUEST" != "true" ]; then ./flutter/bin/flutter format -n --set-exit-if-changed home_insurance_app/lib/* home_insurance_app/test/*; fi]'
   - name: test sdk
-    if: event = pr
-    script: cd sdk; ../flutter/bin/flutter test;
+    script: 'if [ "$TRAVIS_PULL_REQUEST" != "true" ]; then cd sdk; ../flutter/bin/flutter test; fi';
   - name: format sdk
-    if: event = pr
-    script: ./flutter/bin/flutter format -n --set-exit-if-changed sdk/lib/* sdk/test/*
+    script: 'if [ "$TRAVIS_PULL_REQUEST" != "true" ]; then ./flutter/bin/flutter format -n --set-exit-if-changed sdk/lib/* sdk/test/*; fi]'
 cache:
   directories:
     - $HOME/.pub-cache
