@@ -18,25 +18,27 @@ const String getAllStructuresUrl =
 const String getDeviceStatusUrl =
     "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices/device-id";
 
-const deviceResponse = '{"name" : "/enterprises/enterprise-id/devices/device-id","type" : "sdm.devices.types.device-type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}}}';
+const deviceResponse =
+    '{"name" : "/enterprises/enterprise-id/devices/device-id","type" : "sdm.devices.types.device-type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}}}';
 const deviceListResponse = '{ "devices": [' + deviceResponse + '] }';
-const structureListResponse = '{"structures": [{"name": "enterprises/sdm-internal/structures/AVPHwEtfUkCviHmeFD_OR4HNMExGmuPENGmG_9BsP5C-05EWFbrQpgZV5laMe8GhMiyg3XXTbI5AvTzzYUoQ03Zd6pQ8","traits": {"sdm.structures.traits.Info": {"customName": "Second home"}}},{"name": "enterprises/sdm-internal/structures/AVPHwEvTILTn3tYCarertyG3cExQYAdHxF5xhVSDf5eQc6F8gi4ThQDGirY7_n-XzYcs9DQChQ8obbUihc0h2YWg5EDy","traits": {"sdm.structures.traits.Info": {"customName": "Onyx Home"}}}]}';
+const structureListResponse =
+    '{"structures": [{"name": "enterprises/sdm-internal/structures/AVPHwEtfUkCviHmeFD_OR4HNMExGmuPENGmG_9BsP5C-05EWFbrQpgZV5laMe8GhMiyg3XXTbI5AvTzzYUoQ03Zd6pQ8","traits": {"sdm.structures.traits.Info": {"customName": "Second home"}}},{"name": "enterprises/sdm-internal/structures/AVPHwEvTILTn3tYCarertyG3cExQYAdHxF5xhVSDf5eQc6F8gi4ThQDGirY7_n-XzYcs9DQChQ8obbUihc0h2YWg5EDy","traits": {"sdm.structures.traits.Info": {"customName": "Onyx Home"}}}]}';
 
 const device = {
   'id': 'device-id',
   'customName': null,
   'type': 'sdm.devices.types.device-type'
 };
-const deviceList = [
-  device
-];
+const deviceList = [device];
 const structureList = [
   {
-    'id': 'AVPHwEtfUkCviHmeFD_OR4HNMExGmuPENGmG_9BsP5C-05EWFbrQpgZV5laMe8GhMiyg3XXTbI5AvTzzYUoQ03Zd6pQ8',
+    'id':
+        'AVPHwEtfUkCviHmeFD_OR4HNMExGmuPENGmG_9BsP5C-05EWFbrQpgZV5laMe8GhMiyg3XXTbI5AvTzzYUoQ03Zd6pQ8',
     'customName': {'customName': 'Second home'}
   },
   {
-    'id': 'AVPHwEvTILTn3tYCarertyG3cExQYAdHxF5xhVSDf5eQc6F8gi4ThQDGirY7_n-XzYcs9DQChQ8obbUihc0h2YWg5EDy',
+    'id':
+        'AVPHwEvTILTn3tYCarertyG3cExQYAdHxF5xhVSDf5eQc6F8gi4ThQDGirY7_n-XzYcs9DQChQ8obbUihc0h2YWg5EDy',
     'customName': {'customName': 'Onyx Home'}
   }
 ];
@@ -47,13 +49,13 @@ void main() {
     mockClient = new MockClient();
     mockResponse = new MockResponse();
     when(mockClient.post(getAllDevicesUrl,
-        headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenAnswer((_) => Future.value(mockResponse));
     when(mockClient.post(getAllStructuresUrl,
-        headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenAnswer((_) => Future.value(mockResponse));
     when(mockClient.post(getDeviceStatusUrl,
-        headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenAnswer((_) => Future.value(mockResponse));
   });
 
@@ -63,7 +65,7 @@ void main() {
 
     // initialising class (behaviour same as setup)
     AccessDevices accessDevices =
-    new AccessDevices.test("accessToken", "enterpriseId", mockClient);
+        new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
     expect((await accessDevices.getAllDevices()).value, deviceList);
@@ -72,12 +74,12 @@ void main() {
   test("test 1.2: get all devices exception on http request", () async {
     // Defining behaviour: throws error
     when(mockClient.post(getAllDevicesUrl,
-        headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenThrow(new Exception());
 
     // initialising class
     AccessDevices accessDevices =
-    new AccessDevices.test("accessToken", "enterpriseId", mockClient);
+        new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
     expect((await accessDevices.getAllDevices()).isEmpty, true);
@@ -86,7 +88,7 @@ void main() {
   test("test 1.3: get all devices timeout on http request", () async {
     // Defining behaviour: returns a response after 200 ms
     when(mockClient.post(getAllDevicesUrl,
-        headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenAnswer((_) async {
       await Future.delayed(new Duration(milliseconds: 200));
       return Future.value(mockResponse);
@@ -108,22 +110,21 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices =
-    new AccessDevices.test("accessToken", "enterpriseId", mockClient);
+        new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
-    expect(
-        (await accessDevices.getAllStructures()).value, structureList);
+    expect((await accessDevices.getAllStructures()).value, structureList);
   });
 
   test("test 2.2: get all structures exception on http request", () async {
     // Defining behaviour: throws error
     when(mockClient.post(getAllStructuresUrl,
-        headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenThrow(new Exception());
 
     // initialising class
     AccessDevices accessDevices =
-    new AccessDevices.test("accessToken", "enterpriseId", mockClient);
+        new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
     expect((await accessDevices.getAllStructures()).isEmpty, true);
@@ -131,24 +132,24 @@ void main() {
 
   test(
       "test 2.3: get all structures returns response on http request in 200 ms",
-          () async {
-        // Defining behaviour: throws error
-        when(mockClient.post(getAllStructuresUrl,
+      () async {
+    // Defining behaviour: throws error
+    when(mockClient.post(getAllStructuresUrl,
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
-            .thenAnswer((_) async {
-          await Future.delayed(new Duration(milliseconds: 200));
-          return Future.value(mockResponse);
-        });
-        when(mockResponse.body).thenReturn("list of structures");
+        .thenAnswer((_) async {
+      await Future.delayed(new Duration(milliseconds: 200));
+      return Future.value(mockResponse);
+    });
+    when(mockResponse.body).thenReturn("list of structures");
 
-        // initialising class
-        AccessDevices accessDevices = new AccessDevices.test(
-            "accessToken", "enterpriseId", mockClient,
-            accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
+    // initialising class
+    AccessDevices accessDevices = new AccessDevices.test(
+        "accessToken", "enterpriseId", mockClient,
+        accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
 
-        // testing
-        expect((await accessDevices.getAllStructures()).isEmpty, true);
-      });
+    // testing
+    expect((await accessDevices.getAllStructures()).isEmpty, true);
+  });
 
   test("test 3.1: get device status successful http request", () async {
     // Defining behaviour
@@ -156,7 +157,7 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices =
-    new AccessDevices.test("accessToken", "enterpriseId", mockClient);
+        new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
     expect((await accessDevices.getDeviceStatus("device-id")).value, "ONLINE");
@@ -165,12 +166,12 @@ void main() {
   test("test 3.2: get devices status exception on http request", () async {
     // Defining behaviour: throws error
     when(mockClient.post(getDeviceStatusUrl,
-        headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenThrow(new Exception());
 
     // initialising class
     AccessDevices accessDevices =
-    new AccessDevices.test("accessToken", "enterpriseId", mockClient);
+        new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
     expect((await accessDevices.getDeviceStatus("device-id")).isEmpty, true);
@@ -178,22 +179,22 @@ void main() {
 
   test(
       "test 3.3: get devices status returns response on http request in 200 ms",
-          () async {
-        // defining behaviour
-        when(mockClient.post(getDeviceStatusUrl,
+      () async {
+    // defining behaviour
+    when(mockClient.post(getDeviceStatusUrl,
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
-            .thenAnswer((_) async {
-          await Future.delayed(new Duration(milliseconds: 200));
-          return Future.value(mockResponse);
-        });
-        when(mockResponse.body).thenReturn(deviceResponse);
+        .thenAnswer((_) async {
+      await Future.delayed(new Duration(milliseconds: 200));
+      return Future.value(mockResponse);
+    });
+    when(mockResponse.body).thenReturn(deviceResponse);
 
-        // initialising class
-        AccessDevices accessDevices = new AccessDevices.test(
-            "accessToken", "enterpriseId", mockClient,
-            accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
+    // initialising class
+    AccessDevices accessDevices = new AccessDevices.test(
+        "accessToken", "enterpriseId", mockClient,
+        accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
 
-        // testing
-        expect((await accessDevices.getDeviceStatus("device-id")).isEmpty, true);
-      });
+    // testing
+    expect((await accessDevices.getDeviceStatus("device-id")).isEmpty, true);
+  });
 }

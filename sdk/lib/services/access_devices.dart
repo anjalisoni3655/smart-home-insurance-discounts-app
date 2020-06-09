@@ -7,8 +7,8 @@ import 'package:optional/optional.dart';
 
 String getId(String name) {
   String deviceId = '';
-  for(int i = 0; i < name.length; ++ i) {
-    if(name[i] == '/') {
+  for (int i = 0; i < name.length; ++i) {
+    if (name[i] == '/') {
       deviceId = '';
     } else {
       deviceId += name[i];
@@ -51,7 +51,7 @@ class AccessDevices {
       ).timeout(accessDevicesTimeoutDuration);
       var result = jsonDecode(response.body);
       List devices = [];
-      for(var device in result['devices']) {
+      for (var device in result['devices']) {
         devices.add({
           'id': getId(device['name']),
           'customName': device['traits']['sdm.devices.traits.Info'],
@@ -74,8 +74,9 @@ class AccessDevices {
       ).timeout(accessDevicesTimeoutDuration);
       var result = jsonDecode(response.body);
       List structures = [];
-      for(var structure in result['structures']) {
-        structures.add({'id': getId(structure['name']),
+      for (var structure in result['structures']) {
+        structures.add({
+          'id': getId(structure['name']),
           'customName': structure['traits']['sdm.structures.traits.Info'],
         });
       }
@@ -96,7 +97,7 @@ class AccessDevices {
       ).timeout(accessDevicesTimeoutDuration);
       var result = jsonDecode(response.body);
       return Optional.of(result["traits"]
-      ["sdm.devices.traits.DeviceConnectivityTrait"]["status"]);
+          ["sdm.devices.traits.DeviceConnectivityTrait"]["status"]);
     } catch (error) {
       print(error);
       return Optional.empty();
