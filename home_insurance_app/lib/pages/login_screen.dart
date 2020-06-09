@@ -13,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -25,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildBody() {
     return Column(
+
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
@@ -37,12 +39,13 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height,
+          //height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height*0.03,
         ),
 
         Text('Log in to Continue'),
         SizedBox(
-          height: MediaQuery.of(context).size.height,,
+          height: MediaQuery.of(context).size.width*0.04,
         ),
         RoundedButton(
           title: 'LOG IN',
