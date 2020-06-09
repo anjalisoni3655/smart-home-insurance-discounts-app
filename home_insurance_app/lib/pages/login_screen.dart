@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/components/rounded_buttons.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 
@@ -45,19 +44,23 @@ class _LoginScreenState extends State<LoginScreen> {
         SizedBox(
           height: MediaQuery.of(context).size.width * 0.04,
         ),
-        RoundedButton(
-          key: Key('navigateToHome'),
-          title: 'LOG IN',
-          colour: Colors.brown,
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return HomePage();
-            }));
-            //TODO: import sdk library to use the google login function
-          },
-          //child: Text('SIGN OUT'),
-        ),
+        RaisedButton(
+            key: Key('navigateToHome'),
+            child: Text("LOG IN WITH GOOGLE"),
+            color: Colors.brown,
+            textColor: Colors.white,
+            onPressed: (){
+
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return HomePage();
+              }));
+//TODO: import sdk library to use the google login function
+
+            },
+            shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+        )
       ],
     );
   }
 }
+
