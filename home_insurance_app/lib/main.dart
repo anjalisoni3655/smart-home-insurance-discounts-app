@@ -10,7 +10,7 @@ void main() {
   runApp(MyApp());
 }
 
-// This class is used to store all routes and takes the user to the page corresponding to initial route ('/)
+// MyApp is used to store all routes and takes the user to the page corresponding to initial route ('/)
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
