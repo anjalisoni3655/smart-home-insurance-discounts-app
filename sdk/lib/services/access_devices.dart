@@ -65,6 +65,29 @@ class AccessDevices {
     }
   }
 
+  Future<Optional<List>> getDevicesOfStructure(String structureId) async {
+    try {
+      String request = URL + "enterprises/" + _enterpriseId + '/structures/' + structureId + "/devices";
+      final response = await _client.post(
+        request,
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
+      ).timeout(accessDevicesTimeoutDuration);
+      var result = jsonDecode(response.body);
+      List devices = [];
+      for (var device in result['devices']) {
+        devices.add({
+          'id': getId(device['name']),
+          'customName': device['traits']['sdm.devices.traits.Info'],
+          'type': device['type'],
+        });
+      }
+      return Optional.of(devices);
+    } catch (error) {
+      print(error);
+      return Optional.empty();
+    }
+  }
+
   Future<Optional<List>> getAllStructures() async {
     try {
       String request = URL + "enterprises/" + _enterpriseId + "/structures";
