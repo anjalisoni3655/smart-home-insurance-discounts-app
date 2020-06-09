@@ -4,8 +4,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const String id = 'login_screen';
-  static const navigateToDetailsButtonKey = Key('navigateToDetails');
+  static const String id = '/';
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -27,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildBody() {
     return Column(
-
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
@@ -41,19 +39,20 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         SizedBox(
           //height: MediaQuery.of(context).size.height,
-          height: MediaQuery.of(context).size.height*0.03,
+          height: MediaQuery.of(context).size.height * 0.03,
         ),
-
         Text('Log in to Continue'),
         SizedBox(
-          height: MediaQuery.of(context).size.width*0.04,
+          height: MediaQuery.of(context).size.width * 0.04,
         ),
         RoundedButton(
-          title: 'LOG IN',
           key: Key('navigateToHome'),
+          title: 'LOG IN',
+          colour: Colors.brown,
           onPressed: () {
-
-            Navigator.pushNamed(context, HomePage.id);
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return HomePage();
+            }));
             //TODO: import sdk library to use the google login function
           },
           //child: Text('SIGN OUT'),

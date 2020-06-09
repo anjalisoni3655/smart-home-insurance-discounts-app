@@ -8,32 +8,28 @@ import 'package:mockito/mockito.dart';
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
-  group('Login Page Widget Tests', () {
-    NavigatorObserver mockObserver;
-    setUp(() {
-      mockObserver = MockNavigatorObserver();
-    });
+  NavigatorObserver mockObserver;
+  setUp(() {
+    mockObserver = MockNavigatorObserver();
+  });
+  testWidgets('LoginPage Widget Test', (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: LoginScreen(),
+      navigatorObservers: [mockObserver],
+    ));
+    verify(mockObserver.didPush(any, any));
+    final titleFinder = find.text('Smart Home');
+    final messageFinder = find.text('Log in to Continue');
+    expect(titleFinder, findsOneWidget);
+    expect(messageFinder, findsOneWidget);
 
-    testWidgets('LoginPage Widget Test', (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(
-        home: LoginScreen(),
-        navigatorObservers: [mockObserver],
-      ));
-      verify(mockObserver.didPush(any, any));
-      final titleFinder = find.text('Smart Home');
-      final messageFinder = find.text('Log in to Continue');
-      expect(titleFinder, findsOneWidget);
-      expect(messageFinder, findsOneWidget);
+    //Finds Button
+    expect(find.byType(RoundedButton), findsOneWidget);
 
-      //Finds Button
-      expect(find.byType(RoundedButton), findsOneWidget);
-
-      //Checks whether Navigator gets pushed or not
-
-      await tester.tap(find.byKey(Key('navigateToHome')));
-      await tester.pumpAndSettle();
-      verify(mockObserver.didPush(any, any));
-      expect(find.byType(HomePage), findsOneWidget);
-    });
+    //Checks whether Navigator gets pushed or not
+    await tester.tap(find.byType(RoundedButton));
+    await tester.pumpAndSettle();
+    verify(mockObserver.didPush(any, any));
+    expect(find.byType(HomePage), findsOneWidget);
   });
 }
