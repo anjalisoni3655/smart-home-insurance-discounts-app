@@ -17,13 +17,15 @@ class DisplayPolicies extends StatefulWidget {
   _DisplayPoliciesState createState() => _DisplayPoliciesState();
 }
 
-Map data = {};
-
 class _DisplayPoliciesState extends State<DisplayPolicies> {
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+    double screenheight = mediaQuery.size.height;
+    double screenwidth = mediaQuery.size.width;
+
     // data stores the policies available for the user as a key-value pair.
-    data = ModalRoute.of(context).settings.arguments;
+    Map data = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: CommonAppBar(),
       floatingActionButton: FloatingActionButton.extended(
@@ -43,7 +45,8 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenwidth / 30, vertical: screenheight / 40),
               child: Text(
                 'Available Policies',
                 style: TextStyle(
@@ -52,7 +55,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 ),
               ),
             ),
-            SizedBox(height: 50.0),
+            SizedBox(height: screenheight / 40),
             GestureDetector(
               onTap: () => print(
                   "Get smart device discounts"), // Goes to the smart device discounts page
@@ -71,8 +74,8 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                         )),
                   )),
             ),
-            SizedBox(height: 20.0),
-            RadioGroup(),
+            SizedBox(height: screenheight / 40),
+            RadioGroup(data),
           ],
         ),
       ),
@@ -82,20 +85,24 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
 
 // This class is used to display a list of policies preceded by the radio buttons
 class RadioGroup extends StatefulWidget {
+  final Map data;
+  const RadioGroup(this.data);
+  //  RadioGroup({Key key , this.data}):super(key:key);
   @override
   _RadioGroupState createState() => _RadioGroupState();
 }
 
 class _RadioGroupState extends State<RadioGroup> {
-  Policy userChoice = data['policies']
-      [0]; //By default the first policy will be displayed as selected  .
-  int choosenIndex = 0;
+  Policy userChoice; // Stores the policy selected by the user
+  int choosenIndex = 0; // Stores the index corresponding to the selected policy
   List<Mapping> choices = new List<Mapping>();
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < data['policies'].length; i++) {
-      choices.add(new Mapping(i, data['policies'][i]));
+    userChoice = widget.data['policies']
+        [0]; //By default the first policy will be displayed as selected  .
+    for (int i = 0; i < widget.data['policies'].length; i++) {
+      choices.add(new Mapping(i, widget.data['policies'][i]));
     }
   }
 
@@ -106,13 +113,13 @@ class _RadioGroupState extends State<RadioGroup> {
         Container(
           child: Column(
             children: choices
-                .map((data) => RadioListTile(
+                .map((entry) => RadioListTile(
                       title: Row(
                         children: <Widget>[
                           Expanded(
                             flex: 8,
                             child: Text(
-                              '\n${data.policyOption.policyName} \nValid for ${data.policyOption.validity} years',
+                              '\n${entry.policyOption.policyName} \nValid for ${entry.policyOption.validity} years',
                               style: TextStyle(
                                 color: Colors.brown,
                                 fontSize: 17.0,
@@ -130,17 +137,17 @@ class _RadioGroupState extends State<RadioGroup> {
                               )),
                           Expanded(
                             flex: 2,
-                            child: Text('${data.policyOption.cost}'),
+                            child: Text('${entry.policyOption.cost}'),
                           ),
                         ],
                       ),
                       groupValue: choosenIndex,
                       activeColor: Colors.blue[500],
-                      value: data.index,
+                      value: entry.index,
                       onChanged: (value) {
                         // A radio button gets selected only when groupValue is equal to value of the respective radio button
                         setState(() {
-                          userChoice = data.policyOption;
+                          userChoice = entry.policyOption;
                           //To make groupValue equal to value for the radio button .
                           choosenIndex = value;
                           print(userChoice.policyName);

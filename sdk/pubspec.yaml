@@ -18,7 +18,12 @@ dependencies:
   googleapis_auth: any
   url_launcher: ^5.1.2
   mockito: ^4.1.1
+<<<<<<< HEAD
 >>>>>>> d0d61ca0e004471d36b4b538f2ab67119075bcab
+=======
+  optional: ^5.0.0
+
+>>>>>>> e6ca976110c8da97210aa03f096bbb9445bf5ad7
 dev_dependencies:
   flutter_test:
     sdk: flutter
