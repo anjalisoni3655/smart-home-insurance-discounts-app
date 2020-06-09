@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 
+// widget for the login with google
 class LoginScreen extends StatefulWidget {
   static const String id = '/';
 
@@ -49,18 +50,15 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text("LOG IN WITH GOOGLE"),
             color: Colors.brown,
             textColor: Colors.white,
-            onPressed: (){
-
+            onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return HomePage();
               }));
 //TODO: import sdk library to use the google login function
-
             },
-            shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
-        )
+            shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0)))
       ],
     );
   }
 }
-

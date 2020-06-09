@@ -7,7 +7,6 @@ import 'package:mockito/mockito.dart';
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
-
   NavigatorObserver mockObserver;
 
   setUp(() {
@@ -15,7 +14,6 @@ void main() {
   });
 
   testWidgets('LoginPage Widget Test', (WidgetTester tester) async {
-
     await tester.pumpWidget(MaterialApp(
       home: LoginScreen(),
       navigatorObservers: [mockObserver],
@@ -38,7 +36,5 @@ void main() {
     verify(mockObserver.didPush(any, any));
 
     expect(find.byType(HomePage), findsOneWidget);
-
   });
-
 }
