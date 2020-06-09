@@ -5,18 +5,6 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:optional/optional.dart';
 
-String getId(String name) {
-  String deviceId = '';
-  for(int i = 0; i < name.length; ++ i) {
-    if(name[i] == '/') {
-      deviceId = '';
-    } else {
-      deviceId += name[i];
-    }
-  }
-  return deviceId;
-}
-
 // Provides helper functions to get list of devices, structures, status of devices etc.
 class AccessDevices {
   static const String URL =
@@ -42,46 +30,30 @@ class AccessDevices {
     _client = client;
   }
 
-  Future<Optional<List>> getAllDevices() async {
+  Future<Optional<String>> getAllDevices() async {
     try {
       String request = URL + "enterprises/" + _enterpriseId + "/devices";
       final response = await _client.post(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
-      var result = jsonDecode(response.body);
-      List devices = [];
-      for(var device in result['devices']) {
-        devices.add({
-          'id': getId(device['name']),
-          'customName': device['traits']['sdm.devices.traits.Info'],
-          'type': device['type'],
-        });
-      }
-      return Optional.of(devices);
+      // TODO: convert response body to list of devices, can be done once format of response is known
+      return Optional.of(response.body);
     } catch (error) {
-      print(error);
       return Optional.empty();
     }
   }
 
-  Future<Optional<List>> getAllStructures() async {
+  Future<Optional<String>> getAllStructures() async {
     try {
       String request = URL + "enterprises/" + _enterpriseId + "/structures";
       final response = await _client.post(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
-      var result = jsonDecode(response.body);
-      List structures = [];
-      for(var structure in result['structures']) {
-        structures.add({'id': getId(structure['name']),
-          'customName': structure['traits']['sdm.structures.traits.Info'],
-        });
-      }
-      return Optional.of(structures);
+      // TODO: convert response body to list of structures, can be done once format of response is known
+      return Optional.of(response.body);
     } catch (error) {
-      print(error);
       return Optional.empty();
     }
   }
@@ -98,7 +70,6 @@ class AccessDevices {
       return Optional.of(result["traits"]
           ["sdm.devices.traits.DeviceConnectivityTrait"]["status"]);
     } catch (error) {
-      print(error);
       return Optional.empty();
     }
   }

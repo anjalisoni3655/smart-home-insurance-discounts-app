@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:optional/optional.dart';
 import 'package:sdk/services/access_devices.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
@@ -16,31 +17,7 @@ const String getAllDevicesUrl =
 const String getAllStructuresUrl =
     "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/structures";
 const String getDeviceStatusUrl =
-    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices/device-id";
-
-const deviceResponse = '{"name" : "/enterprises/enterprise-id/devices/device-id","type" : "sdm.devices.types.device-type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}}}';
-const deviceListResponse = '{ "devices": [' + deviceResponse + '] }';
-const structureListResponse = '{"structures": [{"name": "enterprises/sdm-internal/structures/AVPHwEtfUkCviHmeFD_OR4HNMExGmuPENGmG_9BsP5C-05EWFbrQpgZV5laMe8GhMiyg3XXTbI5AvTzzYUoQ03Zd6pQ8","traits": {"sdm.structures.traits.Info": {"customName": "Second home"}}},{"name": "enterprises/sdm-internal/structures/AVPHwEvTILTn3tYCarertyG3cExQYAdHxF5xhVSDf5eQc6F8gi4ThQDGirY7_n-XzYcs9DQChQ8obbUihc0h2YWg5EDy","traits": {"sdm.structures.traits.Info": {"customName": "Onyx Home"}}}]}';
-
-const device = {
-  'id': 'device-id',
-  'customName': null,
-  'type': 'sdm.devices.types.device-type'
-};
-const deviceList = [
-  device
-];
-const structureList = [
-  {
-    'id': 'AVPHwEtfUkCviHmeFD_OR4HNMExGmuPENGmG_9BsP5C-05EWFbrQpgZV5laMe8GhMiyg3XXTbI5AvTzzYUoQ03Zd6pQ8',
-    'customName': {'customName': 'Second home'}
-  },
-  {
-    'id': 'AVPHwEvTILTn3tYCarertyG3cExQYAdHxF5xhVSDf5eQc6F8gi4ThQDGirY7_n-XzYcs9DQChQ8obbUihc0h2YWg5EDy',
-    'customName': {'customName': 'Onyx Home'}
-  }
-];
-
+    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/enterpriseId/devices/deviceId";
 
 void main() {
   // Default setup
@@ -60,14 +37,14 @@ void main() {
 
   test("test 1.1: get all devices successful http request", () async {
     // defining behaviour
-    when(mockResponse.body).thenReturn(deviceListResponse);
+    when(mockResponse.body).thenReturn("list of devices");
 
     // initialising class (behaviour same as setup)
     AccessDevices accessDevices =
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
-    expect((await accessDevices.getAllDevices()).value, deviceList);
+    expect((await accessDevices.getAllDevices()).value, "list of devices");
   });
 
   test("test 1.2: get all devices exception on http request", () async {
@@ -92,7 +69,7 @@ void main() {
       await Future.delayed(new Duration(milliseconds: 200));
       return Future.value(mockResponse);
     }); // Mock response returns a body
-    when(mockResponse.body).thenReturn(deviceListResponse);
+    when(mockResponse.body).thenReturn("list of devices");
 
     // initialising class
     AccessDevices accessDevices = new AccessDevices.test(
@@ -105,7 +82,7 @@ void main() {
 
   test("test 2.1: get all structures successful http request", () async {
     // Defining behaviour
-    when(mockResponse.body).thenReturn(structureListResponse);
+    when(mockResponse.body).thenReturn("list of structures");
 
     // initialising class
     AccessDevices accessDevices =
@@ -113,7 +90,7 @@ void main() {
 
     // testing
     expect(
-        (await accessDevices.getAllStructures()).value, structureList);
+        (await accessDevices.getAllStructures()).value, "list of structures");
   });
 
   test("test 2.2: get all structures exception on http request", () async {
@@ -153,14 +130,15 @@ void main() {
 
   test("test 3.1: get device status successful http request", () async {
     // Defining behaviour
-    when(mockResponse.body).thenReturn(deviceResponse);
+    when(mockResponse.body).thenReturn(
+        '{"name" : "/enterprises/enterprise-id/devices/device-id","type" : "sdm.devices.types.device-type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}}}');
 
     // initialising class
     AccessDevices accessDevices =
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
-    expect((await accessDevices.getDeviceStatus("device-id")).value, "ONLINE");
+    expect((await accessDevices.getDeviceStatus("deviceId")).value, "ONLINE");
   });
 
   test("test 3.2: get devices status exception on http request", () async {
@@ -174,7 +152,7 @@ void main() {
         new AccessDevices.test("accessToken", "enterpriseId", mockClient);
 
     // testing
-    expect((await accessDevices.getDeviceStatus("device-id")).isEmpty, true);
+    expect((await accessDevices.getDeviceStatus("deviceId")).isEmpty, true);
   });
 
   test(
@@ -187,7 +165,8 @@ void main() {
       await Future.delayed(new Duration(milliseconds: 200));
       return Future.value(mockResponse);
     });
-    when(mockResponse.body).thenReturn(deviceResponse);
+    when(mockResponse.body).thenReturn(
+        '{"name" : "/enterprises/enterprise-id/devices/device-id","type" : "sdm.devices.types.device-type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}}}');
 
     // initialising class
     AccessDevices accessDevices = new AccessDevices.test(
@@ -195,6 +174,6 @@ void main() {
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
 
     // testing
-    expect((await accessDevices.getDeviceStatus("device-id")).isEmpty, true);
+    expect((await accessDevices.getDeviceStatus("deviceId")).isEmpty, true);
   });
 }
