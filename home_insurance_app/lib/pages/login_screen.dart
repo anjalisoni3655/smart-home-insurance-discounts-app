@@ -37,11 +37,12 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         SizedBox(
-          height: 24.0,
+          height: MediaQuery.of(context).size.height,
         ),
+
         Text('Log in to Continue'),
         SizedBox(
-          height: 24.0,
+          height: MediaQuery.of(context).size.height,,
         ),
         RoundedButton(
           title: 'LOG IN',
