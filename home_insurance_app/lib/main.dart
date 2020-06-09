@@ -3,6 +3,8 @@ import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
 
+import 'pages/home.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       initialRoute: LoginScreen.id,
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
-        '/': (context) => HomePage(),
+        HomePage.id: (context) => HomePage(),
         '/gethomedetails': (context) => HomeDetails(),
       },
     );

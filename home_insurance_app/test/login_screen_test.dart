@@ -1,15 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:homeinsuranceapp/main.dart';
 
 import 'package:homeinsuranceapp/pages/login_screen.dart';
 
 void main() {
   testWidgets('Widget Test', (WidgetTester tester) async {
-//    // Build our app and trigger a frame.
-//    await tester.pumpWidget(MyApp());
-//    //expect(find.text("Log in to Continue"), findsOneWidget);
-   await tester.tap(find.byKey(Key('Log in to Continue')));
-
+    await tester.pumpWidget(LoginScreen());
+    final titleFinder = find.text('Smart Home');
+    final messageFinder = find.text('Log in to Continue');
+    expect(titleFinder, findsOneWidget);
+    expect(messageFinder, findsOneWidget);
   });
 }
