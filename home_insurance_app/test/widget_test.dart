@@ -8,7 +8,10 @@ import '../lib/pages/home.dart';
 void main() {
   testWidgets('Widget Test', (WidgetTester tester) async {
 
-    await tester.pumpWidget(HomePage());
+    await tester.pumpWidget(MaterialApp(
+      home: HomePage(),
+
+    ));
 
     expect(
         find.text(

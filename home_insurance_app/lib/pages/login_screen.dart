@@ -5,6 +5,7 @@ import 'package:homeinsuranceapp/pages/home.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
+  static const navigateToDetailsButtonKey = Key('navigateToDetails');
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -49,8 +50,9 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         RoundedButton(
           title: 'LOG IN',
-          colour: Colors.brown,
+          key: Key('navigateToHome'),
           onPressed: () {
+
             Navigator.pushNamed(context, HomePage.id);
             //TODO: import sdk library to use the google login function
           },
