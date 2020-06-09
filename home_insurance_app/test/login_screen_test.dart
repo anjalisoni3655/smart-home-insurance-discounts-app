@@ -1,14 +1,42 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:homeinsuranceapp/main.dart';
+import 'package:homeinsuranceapp/pages/home.dart';
+import 'package:homeinsuranceapp/pages/login_screen.dart';
+import 'package:mockito/mockito.dart';
+
+class MockNavigatorObserver extends Mock implements NavigatorObserver {}
+
 
 void main() {
-  testWidgets('Widget Test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
-    // Verify that our home page includes the introduction text .
-    expect(find.text("Log in to Continue"), findsOneWidget);
-    // Test that icon button in the drawer is working - TODO
-    /*final drawerOpenButton = find.byTooltip("Open navigation menu");
-    await driver.waitFor(drawerOpenButton);*/
+  NavigatorObserver mockObserver;
+
+  setUp(() {
+    mockObserver = MockNavigatorObserver();
+  });
+
+  testWidgets('LoginPage Widget Test', (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: LoginScreen(),
+      navigatorObservers: [mockObserver],
+    ));
+
+    verify(mockObserver.didPush(any, any));
+
+    final titleFinder = find.text('Smart Home');
+    final messageFinder = find.text('Log in to Continue');
+
+    expect(titleFinder, findsOneWidget);
+    expect(messageFinder, findsOneWidget);
+    //Finds Button
+    expect(find.byType(RaisedButton), findsOneWidget);
+
+    //Checks whether Navigator gets pushed or not
+    await tester.tap(find.byType(RaisedButton));
+    await tester.pumpAndSettle();
+
+    verify(mockObserver.didPush(any, any));
+
+    expect(find.byType(HomePage), findsOneWidget);
   });
 }

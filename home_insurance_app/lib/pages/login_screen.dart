@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/components/rounded_buttons.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 
+// widget for login with google
 class LoginScreen extends StatefulWidget {
-  static const String id = 'login_screen';
+  static const String id = '/';
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -13,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -37,21 +38,26 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         SizedBox(
-          height: 24.0,
+          //height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height * 0.03,
         ),
         Text('Log in to Continue'),
         SizedBox(
-          height: 24.0,
+          height: MediaQuery.of(context).size.width * 0.04,
         ),
-        RoundedButton(
-          title: 'LOG IN',
-          colour: Colors.brown,
-          onPressed: () {
-            Navigator.pushNamed(context, HomePage.id);
-            //TODO: import sdk library to use the google login function
-          },
-          //child: Text('SIGN OUT'),
-        ),
+        RaisedButton(
+            key: Key('navigateToHome'),
+            child: Text("LOG IN WITH GOOGLE"),
+            color: Colors.brown,
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return HomePage();
+              }));
+//TODO: import sdk library to use the google login function
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0)))
       ],
     );
   }
