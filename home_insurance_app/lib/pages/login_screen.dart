@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 
-// widget for the login with google
+// widget for login with google
 class LoginScreen extends StatefulWidget {
   static const String id = '/';
 
