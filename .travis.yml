@@ -13,12 +13,16 @@ before_script:
   - ./flutter/bin/flutter doctor
 jobs:
   - name: test app
+    if: event = pr
     script: cd home_insurance_app; ../flutter/bin/flutter test;
   - name: format app
+    if: event = pr
     script: ./flutter/bin/flutter format -n --set-exit-if-changed home_insurance_app/lib/* home_insurance_app/test/*
   - name: test sdk
+    if: event = pr
     script: cd sdk; ../flutter/bin/flutter test;
   - name: format sdk
+    if: event = pr
     script: ./flutter/bin/flutter format -n --set-exit-if-changed sdk/lib/* sdk/test/*
 cache:
   directories:
