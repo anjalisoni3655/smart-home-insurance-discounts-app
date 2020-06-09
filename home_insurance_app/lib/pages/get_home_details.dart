@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/company_policies.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
 String firstLineOfAddress;
 String secondLineOfAddress;
@@ -9,7 +10,7 @@ String city;
 String state;
 int pincode;
 
-// Widget for getting , validating and storing User Adrress
+// Widget for getting , validating and storing User Address
 class HomeDetails extends StatefulWidget {
   @override
   _HomeDetailsState createState() => _HomeDetailsState();
@@ -91,11 +92,7 @@ class _HomeDetailsState extends State<HomeDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-        title: Text('Home Insurance Company'),
-        centerTitle: true,
-        backgroundColor: Colors.brown,
-      ),
+      appBar: CommonAppBar(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(24),

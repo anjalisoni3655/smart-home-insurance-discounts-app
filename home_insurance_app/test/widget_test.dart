@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:homeinsuranceapp/main.dart';
 
+import '../lib/pages/home.dart';
+
 void main() {
   final TestWidgetsFlutterBinding binding =
       TestWidgetsFlutterBinding.ensureInitialized();
   testWidgets('Widget Test', (WidgetTester tester) async {
     await binding.setSurfaceSize(Size(640, 640));
+
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
-    // Verify introduction test does not go out of frame .
+   // login test
+
     expect(
         find.text(
             "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available "),
