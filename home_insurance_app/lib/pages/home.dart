@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
-
+// widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
+  static const String id = 'home_screen';
+
   @override
   _HomePageState createState() => _HomePageState();
 }
