@@ -4,13 +4,15 @@ import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/my_devices.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
+import 'pages/home.dart';
 
+// this is the root of our application
 
 void main() {
   runApp(MyApp());
 }
 
-// This class is used to store all routes and takes the user to the page corresponding to initial route ('/)
+// MyApp is used to store all routes and takes the user to the page corresponding to initial route ('/)
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,6 @@ class MyApp extends StatelessWidget {
         MyDevices.id: (context) => MyDevices(),
         '/': (context) => HomePage(),
         '/gethomedetails': (context) => HomeDetails(),
-
       },
     );
   }

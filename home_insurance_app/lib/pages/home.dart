@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
 
+// widget for the home page, that contains all menu bar options.
+
 class HomePage extends StatefulWidget {
   static const String id = 'home_screen';
 

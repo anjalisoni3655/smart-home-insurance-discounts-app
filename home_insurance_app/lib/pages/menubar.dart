@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/my_devices.dart';
 
+// widget for the different options in the menu bar
 class AppDrawer extends StatefulWidget {
   @override
   _AppDrawerState createState() => _AppDrawerState();
