@@ -7,7 +7,6 @@ import 'package:mockito/mockito.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
-
 void main() {
   NavigatorObserver mockObserver;
 
