@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
         Profile.id: (context) => Profile(),
         '/': (context) => HomePage(),
         '/gethomedetails': (context) => HomeDetails(),
-
       },
     );
   }
