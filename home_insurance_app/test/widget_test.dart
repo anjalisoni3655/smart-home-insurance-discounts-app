@@ -20,48 +20,8 @@ void main() {
         findsOneWidget);
   });
 
-  testWidgets('PopmenuButton is visible and handles gestures',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(home: HomePage()),
-    );
 
-    expect(find.byKey(HomePage.popmenuButton), findsOneWidget);
 
-    await tester.tap(find.byKey(HomePage.popmenuButton));
-    await tester.pumpAndSettle();
 
-    expect(find.text('Logout'), findsOneWidget);
-    expect(find.text('My Profile'), findsOneWidget);
-  });
 
-  testWidgets(
-      'PopmenuButton navigates to the desired screen on pressing LOGOUT',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: HomePage()));
-
-    await tester.tap(find.byKey(HomePage.popmenuButton));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Logout'));
-    await tester.pump();
-    await tester.pump();
-    await tester.pump(Duration(seconds: 1));
-
-    expect(find.byType(LoginScreen), findsOneWidget);
-  });
-
-  testWidgets(
-      'PopmenuButton navigates to the desired screen on pressing My_PROFILE',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: HomePage()));
-
-    await tester.tap(find.byKey(HomePage.popmenuButton));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('My Profile'));
-    await tester.pump();
-    await tester.pump();
-    await tester.pump(Duration(seconds: 1));
-
-    expect(find.byType(Profile), findsOneWidget);
-  });
 }
