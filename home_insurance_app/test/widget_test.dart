@@ -5,15 +5,25 @@ import 'package:homeinsuranceapp/main.dart';
 import '../lib/pages/home.dart';
 
 void main() {
-  final TestWidgetsFlutterBinding binding =
-      TestWidgetsFlutterBinding.ensureInitialized();
+  //final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.ensureInitialized();
   testWidgets('Widget Test', (WidgetTester tester) async {
-    await binding.setSurfaceSize(Size(640, 640));
+    ///await binding.setSurfaceSize(Size(640, 640));
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
-   // login test
+   // Login Page Test
+    final titleFinder = find.text('Smart Home');
+    final messageFinder = find.text('Log in to Continue');
 
+    expect(titleFinder, findsOneWidget);
+    expect(messageFinder, findsOneWidget);
+    //Finds Login  Button
+    expect(find.byType(RaisedButton), findsOneWidget);
+
+    await tester.tap(find.byType(RaisedButton));
+    await tester.pumpAndSettle();
+
+    // For the Home page
     expect(
         find.text(
             "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available "),
@@ -33,24 +43,22 @@ void main() {
     expect(find.byType(RaisedButton), findsOneWidget);
 
     //Checking for all address inputs
-    await tester.enterText(
-        find.byKey(Key('First Adrress Line')), 'A-123 , Street Name');
-    await tester.enterText(find.byKey(Key('Second Adrress Line')), 'Rohini');
+    await tester.enterText(find.byKey(Key('First Address Line')), 'A-123 , Street Name');
+    await tester.enterText(find.byKey(Key('Second Address Line')), 'Rohini');
     await tester.enterText(find.byKey(Key('City')), 'Delhi');
     await tester.enterText(find.byKey(Key('State')), 'Delhi');
-    await tester.enterText(find.byKey(Key('Pincode')), '110033');
+    await tester.enterText(find.byKey(Key('Pin-code')), '110033');
 
     //Checking the working of submit key
     await tester.tap(find.byType(RaisedButton));
     await tester.pumpAndSettle(); // to ensure enough time has passed
-    expect(find.text("Available Policies"),
-        findsOneWidget); //Takes to the policy page
-
-    //Show Policies page
-    // Check the working of the buttons
-    await tester.tap(find.text('View Smart Device Discounts'));
-    await tester.pumpAndSettle();
-    expect(find.text('Available Discounts'),
-        findsOneWidget); // Takes to the discount page
+    expect(find.text("Available Policies"), findsOneWidget); //Takes to the policy page
+//
+//    //Show Policies page
+//    // Check the working of the buttons
+//    await tester.tap(find.text('View Smart Device Discounts'));
+//    await tester.pumpAndSettle();
+//    expect(find.text('Available Discounts'),
+//        findsOneWidget); // Takes to the discount page
   });
 }

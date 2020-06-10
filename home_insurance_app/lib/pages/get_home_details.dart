@@ -20,7 +20,7 @@ class _HomeDetailsState extends State<HomeDetails> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Widget _buildAddressFirstLine() {
     return TextFormField(
-        key: Key('First Adrress Line'), // Used for testing
+        key: Key('First Address Line'), // Used for testing
         decoration: InputDecoration(labelText: "First Line Of Address"),
         validator: (String value) {
           if (value.isEmpty) {
@@ -34,7 +34,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildAddressSecondLine() {
     return TextFormField(
-        key: Key('Second Adrress Line'), // Used for testing
+        key: Key('Second Address Line'), // Used for testing
         decoration: InputDecoration(
             labelText:
                 "Second Line Of Address"), //validator is not required as this field can be left empty
@@ -73,7 +73,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildPincode() {
     return TextFormField(
-        key: Key('Pincode'), // Used for testing
+        key: Key('Pin-code'), // Used for testing
         decoration: InputDecoration(labelText: "Pincode"),
         keyboardType: TextInputType.number,
         validator: (String value) {
@@ -98,7 +98,7 @@ class _HomeDetailsState extends State<HomeDetails> {
           margin: EdgeInsets.all(24),
           child: Column(
             children: <Widget>[
-              Text('Enter Your Address Details ',
+              Text('Enter Your Address Details',
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
