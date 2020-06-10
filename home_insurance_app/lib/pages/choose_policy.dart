@@ -42,7 +42,8 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               Container(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: screenwidth / 40, vertical: screenheight / 50),
+                      horizontal: screenwidth / 40,
+                      vertical: screenheight / 50),
                   child: Text(
                     'Available Policies',
                     style: TextStyle(
@@ -146,7 +147,7 @@ class _RadioGroupState extends State<RadioGroup> {
     return Container(
       // Wraping ListView inside Container to assign scrollable screen a height and width
       width: screenWidth,
-      height: 9 * screenHeight / 16, 
+      height: 9 * screenHeight / 16,
       child: ListView(
         scrollDirection: Axis.vertical,
         children: choices
@@ -210,41 +211,3 @@ class _RadioGroupState extends State<RadioGroup> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
