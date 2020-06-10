@@ -76,7 +76,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                           await DefaultAssetBundle.of(context).loadString("lib/credentials/akashag-step-interns-test.json")
                       );
                       print(credentials);
-                      SDK sdk = SDKBuilder.build(credentials["installed"]["client_id"], credentials["installed"]["client_secret"], "akashag-step-interns-test");
+                      SDK sdk = SDKBuilder.build(credentials["installed"]["project-id"], credentials["installed"]["client_id"], credentials["installed"]["client_secret"], "akashag-step-interns-test");
                       String status = await sdk.requestDeviceAccess();
                       print(status);
                       if(status == "authorization successful") {

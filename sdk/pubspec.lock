@@ -64,6 +64,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
+  curl:
+    dependency: "direct main"
+    description:
+      name: curl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -183,11 +190,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "1.9.0"
-=======
-    version: "1.8.0+1"
->>>>>>> 1f4e1725d64f7460c50d924d78c363952f032ce4
   petitparser:
     dependency: transitive
     description:

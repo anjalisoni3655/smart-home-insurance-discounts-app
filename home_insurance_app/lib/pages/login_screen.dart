@@ -58,9 +58,13 @@ class _LoginScreenState extends State<LoginScreen> {
               var credentials = jsonDecode(
                   await DefaultAssetBundle.of(context).loadString("lib/credentials/akashag-step-interns-test.json")
               );
-              SDK sdk = SDKBuilder.build(credentials["client_id"], credentials["client_secret"], "akashag-step-interns-test");
-              String status = await sdk.login();
+              SDK sdk = SDKBuilder.build(credentials["installed"]["project_id"], credentials["installed"]["client_id"], credentials["installed"]["client_secret"], "akashag-step-interns-test");
+//              String status = await sdk.login();
+              String status = await sdk.requestDeviceAccess();
               print(status);
+              if(status == 'authorization successful') {
+                print(await sdk.getAllDevices());
+              }
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return HomePage();
               }));

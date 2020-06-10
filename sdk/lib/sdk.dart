@@ -51,17 +51,17 @@ class SDK {
 // Builder and Injector class that creates dependancies and injects them into the SDK
 // Creating an instance of SDK without builder is not allowed.
 class SDKBuilder {
-  static SDK build(String clientId, String clientSecret, String enterpriseId,
+  static SDK build(String projectId, String clientId, String clientSecret, String enterpriseId,
       {Duration interactiveFlowTimeout = const Duration(minutes: 5),
-      Duration nonInteractiveFlowTimout = const Duration(seconds: 1)}) {
+      Duration nonInteractiveFlowTimout = const Duration(seconds: 10)}) {
     Login login = new Login(GoogleSignIn(),
         interactiveFlowTimeout: interactiveFlowTimeout,
         nonInteractiveFlowTimeout: nonInteractiveFlowTimout);
     ResourcePicker resourcePicker = new ResourcePicker(
-        auth.clientViaUserConsent, clientId, clientSecret,
+        auth.clientViaUserConsent, enterpriseId, clientId, clientSecret,
         resourcePickerTimeoutDuration: interactiveFlowTimeout);
     AccessDevices accessDevices =
-        new AccessDevices(http.Client(), enterpriseId);
+        new AccessDevices(http.Client(), enterpriseId, accessDevicesTimeoutDuration: nonInteractiveFlowTimout);
 
     SDK sdk = new SDK._(login, resourcePicker, accessDevices);
     return sdk;

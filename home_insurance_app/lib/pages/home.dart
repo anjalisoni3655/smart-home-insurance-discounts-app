@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
       var credentials = jsonDecode(
           await DefaultAssetBundle.of(context).loadString("lib/credentials/akashag-step-interns-test.json")
       );
-      SDK sdk = SDKBuilder.build(credentials["client_id"], credentials["client_secret"], "akashag-step-interns-test");
+      SDK sdk = SDKBuilder.build(credentials["installed"]["project-id"], credentials["installed"]["client_id"], credentials["installed"]["client_secret"], "akashag-step-interns-test");
       String status = await sdk.logout();
       if(status == "logout successful") {
         Navigator.pushReplacementNamed(context, '/login');
