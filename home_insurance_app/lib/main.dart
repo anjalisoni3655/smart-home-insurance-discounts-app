@@ -26,7 +26,6 @@ class MyApp extends StatelessWidget {
         '/showdiscounts': (context) => DisplayDiscounts(),
         HomePage.id: (context) => HomePage(),
         Profile.id: (context) => Profile(),
-        '/': (context) => HomePage(),
         '/gethomedetails': (context) => HomeDetails(),
       },
     );

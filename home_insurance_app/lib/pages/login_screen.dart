@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
@@ -52,13 +55,16 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Colors.brown,
             textColor: Colors.white,
             onPressed: () async {
-              SDK sdk = SDKBuilder.build("client-id", "client-secret", "enterprise-id");
+              var credentials = jsonDecode(
+                  await DefaultAssetBundle.of(context).loadString("lib/credentials/akashag-step-interns-test.json")
+              );
+              SDK sdk = SDKBuilder.build(credentials["client_id"], credentials["client_secret"], "akashag-step-interns-test");
               String status = await sdk.login();
               print(status);
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return HomePage();
               }));
-//TODO: import sdk library to use the google login function
+              //TODO: import sdk library to use the google login function
             },
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)))
