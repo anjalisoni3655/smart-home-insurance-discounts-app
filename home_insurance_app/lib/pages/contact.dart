@@ -16,7 +16,7 @@ class Contact extends StatelessWidget {
           email: 'abdcfff@email.com',
           companyName: 'Home Insurance',
           companyColor: Colors.black,
-          phoneNumber: '+917818044311',
+          phoneNumber: '+91xxxxxxxxxxx',
           website: 'https://nest.com/',
           tagLine: 'Smart Home,Safe Home',
           taglineColor: Colors.black,
