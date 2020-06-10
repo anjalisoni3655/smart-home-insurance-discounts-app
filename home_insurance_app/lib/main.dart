@@ -4,6 +4,7 @@ import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
 import 'package:homeinsuranceapp/pages/choose_policy.dart';
 import 'package:homeinsuranceapp/pages/show_discounts.dart';
+import 'package:homeinsuranceapp/pages/profile.dart';
 
 // this is the root of our application
 void main() {
@@ -23,6 +24,10 @@ class MyApp extends StatelessWidget {
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),
         '/showdiscounts': (context) => DisplayDiscounts(),
+        HomePage.id: (context) => HomePage(),
+        Profile.id: (context) => Profile(),
+        '/': (context) => HomePage(),
+        '/gethomedetails': (context) => HomeDetails(),
       },
     );
   }

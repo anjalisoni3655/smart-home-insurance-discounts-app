@@ -13,6 +13,7 @@ before_script:
   - ./flutter/bin/flutter doctor
 jobs:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
   include:
@@ -27,6 +28,8 @@ jobs:
 
 =======
 >>>>>>> 0d9995e89dab02b59f8c47a9d6c9d654b41d0697
+=======
+>>>>>>> 1f4e1725d64f7460c50d924d78c363952f032ce4
   - name: test app
     if: type = pull_request
     script: cd home_insurance_app; ../flutter/bin/flutter test;
@@ -40,9 +43,12 @@ jobs:
     if: type = pull_request
     script: ./flutter/bin/flutter format -n --set-exit-if-changed sdk/lib/* sdk/test/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> d0d61ca0e004471d36b4b538f2ab67119075bcab
 >>>>>>> 0d9995e89dab02b59f8c47a9d6c9d654b41d0697
+=======
+>>>>>>> 1f4e1725d64f7460c50d924d78c363952f032ce4
 cache:
   directories:
     - $HOME/.pub-cache

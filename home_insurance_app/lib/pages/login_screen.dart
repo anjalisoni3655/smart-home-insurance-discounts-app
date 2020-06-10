@@ -3,7 +3,6 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:sdk/sdk.dart';
 
-
 // widget for login with google
 class LoginScreen extends StatefulWidget {
   static const String id = '/';
