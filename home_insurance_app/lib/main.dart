@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
-<<<<<<< HEAD
 import 'package:homeinsuranceapp/pages/profile.dart';
-=======
->>>>>>> d5b9a75f31411372d87f21bffb292978ec24f513
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
 import 'pages/home.dart';
 

@@ -6,7 +6,6 @@ import 'package:homeinsuranceapp/pages/home.dart';
 class LoginScreen extends StatefulWidget {
   static const String id = '/';
 
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -16,7 +15,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
-
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Center(child: Text('Smart Home')),

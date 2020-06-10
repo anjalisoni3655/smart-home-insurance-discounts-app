@@ -4,7 +4,6 @@ import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
 
-import '../lib/pages/home.dart';
 
 void main() {
   testWidgets('Widget Test', (WidgetTester tester) async {
@@ -63,7 +62,6 @@ void main() {
     await tester.pump();
     await tester.pump(Duration(seconds: 1));
 
-    // expect(find.byKey(Profile.profilePageKey), findsOneWidget);
     expect(find.byType(Profile), findsOneWidget);
   });
 }
