@@ -18,7 +18,7 @@ String getId(String name) {
 // Provides helper functions to get list of devices, structures, status of devices etc.
 class AccessDevices {
   static const String URL =
-      "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/";
+      "https://staging-smartdevicemanagement.sandbox.googleapis.com/partnerconnections/";
 
   String _accessToken;
   String _enterpriseId;
@@ -48,6 +48,7 @@ class AccessDevices {
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
+      print(response.body);
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {

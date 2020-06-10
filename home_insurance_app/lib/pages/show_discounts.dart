@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
+import 'package:sdk/sdk.dart';
 
 Map data = {};
 //Offers selected by the user
@@ -68,7 +71,18 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                         fontFamily: "PTSerifBI",
                       ),
                     ),
-                    onPressed: () {}, // resource picker url is launched
+                    onPressed: () async {
+                      var credentials = jsonDecode(
+                          await DefaultAssetBundle.of(context).loadString("lib/credentials/akashag-step-interns-test.json")
+                      );
+                      print(credentials);
+                      SDK sdk = SDKBuilder.build(credentials["installed"]["client_id"], credentials["installed"]["client_secret"], "akashag-step-interns-test");
+                      String status = await sdk.requestDeviceAccess();
+                      print(status);
+                      if(status == "authorization successful") {
+                        print(await sdk.getAllDevices());
+                      }
+                    }, // resource picker url is launched
                     backgroundColor: Colors.lightBlueAccent,
                   ),
                 ),

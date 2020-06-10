@@ -30,7 +30,14 @@ class SDK {
   Future<Optional<Map>> getUserDetails() => _login.getUserDetails();
   Future<Optional<bool>> isSignedIn() => _login.isSignedIn();
 
-  Future<String> requestDeviceAccess() => _resourcePicker.askForAuthorization();
+  Future<String> requestDeviceAccess() async {
+    String status = await _resourcePicker.askForAuthorization();
+    if(status == "authorization successful") {
+      _accessDevices.setAccessToken(_resourcePicker.accessToken);
+    }
+    return status;
+  }
+  String getAccessToken() => _resourcePicker.accessToken;
 
   Future<Optional<List>> getAllDevices() => _accessDevices.getAllDevices();
   Future<Optional<List>> getDevicesOfStructure(String structureId) =>
