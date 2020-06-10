@@ -5,6 +5,7 @@ import 'package:homeinsuranceapp/pages/home.dart';
 // widget for login with google
 class LoginScreen extends StatefulWidget {
   static const String id = '/';
+  //static const Key loginScreenKey = Key('login_screen_key');
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -15,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
+      //key: LoginScreen.loginScreenKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Center(child: Text('Smart Home')),
