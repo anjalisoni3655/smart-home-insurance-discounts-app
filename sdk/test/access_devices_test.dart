@@ -69,7 +69,6 @@ void main() {
 
     accessDevices = new AccessDevices(mockClient, "enterprise-id",
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
-    print("setting access token");
     accessDevices.setAccessToken("accessToken");
   });
 
