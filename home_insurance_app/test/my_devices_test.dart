@@ -11,9 +11,8 @@ void main() {
       home: MyDevices(),
     ));
 
-    await tester.tap(find.byType(FloatingActionButton));
+    expect(find.byType(FloatingActionButton), findsNWidgets(4));
+    await tester.tap(find.byIcon(Icons.devices_other));
     await tester.pumpAndSettle();
-
-    expect(find.byType(Icon), findsNWidgets(4));
   });
 }
