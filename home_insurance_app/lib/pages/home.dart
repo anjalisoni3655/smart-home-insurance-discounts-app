@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
+import 'package:sdk/sdk.dart';
 
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
@@ -19,8 +22,14 @@ class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
     if (value == 'Logout') {
       Navigator.pushNamed(context, LoginScreen.id);
-      //TODO: call SDK library's signout function
-
+      var credentials = jsonDecode(
+          await DefaultAssetBundle.of(context).loadString("lib/credentials/akashag-step-interns-test.json")
+      );
+      SDK sdk = SDKBuilder.build(credentials["client_id"], credentials["client_secret"], "akashag-step-interns-test");
+      String status = await sdk.logout();
+      if(status == "logout successful") {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
     } else {
       Navigator.pushNamed(context, Profile.id);
     }
