@@ -67,7 +67,12 @@ class AccessDevices {
 
   Future<Optional<List>> getDevicesOfStructure(String structureId) async {
     try {
-      String request = URL + "enterprises/" + _enterpriseId + '/structures/' + structureId + "/devices";
+      String request = URL +
+          "enterprises/" +
+          _enterpriseId +
+          '/structures/' +
+          structureId +
+          "/devices";
       final response = await _client.post(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
