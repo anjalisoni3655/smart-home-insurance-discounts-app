@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// widget for the different options in the menu bar
 class AppDrawer extends StatefulWidget {
   @override
   _AppDrawerState createState() => _AppDrawerState();
@@ -9,6 +10,7 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      key: Key('Menu Bar'),
       child: ListView(
         children: <Widget>[
           DrawerHeader(

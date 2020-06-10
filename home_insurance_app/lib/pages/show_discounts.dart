@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
-Map data = {};
 //Offers selected by the user
 List<Offer> selectedOffers = new List<Offer>();
 // Offers displayed by the company
@@ -16,21 +16,22 @@ class DisplayDiscounts extends StatefulWidget {
 class DisplayDiscountsState extends State<DisplayDiscounts> {
   @override
   Widget build(BuildContext context) {
-    data = ModalRoute.of(context)
+    double screenheight = MediaQuery.of(context).size.height;
+    double screenwidth = MediaQuery.of(context).size.width;
+
+    Map data = ModalRoute.of(context)
         .settings
         .arguments; // data stores the policy selected by the user as a key/value pair
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Insurance Company '),
-        centerTitle: true,
-        backgroundColor: Colors.brown,
-      ),
+      appBar: CommonAppBar(),
       body: Container(
-        margin: EdgeInsets.all(15.0),
+        margin: EdgeInsets.symmetric(
+            vertical: screenheight / 80, horizontal: screenwidth / 80),
         child: Column(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenwidth / 80, vertical: screenheight / 80),
               child: Text(
                 'Available Discounts',
                 style: TextStyle(
@@ -40,18 +41,18 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                 ),
               ),
             ),
-            const Divider(
+            Divider(
               color: Colors.brown,
-              height: 10.0,
-              thickness: 5,
-              indent: 5,
-              endIndent: 5,
+              height: screenheight / 100,
+              thickness: screenheight / 100,
+              indent: screenwidth / 50,
+              endIndent: screenwidth / 50,
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: screenheight / 100),
             AllDiscounts(),
             SizedBox(
-                height:
-                    10.0), //So that the last discount does not get hidden behind the floating button
+                height: screenheight /
+                    50), //So that the last discount does not get hidden behind the floating button
             Stack(
               children: <Widget>[
                 Align(
@@ -128,6 +129,8 @@ class _AllDiscountsState extends State<AllDiscounts> {
       false); // Initially all policies are deselected
 
   Widget build(BuildContext context) {
+    double screenheight = MediaQuery.of(context).size.height;
+    double screenwidth = MediaQuery.of(context).size.width;
     return Expanded(
       child: ListView.builder(
           itemCount: CompanyDataBase.availableOffers.length,
@@ -174,8 +177,13 @@ class _AllDiscountsState extends State<AllDiscounts> {
                                     (entry) => Align(
                                       alignment: Alignment.topLeft,
                                       child: Container(
-                                          margin: EdgeInsets.all(0.0),
-                                          padding: EdgeInsets.all(10.0),
+                                          margin: EdgeInsets.symmetric(
+                                              vertical: screenheight / 100,
+                                              horizontal: screenwidth / 100),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: screenheight / 100,
+                                              horizontal: screenwidth / 100),
+                                          decoration: BoxDecoration(),
                                           child: Text(
                                             '${entry.key} : ${entry.value}',
                                             textAlign: TextAlign.left,

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 
+// widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
+  static const String id = 'home_screen';
+
   @override
   _HomePageState createState() => _HomePageState();
 }
+
+final scaffoldKey = GlobalKey<ScaffoldState>(); // Used for testing the drawer
 
 class _HomePageState extends State<HomePage> {
   @override
@@ -13,12 +19,9 @@ class _HomePageState extends State<HomePage> {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
     return Scaffold(
+      key: scaffoldKey,
       drawer: AppDrawer(), // Sidebar
-      appBar: AppBar(
-        title: Text('Home Insurance Company'),
-        centerTitle: true,
-        backgroundColor: Colors.brown,
-      ),
+      appBar: CommonAppBar(),
       body: Stack(
         children: <Widget>[
           Container(
