@@ -16,17 +16,9 @@ dependencies:
   url_launcher: ^5.1.2
   mockito: ^4.1.1
   optional: ^5.0.0
-<<<<<<< HEAD
-=======
-
->>>>>>> 0d9995e89dab02b59f8c47a9d6c9d654b41d0697
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-<<<<<<< HEAD
 flutter:
-=======
-flutter:
->>>>>>> 0d9995e89dab02b59f8c47a9d6c9d654b41d0697

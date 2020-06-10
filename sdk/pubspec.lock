@@ -183,11 +183,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "1.9.0"
-=======
-    version: "1.8.0+1"
->>>>>>> 0d9995e89dab02b59f8c47a9d6c9d654b41d0697
   petitparser:
     dependency: transitive
     description:
@@ -321,8 +317,4 @@ packages:
     version: "3.6.1"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-<<<<<<< HEAD
   flutter: ">=1.12.13+hotfix.5 <2.0.0"
-=======
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
->>>>>>> 0d9995e89dab02b59f8c47a9d6c9d654b41d0697
