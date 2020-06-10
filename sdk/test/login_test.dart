@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -112,7 +111,7 @@ void main() {
     // Update isSignedIn API method to return true since should be already logged in for successful getUserDetails
     when(mockGoogleSignIn.isSignedIn()).thenAnswer((_) => Future.value(true));
     // Expected result: getUserDetails should return mock details
-    expect(await login.getUserDetails(), {
+    expect((await login.getUserDetails()).value, {
       'displayName': "Osheen Sachdev",
       'email': "osheen@google.com",
       'photoUrl': "someurl.com"
@@ -125,7 +124,7 @@ void main() {
     // update signIn to throw error on call
     when(mockGoogleSignIn.currentUser).thenThrow(new Exception('test'));
     // Expected result : getUserDetails should return null
-    expect(await login.getUserDetails(), null);
+    expect((await login.getUserDetails()).isEmpty, true);
   });
 
   test('test 3.4: api takes longer than timeout to check isSignedIn attempt',
@@ -138,6 +137,6 @@ void main() {
       return true;
     });
     // Expected result : getUserDetails should return null
-    expect(await login.getUserDetails(), null);
+    expect((await login.getUserDetails()).isEmpty, true);
   });
 }

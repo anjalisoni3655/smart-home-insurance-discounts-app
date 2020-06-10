@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:optional/optional.dart';
 
 class Login {
   // Time allowed for Http requests or API calls that are independent of user interactions
@@ -42,18 +43,32 @@ class Login {
     }
   }
 
-  Future<Map> getUserDetails() async {
+  Future<Optional<Map>> getUserDetails() async {
     try {
       if (!(await _googleSignIn
           .isSignedIn()
-          .timeout(nonInteractiveFlowTimeout))) return null;
-      return {
+          .timeout(nonInteractiveFlowTimeout))) return Optional.empty();
+      return Optional.of({
         "displayName": _googleSignIn.currentUser.displayName,
         "email": _googleSignIn.currentUser.email,
         "photoUrl": _googleSignIn.currentUser.photoUrl
-      };
+      });
     } catch (error) {
-      return null;
+      print(error);
+      return Optional.empty();
     }
+  }
+
+  Future<Optional<bool>> isSignedIn() async {
+    try {
+      bool result = await _googleSignIn
+          .isSignedIn()
+          .timeout(nonInteractiveFlowTimeout);
+      return Optional.of(result);
+    } catch (error) {
+      print(error);
+      return Optional.empty();
+    }
+
   }
 }
