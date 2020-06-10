@@ -13,22 +13,21 @@ class AccessDevices {
   final Duration accessDevicesTimeoutDuration;
   http.Client _client;
 
-  AccessDevices(String accessToken, String enterpriseId,
+  // Dependency Injection (constructor injection of http.Client service)
+  AccessDevices( http.Client client, String enterpriseId,
       {this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
-    this._accessToken = accessToken;
-    this._enterpriseId = enterpriseId;
-    _client = new http.Client();
-  }
-
-  AccessDevices.test(
-      String accessToken, String enterpriseId, http.Client client,
-      {this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
-    this._accessToken = accessToken;
     this._enterpriseId = enterpriseId;
     _client = client;
   }
 
+  void setAccessToken(String accessToken) {
+    this._accessToken = accessToken;
+  }
+
   Future<Optional<String>> getAllDevices() async {
+    if(_accessToken == null) {
+      throw Exception("Access Token not set");
+    }
     try {
       String request = URL + "enterprises/" + _enterpriseId + "/devices";
       final response = await _client.post(
@@ -43,6 +42,9 @@ class AccessDevices {
   }
 
   Future<Optional<String>> getAllStructures() async {
+    if(_accessToken == null) {
+      throw Exception("Access Token not set");
+    }
     try {
       String request = URL + "enterprises/" + _enterpriseId + "/structures";
       final response = await _client.post(
@@ -57,6 +59,9 @@ class AccessDevices {
   }
 
   Future<Optional<String>> getDeviceStatus(String deviceId) async {
+    if(_accessToken == null) {
+      throw Exception("Access Token not set");
+    }
     try {
       String request =
           URL + "enterprises/" + _enterpriseId + "/devices/" + deviceId;

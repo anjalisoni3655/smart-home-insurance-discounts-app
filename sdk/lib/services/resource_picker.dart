@@ -1,6 +1,5 @@
 import 'package:url_launcher/url_launcher.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
-import 'package:http/http.dart' as http;
 
 // Provides the service of launching the resource picker and returning the access token obtained
 class ResourcePicker {
@@ -12,16 +11,9 @@ class ResourcePicker {
   final Duration resourcePickerTimeoutDuration;
   Function clientViaUserConsent;
 
-  ResourcePicker(String clientId, String clientSecret,
-      {this.resourcePickerTimeoutDuration = const Duration(minutes: 5)}) {
-    this.clientViaUserConsent = auth.clientViaUserConsent;
-    this._clientId = clientId;
-    this._clientSecret = clientSecret;
-  }
-
-  // Testing constructor
-  ResourcePicker.test(
-      String clientId, String clientSecret, Function clientViaUserConsent,
+  // Dependency Injection (cunstructor injection of clientViaUserConsent service)
+  ResourcePicker(
+      Function clientViaUserConsent, String clientId, String clientSecret,
       {this.resourcePickerTimeoutDuration = const Duration(minutes: 5)}) {
     this.clientViaUserConsent = clientViaUserConsent;
     this._clientId = clientId;
