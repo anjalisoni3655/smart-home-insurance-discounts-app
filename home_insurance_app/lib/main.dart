@@ -4,10 +4,9 @@ import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/my_devices.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
 import 'package:homeinsuranceapp/pages/contact.dart';
-import 'pages/home.dart';
+import 'package:homeinsuranceapp/pages/get_home_details.dart';
 
 // this is the root of our application
-
 void main() {
   runApp(MyApp());
 }
@@ -25,6 +24,7 @@ class MyApp extends StatelessWidget {
         Profile.id: (context) => Profile(),
         MyDevices.id: (context) => MyDevices(),
         Contact.id: (context) => Contact(),
+        '/gethomedetails': (context) => HomeDetails(),
       },
     );
   }

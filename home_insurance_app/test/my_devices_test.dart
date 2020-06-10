@@ -11,8 +11,21 @@ void main() {
       home: MyDevices(),
     ));
 
-    expect(find.byType(FloatingActionButton), findsNWidgets(4));
+    expect(find.byType(FloatingActionButton), findsNWidget);
     await tester.tap(find.byIcon(Icons.devices_other));
     await tester.pumpAndSettle();
+    
+    expect(find.byType(FloatingActionButton), findsNWidget);
+    await tester.tap(find.byIcon(Icons.smoke_free));
+    await tester.pumpAndSettle();
+    
+    expect(find.byType(FloatingActionButton), findsNWidget);
+    await tester.tap(find.byIcon(Icons.home));
+    await tester.pumpAndSettle();
+    
+    expect(find.byType(FloatingActionButton), findsNWidget);
+    await tester.tap(find.byIcon(Icons.camera_alt));
+    await tester.pumpAndSettle();
+    
   });
 }
