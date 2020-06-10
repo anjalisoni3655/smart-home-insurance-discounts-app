@@ -27,19 +27,17 @@ class SDK {
   }
 
   Future<String> login() => _login.login();
-
   Future<String> logout() => _login.logout();
-
   Future<Map> getUserDetails() => _login.getUserDetails();
 
   Future<String> requestDeviceAccess() => _resourcePicker.askForAuthorization();
 
 
-  Future<Optional<String>> getAllDevices() => _accessDevices.getAllDevices();
-
-  Future<Optional<String>> getAllStructures() =>
+  Future<Optional<List>> getAllDevices() => _accessDevices.getAllDevices();
+  Future<Optional<List>> getDevicesOfStructure(String structureId) =>
+      _accessDevices.getDevicesOfStructure(structureId);
+  Future<Optional<List>> getAllStructures() =>
       _accessDevices.getAllStructures();
-
   Future<Optional<String>> getDeviceStatus(String deviceId) =>
       _accessDevices.getDeviceStatus(deviceId);
 }
