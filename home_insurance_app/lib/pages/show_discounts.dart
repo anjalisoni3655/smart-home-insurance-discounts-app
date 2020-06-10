@@ -15,7 +15,7 @@ class DisplayDiscounts extends StatefulWidget {
 
 class DisplayDiscountsState extends State<DisplayDiscounts> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext gggggit status context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
 
