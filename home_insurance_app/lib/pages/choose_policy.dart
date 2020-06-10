@@ -80,6 +80,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/showdiscounts', arguments: {
                       'selectedPolicy': userChoice,
+                      'userAddress': data['userAddress'],
                     });
                   },
                   backgroundColor: Colors.lightBlueAccent,
@@ -101,7 +102,8 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   heroTag: "pay",
                   onPressed: () {
                     Navigator.pop(context, {
-                      'selectedPolicy': userChoice
+                      'selectedPolicy': userChoice,
+                      'userAddress': data['userAddress'],
                     }); // For now , clicking on payment takes back to the home page
                   },
                   backgroundColor: Colors.lightBlueAccent,

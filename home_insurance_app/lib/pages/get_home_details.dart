@@ -123,8 +123,12 @@ class _HomeDetailsState extends State<HomeDetails> {
                         // If the form is valid , all the values are saved in respective variables
                         _formKey.currentState.save();
                         //User Address object is sent to User Address class
-                        UserAddress curr_user = UserAddress(firstLineOfAddress,
-                            secondLineOfAddress, city, state, pincode);
+                        UserAddress curr_user_address = UserAddress(
+                            firstLineOfAddress,
+                            secondLineOfAddress,
+                            city,
+                            state,
+                            pincode);
                         CompanyPolicies pin_to_policy =
                             CompanyPolicies(pincode);
                         //Available policies corresponding to the pincode is saved in list .
@@ -134,6 +138,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                         Navigator.pushReplacementNamed(context, '/choosepolicy',
                             arguments: {
                               'policies': available_policies,
+                              'userAddress': curr_user_address,
                             });
                       },
                       splashColor: Colors.blueGrey,

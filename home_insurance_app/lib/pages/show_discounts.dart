@@ -53,65 +53,67 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
             SizedBox(
                 height: screenheight /
                     50), //So that the last discount does not get hidden behind the floating button
-            Stack(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: FloatingActionButton.extended(
-                    heroTag: 'Discounts',
-                    icon: Icon(Icons.money_off),
-                    label: Text(
-                      'Get Discounts',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: "PTSerifBI",
+            data == null
+                ? Container()
+                : // if data is null , this means that the user has come to this page only to see the discounts so buttons for payment should not appear
+                Stack(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: FloatingActionButton.extended(
+                          heroTag: 'Discounts',
+                          icon: Icon(Icons.money_off),
+                          label: Text(
+                            'Get Discounts',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w900,
+                              fontFamily: "PTSerifBI",
+                            ),
+                          ),
+                          onPressed: () {}, // resource picker url is launched
+                          backgroundColor: Colors.lightBlueAccent,
+                        ),
                       ),
-                    ),
-                    onPressed: () {}, // resource picker url is launched
-                    backgroundColor: Colors.lightBlueAccent,
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: FloatingActionButton.extended(
-                    heroTag: 'Payment',
-                    icon: Icon(Icons.arrow_forward),
-                    label: Text(
-                      'Go to Payment',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: "PTSerifBI",
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: FloatingActionButton.extended(
+                          heroTag: 'Payment',
+                          icon: Icon(Icons.arrow_forward),
+                          label: Text(
+                            'Go to Payment',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w900,
+                              fontFamily: "PTSerifBI",
+                            ),
+                          ),
+                          onPressed: () {
+                            //calculate total discount
+                            int totalDiscount =
+                                offers.getTotalDiscount(selectedOffers);
+                            // get total Amount paid
+                            double finalAmount = offers.getFinalCost(
+                                data['selectedPolicy'].cost, totalDiscount);
+
+                            //pops the current page
+                            Navigator.pop(context);
+                            //Pops the previous page in the stack which is choose_policy page.
+                            //For now all these arguments are  send to the home page
+                            Navigator.pop(context, {
+                              'totalDiscount': totalDiscount,
+                              'amountPaid': finalAmount,
+                              'selectedPolicy': data['selectedPolicy'],
+                              'userAddress': data['userAddress'],
+                            });
+                          },
+                          backgroundColor: Colors.lightBlueAccent,
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      // if data is null , it means that user has not selected any policy and user just wants to view the discounts .
-                      if (data != null) {
-                        //calculate total discount
-                        int totalDiscount =
-                            offers.getTotalDiscount(selectedOffers);
-                        // get total Amount paid
-                        double finalAmount = offers.getFinalCost(
-                            data['selectedPolicy'].cost, totalDiscount);
-                        //pops the current page
-                        Navigator.pop(context);
-                        //Pops the previous page in the stack which is choose_policy page.
-                        //For now all these argumenst are  send to the home page
-                        Navigator.pop(context, {
-                          'totalDiscount': totalDiscount,
-                          'amountpaid': finalAmount,
-                          'selectedPolicy': data['selectedPolicy'],
-                        });
-                      }
-                    },
-                    backgroundColor: Colors.lightBlueAccent,
-                  ),
-                ),
-              ],
-            )
+                    ],
+                  )
           ],
         ),
       ),
