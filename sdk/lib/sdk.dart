@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:url_launcher/url_launcher.dart';
 
+// The main SDK class the user will access
 class SDK {
   Login _login;
   ResourcePicker _resourcePicker;
