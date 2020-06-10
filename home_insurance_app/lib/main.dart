@@ -7,7 +7,9 @@ import 'package:homeinsuranceapp/pages/get_home_details.dart';
 import 'pages/home.dart';
 
 // this is the root of our application
+import 'pages/home.dart';
 
+// this is the root of our application
 void main() {
   runApp(MyApp());
 }
