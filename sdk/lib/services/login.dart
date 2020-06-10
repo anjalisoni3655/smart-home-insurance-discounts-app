@@ -61,14 +61,12 @@ class Login {
 
   Future<Optional<bool>> isSignedIn() async {
     try {
-      bool result = await _googleSignIn
-          .isSignedIn()
-          .timeout(nonInteractiveFlowTimeout);
+      bool result =
+          await _googleSignIn.isSignedIn().timeout(nonInteractiveFlowTimeout);
       return Optional.of(result);
     } catch (error) {
       print(error);
       return Optional.empty();
     }
-
   }
 }

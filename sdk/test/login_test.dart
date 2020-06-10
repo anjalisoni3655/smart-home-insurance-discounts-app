@@ -148,8 +148,7 @@ void main() {
     expect((await login.isSignedIn()).value, true);
   });
 
-  test('test 4.2: api throws exception on isSignedIn',
-      () async {
+  test('test 4.2: api throws exception on isSignedIn', () async {
     Login login = new Login(mockGoogleSignIn);
     // update signIn to throw error on call
     when(mockGoogleSignIn.isSignedIn()).thenThrow(new Exception('test'));
@@ -169,6 +168,4 @@ void main() {
     // Expected result : getUserDetails should return null
     expect((await login.isSignedIn()).isEmpty, true);
   });
-
-
 }
