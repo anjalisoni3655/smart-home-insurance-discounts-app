@@ -36,9 +36,8 @@ class AccessDevices {
     this._accessToken = accessToken;
   }
 
-
   Future<Optional<List>> getAllDevices() async {
-    if(_accessToken == null) {
+    if (_accessToken == null) {
       throw new Exception("Access Token not set");
     }
     try {
@@ -66,12 +65,16 @@ class AccessDevices {
   }
 
   Future<Optional<List>> getDevicesOfStructure(String structureId) async {
-    if(_accessToken == null) {
+    if (_accessToken == null) {
       throw Exception("Access token not set");
     }
     try {
-      String request = URL + "enterprises/" + _enterpriseId + '/structures/' +
-          structureId + "/devices";
+      String request = URL +
+          "enterprises/" +
+          _enterpriseId +
+          '/structures/' +
+          structureId +
+          "/devices";
       final response = await _client.post(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
@@ -93,7 +96,7 @@ class AccessDevices {
   }
 
   Future<Optional<List>> getAllStructures() async {
-    if(_accessToken == null) {
+    if (_accessToken == null) {
       throw Exception("Access token not set");
     }
     try {
@@ -118,7 +121,7 @@ class AccessDevices {
   }
 
   Future<Optional<String>> getDeviceStatus(String deviceId) async {
-    if(_accessToken == null) {
+    if (_accessToken == null) {
       throw Exception("Access token not set");
     }
     try {
@@ -130,7 +133,7 @@ class AccessDevices {
       ).timeout(accessDevicesTimeoutDuration);
       var result = jsonDecode(response.body);
       return Optional.of(result["traits"]
-      ["sdm.devices.traits.DeviceConnectivityTrait"]["status"]);
+          ["sdm.devices.traits.DeviceConnectivityTrait"]["status"]);
     } catch (error) {
       print(error);
       return Optional.empty();

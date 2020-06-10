@@ -15,8 +15,8 @@ class SDK {
   AccessDevices _accessDevices;
 
   // Dependency injection (constructor injection of Login, ResourcePicker and AccessDevices services)
-  SDK._(Login login, ResourcePicker resourcePicker,
-      AccessDevices accessDevices) {
+  SDK._(
+      Login login, ResourcePicker resourcePicker, AccessDevices accessDevices) {
     if (login == null || resourcePicker == null || accessDevices == null) {
       throw new Exception("Parameters passed can't be null");
     } else {
@@ -32,7 +32,6 @@ class SDK {
 
   Future<String> requestDeviceAccess() => _resourcePicker.askForAuthorization();
 
-
   Future<Optional<List>> getAllDevices() => _accessDevices.getAllDevices();
   Future<Optional<List>> getDevicesOfStructure(String structureId) =>
       _accessDevices.getDevicesOfStructure(structureId);
@@ -47,10 +46,15 @@ class SDK {
 class SDKBuilder {
   static SDK build(String clientId, String clientSecret, String enterpriseId,
       {Duration interactiveFlowTimeout = const Duration(minutes: 5),
-        Duration nonInteractiveFlowTimout = const Duration(seconds: 1)}) {
-    Login login = new Login(GoogleSignIn(), interactiveFlowTimeout: interactiveFlowTimeout, nonInteractiveFlowTimeout: nonInteractiveFlowTimout);
-    ResourcePicker resourcePicker = new ResourcePicker(auth.clientViaUserConsent, clientId, clientSecret, resourcePickerTimeoutDuration: interactiveFlowTimeout);
-    AccessDevices accessDevices = new AccessDevices(http.Client(), enterpriseId);
+      Duration nonInteractiveFlowTimout = const Duration(seconds: 1)}) {
+    Login login = new Login(GoogleSignIn(),
+        interactiveFlowTimeout: interactiveFlowTimeout,
+        nonInteractiveFlowTimeout: nonInteractiveFlowTimout);
+    ResourcePicker resourcePicker = new ResourcePicker(
+        auth.clientViaUserConsent, clientId, clientSecret,
+        resourcePickerTimeoutDuration: interactiveFlowTimeout);
+    AccessDevices accessDevices =
+        new AccessDevices(http.Client(), enterpriseId);
 
     SDK sdk = new SDK._(login, resourcePicker, accessDevices);
     return sdk;

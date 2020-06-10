@@ -24,7 +24,8 @@ const String getDeviceStatusUrl =
 const deviceResponse =
     '{"name" : "/enterprises/enterprise-id/devices/device-id","type" : "sdm.devices.types.device-type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}}}';
 const allDevicesListResponse = '{ "devices": [' + deviceResponse + '] }';
-const devicesOfStructureListResponse = '{ "devices": [' + deviceResponse + '] }';
+const devicesOfStructureListResponse =
+    '{ "devices": [' + deviceResponse + '] }';
 const allStructuresListResponse =
     '{"structures": [{"name": "enterprises/sdm-internal/structures/AVPHwEtfUkCviHmeFD_OR4HNMExGmuPENGmG_9BsP5C-05EWFbrQpgZV5laMe8GhMiyg3XXTbI5AvTzzYUoQ03Zd6pQ8","traits": {"sdm.structures.traits.Info": {"customName": "Second home"}}},{"name": "enterprises/sdm-internal/structures/AVPHwEvTILTn3tYCarertyG3cExQYAdHxF5xhVSDf5eQc6F8gi4ThQDGirY7_n-XzYcs9DQChQ8obbUihc0h2YWg5EDy","traits": {"sdm.structures.traits.Info": {"customName": "Onyx Home"}}}]}';
 
@@ -66,7 +67,8 @@ void main() {
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenAnswer((_) => Future.value(mockResponse));
 
-    accessDevices = new AccessDevices(mockClient, "enterprise-id", accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
+    accessDevices = new AccessDevices(mockClient, "enterprise-id",
+        accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
     accessDevices.setAccessToken("accessToken");
   });
 
@@ -149,7 +151,7 @@ void main() {
     when(mockClient.post(getDeviceStatusUrl,
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenThrow(new Exception());
-    
+
     // testing
     expect((await accessDevices.getDeviceStatus("device-id")).isEmpty, true);
   });
@@ -175,23 +177,26 @@ void main() {
     when(mockResponse.body).thenReturn(devicesOfStructureListResponse);
 
     // testing
-    expect((await accessDevices.getDevicesOfStructure('structure-id')).value, devicesOfStructureResult);
+    expect((await accessDevices.getDevicesOfStructure('structure-id')).value,
+        devicesOfStructureResult);
   });
 
-  test("test 4.2: get devices of structure exception on http request", () async {
+  test("test 4.2: get devices of structure exception on http request",
+      () async {
     // Defining behaviour: throws error
     when(mockClient.post(getDevicesOfStructureUrl,
-        headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenThrow(new Exception());
 
     // testing
-    expect((await accessDevices.getDevicesOfStructure('structure-id')).isEmpty, true);
+    expect((await accessDevices.getDevicesOfStructure('structure-id')).isEmpty,
+        true);
   });
 
   test("test 4.3: get devices of structure timeout on http request", () async {
     // Defining behaviour: returns a response after 200 ms
     when(mockClient.post(getDevicesOfStructureUrl,
-        headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
+            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenAnswer((_) async {
       await Future.delayed(new Duration(milliseconds: 200));
       return Future.value(mockResponse);
@@ -199,8 +204,7 @@ void main() {
     when(mockResponse.body).thenReturn(devicesOfStructureListResponse);
 
     // testing
-    expect((await accessDevices.getDevicesOfStructure('structure-id')).isEmpty, true);
+    expect((await accessDevices.getDevicesOfStructure('structure-id')).isEmpty,
+        true);
   });
-
-
 }
