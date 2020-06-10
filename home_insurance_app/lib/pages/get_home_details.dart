@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/company_policies.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
 String firstLineOfAddress;
 String secondLineOfAddress;
@@ -19,6 +20,7 @@ class _HomeDetailsState extends State<HomeDetails> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Widget _buildAddressFirstLine() {
     return TextFormField(
+        key: Key('First Adrress Line'), // Used for testing
         decoration: InputDecoration(labelText: "First Line Of Address"),
         validator: (String value) {
           if (value.isEmpty) {
@@ -32,6 +34,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildAddressSecondLine() {
     return TextFormField(
+        key: Key('Second Adrress Line'), // Used for testing
         decoration: InputDecoration(
             labelText:
                 "Second Line Of Address"), //validator is not required as this field can be left empty
@@ -42,6 +45,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildCity() {
     return TextFormField(
+        key: Key('City'), // Used for testing
         decoration: InputDecoration(labelText: " City "),
         validator: (String value) {
           if (value.isEmpty) {
@@ -55,6 +59,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildState() {
     return TextFormField(
+        key: Key('State'), // Used for testing
         decoration: InputDecoration(labelText: "State/Union Territory"),
         validator: (String value) {
           if (value.isEmpty) {
@@ -68,6 +73,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildPincode() {
     return TextFormField(
+        key: Key('Pincode'), // Used for testing
         decoration: InputDecoration(labelText: "Pincode"),
         keyboardType: TextInputType.number,
         validator: (String value) {
@@ -86,11 +92,7 @@ class _HomeDetailsState extends State<HomeDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-        title: Text('Home Insurance Company'),
-        centerTitle: true,
-        backgroundColor: Colors.brown,
-      ),
+      appBar: CommonAppBar(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(24),

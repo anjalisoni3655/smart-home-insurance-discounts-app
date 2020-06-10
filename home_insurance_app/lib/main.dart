@@ -10,12 +10,16 @@ void main() {
   runApp(MyApp());
 }
 
-// This class is used to store all routes and taked the user to the page corresponding to initial route ('/)
+// MyApp is used to store all routes and takes the user to the page corresponding to initial route ('/)
 class MyApp extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Smart Home',
+      initialRoute: LoginScreen.id,
       routes: {
-        '/': (context) => HomePage(),
+        LoginScreen.id: (context) => LoginScreen(),
+        '/home': (context) => HomePage(),
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),
         '/showdiscounts': (context) => DisplayDiscounts(),

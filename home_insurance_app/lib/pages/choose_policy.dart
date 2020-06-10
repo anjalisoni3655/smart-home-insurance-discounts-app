@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
 //This class maps each policy to a index value which is used in selecting radio buttons
 class Mapping {
@@ -11,33 +12,36 @@ class Mapping {
   }
 }
 
-Map data = {};
-Policy userChoice;
+Policy userChoice; // Stores the policy selected by the user
 
 class DisplayPolicies extends StatefulWidget {
   @override
   _DisplayPoliciesState createState() => _DisplayPoliciesState();
 }
 
+//This class defines the layout for entire screen except the policy list container
 class _DisplayPoliciesState extends State<DisplayPolicies> {
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+    double screenheight = mediaQuery.size.height;
+    double screenwidth = mediaQuery.size.width;
+
     // data stores the policies available for the user as a key-value pair.
-    data = ModalRoute.of(context).settings.arguments;
+    Map data = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Insurance Company '),
-        centerTitle: true,
-        backgroundColor: Colors.brown,
-      ),
+      appBar: CommonAppBar(),
       body: Container(
-        padding: const EdgeInsets.all(2.0),
-        margin: const EdgeInsets.all(2.0),
+        padding: EdgeInsets.symmetric(
+            vertical: screenheight / 100, horizontal: screenheight / 100),
+        margin: EdgeInsets.symmetric(
+            vertical: screenheight / 100, horizontal: screenwidth / 100),
         child: Center(
           child: Column(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenwidth / 40, vertical: screenheight / 50),
                 child: Text(
                   'Available Policies',
                   style: TextStyle(
@@ -47,25 +51,16 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   ),
                 ),
               ),
-              const Divider(
+              Divider(
                 color: Colors.brown,
-                height: 10.0,
-                thickness: 5,
-                indent: 5,
-                endIndent: 5,
+                height: screenheight / 100,
+                thickness: screenheight / 100,
+                indent: screenwidth / 100,
+                endIndent: screenwidth / 100,
               ),
-              SizedBox(height: 10.0),
-              SizedBox(height: 20.0),
-              RadioGroup(),
-              SizedBox(height: 10.0),
-              Text(
-                'Scroll Down',
-                style: TextStyle(
-                  fontFamily: 'PTSerifR',
-                  fontSize: 10.0,
-                ),
-              ),
-              SizedBox(height: 20.0),
+              SizedBox(height: screenheight / 50),
+              RadioGroup(data),
+              SizedBox(height: screenheight / 50),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
@@ -87,13 +82,15 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   ),
                 ),
               ),
-              SizedBox(height: 10.0),
+              SizedBox(height: 10.0), ////
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
                   heroTag: "pay",
                   onPressed: () {
-                    Navigator.pop(context); // For now it goes to the home page
+                    Navigator.pop(context, {
+                      'selectedPolicy': userChoice
+                    }); // For now , clicking on payment takes back to the home page
                   },
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
@@ -118,20 +115,24 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
 
 // This class is used to display a list of policies preceded by the radio buttons
 class RadioGroup extends StatefulWidget {
+  final Map data;
+  const RadioGroup(this.data);
+  //  RadioGroup({Key key , this.data}):super(key:key);
   @override
   _RadioGroupState createState() => _RadioGroupState();
 }
 
 class _RadioGroupState extends State<RadioGroup> {
-  int choosenIndex = 0;
+  int choosenIndex = 0; // Stores the index corresponding to the selected policy
+
   List<Mapping> choices = new List<Mapping>();
   @override
   void initState() {
     super.initState();
-    userChoice = data['policies']
+    userChoice = widget.data['policies']
         [0]; //By default the first policy will be displayed as selected  .
-    for (int i = 0; i < data['policies'].length; i++) {
-      choices.add(new Mapping(i, data['policies'][i]));
+    for (int i = 0; i < widget.data['policies'].length; i++) {
+      choices.add(new Mapping(i, widget.data['policies'][i]));
     }
   }
 
@@ -143,11 +144,11 @@ class _RadioGroupState extends State<RadioGroup> {
     return Container(
       // Wraping ListView inside Container to assign scrollable screen a height and width
       width: screenWidth,
-      height: 9 * screenHeight / 16, // list should not over
+      height: 9 * screenHeight / 16,
       child: ListView(
         scrollDirection: Axis.vertical,
         children: choices
-            .map((data) => RadioListTile(
+            .map((entry) => RadioListTile(
                   title: Row(
                     children: <Widget>[
                       Expanded(
@@ -156,7 +157,7 @@ class _RadioGroupState extends State<RadioGroup> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                '\n${data.policyOption.policyName}',
+                                '\n${entry.policyOption.policyName}',
                                 style: TextStyle(
                                   color: Colors.black87,
                                   fontWeight: FontWeight.bold,
@@ -165,7 +166,7 @@ class _RadioGroupState extends State<RadioGroup> {
                                 ),
                               ),
                               Text(
-                                'Valid for ${data.policyOption.validity} years',
+                                'Valid for ${entry.policyOption.validity} years',
                                 style: TextStyle(
                                   color: Colors.blueAccent[500],
                                   fontSize: 13.0,
@@ -185,17 +186,17 @@ class _RadioGroupState extends State<RadioGroup> {
                           )),
                       Expanded(
                         flex: 2,
-                        child: Text('${data.policyOption.cost}'),
+                        child: Text('${entry.policyOption.cost}'),
                       ),
                     ],
                   ),
                   groupValue: choosenIndex,
                   activeColor: Colors.blue[500],
-                  value: data.index,
+                  value: entry.index,
                   onChanged: (value) {
                     // A radio button gets selected only when groupValue is equal to value of the respective radio button
                     setState(() {
-                      userChoice = data.policyOption;
+                      userChoice = entry.policyOption;
                       //To make groupValue equal to value for the radio button .
                       choosenIndex = value;
                       print(userChoice.policyName);

@@ -12,6 +12,21 @@ before_script:
   - git clone https://github.com/flutter/flutter.git -b beta
   - ./flutter/bin/flutter doctor
 jobs:
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  include:
+    - stage: test app
+      script: cd home_insurance_app; ../flutter/bin/flutter test;
+    - stage: format app
+      script: ./flutter/bin/flutter format -n --set-exit-if-changed home_insurance_app/lib/*
+    - stage: test sdk
+      script: cd sdk; ../flutter/bin/flutter test;
+    - stage: format sdk
+      script: ./flutter/bin/flutter format -n --set-exit-if-changed sdk/lib/*
+
+=======
+>>>>>>> 0d9995e89dab02b59f8c47a9d6c9d654b41d0697
   - name: test app
     if: type = pull_request
     script: cd home_insurance_app; ../flutter/bin/flutter test;
@@ -24,6 +39,10 @@ jobs:
   - name: format sdk
     if: type = pull_request
     script: ./flutter/bin/flutter format -n --set-exit-if-changed sdk/lib/* sdk/test/*
+<<<<<<< HEAD
+=======
+>>>>>>> d0d61ca0e004471d36b4b538f2ab67119075bcab
+>>>>>>> 0d9995e89dab02b59f8c47a9d6c9d654b41d0697
 cache:
   directories:
     - $HOME/.pub-cache

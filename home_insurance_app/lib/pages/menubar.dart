@@ -10,6 +10,7 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      key: Key('Menu Bar'),
       child: ListView(
         children: <Widget>[
           DrawerHeader(
