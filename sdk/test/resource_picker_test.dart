@@ -3,6 +3,8 @@ import 'package:googleapis_auth/auth.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sdk/services/resource_picker.dart';
 
+import 'login_test.dart';
+
 class MockAuthClient extends Mock implements AuthClient {}
 
 class MockAccessCredentials extends Mock implements AccessCredentials {}

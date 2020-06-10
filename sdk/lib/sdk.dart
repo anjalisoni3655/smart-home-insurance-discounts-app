@@ -7,6 +7,7 @@ import 'package:sdk/services/login.dart';
 import 'package:sdk/services/resource_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:googleapis_auth/auth_io.dart' as auth;
+import 'package:url_launcher/url_launcher.dart';
 
 // The main SDK class the user will access
 class SDK {
@@ -28,8 +29,7 @@ class SDK {
 
   Future<String> login() => _login.login();
   Future<String> logout() => _login.logout();
-  Future<Optional<Map>> getUserDetails() => _login.getUserDetails();
-  Future<Optional<bool>> isSignedIn() => _login.isSignedIn();
+  Future<Map> getUserDetails() => _login.getUserDetails();
 
   Future<String> requestDeviceAccess() => _resourcePicker.askForAuthorization();
 
