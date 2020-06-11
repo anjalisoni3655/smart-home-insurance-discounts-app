@@ -11,7 +11,6 @@ CompanyDataBase offers = new CompanyDataBase();
 
 Offer selectedOffer;
 
-
 class DisplayDiscounts extends StatefulWidget {
   @override
   DisplayDiscountsState createState() => DisplayDiscountsState();
@@ -19,7 +18,7 @@ class DisplayDiscounts extends StatefulWidget {
 
 class DisplayDiscountsState extends State<DisplayDiscounts> {
   @override
-  Widget build(BuildContext  context) {
+  Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
 
@@ -33,23 +32,25 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
             vertical: screenheight / 80, horizontal: screenwidth / 80),
         child: Column(
           children: <Widget>[
-            Expanded(   // To avoid renderflow in small device sizes , expanded widget is used
-              flex:6,
+            Expanded(
+              // To avoid renderflow in small device sizes , expanded widget is used
+              flex: 6,
               child: Column(
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: screenwidth / 80, vertical: screenheight / 80),
+                        horizontal: screenwidth / 80,
+                        vertical: screenheight / 80),
                     child: Text(
                       'Available Discounts',
                       style: CustomTextStyle(fontSize: 30.0),
                     ),
                   ),
-                  CustomDivider(height: screenheight / 100, width: screenwidth / 50),
+                  CustomDivider(
+                      height: screenheight / 100, width: screenwidth / 50),
                   SizedBox(height: screenheight / 100),
                   AllDiscounts(),
-                  SizedBox(
-                      height: screenheight / 50),
+                  SizedBox(height: screenheight / 50),
                 ],
               ),
             ),
@@ -59,8 +60,8 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                 ? Container()
                 : // if data is null , this means that the user has come to this page only to see the discounts so buttons for payment should not appear
                 Expanded(
-                  flex:1,
-                  child: Stack(
+                    flex: 1,
+                    child: Stack(
                       children: <Widget>[
                         Align(
                           alignment: Alignment.centerLeft,
@@ -69,10 +70,10 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                             icon: Icon(Icons.money_off),
                             label: Text(
                               'Get Discounts',
-                              style: CustomTextStyle( fontWeight: FontWeight.w900),
+                              style:
+                                  CustomTextStyle(fontWeight: FontWeight.w900),
                             ),
-                            onPressed: () {
-                            }, // resource picker url is launched
+                            onPressed: () {}, // resource picker url is launched
                             backgroundColor: Colors.lightBlueAccent,
                           ),
                         ),
@@ -83,7 +84,8 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                             icon: Icon(Icons.arrow_forward),
                             label: Text(
                               'Go to Payment',
-                              style: CustomTextStyle(fontWeight: FontWeight.w900),
+                              style:
+                                  CustomTextStyle(fontWeight: FontWeight.w900),
                             ),
                             onPressed: () {
                               //pops the current page
@@ -98,13 +100,10 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                             },
                             backgroundColor: Colors.lightBlueAccent,
                           ),
-
                         ),
-
                       ],
                     ),
-                )
-
+                  )
           ],
         ),
       ),
@@ -166,15 +165,15 @@ class _AllDiscountsState extends State<AllDiscounts> {
                                     (entry) => Align(
                                       alignment: Alignment.topLeft,
                                       child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: screenheight / 80,
-                                              horizontal: screenwidth / 80),
-                                          decoration: BoxDecoration(),
-                                          child: Text(
-                                            '${entry.key} : ${entry.value}',
-                                            textAlign: TextAlign.left,
-                                            style: CustomTextStyle(fontSize: 17),
-                                          ),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: screenheight / 80,
+                                            horizontal: screenwidth / 80),
+                                        decoration: BoxDecoration(),
+                                        child: Text(
+                                          '${entry.key} : ${entry.value}',
+                                          textAlign: TextAlign.left,
+                                          style: CustomTextStyle(fontSize: 17),
+                                        ),
                                       ),
                                     ),
                                   )
@@ -185,7 +184,8 @@ class _AllDiscountsState extends State<AllDiscounts> {
                           child: Text(
                             '${CompanyDataBase.availableOffers[index].discount} %',
                             textAlign: TextAlign.center,
-                            style: CustomTextStyle( fontWeight: FontWeight.w500, fontSize: 20.0),
+                            style: CustomTextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 20.0),
                           ),
                         )
                       ],

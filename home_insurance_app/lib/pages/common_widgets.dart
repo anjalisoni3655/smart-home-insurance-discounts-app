@@ -15,7 +15,7 @@ class _CommonAppBarState extends State<CommonAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title:Text('Home Insurance Company'),
+      title: Text('Home Insurance Company'),
       centerTitle: true,
       backgroundColor: Colors.brown,
     );

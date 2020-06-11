@@ -48,7 +48,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                       vertical: screenheight / 50),
                   child: Text(
                     'Available Policies',
-                      style: CustomTextStyle(fontSize: 30.0),
+                    style: CustomTextStyle(fontSize: 30.0),
                   ),
                 ),
               ),
@@ -57,17 +57,14 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               CustomSizedBox(height: screenheight / 100),
               RadioGroup(data),
               CustomSizedBox(height: screenheight / 50),
-
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
                   heroTag: "View",
                   onPressed: () {
                     Navigator.pushNamed(context, '/showdiscounts', arguments: {
-
                       'selectedPolicy': userChoice,
                       'userAddress': data['userAddress'],
-
                     });
                   },
                   backgroundColor: Colors.lightBlueAccent,
@@ -84,7 +81,6 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 child: FloatingActionButton.extended(
                   heroTag: "pay",
                   onPressed: () {
-
                     Navigator.pop(context, {
                       'selectedPolicy': userChoice,
                       'userAddress': data['userAddress'],
@@ -159,7 +155,6 @@ class _RadioGroupState extends State<RadioGroup> {
                                 style: CustomTextStyle(
                                     color: Colors.blueAccent[500],
                                     fontSize: 13.0),
-
                               ),
                             ],
                           )),
