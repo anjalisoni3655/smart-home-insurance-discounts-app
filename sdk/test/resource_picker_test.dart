@@ -3,8 +3,6 @@ import 'package:googleapis_auth/auth.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sdk/services/resource_picker.dart';
 
-import 'login_test.dart';
-
 class MockAuthClient extends Mock implements AuthClient {}
 
 class MockAccessCredentials extends Mock implements AccessCredentials {}
@@ -40,14 +38,15 @@ void main() {
       return mockAuthClient;
     }
 
-    ResourcePicker resourcePicker = new ResourcePicker.test(
-        "client_id", "client_secret", mockClientViaUserConsent);
+    ResourcePicker resourcePicker = new ResourcePicker(mockClientViaUserConsent,
+        "enterprise_id", "client_id", "client_secret");
     // Expected results:
     expect(
         await resourcePicker.askForAuthorization(), "authorization successful");
     expect(resourcePicker.accessToken, "accessTokenTest");
     expect(resourcePicker.refreshToken, "refreshTokenTest");
   });
+
   test('test 2: API function throws error', () async {
     // Defining behaviour: throws an error on calling
     AuthClient mockClientViaUserConsent(
@@ -56,8 +55,8 @@ void main() {
     }
 
     // Expected behaviour
-    ResourcePicker resourcePicker = new ResourcePicker.test(
-        "client_id", "client_secret", mockClientViaUserConsent);
+    ResourcePicker resourcePicker = new ResourcePicker(mockClientViaUserConsent,
+        "enterprise_id", "client_id", "client_secret");
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });
 
@@ -70,8 +69,8 @@ void main() {
     }
 
     // Expected behaviour
-    ResourcePicker resourcePicker = new ResourcePicker.test(
-        "client_id", "client_secret", mockClientViaUserConsent,
+    ResourcePicker resourcePicker = new ResourcePicker(
+        mockClientViaUserConsent, "enterprise_id", "client_id", "client_secret",
         resourcePickerTimeoutDuration: new Duration(milliseconds: 100));
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });

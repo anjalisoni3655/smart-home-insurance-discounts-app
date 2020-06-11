@@ -1,5 +1,3 @@
-library sdk;
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -21,35 +19,35 @@ String getId(String name) {
 // Provides helper functions to get list of devices, structures, status of devices etc.
 class AccessDevices {
   final String url;
-
   String _accessToken;
+  String _refreshToken;
   String _enterpriseId;
   final Duration accessDevicesTimeoutDuration;
   http.Client _client;
 
-  AccessDevices(String accessToken, String enterpriseId,
+  // Dependency Injection (constructor injection of http.Client service)
+  AccessDevices(http.Client client, String enterpriseId,
       {this.accessDevicesTimeoutDuration = const Duration(seconds: 2),
       this.url =
           "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/"}) {
-    this._accessToken = accessToken;
-    this._enterpriseId = enterpriseId;
-    _client = new http.Client();
-  }
-
-  AccessDevices.test(
-      String accessToken, String enterpriseId, http.Client client,
-      {this.accessDevicesTimeoutDuration = const Duration(seconds: 2),
-      this.url =
-          "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/"}) {
-    this._accessToken = accessToken;
     this._enterpriseId = enterpriseId;
     _client = client;
   }
 
+  void setCredentials(Map credentials) {
+    this._accessToken = credentials['accessToken'];
+    this._refreshToken = credentials['refreshToken'];
+  }
+
   Future<Optional<List>> getAllDevices() async {
+    if (_accessToken == null) {
+      throw new Exception("Access Token not set");
+    }
     try {
       String request = url + "enterprises/" + _enterpriseId + "/devices";
-      final response = await _client.post(
+      print(request);
+      print(_accessToken);
+      final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
@@ -71,6 +69,9 @@ class AccessDevices {
   }
 
   Future<Optional<List>> getDevicesOfStructure(String structureId) async {
+    if (_accessToken == null) {
+      throw Exception("Access token not set");
+    }
     try {
       String request = url +
           "enterprises/" +
@@ -78,7 +79,7 @@ class AccessDevices {
           '/structures/' +
           structureId +
           "/devices";
-      final response = await _client.post(
+      final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
@@ -100,9 +101,12 @@ class AccessDevices {
   }
 
   Future<Optional<List>> getAllStructures() async {
+    if (_accessToken == null) {
+      throw Exception("Access token not set");
+    }
     try {
       String request = url + "enterprises/" + _enterpriseId + "/structures";
-      final response = await _client.post(
+      final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
@@ -123,10 +127,13 @@ class AccessDevices {
   }
 
   Future<Optional<String>> getDeviceStatus(String deviceId) async {
+    if (_accessToken == null) {
+      throw Exception("Access token not set");
+    }
     try {
       String request =
           url + "enterprises/" + _enterpriseId + "/devices/" + deviceId;
-      http.Response response = await _client.post(
+      http.Response response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
@@ -137,5 +144,9 @@ class AccessDevices {
       log(error.toString());
       return Optional.empty();
     }
+  }
+
+  Future<void> refreshAccessToken() {
+    // TODO: implement refreshing access token
   }
 }
