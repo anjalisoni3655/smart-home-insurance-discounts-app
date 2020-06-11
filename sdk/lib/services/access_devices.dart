@@ -19,7 +19,6 @@ String getId(String name) {
 // Provides helper functions to get list of devices, structures, status of devices etc.
 class AccessDevices {
   final String url;
-
   String _accessToken;
   String _refreshToken;
   String _enterpriseId;
@@ -46,6 +45,7 @@ class AccessDevices {
     }
     try {
       String request = url + "enterprises/" + _enterpriseId + "/devices";
+      print(request);
       final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
@@ -63,6 +63,7 @@ class AccessDevices {
       return Optional.of(devices);
     } catch (error) {
       log(error.toString());
+      print(error);
       return Optional.empty();
     }
   }

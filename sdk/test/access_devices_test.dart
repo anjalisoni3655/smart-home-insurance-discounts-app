@@ -84,7 +84,7 @@ void main() {
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenAnswer((_) => Future.value(mockResponse));
 
-    accessDevices = new AccessDevices(mockClient, "enterprise-id",
+    accessDevices = new AccessDevices(mockClient, enterpriseId,
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100), url: url);
     accessDevices.setCredentials({"accessToken": "accessToken", "refreshToken": "refreshToken"});
   });
