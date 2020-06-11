@@ -49,7 +49,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30.0,
-                      fontFamily: 'PTSerifBI',
+                      fontFamily: 'Source Sans Pro',
                     ),
                   ),
                 ),
@@ -68,7 +68,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               Text(
                 'Scroll Down',
                 style: TextStyle(
-                  fontFamily: 'PTSerifR',
+                  fontFamily: 'Source Sans Pro',
                   fontSize: 10.0,
                 ),
               ),
@@ -174,7 +174,7 @@ class _RadioGroupState extends State<RadioGroup> {
                                   color: Colors.black87,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 17.0,
-                                  fontFamily: 'PTSerifR',
+                                  fontFamily: 'Source Sans Pro',
                                 ),
                               ),
                               Text(
@@ -182,7 +182,7 @@ class _RadioGroupState extends State<RadioGroup> {
                                 style: TextStyle(
                                   color: Colors.blueAccent[500],
                                   fontSize: 13.0,
-                                  fontFamily: 'PTSerifR',
+                                  fontFamily: 'Source Sans Pro',
                                 ),
                               ),
                             ],
