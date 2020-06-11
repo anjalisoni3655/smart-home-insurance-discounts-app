@@ -5,6 +5,7 @@ import 'package:googleapis_auth/auth_io.dart' as auth;
 class ResourcePicker {
   String _accessToken;
   String _refreshToken;
+  String _enterpriseId;
   String _clientId;
   String _clientSecret;
   String _scope = "https://www.googleapis.com/auth/sdm.service";
@@ -12,10 +13,11 @@ class ResourcePicker {
   Function clientViaUserConsent;
 
   // Dependency Injection (cunstructor injection of clientViaUserConsent service)
-  ResourcePicker(
-      Function clientViaUserConsent, String clientId, String clientSecret,
+  ResourcePicker(Function clientViaUserConsent, String enterpriseId,
+      String clientId, String clientSecret,
       {this.resourcePickerTimeoutDuration = const Duration(minutes: 5)}) {
     this.clientViaUserConsent = clientViaUserConsent;
+    this._enterpriseId = enterpriseId;
     this._clientId = clientId;
     this._clientSecret = clientSecret;
   }
@@ -25,6 +27,9 @@ class ResourcePicker {
     try {
       auth.AuthClient authClient = await clientViaUserConsent(
           auth.ClientId(_clientId, _clientSecret), [_scope], (url) {
+        url =
+            'https://sdmresourcepicker-staging.sandbox.google.com/partnerconnections/$_enterpriseId' +
+                url.substring(36);
         launch(url);
       }).timeout(resourcePickerTimeoutDuration);
       _accessToken = authClient.credentials.accessToken.data;

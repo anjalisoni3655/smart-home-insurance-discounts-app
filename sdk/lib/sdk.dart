@@ -52,7 +52,7 @@ class SDKBuilder {
         interactiveFlowTimeout: interactiveFlowTimeout,
         nonInteractiveFlowTimeout: nonInteractiveFlowTimout);
     ResourcePicker resourcePicker = new ResourcePicker(
-        auth.clientViaUserConsent, clientId, clientSecret,
+        auth.clientViaUserConsent, enterpriseId, clientId, clientSecret,
         resourcePickerTimeoutDuration: interactiveFlowTimeout);
     AccessDevices accessDevices =
         new AccessDevices(http.Client(), enterpriseId);
