@@ -27,6 +27,7 @@ class ResourcePicker {
     try {
       auth.AuthClient authClient = await clientViaUserConsent(
           auth.ClientId(_clientId, _clientSecret), [_scope], (url) {
+        // remove the default 'https://accounts.google.com/o/oauth2' domain name by resource picker domain name
         url =
             'https://sdmresourcepicker-staging.sandbox.google.com/partnerconnections/$_enterpriseId' +
                 url.substring(36);
