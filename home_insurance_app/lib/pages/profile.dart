@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/components/constants.dart';
+import 'package:homeinsuranceapp/components/css.dart';
 
 //widget for the my profile page displaying user's details
 class Profile extends StatelessWidget {
