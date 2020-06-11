@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
+import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
 //This class maps each policy to a index value which is used in selecting radio buttons
 class Mapping {
@@ -14,6 +15,7 @@ class Mapping {
 
 Policy userChoice; // Stores the policy selected by the user
 
+// This class displays the overall layout of the choose_policy page
 class DisplayPolicies extends StatefulWidget {
   @override
   _DisplayPoliciesState createState() => _DisplayPoliciesState();
@@ -46,32 +48,15 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                       vertical: screenheight / 50),
                   child: Text(
                     'Available Policies',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                      fontFamily: 'Source Sans Pro',
-                    ),
+                      style: CustomTextStyle(fontSize: 30.0),
                   ),
                 ),
               ),
-              Divider(
-                color: Colors.brown,
-                height: screenheight / 100,
-                thickness: screenheight / 100,
-                indent: screenwidth / 100,
-                endIndent: screenwidth / 100,
-              ),
-
-              SizedBox(height: screenheight / 50),
+              CustomDivider(
+                  height: screenheight / 100, width: screenwidth / 100),
+              CustomSizedBox(height: screenheight / 100),
               RadioGroup(data),
-              SizedBox(height: screenheight / 50),
-              Text(
-                'Scroll Down',
-                style: TextStyle(
-                  fontFamily: 'Source Sans Pro',
-                  fontSize: 10.0,
-                ),
-              ),
+              CustomSizedBox(height: screenheight / 50),
 
               Align(
                 alignment: Alignment.bottomCenter,
@@ -86,15 +71,11 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   icon: Icon(Icons.payment),
                   label: Text(
                     'View Smart Device Discounts',
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: CustomTextStyle(),
                   ),
                 ),
               ),
-              SizedBox(height: 10.0), ////
+              CustomSizedBox(height: screenheight / 100),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
@@ -109,11 +90,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   label: Text(
                     'Payment',
                     maxLines: 2,
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: CustomTextStyle(),
                   ),
                 ),
               ),
@@ -170,20 +147,14 @@ class _RadioGroupState extends State<RadioGroup> {
                             children: <Widget>[
                               Text(
                                 '\n${entry.policyOption.policyName}',
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17.0,
-                                  fontFamily: 'Source Sans Pro',
-                                ),
+                                style: CustomTextStyle(fontSize: 17.0),
                               ),
                               Text(
                                 'Valid for ${entry.policyOption.validity} years',
-                                style: TextStyle(
-                                  color: Colors.blueAccent[500],
-                                  fontSize: 13.0,
-                                  fontFamily: 'Source Sans Pro',
-                                ),
+                                style: CustomTextStyle(
+                                    color: Colors.blueAccent[500],
+                                    fontSize: 13.0),
+
                               ),
                             ],
                           )),
