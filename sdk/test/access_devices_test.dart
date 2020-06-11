@@ -12,6 +12,7 @@ MockClient mockClient;
 MockResponse mockResponse;
 
 // Naming enterprises, structures and devices
+const url = 'https://sdm-api.googleapis.com/';
 const enterpriseId = 'sdm-test';
 const structure1Id = 'home-1-structure-id';
 const structure1Name = 'home-1';
@@ -26,13 +27,13 @@ const device2Type = "sdm.devices.types.CAMERA";
 
 // Valid GET Request URLs
 const String getAllDevicesUrl =
-    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/$enterpriseId/devices";
+    "${url}enterprises/$enterpriseId/devices";
 const String getDevicesOfStructure1Url =
-    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/$enterpriseId/structures/$structure1Id/devices";
+    "${url}enterprises/$enterpriseId/structures/$structure1Id/devices";
 const String getAllStructuresUrl =
-    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/$enterpriseId/structures";
+    "${url}enterprises/$enterpriseId/structures";
 const String getDevice1StatusUrl =
-    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/$enterpriseId/devices/$device1Id";
+    "${url}enterprises/$enterpriseId/devices/$device1Id";
 
 // Responses returned by the SDM API
 const device1Response =
@@ -91,7 +92,7 @@ void main() {
 
     // initialising class (behaviour same as setup)
     AccessDevices accessDevices =
-        new AccessDevices.test("accessToken", enterpriseId, mockClient);
+        new AccessDevices.test("accessToken", enterpriseId, mockClient, url: url);
 
     // testing
     expect((await accessDevices.getAllDevices()).value, allDevicesResult);
@@ -105,7 +106,7 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices =
-        new AccessDevices.test("accessToken", enterpriseId, mockClient);
+        new AccessDevices.test("accessToken", enterpriseId, mockClient, url: url);
 
     // testing
     expect((await accessDevices.getAllDevices()).isEmpty, true);
@@ -123,7 +124,7 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices = new AccessDevices.test(
-        "accessToken", enterpriseId, mockClient,
+        "accessToken", enterpriseId, mockClient, url: url,
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
 
     // testing
@@ -136,7 +137,7 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices =
-        new AccessDevices.test("accessToken", enterpriseId, mockClient);
+        new AccessDevices.test("accessToken", enterpriseId, mockClient, url: url);
 
     // testing
     expect((await accessDevices.getAllStructures()).value, allStructuresResult);
@@ -150,7 +151,7 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices =
-        new AccessDevices.test("accessToken", enterpriseId, mockClient);
+        new AccessDevices.test("accessToken", enterpriseId, mockClient, url: url);
 
     // testing
     expect((await accessDevices.getAllStructures()).isEmpty, true);
@@ -170,7 +171,7 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices = new AccessDevices.test(
-        "accessToken", enterpriseId, mockClient,
+        "accessToken", enterpriseId, mockClient, url: url,
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
 
     // testing
@@ -183,7 +184,7 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices =
-        new AccessDevices.test("accessToken", enterpriseId, mockClient);
+        new AccessDevices.test("accessToken", enterpriseId, mockClient, url: url);
 
     // testing
     expect((await accessDevices.getDeviceStatus(device1Id)).value, "ONLINE");
@@ -197,7 +198,7 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices =
-        new AccessDevices.test("accessToken", enterpriseId, mockClient);
+        new AccessDevices.test("accessToken", enterpriseId, mockClient, url: url);
 
     // testing
     expect((await accessDevices.getDeviceStatus(device1Id)).isEmpty, true);
@@ -217,7 +218,7 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices = new AccessDevices.test(
-        "accessToken", enterpriseId, mockClient,
+        "accessToken", enterpriseId, mockClient, url: url,
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
 
     // testing
@@ -230,7 +231,7 @@ void main() {
 
     // initialising class (behaviour same as setup)
     AccessDevices accessDevices =
-        new AccessDevices.test("accessToken", enterpriseId, mockClient);
+        new AccessDevices.test("accessToken", enterpriseId, mockClient, url: url);
 
     // testing
     expect((await accessDevices.getDevicesOfStructure(structure1Id)).value,
@@ -246,7 +247,7 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices =
-        new AccessDevices.test("accessToken", enterpriseId, mockClient);
+        new AccessDevices.test("accessToken", enterpriseId, mockClient, url: url);
 
     // testing
     expect((await accessDevices.getDevicesOfStructure(structure1Id)).isEmpty,
@@ -265,7 +266,7 @@ void main() {
 
     // initialising class
     AccessDevices accessDevices = new AccessDevices.test(
-        "accessToken", enterpriseId, mockClient,
+        "accessToken", enterpriseId, mockClient, url: url,
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
 
     // testing

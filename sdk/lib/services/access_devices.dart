@@ -20,8 +20,7 @@ String getId(String name) {
 
 // Provides helper functions to get list of devices, structures, status of devices etc.
 class AccessDevices {
-  static const String URL =
-      "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/";
+  final String url;
 
   String _accessToken;
   String _enterpriseId;
@@ -29,7 +28,8 @@ class AccessDevices {
   http.Client _client;
 
   AccessDevices(String accessToken, String enterpriseId,
-      {this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
+      {this.accessDevicesTimeoutDuration = const Duration(seconds: 2),
+      this.url = "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/"}) {
     this._accessToken = accessToken;
     this._enterpriseId = enterpriseId;
     _client = new http.Client();
@@ -37,7 +37,8 @@ class AccessDevices {
 
   AccessDevices.test(
       String accessToken, String enterpriseId, http.Client client,
-      {this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
+      {this.accessDevicesTimeoutDuration = const Duration(seconds: 2),
+        this.url = "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/"}) {
     this._accessToken = accessToken;
     this._enterpriseId = enterpriseId;
     _client = client;
@@ -45,7 +46,7 @@ class AccessDevices {
 
   Future<Optional<List>> getAllDevices() async {
     try {
-      String request = URL + "enterprises/" + _enterpriseId + "/devices";
+      String request = url + "enterprises/" + _enterpriseId + "/devices";
       final response = await _client.post(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
@@ -62,13 +63,14 @@ class AccessDevices {
       }
       return Optional.of(devices);
     } catch (error) {
+      log(error.toString());
       return Optional.empty();
     }
   }
 
   Future<Optional<List>> getDevicesOfStructure(String structureId) async {
     try {
-      String request = URL +
+      String request = url +
           "enterprises/" +
           _enterpriseId +
           '/structures/' +
@@ -90,14 +92,14 @@ class AccessDevices {
       }
       return Optional.of(devices);
     } catch (error) {
-      log(error);
+      log(error.toString());
       return Optional.empty();
     }
   }
 
   Future<Optional<List>> getAllStructures() async {
     try {
-      String request = URL + "enterprises/" + _enterpriseId + "/structures";
+      String request = url + "enterprises/" + _enterpriseId + "/structures";
       final response = await _client.post(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
@@ -113,7 +115,7 @@ class AccessDevices {
       }
       return Optional.of(structures);
     } catch (error) {
-      log(error);
+      log(error.toString());
       return Optional.empty();
     }
   }
@@ -121,7 +123,7 @@ class AccessDevices {
   Future<Optional<String>> getDeviceStatus(String deviceId) async {
     try {
       String request =
-          URL + "enterprises/" + _enterpriseId + "/devices/" + deviceId;
+          url + "enterprises/" + _enterpriseId + "/devices/" + deviceId;
       http.Response response = await _client.post(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
@@ -130,7 +132,7 @@ class AccessDevices {
       return Optional.of(result["traits"]
           ["sdm.devices.traits.DeviceConnectivityTrait"]["status"]);
     } catch (error) {
-      log(error);
+      log(error.toString());
       return Optional.empty();
     }
   }

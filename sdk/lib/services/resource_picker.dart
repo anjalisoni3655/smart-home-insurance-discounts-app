@@ -40,7 +40,7 @@ class ResourcePicker {
       _refreshToken = authClient.credentials.refreshToken;
       return "authorization successful";
     } catch (error) {
-      log(error);
+      log(error.toString());
       return "authorization failed";
     }
   }

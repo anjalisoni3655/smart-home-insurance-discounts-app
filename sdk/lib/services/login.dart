@@ -30,7 +30,7 @@ class Login {
       await _googleSignIn.signIn().timeout(interactiveFlowTimeout);
       return "login successful";
     } catch (error) {
-      log(error);
+      log(error.toString());
       return "login failed";
     }
   }
@@ -44,7 +44,7 @@ class Login {
       }
       return "not logged in";
     } catch (error) {
-      log(error);
+      log(error.toString());
       return "logout failed";
     }
   }
@@ -60,7 +60,7 @@ class Login {
         "photoUrl": _googleSignIn.currentUser.photoUrl
       };
     } catch (error) {
-      log(error);
+      log(error.toString());
       return null;
     }
   }
