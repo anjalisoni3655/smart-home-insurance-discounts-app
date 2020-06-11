@@ -41,13 +41,13 @@ const device2Response =
     '{"name" : "/enterprises/$enterpriseId/devices/$device2Id","type" : "$device2Type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "OFFLINE"}, "sdm.devices.traits.Info": {"customName": "$device2Name"}}}';
 const allDevicesListResponse =
     '{ "devices": [$device1Response, $device2Response] }';
-const devicesOfStructureListResponse =
-    '{ "devices": [$device1Response] }';
-const structure1Response = '{"name": "enterprises/$enterpriseId/structures/$structure1Id","traits": {"sdm.structures.traits.Info": {"customName": "$structure1Name"}}}';
-const structure2Response = '{"name": "enterprises/$enterpriseId/structures/$structure2Id","traits": {"sdm.structures.traits.Info": {"customName": "$structure2Name"}}}';
+const devicesOfStructureListResponse = '{ "devices": [$device1Response] }';
+const structure1Response =
+    '{"name": "enterprises/$enterpriseId/structures/$structure1Id","traits": {"sdm.structures.traits.Info": {"customName": "$structure1Name"}}}';
+const structure2Response =
+    '{"name": "enterprises/$enterpriseId/structures/$structure2Id","traits": {"sdm.structures.traits.Info": {"customName": "$structure2Name"}}}';
 const allStructuresListResponse =
     '{ "structures": [$structure1Response, $structure2Response] }';
-
 
 // Expected results from the SDK
 const device1 = {
@@ -62,14 +62,8 @@ const device2 = {
 };
 const allDevicesResult = [device1, device2];
 const devicesOfStructure1Result = [device1];
-const structure1Result = {
-  'id': structure1Id,
-  'customName': structure1Name
-};
-const structure2Result = {
-  'id': structure2Id,
-  'customName': structure2Name
-};
+const structure1Result = {'id': structure1Id, 'customName': structure1Name};
+const structure2Result = {'id': structure2Id, 'customName': structure2Name};
 const allStructuresResult = [structure1Result, structure2Result];
 
 void main() {

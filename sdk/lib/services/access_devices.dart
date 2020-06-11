@@ -54,7 +54,8 @@ class AccessDevices {
       for (var device in result['devices']) {
         devices.add({
           'id': getId(device['name']),
-          'customName': device['traits']['sdm.devices.traits.Info']["customName"],
+          'customName': device['traits']['sdm.devices.traits.Info']
+              ["customName"],
           'type': device['type'],
         });
       }
@@ -81,7 +82,8 @@ class AccessDevices {
       for (var device in result['devices']) {
         devices.add({
           'id': getId(device['name']),
-          'customName': device['traits']['sdm.devices.traits.Info']["customName"],
+          'customName': device['traits']['sdm.devices.traits.Info']
+              ["customName"],
           'type': device['type'],
         });
       }
@@ -103,7 +105,8 @@ class AccessDevices {
       for (var structure in result['structures']) {
         structures.add({
           'id': getId(structure['name']),
-          'customName': structure['traits']['sdm.structures.traits.Info']["customName"],
+          'customName': structure['traits']['sdm.structures.traits.Info']
+              ["customName"],
         });
       }
       return Optional.of(structures);
