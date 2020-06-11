@@ -29,7 +29,8 @@ class AccessDevices {
 
   AccessDevices(String accessToken, String enterpriseId,
       {this.accessDevicesTimeoutDuration = const Duration(seconds: 2),
-      this.url = "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/"}) {
+      this.url =
+          "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/"}) {
     this._accessToken = accessToken;
     this._enterpriseId = enterpriseId;
     _client = new http.Client();
@@ -38,7 +39,8 @@ class AccessDevices {
   AccessDevices.test(
       String accessToken, String enterpriseId, http.Client client,
       {this.accessDevicesTimeoutDuration = const Duration(seconds: 2),
-        this.url = "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/"}) {
+      this.url =
+          "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/"}) {
     this._accessToken = accessToken;
     this._enterpriseId = enterpriseId;
     _client = client;
