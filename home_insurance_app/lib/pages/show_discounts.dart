@@ -4,9 +4,12 @@ import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
 //Offers selected by the user
-List<Offer> selectedOffers = new List<Offer>();
+
 // Offers displayed by the company
 CompanyDataBase offers = new CompanyDataBase();
+
+Offer selectedOffer;
+
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -15,7 +18,7 @@ class DisplayDiscounts extends StatefulWidget {
 
 class DisplayDiscountsState extends State<DisplayDiscounts> {
   @override
-  Widget build(BuildContext gggggit status context) {
+  Widget build(BuildContext  context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
 
@@ -37,7 +40,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30.0,
-                  fontFamily: 'PTSerifBI',
+                  fontFamily: 'Source Sans Pro',
                 ),
               ),
             ),
@@ -53,6 +56,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
             SizedBox(
                 height: screenheight /
                     50), //So that the last discount does not get hidden behind the floating button
+
             data == null
                 ? Container()
                 : // if data is null , this means that the user has come to this page only to see the discounts so buttons for payment should not appear
@@ -69,7 +73,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                               color: Colors.black87,
                               fontSize: 15.0,
                               fontWeight: FontWeight.w900,
-                              fontFamily: "PTSerifBI",
+                              fontFamily: "Source Sans Pro",
                             ),
                           ),
                           onPressed: () {}, // resource picker url is launched
@@ -87,30 +91,23 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                               color: Colors.black87,
                               fontSize: 15.0,
                               fontWeight: FontWeight.w900,
-                              fontFamily: "PTSerifBI",
+                              fontFamily: "Source Sans Pro",
                             ),
                           ),
                           onPressed: () {
-                            //calculate total discount
-                            int totalDiscount =
-                                offers.getTotalDiscount(selectedOffers);
-                            // get total Amount paid
-                            double finalAmount = offers.getFinalCost(
-                                data['selectedPolicy'].cost, totalDiscount);
-
                             //pops the current page
                             Navigator.pop(context);
                             //Pops the previous page in the stack which is choose_policy page.
                             //For now all these arguments are  send to the home page
                             Navigator.pop(context, {
-                              'totalDiscount': totalDiscount,
-                              'amountPaid': finalAmount,
+                              'selectedOffer': selectedOffer,
                               'selectedPolicy': data['selectedPolicy'],
                               'userAddress': data['userAddress'],
                             });
                           },
                           backgroundColor: Colors.lightBlueAccent,
                         ),
+
                       ),
                     ],
                   )
@@ -129,6 +126,7 @@ class AllDiscounts extends StatefulWidget {
 class _AllDiscountsState extends State<AllDiscounts> {
   List<bool> isSelected = List.filled(CompanyDataBase.availableOffers.length,
       false); // Initially all policies are deselected
+  int currSelected = 0; // Currently no discount is selected
 
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
@@ -155,15 +153,10 @@ class _AllDiscountsState extends State<AllDiscounts> {
                   onTap: () {
                     setState(() {
                       //Current Selected state of corresponding discount is reversed
-                      isSelected[index] = !isSelected[index];
-                      if (isSelected[index] == true)
-                        selectedOffers
-                            .add(CompanyDataBase.availableOffers[index]);
-                      else {
-                        // It is deselected , so remove from list
-                        selectedOffers.removeAt(selectedOffers
-                            .indexOf(CompanyDataBase.availableOffers[index]));
-                      }
+                      isSelected[currSelected] = false;
+                      currSelected = index;
+                      isSelected[index] = true;
+                      selectedOffer = CompanyDataBase.availableOffers[index];
                     });
                   },
                   child: Container(
@@ -179,19 +172,19 @@ class _AllDiscountsState extends State<AllDiscounts> {
                                     (entry) => Align(
                                       alignment: Alignment.topLeft,
                                       child: Container(
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: screenheight / 100,
-                                              horizontal: screenwidth / 100),
+//                                          margin: EdgeInsets.symmetric(
+//                                              vertical: screenheight / 100,
+//                                              horizontal: screenwidth / 100),
                                           padding: EdgeInsets.symmetric(
-                                              vertical: screenheight / 100,
-                                              horizontal: screenwidth / 100),
+                                              vertical: screenheight / 80,
+                                              horizontal: screenwidth / 80),
                                           decoration: BoxDecoration(),
                                           child: Text(
                                             '${entry.key} : ${entry.value}',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontFamily: "PTSerifBI",
+                                              fontFamily: "Source Sans Pro",
                                               fontSize: 17,
                                             ),
                                           )),

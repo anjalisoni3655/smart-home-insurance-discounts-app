@@ -1,27 +1,17 @@
 import 'package:homeinsuranceapp/data/offer.dart';
+import 'package:homeinsuranceapp/data/deviceType.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 
-// This class contains all teh discounts offered by the insurance company
 class CompanyDataBase {
+  // String of devices on which the company has the option to provide discounts
+  static List<String> devices = EnumToString.toList(DeviceType.values);
   static List<Offer> availableOffers = [
-    new Offer(
-        {'Nest Hello Doorbell': 1, 'Nest Protect - Smoke + CO alarm': 1}, 5),
-    new Offer({'Nest Cam IQ Outdoor': 1, 'Nest Thermostat': 1}, 4),
-    new Offer({'Nest Protect- Smoke + CO alarm': 2}, 3),
-    new Offer({'Nest X Yale Lock': 1, 'Nest Hello Doorbell': 1}, 1),
-    new Offer({'Nest Protect - Smoke + CO alarm': 2}, 1),
-    new Offer({'Nest X Yale Lock': 1}, 1),
-    new Offer({'Nest X Yale Lock': 1}, 2)
+    new Offer({'${devices[0]}': 1, '${devices[1]}': 1}, 5),
+    new Offer({'${devices[1]}': 1, '${devices[2]}': 1}, 4),
+    new Offer({'${devices[3]}': 2}, 3),
+    new Offer({'${devices[1]}': 1, '${devices[3]}': 1}, 1),
+    new Offer({'${devices[2]}': 2}, 2),
+    new Offer({'${devices[1]}': 1}, 1),
+    new Offer({'${devices[2]}': 1}, 1)
   ];
-
-  int getTotalDiscount(List<Offer> userChoice) {
-    int totalDiscount = 0;
-    for (int i = 0; i < userChoice.length; i++) {
-      totalDiscount += (userChoice[i].discount);
-    }
-    return (totalDiscount);
-  }
-
-  double getFinalCost(int policyCost, int totalDiscount) {
-    return (((100 - totalDiscount) / 100) * policyCost);
-  }
 }
