@@ -53,13 +53,13 @@ class AccessDevices {
       for (var device in result['devices']) {
         devices.add({
           'id': getId(device['name']),
-          'customName': device['traits']['sdm.devices.traits.Info'],
+          'customName': device['traits']['sdm.devices.traits.Info']
+              ["customName"],
           'type': device['type'],
         });
       }
       return Optional.of(devices);
     } catch (error) {
-      print(error);
       return Optional.empty();
     }
   }
@@ -84,13 +84,13 @@ class AccessDevices {
       for (var device in result['devices']) {
         devices.add({
           'id': getId(device['name']),
-          'customName': device['traits']['sdm.devices.traits.Info'],
+          'customName': device['traits']['sdm.devices.traits.Info']
+              ["customName"],
           'type': device['type'],
         });
       }
       return Optional.of(devices);
     } catch (error) {
-      print(error);
       return Optional.empty();
     }
   }
@@ -110,12 +110,12 @@ class AccessDevices {
       for (var structure in result['structures']) {
         structures.add({
           'id': getId(structure['name']),
-          'customName': structure['traits']['sdm.structures.traits.Info'],
+          'customName': structure['traits']['sdm.structures.traits.Info']
+              ["customName"],
         });
       }
       return Optional.of(structures);
     } catch (error) {
-      print(error);
       return Optional.empty();
     }
   }
@@ -135,7 +135,6 @@ class AccessDevices {
       return Optional.of(result["traits"]
           ["sdm.devices.traits.DeviceConnectivityTrait"]["status"]);
     } catch (error) {
-      print(error);
       return Optional.empty();
     }
   }
