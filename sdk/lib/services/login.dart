@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:optional/optional.dart';
 
@@ -26,6 +27,7 @@ class Login {
       await _googleSignIn.signIn().timeout(interactiveFlowTimeout);
       return "login successful";
     } catch (error) {
+      log(error.toString());
       return "login failed";
     }
   }
@@ -39,6 +41,7 @@ class Login {
       }
       return "not logged in";
     } catch (error) {
+      log(error.toString());
       return "logout failed";
     }
   }
@@ -54,7 +57,7 @@ class Login {
         "photoUrl": _googleSignIn.currentUser.photoUrl
       });
     } catch (error) {
-      print(error);
+      log(error.toString());
       return Optional.empty();
     }
   }
@@ -65,7 +68,7 @@ class Login {
           await _googleSignIn.isSignedIn().timeout(nonInteractiveFlowTimeout);
       return Optional.of(result);
     } catch (error) {
-      print(error);
+      log(error.toString());
       return Optional.empty();
     }
   }

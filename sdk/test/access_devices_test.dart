@@ -13,6 +13,7 @@ MockResponse mockResponse;
 AccessDevices accessDevices;
 
 // Naming enterprises, structures and devices
+const url = 'https://sdm-api.googleapis.com/';
 const enterpriseId = 'sdm-test';
 const structure1Id = 'home-1-structure-id';
 const structure1Name = 'home-1';
@@ -26,14 +27,12 @@ const device2Name = 'device-2-name';
 const device2Type = "sdm.devices.types.CAMERA";
 
 // Valid GET Request URLs
-const String getAllDevicesUrl =
-    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/$enterpriseId/devices";
+const String getAllDevicesUrl = "${url}enterprises/$enterpriseId/devices";
 const String getDevicesOfStructure1Url =
-    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/$enterpriseId/structures/$structure1Id/devices";
-const String getAllStructuresUrl =
-    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/$enterpriseId/structures";
+    "${url}enterprises/$enterpriseId/structures/$structure1Id/devices";
+const String getAllStructuresUrl = "${url}enterprises/$enterpriseId/structures";
 const String getDevice1StatusUrl =
-    "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/enterprises/$enterpriseId/devices/$device1Id";
+    "${url}enterprises/$enterpriseId/devices/$device1Id";
 
 // Responses returned by the SDM API
 const device1Response =
@@ -86,7 +85,7 @@ void main() {
         .thenAnswer((_) => Future.value(mockResponse));
 
     accessDevices = new AccessDevices(mockClient, "enterprise-id",
-        accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
+        accessDevicesTimeoutDuration: new Duration(milliseconds: 100), url: url);
     accessDevices.setCredentials({"accessToken": "accessToken", "refreshToken": "refreshToken"});
   });
 

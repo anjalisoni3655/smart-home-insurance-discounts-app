@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:optional/optional.dart';
+import 'dart:developer';
 
 String getId(String name) {
   String deviceId = '';
@@ -17,8 +18,7 @@ String getId(String name) {
 
 // Provides helper functions to get list of devices, structures, status of devices etc.
 class AccessDevices {
-  static const String URL =
-      "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/";
+  final String url;
 
   String _accessToken;
   String _refreshToken;
@@ -28,7 +28,9 @@ class AccessDevices {
 
   // Dependency Injection (constructor injection of http.Client service)
   AccessDevices(http.Client client, String enterpriseId,
-      {this.accessDevicesTimeoutDuration = const Duration(seconds: 2)}) {
+      {this.accessDevicesTimeoutDuration = const Duration(seconds: 2),
+      this.url =
+          "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/"}) {
     this._enterpriseId = enterpriseId;
     _client = client;
   }
@@ -43,10 +45,8 @@ class AccessDevices {
       throw new Exception("Access Token not set");
     }
     try {
-      String request = URL + "enterprises/" + _enterpriseId + "/devices";
-      print(request);
-      print(_accessToken);
-      final response = await _client.post(
+      String request = url + "enterprises/" + _enterpriseId + "/devices";
+      final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
@@ -62,6 +62,7 @@ class AccessDevices {
       }
       return Optional.of(devices);
     } catch (error) {
+      log(error.toString());
       return Optional.empty();
     }
   }
@@ -71,13 +72,13 @@ class AccessDevices {
       throw Exception("Access token not set");
     }
     try {
-      String request = URL +
+      String request = url +
           "enterprises/" +
           _enterpriseId +
           '/structures/' +
           structureId +
           "/devices";
-      final response = await _client.post(
+      final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
@@ -93,6 +94,7 @@ class AccessDevices {
       }
       return Optional.of(devices);
     } catch (error) {
+      log(error.toString());
       return Optional.empty();
     }
   }
@@ -102,8 +104,8 @@ class AccessDevices {
       throw Exception("Access token not set");
     }
     try {
-      String request = URL + "enterprises/" + _enterpriseId + "/structures";
-      final response = await _client.post(
+      String request = url + "enterprises/" + _enterpriseId + "/structures";
+      final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
@@ -118,6 +120,7 @@ class AccessDevices {
       }
       return Optional.of(structures);
     } catch (error) {
+      log(error.toString());
       return Optional.empty();
     }
   }
@@ -128,7 +131,7 @@ class AccessDevices {
     }
     try {
       String request =
-          URL + "enterprises/" + _enterpriseId + "/devices/" + deviceId;
+          url + "enterprises/" + _enterpriseId + "/devices/" + deviceId;
       http.Response response = await _client.post(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
@@ -137,6 +140,7 @@ class AccessDevices {
       return Optional.of(result["traits"]
           ["sdm.devices.traits.DeviceConnectivityTrait"]["status"]);
     } catch (error) {
+      log(error.toString());
       return Optional.empty();
     }
   }
