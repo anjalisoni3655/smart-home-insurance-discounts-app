@@ -39,7 +39,7 @@ void main() {
     }
 
     ResourcePicker resourcePicker = new ResourcePicker(
-        mockClientViaUserConsent, "client_id", "client_secret");
+        mockClientViaUserConsent, "enterprise_id", "client_id", "client_secret");
     // Expected results:
     expect(
         await resourcePicker.askForAuthorization(), "authorization successful");
@@ -55,8 +55,8 @@ void main() {
     }
 
     // Expected behaviour
-    ResourcePicker resourcePicker = new ResourcePicker(
-        mockClientViaUserConsent, "client_id", "client_secret");
+    ResourcePicker resourcePicker = new ResourcePicker(mockClientViaUserConsent,
+        "enterprise_id", "client_id", "client_secret");
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });
 
@@ -70,7 +70,7 @@ void main() {
 
     // Expected behaviour
     ResourcePicker resourcePicker = new ResourcePicker(
-        mockClientViaUserConsent, "client_id", "client_secret",
+        mockClientViaUserConsent, "enterprise_id", "client_id", "client_secret",
         resourcePickerTimeoutDuration: new Duration(milliseconds: 100));
     expect(await resourcePicker.askForAuthorization(), "authorization failed");
   });
