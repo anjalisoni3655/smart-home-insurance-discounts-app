@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
+import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //Offers selected by the user
 List<Offer> selectedOffers = new List<Offer>();
@@ -98,14 +99,22 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                             data['selectedPolicy'].cost, totalDiscount);
                         //pops the current page
                         Navigator.pop(context);
+
                         //Pops the previous page in the stack which is choose_policy page.
                         //For now all these argumenst are  send to the home page
-                        Navigator.pop(context, {
-                          'totalDiscount': totalDiscount,
-                          'amountpaid': finalAmount,
-                          'selectedPolicy': data['selectedPolicy'],
-                        });
+                       // Navigator.pushNamed(context,Payment.id);
+                        Navigator.pushNamed(
+                            context,
+                            Payment.id,
+                            arguments: {
+                              'totalDiscount': totalDiscount,
+                              'amountpaid': finalAmount,
+                              'selectedPolicy': data['selectedPolicy'],
+
+                            }
+                        );
                       }
+
                     },
                     backgroundColor: Colors.lightBlueAccent,
                   ),

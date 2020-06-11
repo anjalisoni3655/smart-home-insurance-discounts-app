@@ -116,6 +116,9 @@ class _HomeDetailsState extends State<HomeDetails> {
                     _buildPincode(),
                     SizedBox(height: 100),
                     RaisedButton(
+                      color: Colors.brown,
+                      textColor: Colors.white,
+
                       onPressed: () {
                         if (!_formKey.currentState.validate()) {
                           return;
@@ -136,11 +139,15 @@ class _HomeDetailsState extends State<HomeDetails> {
                               'policies': available_policies,
                             });
                       },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
                       splashColor: Colors.blueGrey,
                       child: Text(
-                        'Submit',
+
+                        'SUBMIT',
                         style: TextStyle(
-                          color: Colors.black54,
+
+                          //color: Colors.black54,
                           fontSize: 16,
                         ),
                       ),
