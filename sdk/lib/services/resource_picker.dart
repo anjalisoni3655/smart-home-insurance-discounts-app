@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:http/http.dart' as http;
@@ -39,7 +40,7 @@ class ResourcePicker {
       _refreshToken = authClient.credentials.refreshToken;
       return "authorization successful";
     } catch (error) {
-      print(error);
+      log(error);
       return "authorization failed";
     }
   }

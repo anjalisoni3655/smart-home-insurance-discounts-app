@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:optional/optional.dart';
+import 'dart:developer';
 
 String getId(String name) {
   String deviceId = '';
@@ -89,6 +90,7 @@ class AccessDevices {
       }
       return Optional.of(devices);
     } catch (error) {
+      log(error);
       return Optional.empty();
     }
   }
@@ -111,6 +113,7 @@ class AccessDevices {
       }
       return Optional.of(structures);
     } catch (error) {
+      log(error);
       return Optional.empty();
     }
   }
@@ -127,6 +130,7 @@ class AccessDevices {
       return Optional.of(result["traits"]
           ["sdm.devices.traits.DeviceConnectivityTrait"]["status"]);
     } catch (error) {
+      log(error);
       return Optional.empty();
     }
   }
