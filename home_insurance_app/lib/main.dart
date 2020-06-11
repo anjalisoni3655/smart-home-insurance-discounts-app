@@ -4,6 +4,7 @@ import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
 import 'package:homeinsuranceapp/pages/choose_policy.dart';
 import 'package:homeinsuranceapp/pages/show_discounts.dart';
+import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 import 'pages/home.dart';
 
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),
         '/showdiscounts': (context) => DisplayDiscounts(),
+        Payment.id :(context)=>Payment(),
 
       },
     );
