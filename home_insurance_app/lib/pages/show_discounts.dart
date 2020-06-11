@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/company_offers.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
+import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
 //Offers selected by the user
 Offer selectedOffer;
@@ -32,21 +33,11 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                   horizontal: screenwidth / 80, vertical: screenheight / 80),
               child: Text(
                 'Available Discounts',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30.0,
-                  fontFamily: 'Source Sans Pro',
-                ),
+                style: CustomTextStyle(fontSize: 30.0),
               ),
             ),
-            Divider(
-              color: Colors.brown,
-              height: screenheight / 100,
-              thickness: screenheight / 100,
-              indent: screenwidth / 50,
-              endIndent: screenwidth / 50,
-            ),
-            SizedBox(height: screenheight / 100),
+            CustomDivider(height: screenheight / 100, width: screenwidth / 50),
+            CustomSizedBox(height: screenheight / 100),
             AllDiscounts(),
             SizedBox(
                 height: screenheight /
@@ -60,12 +51,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                     icon: Icon(Icons.money_off),
                     label: Text(
                       'Get Discounts',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: "Source Sans Pro",
-                      ),
+                      style: CustomTextStyle(fontWeight: FontWeight.w900),
                     ),
                     onPressed: () {}, // resource picker url is launched
                     backgroundColor: Colors.lightBlueAccent,
@@ -78,12 +64,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                     icon: Icon(Icons.arrow_forward),
                     label: Text(
                       'Go to Payment',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: "Source Sans Pro",
-                      ),
+                      style: CustomTextStyle(fontWeight: FontWeight.w900),
                     ),
                     onPressed: () {}, // Payment is initiated
                     backgroundColor: Colors.lightBlueAccent,
@@ -152,9 +133,6 @@ class _AllDiscountsState extends State<AllDiscounts> {
                                     (entry) => Align(
                                       alignment: Alignment.topLeft,
                                       child: Container(
-//                                          margin: EdgeInsets.symmetric(
-//                                              vertical: screenheight / 100,
-//                                              horizontal: screenwidth / 100),
                                           padding: EdgeInsets.symmetric(
                                               vertical: screenheight / 80,
                                               horizontal: screenwidth / 80),
@@ -162,11 +140,8 @@ class _AllDiscountsState extends State<AllDiscounts> {
                                           child: Text(
                                             '${entry.key} : ${entry.value}',
                                             textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: "Source Sans Pro",
-                                              fontSize: 17,
-                                            ),
+                                            style:
+                                                CustomTextStyle(fontSize: 17),
                                           )),
                                     ),
                                   )
@@ -177,10 +152,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                           child: Text(
                             '${CompanyOffers.availableOffers[index].discount} %',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20.0,
-                            ),
+                            style: CustomTextStyle( fontWeight: FontWeight.w500, fontSize: 20.0),
                           ),
                         )
                       ],
