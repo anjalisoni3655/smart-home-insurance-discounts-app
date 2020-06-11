@@ -87,7 +87,7 @@ void main() {
 
     accessDevices = new AccessDevices(mockClient, "enterprise-id",
         accessDevicesTimeoutDuration: new Duration(milliseconds: 100));
-    accessDevices.setAccessToken("accessToken");
+    accessDevices.setCredentials({"accessToken": "accessToken", "refreshToken": "refreshToken"});
   });
 
   test("test 1.1: get all devices successful http request", () async {

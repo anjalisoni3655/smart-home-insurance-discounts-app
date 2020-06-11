@@ -21,6 +21,7 @@ class AccessDevices {
       "https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/";
 
   String _accessToken;
+  String _refreshToken;
   String _enterpriseId;
   final Duration accessDevicesTimeoutDuration;
   http.Client _client;
@@ -32,8 +33,9 @@ class AccessDevices {
     _client = client;
   }
 
-  void setAccessToken(String accessToken) {
-    this._accessToken = accessToken;
+  void setCredentials(Map credentials) {
+    this._accessToken = credentials['accessToken'];
+    this._refreshToken = credentials['refreshToken'];
   }
 
   Future<Optional<List>> getAllDevices() async {
@@ -137,5 +139,9 @@ class AccessDevices {
     } catch (error) {
       return Optional.empty();
     }
+  }
+
+  Future<void> refreshAccessToken() {
+    // TODO: implement refreshing access token
   }
 }

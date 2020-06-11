@@ -31,8 +31,15 @@ class SDK {
   Future<Optional<Map>> getUserDetails() => _login.getUserDetails();
   Future<Optional<bool>> isSignedIn() => _login.isSignedIn();
 
-  Future<String> requestDeviceAccess() => _resourcePicker.askForAuthorization();
+  Future<String> requestDeviceAccess() async {
+    String status = await _resourcePicker.askForAuthorization();
+    if(status == 'authorization successful') {
+      setCredentials(getCredentials());
+    }
+  }
+  Map getCredentials() => _resourcePicker.getCredentials();
 
+  void setCredentials(credentials) => _accessDevices.setCredentials(credentials);
   Future<Optional<List>> getAllDevices() => _accessDevices.getAllDevices();
   Future<Optional<List>> getDevicesOfStructure(String structureId) =>
       _accessDevices.getDevicesOfStructure(structureId);
