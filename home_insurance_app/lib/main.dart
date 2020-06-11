@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
         '/choosepolicy': (context) => DisplayPolicies(),
         '/showdiscounts': (context) => DisplayDiscounts(),
         Payment.id :(context)=>Payment(),
-
       },
     );
   }

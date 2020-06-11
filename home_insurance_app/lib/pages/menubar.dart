@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 // widget for the different options in the menu bar
 class AppDrawer extends StatefulWidget {
   @override
