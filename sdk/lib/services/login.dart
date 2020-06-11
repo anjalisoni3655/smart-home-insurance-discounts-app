@@ -3,9 +3,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class Login {
   // Time allowed for Http requests or API calls that are independent of user interactions
-  Duration nonInteractiveFlowTimeout;
+  final Duration nonInteractiveFlowTimeout;
   // Time allowed for Http requests or API calls that will require some user interaction or interference (input)
-  Duration interactiveFlowTimeout;
+  final Duration interactiveFlowTimeout;
   int testing;
   GoogleSignIn _googleSignIn;
 

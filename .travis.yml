@@ -13,14 +13,17 @@ before_script:
   - ./flutter/bin/flutter doctor
 jobs:
   - name: test app
+    if: type = pull_request
     script: cd home_insurance_app; ../flutter/bin/flutter test;
   - name: format app
+    if: type = pull_request
     script: ./flutter/bin/flutter format -n --set-exit-if-changed home_insurance_app/lib/* home_insurance_app/test/*
   - name: test sdk
+    if: type = pull_request
     script: cd sdk; ../flutter/bin/flutter test;
   - name: format sdk
+    if: type = pull_request
     script: ./flutter/bin/flutter format -n --set-exit-if-changed sdk/lib/* sdk/test/*
 cache:
   directories:
     - $HOME/.pub-cache
-
