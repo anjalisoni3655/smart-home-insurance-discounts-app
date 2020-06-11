@@ -17,7 +17,6 @@ const kDesignationTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-
 /// Normal TextStyle for various usages.
 /// [color: Black, fontFamily: Source Sans Pro, size: 20.0]
 const kNormalTextStyle = TextStyle(
@@ -25,4 +24,3 @@ const kNormalTextStyle = TextStyle(
   fontFamily: 'Source Sans Pro',
   fontSize: 20.0,
 );
-
