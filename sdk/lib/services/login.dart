@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:optional/optional.dart';
 
 class Login {
   // Time allowed for Http requests or API calls that are independent of user interactions
@@ -10,12 +11,8 @@ class Login {
   int testing;
   GoogleSignIn _googleSignIn;
 
-  Login(
-      {this.interactiveFlowTimeout = const Duration(minutes: 1),
-      this.nonInteractiveFlowTimeout = const Duration(seconds: 1)}) {
-    _googleSignIn = GoogleSignIn();
-  }
-  Login.test(GoogleSignIn googleSignIn,
+  // Dependency Injection (constructor injection of Google Sign In service)
+  Login(GoogleSignIn googleSignIn,
       {this.interactiveFlowTimeout = const Duration(minutes: 1),
       this.nonInteractiveFlowTimeout = const Duration(seconds: 1)}) {
     _googleSignIn = googleSignIn;
@@ -49,19 +46,30 @@ class Login {
     }
   }
 
-  Future<Map> getUserDetails() async {
+  Future<Optional<Map>> getUserDetails() async {
     try {
       if (!(await _googleSignIn
           .isSignedIn()
-          .timeout(nonInteractiveFlowTimeout))) return null;
-      return {
+          .timeout(nonInteractiveFlowTimeout))) return Optional.empty();
+      return Optional.of({
         "displayName": _googleSignIn.currentUser.displayName,
         "email": _googleSignIn.currentUser.email,
         "photoUrl": _googleSignIn.currentUser.photoUrl
-      };
+      });
     } catch (error) {
       log(error.toString());
-      return null;
+      return Optional.empty();
+    }
+  }
+
+  Future<Optional<bool>> isSignedIn() async {
+    try {
+      bool result =
+          await _googleSignIn.isSignedIn().timeout(nonInteractiveFlowTimeout);
+      return Optional.of(result);
+    } catch (error) {
+      log(error.toString());
+      return Optional.empty();
     }
   }
 }
