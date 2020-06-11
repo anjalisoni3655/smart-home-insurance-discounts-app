@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
-import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //This class maps each policy to a index value which is used in selecting radio buttons
 class Mapping {
@@ -101,7 +100,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 child: FloatingActionButton.extended(
                   heroTag: "pay",
                   onPressed: () {
-                  Navigator.pushNamed(context, Payment.id,arguments:{
+                  Navigator.pop(context,{
                     'selectedPolicy': userChoice,
 
                   } );
