@@ -48,7 +48,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                       vertical: screenheight / 50),
                   child: Text(
                     'Available Policies',
-                      style: CustomTextStyle(fontSize: 30.0),
+                    style: CustomTextStyle(fontSize: 30.0),
                   ),
                 ),
               ),
@@ -57,7 +57,6 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               CustomSizedBox(height: screenheight / 100),
               RadioGroup(data),
               CustomSizedBox(height: screenheight / 50),
-
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
@@ -154,7 +153,6 @@ class _RadioGroupState extends State<RadioGroup> {
                                 style: CustomTextStyle(
                                     color: Colors.blueAccent[500],
                                     fontSize: 13.0),
-
                               ),
                             ],
                           )),
