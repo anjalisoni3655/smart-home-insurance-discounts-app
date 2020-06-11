@@ -23,7 +23,8 @@ class ResourcePicker {
     this._clientSecret = clientSecret;
   }
 
-  Map getCredentials() => {"accessToken": _accessToken, "refreshTokennn": _refreshToken};
+  Map getCredentials() =>
+      {"accessToken": _accessToken, "refreshTokennn": _refreshToken};
 
   Future<String> askForAuthorization() async {
     // Launch URL for the resource picker and get back the access token that it returns

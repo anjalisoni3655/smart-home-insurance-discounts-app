@@ -46,6 +46,7 @@ class AccessDevices {
     try {
       String request = url + "enterprises/" + _enterpriseId + "/devices";
       print(request);
+      print(_accessToken);
       final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
@@ -133,7 +134,7 @@ class AccessDevices {
     try {
       String request =
           url + "enterprises/" + _enterpriseId + "/devices/" + deviceId;
-      http.Response response = await _client.post(
+      http.Response response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);

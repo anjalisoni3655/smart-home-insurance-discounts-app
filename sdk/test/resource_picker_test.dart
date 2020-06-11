@@ -38,8 +38,8 @@ void main() {
       return mockAuthClient;
     }
 
-    ResourcePicker resourcePicker = new ResourcePicker(
-        mockClientViaUserConsent, "enterprise_id", "client_id", "client_secret");
+    ResourcePicker resourcePicker = new ResourcePicker(mockClientViaUserConsent,
+        "enterprise_id", "client_id", "client_secret");
     // Expected results:
     expect(
         await resourcePicker.askForAuthorization(), "authorization successful");
