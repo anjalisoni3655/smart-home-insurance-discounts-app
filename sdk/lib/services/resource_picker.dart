@@ -30,66 +30,14 @@ class ResourcePicker {
     // Launch URL for the resource picker and get back the access token that it returns
     try {
       String domainName = "sdmresourcepicker-staging.sandbox.google.com/partnerconnections";
+      var authClient = await auth.clientViaUserConsent(new auth.ClientId(_clientId, _clientSecret), [_scope], (url) {
+        url = 'https://$domainName/$_enterpriseId' + url.substring(36) + '&access_type=offline';
+        print(url);
+        launch(url);
+      });
 
-      HttpServer server = await HttpServer.bind('localhost', 0);
-
-      var port = server.port;
-      var redirectionUri = 'http://localhost:$port';
-      var state = 'authcodestate${new DateTime.now().millisecondsSinceEpoch}';
-
-      String resourcePickerUrl = 'https://$domainName/$_enterpriseId/auth?redirect_uri=$redirectionUri&access_type=offline&prompt=consent&client_id=$_clientId&response_type=code&state=$state&scope=https://www.googleapis.com/auth/sdm.service';
-      launch(resourcePickerUrl);
-
-      var request = await server.first;
-      var uri = request.uri;
-
-      var code = uri.queryParameters['code'];
-
-      var uri2 = Uri.parse('https://accounts.google.com/o/oauth2/token');
-      var formValues = [
-        'grant_type=authorization_code',
-        'code=${Uri.encodeQueryComponent(code)}',
-        'redirect_uri=${Uri.encodeQueryComponent(redirectionUri)}',
-        'client_id=${Uri.encodeQueryComponent(_clientId)}',
-        'client_secret=${Uri.encodeQueryComponent(_clientSecret)}',
-      ];
-
-      var body = new Stream<List<int>>.fromIterable(
-          <List<int>>[ascii.encode(formValues.join('&'))]);
-
-      var request2 = new RequestImpl('POST', uri2, body);
-      request2.headers['content-type'] = 'application/x-www-form-urlencoded; charset=utf-8';
-
-      http.Client client = new http.Client();
-      var response = await client.send(request2);
-      request.response
-        ..statusCode = 200
-        ..headers.set('content-type', 'text/html; charset=UTF-8')
-        ..write('''
-<!DOCTYPE html>
-
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Authorization successful.</title>
-  </head>
-
-  <body>
-    <h2 style="text-align: center">Application has successfully obtained access credentials</h2>
-    <p style="text-align: center">This window can be closed now.</p>
-  </body>
-</html>''');
-      await request.response.close();
-
-      Map jsonMap =
-      await utf8.decoder.bind(response.stream).transform(json.decoder).first;
-
-      _accessToken = jsonMap['access_token'];
-      _refreshToken = jsonMap['refresh_token'];
-
-      client.close();
-      print(_accessToken);
-
+      _accessToken = authClient.credentials.accessToken.data;
+      _refreshToken = authClient.credentials.refreshToken;
       return "authorization successful";
     } catch (error) {
       print(error);

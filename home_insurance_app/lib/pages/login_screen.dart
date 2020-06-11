@@ -63,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
               String status = await sdk.requestDeviceAccess();
               print(status);
               if(status == 'authorization successful') {
+                sdk.setAcc(sdk.getAccessToken());
                 print(await sdk.getAllDevices());
               }
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
