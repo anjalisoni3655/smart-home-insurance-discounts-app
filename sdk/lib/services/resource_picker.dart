@@ -43,5 +43,8 @@ class ResourcePicker {
       log(error.toString());
       return "authorization failed";
     }
-  
+  }
+
+  String get accessToken => _accessToken;
+  String get refreshToken => _refreshToken;
 }
