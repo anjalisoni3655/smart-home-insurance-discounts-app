@@ -64,7 +64,6 @@ class AccessDevices {
       return Optional.of(devices);
     } catch (error) {
       log(error.toString());
-      print(error);
       return Optional.empty();
     }
   }
