@@ -64,8 +64,10 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   heroTag: "View",
                   onPressed: () {
                     Navigator.pushNamed(context, '/showdiscounts', arguments: {
+
                       'selectedPolicy': userChoice,
                       'userAddress': data['userAddress'],
+
                     });
                   },
                   backgroundColor: Colors.lightBlueAccent,
@@ -82,6 +84,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 child: FloatingActionButton.extended(
                   heroTag: "pay",
                   onPressed: () {
+
                     Navigator.pop(context, {
                       'selectedPolicy': userChoice,
                       'userAddress': data['userAddress'],

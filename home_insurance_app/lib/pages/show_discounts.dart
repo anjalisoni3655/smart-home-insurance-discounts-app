@@ -109,8 +109,10 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                         ),
 
                       ),
+
                     ],
                   )
+
           ],
         ),
       ),
