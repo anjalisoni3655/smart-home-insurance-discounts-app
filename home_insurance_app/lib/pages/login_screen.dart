@@ -50,8 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text("LOG IN WITH GOOGLE"),
             color: Colors.brown,
             textColor: Colors.white,
-            onPressed: () {
-              getInsurances('userId');
+            onPressed: () async {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return HomePage();
               }));
