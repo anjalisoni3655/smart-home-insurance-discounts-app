@@ -10,7 +10,6 @@ import 'package:homeinsuranceapp/pages/choose_policy.dart';
 import 'package:homeinsuranceapp/pages/show_discounts.dart';
 import 'pages/home.dart';
 
-
 // this is the root of our application
 void main() {
   runApp(MyApp());
