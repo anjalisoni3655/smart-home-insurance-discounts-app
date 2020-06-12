@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:homeinsuranceapp/data/company_offers.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
@@ -7,10 +8,12 @@ import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 //Offers selected by the user
 Offer selectedOffer;
 
+
 class DisplayDiscounts extends StatefulWidget {
   @override
   DisplayDiscountsState createState() => DisplayDiscountsState();
 }
+
 
 class DisplayDiscountsState extends State<DisplayDiscounts> {
   @override
@@ -163,5 +166,4 @@ class _AllDiscountsState extends State<AllDiscounts> {
             );
           }),
     );
-  }
-}
+

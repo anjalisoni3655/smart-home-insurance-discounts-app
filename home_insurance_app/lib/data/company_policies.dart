@@ -1,5 +1,5 @@
 import 'package:homeinsuranceapp/data/policy.dart';
-
+// This class is used to store all the policies that the company offer for different pin-codes .
 class CompanyPolicies {
   int pincode;
   static List<Policy> policies1 = [
