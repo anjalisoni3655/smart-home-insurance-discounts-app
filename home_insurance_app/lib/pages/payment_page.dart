@@ -20,8 +20,11 @@ class _PaymentState extends State<Payment> {
         'address': arguments['userAddress'],
         'policy': arguments['selectedPolicy'],
         'offer': arguments['selectedOffer'],
-        'total_discount': arguments['selectedPolicy'].cost * 0.01 * arguments['selectedOffer'].discount,
-        'discounted_cost':  arguments['selectedPolicy'].cost * (1 - 0.01 * arguments['selectedOffer'].discount)
+        'total_discount': arguments['selectedPolicy'].cost *
+            0.01 *
+            arguments['selectedOffer'].discount,
+        'discounted_cost': arguments['selectedPolicy'].cost *
+            (1 - 0.01 * arguments['selectedOffer'].discount)
       };
       print(purchase);
     }
@@ -83,8 +86,7 @@ class _PaymentState extends State<Payment> {
             ),
             TextWidget(
               leftText: 'Discounted Cost: ',
-              rightText:
-                  'Rs ${purchase['discounted_cost']}',
+              rightText: 'Rs ${purchase['discounted_cost']}',
             ),
           ],
         ),

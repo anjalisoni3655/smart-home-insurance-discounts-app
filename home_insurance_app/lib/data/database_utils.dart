@@ -1,4 +1,3 @@
-
 void addInsurancePurchased(purchase) {
   print("added");
   print(purchase);
