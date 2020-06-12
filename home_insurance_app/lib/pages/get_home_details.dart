@@ -116,6 +116,8 @@ class _HomeDetailsState extends State<HomeDetails> {
                     _buildPincode(),
                     SizedBox(height: 100),
                     RaisedButton(
+                      color: Colors.brown,
+                      textColor: Colors.white,
                       onPressed: () {
                         if (!_formKey.currentState.validate()) {
                           return;
@@ -123,8 +125,12 @@ class _HomeDetailsState extends State<HomeDetails> {
                         // If the form is valid , all the values are saved in respective variables
                         _formKey.currentState.save();
                         //User Address object is sent to User Address class
-                        UserAddress curr_user = UserAddress(firstLineOfAddress,
-                            secondLineOfAddress, city, state, pincode);
+                        UserAddress curr_user_address = UserAddress(
+                            firstLineOfAddress,
+                            secondLineOfAddress,
+                            city,
+                            state,
+                            pincode);
                         CompanyPolicies pin_to_policy =
                             CompanyPolicies(pincode);
                         //Available policies corresponding to the pincode is saved in list .
@@ -134,13 +140,17 @@ class _HomeDetailsState extends State<HomeDetails> {
                         Navigator.pushReplacementNamed(context, '/choosepolicy',
                             arguments: {
                               'policies': available_policies,
+                              'userAddress': curr_user_address,
+
                             });
                       },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0)),
                       splashColor: Colors.blueGrey,
                       child: Text(
-                        'Submit',
+                        'SUBMIT',
                         style: TextStyle(
-                          color: Colors.black54,
+                          //color: Colors.black54,
                           fontSize: 16,
                         ),
                       ),

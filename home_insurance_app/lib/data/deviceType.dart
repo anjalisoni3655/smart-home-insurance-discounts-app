@@ -1,0 +1,6 @@
+enum DeviceType {
+  SMOKE_CO_DETECTOR,
+  THERMOSTAT,
+  CAMERA,
+  DOORBELL,
+}
