@@ -16,15 +16,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
     if (value == 'Logout') {
+      Navigator.pushNamed(context, LoginScreen.id);
+      //TODO: call SDK library's signout function
+
+    } else {
+      Navigator.pushNamed(context, Profile.id);
       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
         return LoginScreen();
       }));
       //TODO: call SDK library's signout function
 
-    } else {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return Profile();
-      }));
     }
   }
 
