@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
-import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
 String firstLineOfAddress;

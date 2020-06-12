@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 
 // widget for login with google
@@ -50,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Colors.brown,
             textColor: Colors.white,
             onPressed: () {
+              getInsurances('userId');
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return HomePage();
               }));
