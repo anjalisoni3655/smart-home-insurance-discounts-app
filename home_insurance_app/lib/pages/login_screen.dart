@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:sdk/sdk.dart';
+import 'package:optional/optional.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 // widget for login with google
 class LoginScreen extends StatefulWidget {
@@ -49,10 +54,49 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text("LOG IN WITH GOOGLE"),
             color: Colors.brown,
             textColor: Colors.white,
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return HomePage();
-              }));
+            onPressed: () async {
+              GoogleSignIn _googleSignIn;
+              try {
+                print('Auth started');
+                final RemoteConfig _remoteConfig = await RemoteConfig.instance;
+                await _remoteConfig.fetch();
+                await _remoteConfig.activateFetched();
+                print('auth completed');
+                String _clientId = _remoteConfig.getString('client_id');
+                String _clientSecret = _remoteConfig.getString('client_secret');
+                String _enterpriseId = _remoteConfig.getString('enterprise_id');
+                print(_clientId);
+                SDK sdk =
+                    SDKBuilder.build(_clientId, _clientSecret, _enterpriseId);
+                String status = await sdk.login();
+
+                if (status == "login successful") {
+                  Optional<Map> userDetailsOptional =
+                      await sdk.getUserDetails();
+                  final userDetails = userDetailsOptional.map((userMap) =>
+                      Map.fromIterables(userMap.keys, userMap.values));
+                  final Map details = userDetails.value;
+                  print(details);
+                  await uploadUserDetails(
+                      name: details['displayName'],
+                      email: details['email'],
+                      photourl: details['photoUrl']);
+
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return HomePage();
+                  }));
+                } else if (status == 'already logged in') {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return HomePage();
+                  }));
+                }
+              } catch (e) {
+                print(e);
+                //print('Error retrieving data from RemoteConfig');
+              }
+
 //TODO: import sdk library to use the google login function
             },
             shape: RoundedRectangleBorder(

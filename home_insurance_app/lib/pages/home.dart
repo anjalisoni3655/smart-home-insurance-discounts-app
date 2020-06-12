@@ -4,6 +4,8 @@ import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:sdk/sdk.dart';
 
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
@@ -14,32 +16,57 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-final scaffoldKey = GlobalKey<ScaffoldState>(); // Used for testing the drawer
-
 class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
     if (value == 'Logout') {
       Navigator.pushNamed(context, LoginScreen.id);
-      //TODO: call SDK library's signout function
-
+      final RemoteConfig _remoteConfig = await RemoteConfig.instance;
+      await _remoteConfig.fetch();
+      await _remoteConfig.activateFetched();
+      print('auth completed');
+      String _clientId = _remoteConfig.getString('client_id');
+      String _clientSecret = _remoteConfig.getString('client_secret');
+      String _enterpriseId = _remoteConfig.getString('enterprise_id');
+      print(_clientId);
+      SDK sdk = SDKBuilder.build(_clientId, _clientSecret, _enterpriseId);
+      String status = await sdk.logout();
+      if (status == "logout successful") {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
     } else {
       Navigator.pushNamed(context, Profile.id);
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return LoginScreen();
-      }));
-      //TODO: call SDK library's signout function
-
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final scaffoldKey =
+        GlobalKey<ScaffoldState>(); // Used for testing the drawer
+
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
     return Scaffold(
       key: scaffoldKey,
       drawer: AppDrawer(), // Sidebar
-      appBar: CommonAppBar(),
+      appBar: AppBar(
+        title: Text('Home Insurance Company'),
+        centerTitle: true,
+        backgroundColor: Colors.brown,
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            child: Icon(Icons.accessibility),
+            onSelected: onClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout', 'My Profile'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
       body: Stack(
         children: <Widget>[
           Container(

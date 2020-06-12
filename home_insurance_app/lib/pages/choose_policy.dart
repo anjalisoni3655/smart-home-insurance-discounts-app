@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
@@ -81,7 +82,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
                   heroTag: "pay",
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.pop(context, {
                       'selectedPolicy': userChoice
                     }); // For now , clicking on payment takes back to the home page

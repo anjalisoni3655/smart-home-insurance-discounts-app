@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
+import 'package:flutter/material.dart';
 
 Future<List<Policy>> getPolicies(int pincode) async {
   int category = getCategoryFromPincode(pincode);
@@ -20,4 +22,17 @@ int getCategoryFromPincode(pincode) {
   // Implement business logic of how to assign categories to pincodes
   // right now returning mod 3
   return (pincode % 3) + 1;
+}
+
+final localStorage = FlutterSecureStorage();
+
+Future<void> uploadUserDetails(
+    {String name, String email, String photourl}) async {
+  await localStorage.write(key: 'name', value: name);
+  await localStorage.write(key: 'email', value: email);
+  await localStorage.write(key: 'photourl', value: photourl);
+  await Firestore.instance.collection('user').document(email).setData({
+    'name': name,
+    'email': email,
+  }, merge: true);
 }
