@@ -24,3 +24,44 @@ const kNormalTextStyle = TextStyle(
   fontFamily: 'Source Sans Pro',
   fontSize: 20.0,
 );
+
+/// TextStyle for the heading of the LoginScreen
+const kLoginScreenHeading = TextStyle(
+  fontSize: 45.0,
+  fontWeight: FontWeight.w900,
+);
+
+/// TextStyle for the HomeScreen
+const kHomeScreenTextStyle = TextStyle(
+  color: Colors.white70,
+  fontWeight: FontWeight.bold,
+  fontSize: 15.0,
+);
+
+/// TextStyle for the Get Home Details Button
+const kGetDetailsButtonTextStyle = TextStyle(
+  color: Colors.black54,
+  fontSize: 16,
+);
+
+/// TextStyle for the Get Details Screem Heading
+const kGetDetailsHeadTextStyle = TextStyle(
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold,
+  color: Colors.black87,
+);
+
+/// Common [Scaffold] background color
+const kScaffoldBackgroundColor = Colors.white;
+
+/// Common [Appbar] background color
+const kAppbarColor = Colors.brown;
+
+/// Login button Color
+const kLoginButtonColor = Colors.brown;
+
+/// LoginButton Text Color
+const kLoginButtonTextColor = Colors.white;
+
+/// Icon color for the profile page icons
+const kProfileIconColor = Colors.black;

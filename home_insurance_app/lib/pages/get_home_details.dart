@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/company_policies.dart';
@@ -89,7 +90,7 @@ class _HomeDetailsState extends State<HomeDetails> {
       appBar: AppBar(
         title: Text('Home Insurance Company'),
         centerTitle: true,
-        backgroundColor: Colors.brown,
+        backgroundColor: kAppbarColor,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -97,11 +98,7 @@ class _HomeDetailsState extends State<HomeDetails> {
           child: Column(
             children: <Widget>[
               Text('Enter Your Address Details ',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  )),
+                  style: kGetDetailsHeadTextStyle),
               Form(
                 key: _formKey,
                 child: Column(
@@ -132,10 +129,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                       splashColor: Colors.blueGrey,
                       child: Text(
                         'Submit',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 16,
-                        ),
+                        style: kGetDetailsButtonTextStyle,
                       ),
                     ),
                   ],

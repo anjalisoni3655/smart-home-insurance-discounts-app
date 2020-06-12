@@ -30,7 +30,7 @@ class Profile extends StatelessWidget {
               height: 20.0,
               width: 150.0,
               child: Divider(
-                color: Colors.black,
+                color: kProfileIconColor,
               ),
             ),
             Card(
@@ -38,7 +38,7 @@ class Profile extends StatelessWidget {
                 child: ListTile(
                   leading: Icon(
                     Icons.phone,
-                    color: Colors.black,
+                    color: kProfileIconColor,
                   ),
                   title: Text(
                     '+91xxxxxxxxxx',
@@ -50,7 +50,7 @@ class Profile extends StatelessWidget {
                 child: ListTile(
                   leading: Icon(
                     Icons.email,
-                    color: Colors.black,
+                    color: kProfileIconColor,
                   ),
                   title: Text(
                     'xyz@email.com',
