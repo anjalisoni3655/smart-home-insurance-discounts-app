@@ -21,26 +21,48 @@ Future<List<Policy>> getPolicies(int pincode) async {
 }
 
 Future<List<Offer>> getOffers() async {
-  QuerySnapshot snapshot = await Firestore.instance.collection("offer").getDocuments();
+  QuerySnapshot snapshot =
+      await Firestore.instance.collection("offer").getDocuments();
   List<Offer> list = [];
-  for(var doc in snapshot.documents) {
-    list.add(new Offer(new Map<String, int>.from(doc.data['requirements']), doc.data['discount']));
+  for (var doc in snapshot.documents) {
+    list.add(new Offer(new Map<String, int>.from(doc.data['requirements']),
+        doc.data['discount']));
   }
   return list;
 }
 
 Future<List<Purchase>> getInsurances(userId) async {
-  QuerySnapshot snapshot = await Firestore.instance.collection("user").document(userId).collection("insurances_purchased").getDocuments();
+  QuerySnapshot snapshot = await Firestore.instance
+      .collection("user")
+      .document(userId)
+      .collection("insurances_purchased")
+      .getDocuments();
   List<Purchase> list = [];
-  for(var doc in snapshot.documents) {
-    list.add(new Purchase(new Policy(doc.data['policy']['name'], doc.data['policy']['validity'], doc.data['policy']['cost']), new Offer(new Map<String, int>.from(doc.data['offer']['requirements']), doc.data['offer']['discount']), doc.data['structure_id'], doc.data['date_of_purchase'], new UserAddress(doc.data['address']['first_line'], doc.data['address']['second_line'], doc.data['address']['city'], doc.data['address']['state'], doc.data['address']['pincode'])));
+  for (var doc in snapshot.documents) {
+    list.add(new Purchase(
+        new Policy(doc.data['policy']['name'], doc.data['policy']['validity'],
+            doc.data['policy']['cost']),
+        new Offer(new Map<String, int>.from(doc.data['offer']['requirements']),
+            doc.data['offer']['discount']),
+        doc.data['structure_id'],
+        doc.data['date_of_purchase'],
+        new UserAddress(
+            doc.data['address']['first_line'],
+            doc.data['address']['second_line'],
+            doc.data['address']['city'],
+            doc.data['address']['state'],
+            doc.data['address']['pincode'])));
   }
   print(list);
   return list;
 }
 
 Future<void> addPurchase(String userId, Purchase purchase) async {
-  await Firestore.instance.collection('user').document(userId).collection('insurances_purchased').add({
+  await Firestore.instance
+      .collection('user')
+      .document(userId)
+      .collection('insurances_purchased')
+      .add({
     'address': {
       'first_line': purchase.address.firstLineOfAddress,
       'second_line': purchase.address.secondLineOfAddress,

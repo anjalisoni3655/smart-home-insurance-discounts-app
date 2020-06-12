@@ -12,7 +12,8 @@ class Purchase {
   double totalDiscount;
   double discountedCost;
 
-  Purchase(this.policy, this.offer, this.structureId, this.dateOfPurchase, this.address) {
+  Purchase(this.policy, this.offer, this.structureId, this.dateOfPurchase,
+      this.address) {
     this.totalDiscount = policy.cost * (0.01 * offer.discount);
     this.discountedCost = policy.cost * (1 - 0.01 * offer.discount);
   }
