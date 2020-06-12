@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/offer.dart';
-import 'package:homeinsuranceapp/data/policy.dart';
-import 'package:homeinsuranceapp/data/user_home_details.dart';
+import 'package:homeinsuranceapp/data/database_utils.dart';
 
 class Payment extends StatefulWidget {
   static const id = 'payment';
@@ -18,12 +16,12 @@ class _PaymentState extends State<Payment> {
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
       purchase = {
-        'structure_id': arguments['structure']['id'],
+//        'structure_id': arguments['structure']['id'],
         'address': arguments['userAddress'],
         'policy': arguments['selectedPolicy'],
         'offer': arguments['selectedOffer'],
-        'total_discount': arguments['selectedPolicy'].cost * 0.01 * arguments['offer'].discount,
-        'discounted_cost':  arguments['selectedPolicy'].cost * (1 - 0.01 * arguments['offer'].discount)
+        'total_discount': arguments['selectedPolicy'].cost * 0.01 * arguments['selectedOffer'].discount,
+        'discounted_cost':  arguments['selectedPolicy'].cost * (1 - 0.01 * arguments['selectedOffer'].discount)
       };
       print(purchase);
     }
@@ -57,7 +55,7 @@ class _PaymentState extends State<Payment> {
             ),
             TextWidget(
               leftText: 'Selected Policy: ',
-              rightText: '${purchase['policy'].name}',
+              rightText: '${purchase['policy'].policyName}',
             ),
             SizedBox(
               height: 20.0,
@@ -93,7 +91,7 @@ class _PaymentState extends State<Payment> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          //Navigator.pushNamed(context, ConfirmPayment.id);
+          addInsurancePurchased(purchase);
         }, // Goes to the payment page
         backgroundColor: Colors.lightBlueAccent,
         icon: Icon(Icons.payment),

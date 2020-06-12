@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-void addInsurancePurchased(purchase, userId) {
-  Firestore.instance
-      .collection("user").document(userId).updat
+void addInsurancePurchased(purchase) {
+  print("added");
+  print(purchase);
+  // TODO: push purchase to database
 }
