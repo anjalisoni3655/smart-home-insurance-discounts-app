@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
@@ -55,15 +56,25 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Colors.brown,
             textColor: Colors.white,
             onPressed: () async {
-              var credentials = jsonDecode(
-                  await DefaultAssetBundle.of(context).loadString("lib/credentials/akashag-step-interns-test.json")
-              );
-              SDK sdk = SDKBuilder.build(credentials["installed"]["project_id"], credentials["installed"]["client_id"], credentials["installed"]["client_secret"], "akashag-step-interns-test");
+
+              try {
+                final RemoteConfig _remoteConfig = await RemoteConfig.instance;
+                await _remoteConfig.fetch();
+                await _remoteConfig.activateFetched();
+                String _projectId = _remoteConfig.getString('project_id');
+                String _clientId = _remoteConfig.getString('client_id');
+                String _clientSecret = _remoteConfig.getString('client_secret');
+                String _enterpriseId = _remoteConfig.getString('enterprise_id');
+                SDK sdk = SDKBuilder.build(_projectId, _clientId, _clientSecret, _enterpriseId);
 //              String status = await sdk.login();
               String status = await sdk.requestDeviceAccess();
               print(status);
               if(status == 'authorization successful') {
                 print(await sdk.getAllDevices());
+              }
+              } catch (e) {
+                print(e);
+                print('Error retrieving data from RemoteConfig');
               }
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return HomePage();
