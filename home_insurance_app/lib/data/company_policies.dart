@@ -9,7 +9,6 @@ class CompanyPolicies {
     Policy('Personal Accident', 7, 1000),
     Policy("Public Liability Coverage", 2, 1000),
     Policy("Loss In Natural Disaster", 3, 4000),
-    Policy("Landlord's Insurance", 5, 5000)
   ];
   static List<Policy> policies2 = [
     Policy("Public Liability Coverage", 6, 5000),
