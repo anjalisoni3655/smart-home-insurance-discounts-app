@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:homeinsuranceapp/data/company_offers.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
@@ -14,7 +13,7 @@ class DisplayDiscounts extends StatefulWidget {
   DisplayDiscountsState createState() => DisplayDiscountsState();
 }
 
-
+// This class provides overall layout of the page .
 class DisplayDiscountsState extends State<DisplayDiscounts> {
   @override
   Widget build(BuildContext context) {
@@ -56,7 +55,9 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                       'Get Discounts',
                       style: CustomTextStyle(fontWeight: FontWeight.w900),
                     ),
-                    onPressed: () {}, // resource picker url is launched
+                    onPressed: () {
+                      //TODO: Call the resource picker and then highlight the allowed discounts .
+                    }, // resource picker url is launched
                     backgroundColor: Colors.lightBlueAccent,
                   ),
                 ),
@@ -166,4 +167,5 @@ class _AllDiscountsState extends State<AllDiscounts> {
             );
           }),
     );
-
+  }
+}

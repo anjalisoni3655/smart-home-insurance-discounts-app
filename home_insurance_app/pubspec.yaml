@@ -64,19 +64,6 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-<<<<<<< HEAD
-
-=======
-  fonts:
-    - family: PTSerifBI
-      fonts:
-        - asset: fonts/PTSerif-BoldItalic.ttf
-
-    - family: PTSerifR
-      fonts:
-        - asset: fonts/PTSerif-Regular.ttf  
->>>>>>> a5f1ad52bbaf7ae97fe78d4d6064e36e8d6dcb52
-        
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

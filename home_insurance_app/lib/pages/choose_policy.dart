@@ -48,22 +48,13 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                       vertical: screenheight / 50),
                   child: Text(
                     'Available Policies',
-<<<<<<< HEAD
                     style: CustomTextStyle(fontSize: 30.0),
-=======
-                    style: TextStyle(fontSize: 30.0),
->>>>>>> a5f1ad52bbaf7ae97fe78d4d6064e36e8d6dcb52
+
                   ),
                 ),
               ),
-              CustomDivider(
-<<<<<<< HEAD
-                  height: screenheight / 100, width: screenwidth / 100),
-=======
-                  // Returns a Divider widget whose some attributes are defined by the parameters and others take the default value
-                  height: screenheight / 100,
-                  width: screenwidth / 100),
->>>>>>> a5f1ad52bbaf7ae97fe78d4d6064e36e8d6dcb52
+              // Returns a Divider widget whose some attributes are defined by the parameters and others take the default value
+              CustomDivider( height: screenheight / 100, width: screenwidth / 100),
               CustomSizedBox(height: screenheight / 100),
               RadioGroup(data),
               CustomSizedBox(height: screenheight / 50),
