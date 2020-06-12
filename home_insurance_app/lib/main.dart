@@ -5,6 +5,11 @@ import 'package:homeinsuranceapp/pages/my_devices.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
 import 'package:homeinsuranceapp/pages/contact.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
+import 'package:homeinsuranceapp/pages/get_home_details.dart';
+import 'package:homeinsuranceapp/pages/choose_policy.dart';
+import 'package:homeinsuranceapp/pages/show_discounts.dart';
+import 'pages/home.dart';
+
 
 // this is the root of our application
 void main() {
@@ -24,7 +29,10 @@ class MyApp extends StatelessWidget {
         Profile.id: (context) => Profile(),
         MyDevices.id: (context) => MyDevices(),
         Contact.id: (context) => Contact(),
+        '/': (context) => HomePage(),
         '/gethomedetails': (context) => HomeDetails(),
+        '/choosepolicy': (context) => DisplayPolicies(),
+        '/showdiscounts': (context) => DisplayDiscounts(),
       },
     );
   }
