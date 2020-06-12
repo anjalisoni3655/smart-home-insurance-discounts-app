@@ -11,6 +11,7 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      key: Key('Menu Bar'),
       child: ListView(
         children: <Widget>[
           DrawerHeader(
@@ -25,7 +26,7 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('Purchase Policy'),
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pushNamed('/gethomedetails');
+                Navigator.pushNamed(context, '/gethomedetails');
               }),
           ListTile(
               leading: Icon(Icons.money_off),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
@@ -12,6 +13,8 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
+
+final scaffoldKey = GlobalKey<ScaffoldState>(); // Used for testing the drawer
 
 class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
@@ -34,27 +37,9 @@ class _HomePageState extends State<HomePage> {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
     return Scaffold(
+      key: scaffoldKey,
       drawer: AppDrawer(), // Sidebar
-      appBar: AppBar(
-        title: Text('Home Insurance Company'),
-        centerTitle: true,
-        backgroundColor: Colors.brown,
-        actions: <Widget>[
-          PopupMenuButton<String>(
-            key: HomePage.popmenuButton,
-            child: Icon(Icons.accessibility),
-            onSelected: onClick,
-            itemBuilder: (BuildContext context) {
-              return {'Logout', 'My Profile'}.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            },
-          ),
-        ],
-      ),
+      appBar: CommonAppBar(),
       body: Stack(
         children: <Widget>[
           Container(
