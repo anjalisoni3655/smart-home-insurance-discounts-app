@@ -6,4 +6,9 @@ class UserAddress {
   int pincode;
   UserAddress(this.firstLineOfAddress, this.secondLineOfAddress, this.city,
       this.state, this.pincode) {}
+
+  @override
+  String toString() {
+    return '$firstLineOfAddress, $secondLineOfAddress, $city, $state, $pincode';
+  }
 }

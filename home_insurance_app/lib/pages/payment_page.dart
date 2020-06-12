@@ -11,33 +11,21 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
-  String userName;
-  String policyName;
-  String myAddress;
-  String offers;
-  int policyAmount;
-  int discount;
+  Map purchase;
 
   @override
   Widget build(BuildContext context) {
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
-      UserAddress address = arguments['userAddress'];
-      myAddress = address.firstLineOfAddress +
-          ', ' +
-          address.secondLineOfAddress +
-          ', ' +
-          address.city +
-          ', ' +
-          address.state +
-          ', ' +
-          address.pincode.toString();
-      Offer offer = arguments['selectedOffer'];
-      offers = offer.requirements.toString();
-      discount = offer.discount;
-      Policy policy = arguments['selectedPolicy'];
-      policyName = policy.policyName;
-      policyAmount = policy.cost;
+      purchase = {
+        'structure_id': arguments['structure']['id'],
+        'address': arguments['userAddress'],
+        'policy': arguments['selectedPolicy'],
+        'offer': arguments['selectedOffer'],
+        'total_discount': arguments['selectedPolicy'].cost * 0.01 * arguments['offer'].discount,
+        'discounted_cost':  arguments['selectedPolicy'].cost * (1 - 0.01 * arguments['offer'].discount)
+      };
+      print(purchase);
     }
 
     return Scaffold(
@@ -62,43 +50,43 @@ class _PaymentState extends State<Payment> {
             ),
             TextWidget(
               leftText: 'Address: ',
-              rightText: '$myAddress',
+              rightText: '${purchase['address']}',
             ),
             SizedBox(
               height: 20.0,
             ),
             TextWidget(
               leftText: 'Selected Policy: ',
-              rightText: '$policyName',
+              rightText: '${purchase['policy'].name}',
             ),
             SizedBox(
               height: 20.0,
             ),
             TextWidget(
-              leftText: 'Price: ',
-              rightText: 'Rs. $policyAmount',
+              leftText: 'Cost: ',
+              rightText: 'Rs. ${purchase['policy'].cost}',
             ),
             SizedBox(
               height: 20.0,
             ),
             TextWidget(
               leftText: 'Offers Availed: ',
-              rightText: '$offers',
+              rightText: '${purchase['offer'].requirements}',
             ),
             SizedBox(
               height: 20.0,
             ),
             TextWidget(
               leftText: 'Total Discount: ',
-              rightText: 'Rs ${discount * (policyAmount / 100)}',
+              rightText: 'Rs ${purchase['total_discount']}',
             ),
             SizedBox(
               height: 20.0,
             ),
             TextWidget(
-              leftText: 'Final Price: ',
+              leftText: 'Discounted Cost: ',
               rightText:
-                  'Rs ${policyAmount - (policyAmount * (discount / 100))}',
+                  'Rs ${purchase['discounted_cost']}',
             ),
           ],
         ),
