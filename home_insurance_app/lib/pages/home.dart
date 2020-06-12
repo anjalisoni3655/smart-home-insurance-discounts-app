@@ -4,11 +4,11 @@ import 'dart:ui';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
 
-// widget for the home page, that contains all menu bar options.
 
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
   static const String id = 'home_screen';
+  static const Key popmenuButton = Key('popmenu_key');
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -17,12 +17,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
     if (value == 'Logout') {
+
       Navigator.pushNamed(context, LoginScreen.id);
       //TODO: call SDK library's signout function
 
     } else {
       Navigator.pushNamed(context, Profile.id);
-    }
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        return LoginScreen();
+      }));
+      //TODO: call SDK library's signout function
+
+    } 
   }
 
   @override
@@ -37,6 +43,8 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.brown,
         actions: <Widget>[
           PopupMenuButton<String>(
+            key: HomePage.popmenuButton,
+
             child: Icon(Icons.accessibility),
             onSelected: onClick,
             itemBuilder: (BuildContext context) {

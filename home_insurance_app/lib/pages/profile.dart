@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 //widget for the my profile page displaying user's details
-
 class Profile extends StatelessWidget {
   static const String id = 'profile';
   @override

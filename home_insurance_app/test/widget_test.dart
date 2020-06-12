@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:homeinsuranceapp/main.dart';
-
-import '../lib/pages/home.dart';
+import 'package:homeinsuranceapp/pages/home.dart';
+import 'package:homeinsuranceapp/pages/login_screen.dart';
+import 'package:homeinsuranceapp/pages/profile.dart';
 
 void main() {
   testWidgets('Widget Test', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(
-      home: HomePage(),
-    ));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: HomePage(),
+      ),
+    );
 
     expect(
         find.text(
