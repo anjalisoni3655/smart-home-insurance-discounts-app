@@ -14,3 +14,7 @@ to enable home insurance providers give discounts to home owners if they have ce
 5. If prompted to run 'flutter pub get' accept, else go to terminal in the IDE and run flutter pub get.
 6. Connect device device to your laptop via USB. It should show up in the top bar. 
 7. Once connected to a devices go to run tab and select run.
+
+**Common issues faced:**
+1. Flutter plugin and installing flutter SDK are different and both need to be setup. 
+2. Run flutter pub get after editing pubspec.yaml file to load the changes.
