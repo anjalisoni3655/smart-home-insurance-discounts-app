@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/company_policies.dart';
@@ -128,13 +129,14 @@ class _HomeDetailsState extends State<HomeDetails> {
                         CompanyPolicies pin_to_policy =
                             CompanyPolicies(pincode);
                         //Available policies corresponding to the pincode is saved in list .
-                        List<Policy> available_policies =
-                            pin_to_policy.get_policies();
+                        getPolicies(pincode).then((policies) {
+                          Navigator.pushReplacementNamed(context, '/choosepolicy',
+                              arguments: {
+                                'policies': policies,
+                              });
+                        });
                         // Available policies sent to the next for user selection .
-                        Navigator.pushReplacementNamed(context, '/choosepolicy',
-                            arguments: {
-                              'policies': available_policies,
-                            });
+
                       },
                       splashColor: Colors.blueGrey,
                       child: Text(
