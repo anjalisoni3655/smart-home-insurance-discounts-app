@@ -7,7 +7,6 @@ import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 //Offers selected by the user
 Offer selectedOffer;
 
-
 class DisplayDiscounts extends StatefulWidget {
   @override
   DisplayDiscountsState createState() => DisplayDiscountsState();
@@ -156,7 +155,8 @@ class _AllDiscountsState extends State<AllDiscounts> {
                           child: Text(
                             '${CompanyOffers.availableOffers[index].discount} %',
                             textAlign: TextAlign.center,
-                            style: CustomTextStyle( fontWeight: FontWeight.w500, fontSize: 20.0),
+                            style: CustomTextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 20.0),
                           ),
                         )
                       ],
