@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
-import 'package:homeinsuranceapp/data/company_policies.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
 String firstLineOfAddress;
@@ -126,17 +125,15 @@ class _HomeDetailsState extends State<HomeDetails> {
                         //User Address object is sent to User Address class
                         UserAddress curr_user = UserAddress(firstLineOfAddress,
                             secondLineOfAddress, city, state, pincode);
-                        CompanyPolicies pin_to_policy =
-                            CompanyPolicies(pincode);
                         //Available policies corresponding to the pincode is saved in list .
                         getPolicies(pincode).then((policies) {
-                          Navigator.pushReplacementNamed(context, '/choosepolicy',
+                          Navigator.pushReplacementNamed(
+                              context, '/choosepolicy',
                               arguments: {
                                 'policies': policies,
                               });
                         });
                         // Available policies sent to the next for user selection .
-
                       },
                       splashColor: Colors.blueGrey,
                       child: Text(
