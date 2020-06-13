@@ -17,23 +17,19 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-
-
 class _HomePageState extends State<HomePage> {
-
   void onClick(String value) async {
     // When user clicks on logOut , global user object calls the logout function
     if (value == 'Logout') {
       String status = await globals.user.logout();
       if (status == "logout successful") {
         Navigator.pop(context, LoginScreen.id);
-      }
-      else{
+      } else {
         //TODO : Add a snackbar displaying unsuccessful logout
       }
-    }
-    else { // user clicks on the profile option in Popup Menu Button
-      Navigator.pushNamed(context, Profile.id );
+    } else {
+      // user clicks on the profile option in Popup Menu Button
+      Navigator.pushNamed(context, Profile.id);
     }
   }
 
