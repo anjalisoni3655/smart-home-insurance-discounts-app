@@ -11,12 +11,10 @@ CompanyDataBase offers = new CompanyDataBase();
 
 Offer selectedOffer;
 
-
 class DisplayDiscounts extends StatefulWidget {
   @override
   DisplayDiscountsState createState() => DisplayDiscountsState();
 }
-
 
 class DisplayDiscountsState extends State<DisplayDiscounts> {
   @override

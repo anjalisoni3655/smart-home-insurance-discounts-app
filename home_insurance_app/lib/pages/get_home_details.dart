@@ -141,7 +141,6 @@ class _HomeDetailsState extends State<HomeDetails> {
                             arguments: {
                               'policies': available_policies,
                               'userAddress': curr_user_address,
-
                             });
                       },
                       shape: RoundedRectangleBorder(

@@ -19,7 +19,6 @@ SizedBox CustomSizedBox({double height = 0, double width = 0}) {
 
 TextStyle CustomTextStyle(
     {Color color = Colors.black87,
-
     double fontSize: 15.0,
     FontWeight fontWeight: FontWeight.bold,
     String fontFamily: "Open Sans Pro"}) {

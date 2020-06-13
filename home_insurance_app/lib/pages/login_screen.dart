@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
+import 'package:sdk/sdk.dart';
+import 'dart:convert';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // widget for login with google
 class LoginScreen extends StatefulWidget {
-  static const String id = '/';
+  static const String id = '/login';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -37,7 +41,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         SizedBox(
-          //height: MediaQuery.of(context).size.height,
           height: MediaQuery.of(context).size.height * 0.03,
         ),
         Text('Log in to Continue'),
@@ -49,14 +52,22 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text("LOG IN WITH GOOGLE"),
             color: Colors.brown,
             textColor: Colors.white,
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return HomePage();
-              }));
-//TODO: import sdk library to use the google login function
+            onPressed: () async {
+              globals.user = await globals.con();
+              print(globals.user);
+              //using global user for calling sdk login function
+              String status = await globals.user.login();
+              if (status == "login successful"||  status == "already logged in") {
+                Navigator.pushNamed(context, '/');
+                print("login successful");
+              }
+              else {
+                print("Falied");
+               // Navigator.pushNamed(context , '/');
+              }
             },
             shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0)))
+                borderRadius: new BorderRadius.circular(30.0))),
       ],
     );
   }

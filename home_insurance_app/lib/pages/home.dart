@@ -4,6 +4,8 @@ import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
+import 'dart:convert';
+import 'package:sdk/sdk.dart';
 
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
@@ -19,16 +21,21 @@ final scaffoldKey = GlobalKey<ScaffoldState>(); // Used for testing the drawer
 class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
     if (value == 'Logout') {
-      Navigator.pushNamed(context, LoginScreen.id);
-      //TODO: call SDK library's signout function
-
+      Navigator.pop(context, LoginScreen.id);
+//      var credentials = jsonDecode(
+//          await DefaultAssetBundle.of(context).loadString(
+//              "lib/credentials/akashag-step-interns-test.json")
+//      );
+//      SDK sdk = SDKBuilder.build(
+//          credentials["installed"]["client_id"],
+//          credentials["installed"]["client_secret"],
+//          "akashag-step-interns-test");
+//      String status = await sdk.logout();
+//      if (status == "logout successful") {
+//        Navigator.pop(context, LoginScreen.id);
+//      }
     } else {
       Navigator.pushNamed(context, Profile.id);
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return LoginScreen();
-      }));
-      //TODO: call SDK library's signout function
-
     }
   }
 
@@ -39,7 +46,26 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: scaffoldKey,
       drawer: AppDrawer(), // Sidebar
-      appBar: CommonAppBar(),
+      appBar: AppBar(
+        title: Text('Home Insurance Company'),
+        centerTitle: true,
+        backgroundColor: Colors.brown,
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            child: Icon(Icons.accessibility),
+            onSelected: onClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout', 'My Profile'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
+
       body: Stack(
         children: <Widget>[
           Container(
@@ -65,9 +91,8 @@ class _HomePageState extends State<HomePage> {
           Container(
             child: Container(
               margin: EdgeInsets.only(
-                  top: 15.0,
-                  left: screenwidth / 16,
-                  right: screenwidth / 16), //Orientation compactible
+                  top: 15.0, left: screenwidth / 16, right: screenwidth / 16),
+              //Orientation compactible
               padding: EdgeInsets.all(15.0),
               width: 6 * screenwidth / 7,
               decoration: BoxDecoration(
