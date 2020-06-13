@@ -37,6 +37,7 @@ dependencies:
   firebase_remote_config: ^0.3.1
   flutter_secure_storage: ^3.3.3
   optional: ^5.0.0
+  enum_to_string: ^1.0.9
 
 
 dev_dependencies:
@@ -70,15 +71,6 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: PTSerifBI
-      fonts:
-        - asset: fonts/PTSerif-BoldItalic.ttf
-
-    - family: PTSerifR
-      fonts:
-        - asset: fonts/PTSerif-Regular.ttf  
-        
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
