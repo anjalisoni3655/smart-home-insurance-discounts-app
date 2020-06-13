@@ -6,6 +6,7 @@ import 'package:homeinsuranceapp/pages/profile.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
 import 'package:homeinsuranceapp/pages/choose_policy.dart';
 import 'package:homeinsuranceapp/pages/show_discounts.dart';
+import 'package:homeinsuranceapp/pages/loading.dart';
 import 'pages/home.dart';
 
 // this is the root of our application
@@ -19,13 +20,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Smart Home',
-      initialRoute: LoginScreen.id,
+      initialRoute: '/loading',
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         HomePage.id: (context) => HomePage(),
         Profile.id: (context) => Profile(),
         MyDevices.id: (context) => MyDevices(),
-        '/': (context) => HomePage(),
+        'login': (context) => LoginScreen(),
+        '/home': (context) => HomePage(),
+        '/loading': (context) => Loading(),
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),
         '/showdiscounts': (context) => DisplayDiscounts(),
