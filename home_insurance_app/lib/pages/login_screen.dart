@@ -41,7 +41,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         SizedBox(
-          //height: MediaQuery.of(context).size.height,
           height: MediaQuery.of(context).size.height * 0.03,
         ),
         Text('Log in to Continue'),
@@ -69,9 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (status == "login successful") {
                   Optional<Map> userDetailsOptional =
                       await sdk.getUserDetails();
-//                  final userDetails = userDetailsOptional.map((userMap) =>
-//                      Map.fromIterables(userMap.keys, userMap.values));
-//                  final Map userDetailsOptional.value = userDetails.value;
+
                   await uploadUserDetails(
                       name: userDetailsOptional.value['displayName'],
                       email: userDetailsOptional.value['email'],
@@ -91,8 +88,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 print(e);
                 //print('Error retrieving data from RemoteConfig');
               }
-
-//TODO: import sdk library to use the google login function
             },
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)))

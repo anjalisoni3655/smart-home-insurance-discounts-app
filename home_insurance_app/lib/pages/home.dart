@@ -23,11 +23,11 @@ class _HomePageState extends State<HomePage> {
       final RemoteConfig _remoteConfig = await RemoteConfig.instance;
       await _remoteConfig.fetch();
       await _remoteConfig.activateFetched();
-      print('auth completed');
+
       String _clientId = _remoteConfig.getString('client_id');
       String _clientSecret = _remoteConfig.getString('client_secret');
       String _enterpriseId = _remoteConfig.getString('enterprise_id');
-      print(_clientId);
+
       SDK sdk = SDKBuilder.build(_clientId, _clientSecret, _enterpriseId);
       String status = await sdk.logout();
       if (status == "logout successful") {
