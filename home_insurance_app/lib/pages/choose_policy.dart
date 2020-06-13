@@ -52,6 +52,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   ),
                 ),
               ),
+              // Returns a Divider widget whose some attributes are defined by the parameters and others take the default value
               CustomDivider(
                   height: screenheight / 100, width: screenwidth / 100),
               CustomSizedBox(height: screenheight / 100),

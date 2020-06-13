@@ -1,3 +1,4 @@
+// This class  defines the user address structure
 class UserAddress {
   String firstLineOfAddress;
   String secondLineOfAddress;

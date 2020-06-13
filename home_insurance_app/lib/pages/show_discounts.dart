@@ -17,6 +17,7 @@ class DisplayDiscounts extends StatefulWidget {
   DisplayDiscountsState createState() => DisplayDiscountsState();
 }
 
+// This class provides overall layout of the page .
 class DisplayDiscountsState extends State<DisplayDiscounts> {
   @override
   Widget build(BuildContext context) {
