@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/company_database.dart';
+import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
-//Offers selected by the user
-
-// Offers displayed by the company
-CompanyDataBase offers = new CompanyDataBase();
-
+//Offer selected by the user
 Offer selectedOffer;
 
 class DisplayDiscounts extends StatefulWidget {
@@ -118,16 +115,24 @@ class AllDiscounts extends StatefulWidget {
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
+  List<Offer> availableOffers = [];
+
   List<bool> isSelected = List.filled(CompanyDataBase.availableOffers.length,
       false); // Initially all policies are deselected
   int currSelected = 0; // Currently no discount is selected
 
   Widget build(BuildContext context) {
+    getOffers().then((offers) {
+      setState(() {
+        availableOffers = offers;
+      });
+    });
+
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
     return Expanded(
       child: ListView.builder(
-          itemCount: CompanyDataBase.availableOffers.length,
+          itemCount: availableOffers.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -150,7 +155,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       isSelected[currSelected] = false;
                       currSelected = index;
                       isSelected[index] = true;
-                      selectedOffer = CompanyDataBase.availableOffers[index];
+                      selectedOffer = availableOffers[index];
                     });
                   },
                   child: Container(
@@ -159,7 +164,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 10,
                           child: Column(
-                              children: (CompanyDataBase.availableOffers[index])
+                              children: (availableOffers[index])
                                   .requirements
                                   .entries
                                   .map(
@@ -183,7 +188,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 2,
                           child: Text(
-                            '${CompanyDataBase.availableOffers[index].discount} %',
+                            '${availableOffers[index].discount} %',
                             textAlign: TextAlign.center,
                             style: CustomTextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 20.0),
