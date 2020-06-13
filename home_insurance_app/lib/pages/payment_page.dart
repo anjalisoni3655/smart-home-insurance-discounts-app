@@ -45,48 +45,48 @@ class _PaymentState extends State<Payment> {
             SizedBox(
               height: 20.0,
             ),
-            TextWidget(leftText: 'Name: ', rightText: 'XYZ'),
+            TextWidget(key: Key('name'), leftText: 'Name: ', rightText: 'XYZ'),
             SizedBox(
               height: 20.0,
             ),
             TextWidget(
               leftText: 'Address: ',
-              rightText: '${purchase['address']}',
+              rightText: '${purchase['address']}' ?? '',
             ),
             SizedBox(
               height: 20.0,
             ),
             TextWidget(
               leftText: 'Selected Policy: ',
-              rightText: '${purchase['policy'].policyName}',
+              rightText: '${purchase['policy'].policyName}' ?? '',
             ),
             SizedBox(
               height: 20.0,
             ),
             TextWidget(
               leftText: 'Cost: ',
-              rightText: 'Rs. ${purchase['policy'].cost}',
+              rightText: 'Rs. ${purchase['policy'].cost}' ?? '',
             ),
             SizedBox(
               height: 20.0,
             ),
             TextWidget(
               leftText: 'Offers Availed: ',
-              rightText: '${purchase['offer'].requirements}',
+              rightText: '${purchase['offer'].requirements}' ?? '',
             ),
             SizedBox(
               height: 20.0,
             ),
             TextWidget(
               leftText: 'Total Discount: ',
-              rightText: 'Rs ${purchase['total_discount']}',
+              rightText: 'Rs ${purchase['total_discount']}' ?? '',
             ),
             SizedBox(
               height: 20.0,
             ),
             TextWidget(
               leftText: 'Discounted Cost: ',
-              rightText: 'Rs ${purchase['discounted_cost']}',
+              rightText: 'Rs ${purchase['discounted_cost']}' ?? '',
             ),
           ],
         ),
@@ -112,14 +112,16 @@ class _PaymentState extends State<Payment> {
 
 class TextWidget extends StatelessWidget {
   TextWidget(
-      {@required String leftText,
+      {Key key,
+        @required String leftText,
       @required String rightText,
       Color leftColor,
       Color rightColor})
       : _leftText = leftText,
         _rightText = rightText,
         _leftColor = leftColor,
-        _rightColor = rightColor;
+        _rightColor = rightColor,
+  super(key: key);
 
   final String _leftText;
   final String _rightText;
