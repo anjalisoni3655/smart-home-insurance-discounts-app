@@ -1,3 +1,4 @@
+// This class defines the policy structure
 class Policy {
   String policyName;
   int validity;

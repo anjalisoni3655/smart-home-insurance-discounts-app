@@ -48,14 +48,13 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                       vertical: screenheight / 50),
                   child: Text(
                     'Available Policies',
-                    style: TextStyle(fontSize: 30.0),
+                    style: CustomTextStyle(fontSize: 30.0),
                   ),
                 ),
               ),
+              // Returns a Divider widget whose some attributes are defined by the parameters and others take the default value
               CustomDivider(
-                  // Returns a Divider widget whose some attributes are defined by the parameters and others take the default value
-                  height: screenheight / 100,
-                  width: screenwidth / 100),
+                  height: screenheight / 100, width: screenwidth / 100),
               CustomSizedBox(height: screenheight / 100),
               RadioGroup(data),
               CustomSizedBox(height: screenheight / 50),
@@ -66,6 +65,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/showdiscounts', arguments: {
                       'selectedPolicy': userChoice,
+                      'userAddress': data['userAddress'],
                     });
                   },
                   backgroundColor: Colors.lightBlueAccent,
@@ -83,7 +83,8 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   heroTag: "pay",
                   onPressed: () {
                     Navigator.pop(context, {
-                      'selectedPolicy': userChoice
+                      'selectedPolicy': userChoice,
+                      'userAddress': data['userAddress'],
                     }); // For now , clicking on payment takes back to the home page
                   },
                   backgroundColor: Colors.lightBlueAccent,
