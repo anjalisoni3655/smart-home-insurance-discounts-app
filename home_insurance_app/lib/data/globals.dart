@@ -1,32 +1,18 @@
 library globals;
+
 import 'package:sdk/sdk.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
-  Future<SDK> con() async{
-    final RemoteConfig _remoteConfig = await RemoteConfig.instance;
-    await _remoteConfig.fetch();
-    await _remoteConfig.activateFetched();
-    String _projectId = _remoteConfig.getString('project_id');
-    String _clientId = _remoteConfig.getString('client_id');
-    String _clientSecret = _remoteConfig.getString('client_secret');
-    String _enterpriseId = _remoteConfig.getString('enterprise_id');
-    SDK sdk = SDKBuilder.build( _clientId, _clientSecret, _enterpriseId);
-    return sdk;
-  }
+Future<SDK> con() async {
+  final RemoteConfig _remoteConfig = await RemoteConfig.instance;
+  await _remoteConfig.fetch();
+  await _remoteConfig.activateFetched();
+  String _projectId = _remoteConfig.getString('project_id');
+  String _clientId = _remoteConfig.getString('client_id');
+  String _clientSecret = _remoteConfig.getString('client_secret');
+  String _enterpriseId = _remoteConfig.getString('enterprise_id');
+  SDK sdk = SDKBuilder.build(_clientId, _clientSecret, _enterpriseId);
+  return sdk;
+}
 
-
-  SDK user ;
-//
-//
-//class Session {
-//  // singleton
-//  static final Session _singleton = Session._internal();
-//  factory Session() => _singleton;
-//  Session._internal();
-//  static Session get shared => _singleton;
-//
-//  String username;
-//  String password;
-//}
-//
-//Session.shared.username = 'abc';
+SDK user;

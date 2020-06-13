@@ -13,8 +13,8 @@ class Login {
 
   // Dependency Injection (constructor injection of Google Sign In service)
   Login(GoogleSignIn googleSignIn,
-      {this.interactiveFlowTimeout = const Duration(minutes: 3),  //TODO: I have changed since not working
-      this.nonInteractiveFlowTimeout = const Duration(seconds: 100)}) {
+      {this.interactiveFlowTimeout = const Duration(minutes: 1),
+      this.nonInteractiveFlowTimeout = const Duration(seconds: 1)}) {
     _googleSignIn = googleSignIn;
   }
 

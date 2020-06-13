@@ -3,6 +3,7 @@ import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 //Offers selected by the user
 
@@ -17,6 +18,14 @@ class DisplayDiscounts extends StatefulWidget {
 }
 
 class DisplayDiscountsState extends State<DisplayDiscounts> {
+  Future<void> callResourcePicker() async {
+    String status = await globals.user.requestDeviceAccess();
+    print(status);
+    if (status == 'authorization successful') {
+      print(await globals.user.getAllDevices());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
@@ -73,7 +82,9 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                               style:
                                   CustomTextStyle(fontWeight: FontWeight.w900),
                             ),
-                            onPressed: () {}, // resource picker url is launched
+                            onPressed: () async {
+                              await callResourcePicker();
+                            }, // resource picker url is launched
                             backgroundColor: Colors.lightBlueAccent,
                           ),
                         ),

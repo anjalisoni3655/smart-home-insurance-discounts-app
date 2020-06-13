@@ -3,7 +3,6 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:sdk/sdk.dart';
 import 'dart:convert';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // widget for login with google
@@ -14,6 +13,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Future<void> userLogin() async {
+    //using global sdk object named user for calling sdk login function
+    globals.user = await globals.con();
+    String status = await globals.user.login();
+    if (status == "login successful" || status == "already logged in") {
+      Navigator.pushNamed(context, '/'); // Navigates to the home page
+    } else {
+      print("Login Failed");
+      //TODO Show a snackbar for displaying login failed
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -53,18 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Colors.brown,
             textColor: Colors.white,
             onPressed: () async {
-              globals.user = await globals.con();
-              print(globals.user);
-              //using global user for calling sdk login function
-              String status = await globals.user.login();
-              if (status == "login successful"||  status == "already logged in") {
-                Navigator.pushNamed(context, '/');
-                print("login successful");
-              }
-              else {
-                print("Falied");
-               // Navigator.pushNamed(context , '/');
-              }
+              await userLogin();
             },
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0))),
