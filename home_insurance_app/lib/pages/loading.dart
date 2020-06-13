@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:optional/optional.dart';
@@ -10,7 +9,6 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-
   // Remove this and call sdk isSignedIn
   Future<Optional<bool>> isSignedIn() async {
     await Future.delayed(new Duration(seconds: 4));
@@ -22,7 +20,7 @@ class _LoadingState extends State<Loading> {
     super.initState();
     SDK sdk = SDKBuilder.build('clientId', 'clientSecret', 'enterpriseId');
     isSignedIn().then((value) {
-      if(value.isEmpty || value.value == false) {
+      if (value.isEmpty || value.value == false) {
         Navigator.pushReplacementNamed(context, '/login');
       } else {
         Navigator.pushReplacementNamed(context, '/home');
@@ -39,8 +37,15 @@ class _LoadingState extends State<Loading> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset('assets/loading.gif', width: 400, height: 100,),
-              Text('Loading', style: TextStyle(fontSize: 20),)
+              Image.asset(
+                'assets/loading.gif',
+                width: 400,
+                height: 100,
+              ),
+              Text(
+                'Loading',
+                style: TextStyle(fontSize: 20),
+              )
             ],
           ),
         ),
