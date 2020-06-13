@@ -5,7 +5,6 @@ import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:sdk/sdk.dart';
 import 'package:optional/optional.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 // widget for login with google
 class LoginScreen extends StatefulWidget {
@@ -55,17 +54,14 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Colors.brown,
             textColor: Colors.white,
             onPressed: () async {
-              GoogleSignIn _googleSignIn;
               try {
-                print('Auth started');
                 final RemoteConfig _remoteConfig = await RemoteConfig.instance;
                 await _remoteConfig.fetch();
                 await _remoteConfig.activateFetched();
-                print('auth completed');
+
                 String _clientId = _remoteConfig.getString('client_id');
                 String _clientSecret = _remoteConfig.getString('client_secret');
                 String _enterpriseId = _remoteConfig.getString('enterprise_id');
-                print(_clientId);
                 SDK sdk =
                     SDKBuilder.build(_clientId, _clientSecret, _enterpriseId);
                 String status = await sdk.login();
@@ -73,14 +69,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (status == "login successful") {
                   Optional<Map> userDetailsOptional =
                       await sdk.getUserDetails();
-                  final userDetails = userDetailsOptional.map((userMap) =>
-                      Map.fromIterables(userMap.keys, userMap.values));
-                  final Map details = userDetails.value;
-                  print(details);
+//                  final userDetails = userDetailsOptional.map((userMap) =>
+//                      Map.fromIterables(userMap.keys, userMap.values));
+//                  final Map userDetailsOptional.value = userDetails.value;
                   await uploadUserDetails(
-                      name: details['displayName'],
-                      email: details['email'],
-                      photourl: details['photoUrl']);
+                      name: userDetailsOptional.value['displayName'],
+                      email: userDetailsOptional.value['email'],
+                      photourl: userDetailsOptional.value['photoUrl']);
 
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {

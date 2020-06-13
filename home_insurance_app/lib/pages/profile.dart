@@ -5,6 +5,7 @@ import 'package:homeinsuranceapp/data/database_utilities.dart';
 //widget for the my profile page displaying user's details
 class Profile extends StatefulWidget {
   static const String id = 'profile';
+  static const Key nameKey = Key('name_widget_key');
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -16,16 +17,21 @@ class _ProfileState extends State<Profile> {
   String photoUrl;
 
   void getUserDetails() async {
-    name = await localStorage.read(key: 'name');
-    email = await localStorage.read(key: 'email');
-    photoUrl = await localStorage.read(key: 'photourl');
+    String _name = await localStorage.read(key: 'name');
+    String _email = await localStorage.read(key: 'email');
+    String _photoUrl = await localStorage.read(key: 'photourl');
+    setState(() {
+      name = _name;
+      email = _email;
+      photoUrl = _photoUrl;
+    });
   }
 
   @override
   void initState() {
     super.initState();
+
     getUserDetails();
-    // print(photoUrl);
   }
 
   @override
@@ -39,16 +45,19 @@ class _ProfileState extends State<Profile> {
           children: <Widget>[
             CircleAvatar(
               radius: 50.0,
-              //backgroundImage: NetworkImage("https://www.google.com/imgres?imgurl=https%3A%2F%2Fres.cloudinary.com%2Fdtbudl0yx%2Fimage%2Ffetch%2Fw_2000%2Cf_auto%2Cq_auto%2Cc_fit%2Fhttps%3A%2F%2Fadamtheautomator.com%2Fcontent%2Fimages%2Fsize%2Fw2000%2F2019%2F10%2Fuser-1633249_1280.png&imgrefurl=https%3A%2F%2Fadamtheautomator.com%2Fnew-aduser%2F&tbnid=bon71Qy4q_szHM&vet=12ahUKEwiWtOKNqf3pAhWhx3MBHZUACNUQMygCegUIARDVAQ..i&docid=sMaz-t69UtiOWM&w=2000&h=1950&q=user&ved=2ahUKEwiWtOKNqf3pAhWhx3MBHZUACNUQMygCegUIARDVAQ"),
-              backgroundColor: Colors.blue,
+              backgroundImage: NetworkImage(photoUrl ??
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI9VCNp1MXFz_NDRV_JJR-ym1EGhvHfit3lfbzfHLMkEBZlJ9T&usqp=CAU'),
             ),
-            Text(
-              name,
-              style: TextStyle(
-                fontFamily: 'Pacifico',
-                fontSize: 40.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+            Center(
+              child: Text(
+                name ?? '',
+                key: Profile.nameKey,
+                style: TextStyle(
+                  fontFamily: 'Pacifico',
+                  fontSize: 40.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Text(
@@ -92,7 +101,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.black,
                   ),
                   title: Text(
-                    email,
+                    email ?? '',
                     style: TextStyle(
                         fontSize: 20.0,
                         color: Colors.black,

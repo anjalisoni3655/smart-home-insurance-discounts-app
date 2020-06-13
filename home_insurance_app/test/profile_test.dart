@@ -8,7 +8,8 @@ void main() {
       home: Profile(),
     ));
 
-    expect(find.text('Mr. XYZ'), findsOneWidget);
+    expect(find.byType(Text), findsNWidgets(4));
+    expect(find.byKey(Profile.nameKey), findsOneWidget);
     expect(find.text('Business Analyst'), findsOneWidget);
     expect(find.byType(CircleAvatar), findsOneWidget);
     expect(find.byType(Card), findsNWidgets(2));
