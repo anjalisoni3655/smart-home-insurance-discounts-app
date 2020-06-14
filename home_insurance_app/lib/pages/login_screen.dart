@@ -4,7 +4,7 @@ import 'package:homeinsuranceapp/pages/home.dart';
 
 // widget for login with google
 class LoginScreen extends StatefulWidget {
-  static const String id = '/';
+  static const String id = '/login';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
