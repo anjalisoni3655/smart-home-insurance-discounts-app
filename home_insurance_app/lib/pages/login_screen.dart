@@ -17,14 +17,13 @@ class _LoginScreenState extends State<LoginScreen> {
     //using global sdk object named user for calling sdk login function
     globals.user = await globals.con();
     String status = await globals.user.login();
-    if (status == "login successful" ) {
+    if (status == "login successful") {
       print(status);
       Navigator.pushNamed(context, '/home'); // Navigates to the home page
-    }
-    else if(status == "already logged in"){
+    } else if (status == "already logged in") {
       print(status);
       Navigator.pushNamed(context, '/home');
-     }else {
+    } else {
       print("Login Failed");
       //TODO Show a snackbar for displaying login failed
     }

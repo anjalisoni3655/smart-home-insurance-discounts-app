@@ -7,6 +7,7 @@ import 'package:homeinsuranceapp/pages/list_structures.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:optional/optional.dart';
+import 'package:homeinsuranceapp/data/helper_functions.dart';
 
 //Offers selected by the user
 
@@ -21,23 +22,11 @@ class DisplayDiscounts extends StatefulWidget {
 }
 
 class DisplayDiscountsState extends State<DisplayDiscounts> {
-  // Function for calling resource picker
-  Future<bool> callResourcePicker() async {
-    String status = await globals.user.requestDeviceAccess();
-    print(status);
-    if (status == 'authorization successful') {
-      //TODO : Redirect from the resource picker
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
-
+    List<Offer> allowedoffers = [];
     Map data = ModalRoute.of(context)
         .settings
         .arguments; // data stores the policy selected by the user as a key/value pair
@@ -91,61 +80,30 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                             ),
                             onPressed: () async {
                               //  Call the resource picker
-                              //  bool isAuthorise = await callResourcePicker();
+                              bool isAuthorise = await callResourcePicker();
                               if (true) {
-//                                 Optional<List> response  = await globals.user.getAllStructures();
-//                                 List structures = response.value ;
-                                Map structure; // Selected by the user
-                                List structures = [
-                                  {"id": "12345", "customName": "Onyx Home"},
-                                  {"id": "23456", "customName": "Second Home"}
-                                ];
+                                Map selectedStructure; // Selected by the user
+                                Optional<List> response =
+                                    await globals.user.getAllStructures();
+                                List structures = response.value;
+//                                List structures = [
+//                                  {"id": "12345", "customName": "Onyx Home"},
+//                                  {"id": "23456", "customName": "Second Home"}
+//                                ];
+                                // Helper function to show dialogue ox for displaying structure list
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
                                       // Returns a Alert DialogueBox displaying all user structures
                                       return ListStructures(structures);
                                     }).then((val) {
-                                  setState(() {
-                                    structure = val;
-                                    print(structure);
-                                    // Optional<List> res = await globals.user
-                                    //.getDevicesOfStructure(structure["id"]);
-                                    // List devices = res.value;
-                                    List devices = [
-                                      {"type": "sdm.devices.types.THERMOSTAT"},
-                                      {"type": "sdm.devices.types.CAMERA"}
-                                    ];
-                                    Set<String> types = {};
-                                    for (int i = 0; i < devices.length; i++) {
-                                      String type = devices[i]["type"]
-                                          .substring(18, devices[i]["type"].length);
-                                      types.add(type);
-                                    }
-                                    // Check which offer is valid
-                                    bool isBreak = false;
-                                    List<Offer> allowedOffers = [];
-                                    for (int i = 0; i < CompanyDataBase.availableOffers.length;
-                                    i++) {
-                                      isBreak = false;
-                                      for (var k in CompanyDataBase.availableOffers[i].requirements.keys) {
-                                        if (!(types.contains("$k"))) {
-                                          isBreak = true;
-                                          print("$i break");
-                                          break;
-                                        }
-                                      }
-                                      if (isBreak == false) {
-                                        allowedOffers.add(
-                                            CompanyDataBase.availableOffers[i]);
-                                        print(CompanyDataBase.availableOffers[i].discount);
-                                      }
-
-                                    }
-
+                                  // Following statements are implemented after returning from dialogue box
+                                  setState(() async {
+                                    selectedStructure = val;
+                                    List allowedOffers =
+                                        await getValidOffers(selectedStructure);
                                   });
                                 });
-
                               }
                             },
                             backgroundColor: Colors.lightBlueAccent,
@@ -186,6 +144,9 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
 }
 
 class AllDiscounts extends StatefulWidget {
+  final List<Offer> offerList; // This is the offer list that will be displayed
+  const AllDiscounts(this.offerlist);
+
   @override
   _AllDiscountsState createState() => _AllDiscountsState();
 }
