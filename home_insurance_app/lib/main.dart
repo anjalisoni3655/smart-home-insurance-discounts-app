@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         Profile.id: (context) => Profile(),
-        MyDevices.id: (context) => MyDevices(),
         '/home': (context) => HomePage(),
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),
