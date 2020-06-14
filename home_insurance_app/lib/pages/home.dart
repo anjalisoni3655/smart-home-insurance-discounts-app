@@ -38,7 +38,26 @@ class _HomePageState extends State<HomePage> {
     double screenwidth = mediaQuery.size.width;
     return Scaffold(
       drawer: AppDrawer(), // Sidebar
-      appBar: CommonAppBar(),
+      appBar: AppBar(
+        title: Text('Home Insurance Company'),
+        centerTitle: true,
+        backgroundColor: Colors.brown,
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            child: Icon(Icons.accessibility),
+            onSelected: onClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout', 'My Profile'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
+
       body: Stack(
         children: <Widget>[
           Container(

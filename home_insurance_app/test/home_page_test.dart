@@ -12,17 +12,30 @@ void main() {
       ),
     );
 
-    expect(
-        find.text(
-            "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available "),
-        findsOneWidget);
-    //Test for the Pop Up Button 
-    await tester.tap(find.byKey(Key('popmenu key')));
+
+    var maintext = find.text(
+        "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available ");
+
+    expect(maintext,findsOneWidget);
+
+   // Test for the Pop Up Button
+    var mainButton = find.byIcon(Icons.accessibility);
+    expect(mainButton, findsOneWidget);
+
+    await tester.tap(mainButton);
     await tester.pumpAndSettle();
-    expect(find.text("Logout"), findsOneWidget);
-    expect(find.text('Profile'), findsOneWidget);
-    
-    // Test for menu bar
+
+    var childButton = find.text('Logout');
+    expect(childButton , findsOneWidget);
+    var childButton2 = find.text('My Profile');
+    expect(childButton2 , findsOneWidget);
+
+    // To remove the pop up from the screen , tap anywhere else on the screen
+    await tester.tap(maintext);
+    await tester.pumpAndSettle();
+
+    // Test for Menu Bar
+
     await tester.dragFrom(
         tester.getTopLeft(find.byType(MaterialApp)), Offset(300, 0));
     await tester.pumpAndSettle();
