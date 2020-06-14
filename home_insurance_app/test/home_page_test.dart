@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
-import 'package:homeinsuranceapp/pages/login_screen.dart';
-import 'package:homeinsuranceapp/pages/profile.dart';
+
 
 void main() {
   testWidgets('Widget Test', (WidgetTester tester) async {
@@ -19,10 +18,10 @@ void main() {
     expect(maintext,findsOneWidget);
 
    // Test for the Pop Up Button
-    var mainButton = find.byIcon(Icons.accessibility);
-    expect(mainButton, findsOneWidget);
+    var popUpButton = find.byIcon(Icons.accessibility);
+    expect(popUpButton, findsOneWidget);
 
-    await tester.tap(mainButton);
+    await tester.tap(popUpButton);
     await tester.pumpAndSettle();
 
     var childButton = find.text('Logout');
