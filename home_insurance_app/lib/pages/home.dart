@@ -14,8 +14,6 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-
-
 class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
     if (value == 'Logout') {
