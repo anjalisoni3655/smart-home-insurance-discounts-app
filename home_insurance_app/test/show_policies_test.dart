@@ -18,5 +18,9 @@ void main() {
     expect(buttons, findsNWidgets(2));
     expect(find.text("Payment"), findsOneWidget);
     expect(find.text('View Smart Device Discounts'), findsOneWidget);
+
+    //Check for one or more policies ( Only policies are preceded by this Icon )
+    final policyIcon = find.byIcon(Icons.attach_money);
+    expect(policyIcon, findsWidgets);
   });
 }
