@@ -5,6 +5,7 @@ import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:sdk/sdk.dart';
 import 'package:optional/optional.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 // widget for login with google
 class LoginScreen extends StatefulWidget {
@@ -14,6 +15,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final FirebaseMessaging _messaging = FirebaseMessaging();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _messaging.getToken().then((token) {
+      print('token');
+      print(token);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);

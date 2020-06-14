@@ -38,6 +38,7 @@ dependencies:
   flutter_secure_storage: ^3.3.3
   optional: ^5.0.0
   enum_to_string: ^1.0.9
+  firebase_messaging: ^6.0.16
 
 
 dev_dependencies:
