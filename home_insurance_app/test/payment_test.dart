@@ -1,29 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:homeinsuranceapp/data/offer.dart';
+import 'package:homeinsuranceapp/data/policy.dart';
+import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 void main() {
-
-
+  final GlobalKey<NavigatorState> key = GlobalKey<NavigatorState>();
+  final ValueKey buttonKey = ValueKey('button_key');
+  final Offer selectedOffer = Offer({'thermostat': 1}, 2);
+  final Policy selectedPolicy = Policy('tenants-policy', 5, 1000);
+  final UserAddress userAddress =
+      UserAddress('first_address', 'second_address', 'city', 'state', 208022);
   testWidgets('PaymentPage Widget Test', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: Payment(),
+      navigatorKey: key,
+      routes: {
+        Payment.id: (context) => Payment(),
+      },
+      home: Scaffold(
+        body: Center(
+            child: FlatButton(
+          key: buttonKey,
+          child: Text("A"),
+          onPressed: () => key.currentState.pushNamed(Payment.id, arguments: {
+            'selectedOffer': selectedOffer,
+            'selectedPolicy': selectedPolicy,
+            'userAddress': userAddress,
+          }),
+        )),
+      ),
     ));
 
+    // Navigate to the Payment page with the given arguments
+    await tester.tap(find.byKey(buttonKey));
+    await tester.pump();
+    await tester.pump();
+    await tester.pump(Duration(seconds: 1));
 
+    // Testing whether TextWidgets are painted or not
+    expect(find.byType(TextWidget), findsNWidgets(7));
 
-    
-//    expect(find.byType(TextWidget), findsNWidgets(7));
-   expect(find.byKey(Key('name')), findsOneWidget);
-    //Finds Button
-    expect(find.byType(RaisedButton), findsOneWidget);
-
-    //Checks whether Navigator gets pushed or not
-    await tester.tap(find.byType(RaisedButton));
-    await tester.pumpAndSettle();
-
-
-
-   // expect(find.byType(ConfirmPayment), findsOneWidget);
+    // testing the FloatingActionButton
+    expect(find.byType(FloatingActionButton), findsOneWidget);
   });
 }
