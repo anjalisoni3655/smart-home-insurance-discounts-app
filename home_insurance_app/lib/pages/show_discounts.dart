@@ -17,10 +17,10 @@ Offer selectedOffer;
 
 class DisplayDiscounts extends StatefulWidget {
   @override
-  DisplayDiscountsState createState() => DisplayDiscountsState();
+  _DisplayDiscountsState createState() => _DisplayDiscountsState();
 }
 
-class DisplayDiscountsState extends State<DisplayDiscounts> {
+class _DisplayDiscountsState extends State<DisplayDiscounts> {
 
   List<Offer> offersToDisplay = CompanyDataBase.availableOffers; // This list stores which all offers will be displayed
 
@@ -97,20 +97,16 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       // Returns a Alert DialogueBox displaying all user structures
-                                      return ListStructures(structures);
-                                    }).then((val) {
+                                      return StructureAlertBox(structures);
+                                    }).then((val)async {
                                   // Following statements are implemented after returning from dialogue box
-                                  setState(()  {
                                     selectedStructure = val;
-                                  });
+                                    List<Offer> allowedOffers  =
+                                        await getValidOffers(selectedStructure);
+                                    setState((){
+                                      offersToDisplay = allowedOffers ;
+                                    });
                                 });
-                                 List<Offer> allowedOffers  =
-                                await getValidOffers(selectedStructure);
-                                setState((){
-                              offersToDisplay = allowedOffers ;
-                              print(offersToDisplay.length);
-                                });
-
                               }
                             },
                             backgroundColor: Colors.lightBlueAccent,
