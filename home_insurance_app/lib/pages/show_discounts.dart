@@ -21,11 +21,14 @@ class DisplayDiscounts extends StatefulWidget {
 }
 
 class DisplayDiscountsState extends State<DisplayDiscounts> {
+
+  List<Offer> offersToDisplay = CompanyDataBase.availableOffers; // This list stores which all offers will be displayed
+
   @override
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
-    List<Offer> offersToDisplay = CompanyDataBase.availableOffers; // This list stores which all offers will be displayed
+
     Map data = ModalRoute.of(context)
         .settings
         .arguments; // data stores the policy selected by the user as a key/value pair
@@ -82,8 +85,8 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                             //  bool isAuthorise = await callResourcePicker();
                               if (true) {
                                 Map selectedStructure; // Selected by the user
-//                                Optional<List> response =
-//                                    await globals.user.getAllStructures();
+                            //  Optional<List> response =
+                             //      await globals.user.getAllStructures();
                               //  List structures = response.value;
                                 List structures = [
                                   {"id": "12345", "customName": "Onyx Home"},
@@ -101,10 +104,11 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                                     selectedStructure = val;
                                   });
                                 });
-                                 List allowedOffers=
+                                 List<Offer> allowedOffers  =
                                 await getValidOffers(selectedStructure);
                                 setState((){
                               offersToDisplay = allowedOffers ;
+                              print(offersToDisplay.length);
                                 });
 
                               }
