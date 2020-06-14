@@ -4,7 +4,6 @@ import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 import 'package:homeinsuranceapp/pages/list_structures.dart';
-import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:optional/optional.dart';
 import 'package:homeinsuranceapp/data/helper_functions.dart';
@@ -26,7 +25,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
-    List<Offer> allowedoffers = [];
+    List<Offer> offersToDisplay = CompanyDataBase.availableOffers; // This list stores which all offers will be displayed
     Map data = ModalRoute.of(context)
         .settings
         .arguments; // data stores the policy selected by the user as a key/value pair
@@ -54,7 +53,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                   CustomDivider(
                       height: screenheight / 100, width: screenwidth / 50),
                   SizedBox(height: screenheight / 100),
-                  AllDiscounts(),
+                  AllDiscounts(offersToDisplay),
                   SizedBox(height: screenheight / 50),
                 ],
               ),
@@ -80,30 +79,34 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                             ),
                             onPressed: () async {
                               //  Call the resource picker
-                              bool isAuthorise = await callResourcePicker();
+                            //  bool isAuthorise = await callResourcePicker();
                               if (true) {
                                 Map selectedStructure; // Selected by the user
-                                Optional<List> response =
-                                    await globals.user.getAllStructures();
-                                List structures = response.value;
-//                                List structures = [
-//                                  {"id": "12345", "customName": "Onyx Home"},
-//                                  {"id": "23456", "customName": "Second Home"}
-//                                ];
+//                                Optional<List> response =
+//                                    await globals.user.getAllStructures();
+                              //  List structures = response.value;
+                                List structures = [
+                                  {"id": "12345", "customName": "Onyx Home"},
+                                  {"id": "23456", "customName": "Second Home"}
+                                ];
                                 // Helper function to show dialogue ox for displaying structure list
-                                showDialog(
+                                await showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
                                       // Returns a Alert DialogueBox displaying all user structures
                                       return ListStructures(structures);
                                     }).then((val) {
                                   // Following statements are implemented after returning from dialogue box
-                                  setState(() async {
+                                  setState(()  {
                                     selectedStructure = val;
-                                    List allowedOffers =
-                                        await getValidOffers(selectedStructure);
                                   });
                                 });
+                                 List allowedOffers=
+                                await getValidOffers(selectedStructure);
+                                setState((){
+                              offersToDisplay = allowedOffers ;
+                                });
+
                               }
                             },
                             backgroundColor: Colors.lightBlueAccent,
@@ -145,23 +148,29 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
 
 class AllDiscounts extends StatefulWidget {
   final List<Offer> offerList; // This is the offer list that will be displayed
-  const AllDiscounts(this.offerlist);
+  const AllDiscounts(this.offerList);
 
   @override
   _AllDiscountsState createState() => _AllDiscountsState();
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
-  List<bool> isSelected = List.filled(CompanyDataBase.availableOffers.length,
-      false); // Initially all policies are deselected
-  int currSelected = 0; // Currently no discount is selected
+  List<bool> isSelected = [] ;
+  int currSelected = 0;  // Currently no discount is selected
+
+
+  void initState(){
+    super.initState();
+    isSelected = List.filled(widget.offerList.length,
+        false); // Initially all policies are deselected
+  }
 
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
     return Expanded(
       child: ListView.builder(
-          itemCount: CompanyDataBase.availableOffers.length,
+          itemCount: widget.offerList.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -184,7 +193,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       isSelected[currSelected] = false;
                       currSelected = index;
                       isSelected[index] = true;
-                      selectedOffer = CompanyDataBase.availableOffers[index];
+                      selectedOffer = widget.offerList[index];
                     });
                   },
                   child: Container(
@@ -193,7 +202,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 10,
                           child: Column(
-                              children: (CompanyDataBase.availableOffers[index])
+                              children: (widget.offerList[index])
                                   .requirements
                                   .entries
                                   .map(
@@ -217,7 +226,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 2,
                           child: Text(
-                            '${CompanyDataBase.availableOffers[index].discount} %',
+                            '${widget.offerList[index].discount} %',
                             textAlign: TextAlign.center,
                             style: CustomTextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 20.0),

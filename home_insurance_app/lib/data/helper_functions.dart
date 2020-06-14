@@ -20,13 +20,13 @@ Future<bool> callResourcePicker() async {
 Future<List> getValidOffers(Map structure) async {
   List<Offer> allowedOffers = [];
   List<Offer> allOffers = CompanyDataBase.availableOffers;
-  Optional<List> res =
-      await globals.user.getDevicesOfStructure(structure["id"]);
-  List devices = res.value;
-//    List devices = [
-//      {"type": "sdm.devices.types.THERMOSTAT"},
-//      {"type": "sdm.devices.types.CAMERA"}
-//    ];
+//  Optional<List> res =
+//      await globals.user.getDevicesOfStructure(structure["id"]);
+//  List devices = res.value;
+    List devices = [
+      {"type": "sdm.devices.types.THERMOSTAT"},
+      {"type": "sdm.devices.types.CAMERA"}
+    ];
   Set<String> types = {}; // Stores all unique 'types' of devices that user has
   for (int i = 0; i < devices.length; i++) {
     String type = devices[i]["type"].substring(
@@ -40,7 +40,7 @@ Future<List> getValidOffers(Map structure) async {
 
   for (int i = 0; i < allOffers.length; i++) {
     isValid = true;
-    for (var k in CompanyDataBase.availableOffers[i].requirements.keys) {
+    for (var k in allOffers[i].requirements.keys) {
       if (!(types.contains("$k"))) {
         isValid = false;
         print("$i break");

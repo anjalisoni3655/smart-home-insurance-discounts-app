@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
-import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
-import 'dart:convert';
 import 'package:sdk/sdk.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 

@@ -7,7 +7,6 @@ Future<SDK> con() async {
   final RemoteConfig _remoteConfig = await RemoteConfig.instance;
   await _remoteConfig.fetch();
   await _remoteConfig.activateFetched();
-  String _projectId = _remoteConfig.getString('project_id');
   String _clientId = _remoteConfig.getString('client_id');
   String _clientSecret = _remoteConfig.getString('client_secret');
   String _enterpriseId = _remoteConfig.getString('enterprise_id');
