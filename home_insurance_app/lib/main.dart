@@ -23,14 +23,12 @@ class MyApp extends StatelessWidget {
       initialRoute: LoginScreen.id,
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
-        HomePage.id: (context) => HomePage(),
         Profile.id: (context) => Profile(),
         MyDevices.id: (context) => MyDevices(),
-        '/': (context) => HomePage(),
+        '/home': (context) => HomePage(),
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),
         '/showdiscounts': (context) => DisplayDiscounts(),
-        // '/liststructures':(context) => ListStructures(),
       },
     );
   }

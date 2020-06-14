@@ -10,7 +10,6 @@ import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
-  static const String id = 'home_screen';
   static const Key popmenuButton = Key('popmenu_key');
 
   @override
@@ -23,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     if (value == 'Logout') {
       String status = await globals.user.logout();
       if (status == "logout successful") {
-        Navigator.pop(context, LoginScreen.id);
+        Navigator.pop(context);
       } else {
         //TODO : Add a snackbar displaying unsuccessful logout
       }

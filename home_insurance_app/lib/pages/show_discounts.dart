@@ -117,7 +117,6 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                                       {"type": "sdm.devices.types.CAMERA"}
                                     ];
                                     Set<String> types = {};
-                                    print('hgjhj');
                                     for (int i = 0; i < devices.length; i++) {
                                       String type = devices[i]["type"]
                                           .substring(18, devices[i]["type"].length);
