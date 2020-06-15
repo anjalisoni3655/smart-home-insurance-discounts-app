@@ -12,7 +12,7 @@ Offer selectedOffer;
 // Offers displayed by the company
 CompanyDataBase offers = new CompanyDataBase();
 // None of the discounts will be selected ( It should be globally defined because both the classes controls it )
-bool disableDiscounts = true ;
+bool disableDiscounts = true;
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -31,6 +31,13 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
     Map data = ModalRoute.of(context)
         .settings
         .arguments; // data stores the policy selected by the user as a key/value pair
+
+    void initState() {
+      super.initState();
+      disableDiscounts = true;
+      print("Abcdef");
+    }
+
     return Scaffold(
       appBar: CommonAppBar(),
       body: Container(
@@ -80,13 +87,14 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                   CustomTextStyle(fontWeight: FontWeight.w900),
                             ),
                             onPressed: () async {
-                             //  Get offers which the user is eligible to get after launching resource picker
-                              List<Offer> allowedOffers =
-                                 await getAllowedOffers(context);
+                              //  Get offers which the user is eligible to get after launching resource picker
+//                              List<Offer> allowedOffers =
+//                                 await getAllowedOffers(context);
 
                               setState(() {
-                                offersToDisplay = allowedOffers;
-                                disableDiscounts = false ; // Now the user can select them
+                                offersToDisplay = [];
+                                disableDiscounts =
+                                    false; // Now the user can select them
                               });
                             },
                             backgroundColor: Colors.lightBlueAccent,
@@ -148,84 +156,86 @@ class _AllDiscountsState extends State<AllDiscounts> {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
     // If the offerList is not null then return list else return  container with text
-    return (widget.offerList == null|| widget.offerList.isEmpty) ?
-    Container(
-      child:Text("No Offers Available"),
-    )    :
-    Expanded(
-      child: ListView.builder(
-          itemCount: widget.offerList.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              child: Card(
-                color: isSelected[index]
-                    ? Colors.teal[100]
-                    : Colors
-                        .white, // If selected then color of card is teal else no change in color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                  side: BorderSide(
-                    color: Colors.green,
-                    width: 5.0,
-                  ),
-                ),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      if(disableDiscounts == false ){
-                        //Current Selected state of corresponding discount is reversed
-                        isSelected[currSelected] = false;
-                        currSelected = index;
-                        isSelected[index] = true;
-                        selectedOffer = widget.offerList[index];
-                      }
-
-                    });
-                  },
-                  child: Container(
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 10,
-                          child: Column(
-                              children: (widget.offerList[index])
-                                  .requirements
-                                  .entries
-                                  .map(
-                                    (entry) => Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: screenheight / 80,
-                                            horizontal: screenwidth / 80),
-                                        decoration: BoxDecoration(),
-                                        child: Text(
-                                          '${entry.key} : ${entry.value}',
-                                          textAlign: TextAlign.left,
-                                          style: CustomTextStyle(fontSize: 17),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                  .toList()),
+    return (widget.offerList == null || widget.offerList.isEmpty)
+        ? Container(
+            child: Text("No Offers Available"),
+          )
+        : Expanded(
+            child: ListView.builder(
+                itemCount: widget.offerList.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                    child: Card(
+                      color: isSelected[index]
+                          ? Colors.teal[100]
+                          : Colors
+                              .white, // If selected then color of card is teal else no change in color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        side: BorderSide(
+                          color: Colors.green,
+                          width: 5.0,
                         ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            '${widget.offerList[index].discount} %',
-                            textAlign: TextAlign.center,
-                            style: CustomTextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 20.0),
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (disableDiscounts == false) {
+                              //Current Selected state of corresponding discount is reversed
+                              isSelected[currSelected] = false;
+                              currSelected = index;
+                              isSelected[index] = true;
+                              selectedOffer = widget.offerList[index];
+                            }
+                          });
+                        },
+                        child: Container(
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 10,
+                                child: Column(
+                                    children: (widget.offerList[index])
+                                        .requirements
+                                        .entries
+                                        .map(
+                                          (entry) => Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: screenheight / 80,
+                                                  horizontal: screenwidth / 80),
+                                              decoration: BoxDecoration(),
+                                              child: Text(
+                                                '${entry.key} : ${entry.value}',
+                                                textAlign: TextAlign.left,
+                                                style: CustomTextStyle(
+                                                    fontSize: 17),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                        .toList()),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  '${widget.offerList[index].discount} %',
+                                  textAlign: TextAlign.center,
+                                  style: CustomTextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20.0),
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            );
-          }),
-    );
+                  );
+                }),
+          );
   }
 }

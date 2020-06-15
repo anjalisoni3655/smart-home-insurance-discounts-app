@@ -13,18 +13,22 @@ Future<List> getAllowedOffers(BuildContext context) async {
     Optional<List> response = await globals.user.getAllStructures();
     List structures = response.value;
 
+    if(structures!=null&&structures.isNotEmpty){
 // Helper function to show dialogue box for displaying structure list
-    await showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
+      await showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
 // Returns a Alert DialogueBox displaying all user structures
-          return StructureAlertBox(structures);
-        }).then((selectedStructure) async {
-// Send the structure ( id and name ) and get all offers which the user can get
-      allowedOffers = await getValidOffers(selectedStructure);
-    });
+            return StructureAlertBox(structures);
+          }).then((selectedStructure) async {
+//Send the structure ( id and name ) and get all offers which the user can get
+        allowedOffers = await getValidOffers(selectedStructure);
+      });
+
+    }
   }
+  // In case authorisation is not successful or structure is empty , empty list is returned , else list with desired offers is returned
   return (allowedOffers);
 }
 
