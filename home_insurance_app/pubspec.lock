@@ -192,7 +192,7 @@ packages:
     source: hosted
     version: "4.1.1"
   optional:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: optional
       url: "https://pub.dartlang.org"

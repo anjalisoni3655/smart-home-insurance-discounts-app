@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/list_structures.dart';
 
 Future<List> getAllowedOffers(BuildContext context) async {
-//  Call the resource picker
-//  bool isAuthorise = await callResourcePicker();
+  //Call the resource picker
+  bool isAuthorise = await callResourcePicker();
   if (true) {
     List<Offer> allowedOffers;
 //  Optional<List> response =
