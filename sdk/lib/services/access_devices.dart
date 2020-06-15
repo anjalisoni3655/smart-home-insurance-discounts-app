@@ -45,8 +45,6 @@ class AccessDevices {
     }
     try {
       String request = url + "enterprises/" + _enterpriseId + "/devices";
-      print(request);
-      print(_accessToken);
       final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
@@ -56,7 +54,7 @@ class AccessDevices {
       for (var device in result['devices']) {
         devices.add({
           'id': getId(device['name']),
-          'customName': device['traits']['sdm.devices.traits.Info']
+          'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
         });
@@ -70,15 +68,10 @@ class AccessDevices {
 
   Future<Optional<List>> getDevicesOfStructure(String structureId) async {
     if (_accessToken == null) {
-      throw Exception("Access token not set");
+      throw new Exception("Access Token not set");
     }
     try {
-      String request = url +
-          "enterprises/" +
-          _enterpriseId +
-          '/structures/' +
-          structureId +
-          "/devices";
+      String request = url + "enterprises/" + _enterpriseId + "/devices";
       final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
@@ -86,10 +79,11 @@ class AccessDevices {
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {
+        if(getId(device['assignee']) != structureId) continue;
         devices.add({
           'id': getId(device['name']),
-          'customName': device['traits']['sdm.devices.traits.Info']
-              ["customName"],
+          'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
+          ["customName"],
           'type': device['type'],
         });
       }
