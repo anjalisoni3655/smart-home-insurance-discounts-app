@@ -79,11 +79,11 @@ class AccessDevices {
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {
-        if(getId(device['assignee']) != structureId) continue;
+        if (getId(device['assignee']) != structureId) continue;
         devices.add({
           'id': getId(device['name']),
           'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
-          ["customName"],
+              ["customName"],
           'type': device['type'],
         });
       }
