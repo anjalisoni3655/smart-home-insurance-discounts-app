@@ -81,33 +81,12 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                   CustomTextStyle(fontWeight: FontWeight.w900),
                             ),
                             onPressed: () async {
-                              //  Call the resource picker
-                            //  bool isAuthorise = await callResourcePicker();
-                              if (true) {
-                                Map selectedStructure; // Selected by the user
-                            //  Optional<List> response =
-                             //      await globals.user.getAllStructures();
-                              //  List structures = response.value;
-                                List structures = [
-                                  {"id": "12345", "customName": "Onyx Home"},
-                                  {"id": "23456", "customName": "Second Home"}
-                                ];
-                                // Helper function to show dialogue ox for displaying structure list
-                                await showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      // Returns a Alert DialogueBox displaying all user structures
-                                      return StructureAlertBox(structures);
-                                    }).then((val)async {
-                                  // Following statements are implemented after returning from dialogue box
-                                    selectedStructure = val;
-                                    List<Offer> allowedOffers  =
-                                        await getValidOffers(selectedStructure);
-                                    setState((){
-                                      offersToDisplay = allowedOffers ;
-                                    });
-                                });
-                              }
+                              List<Offer> allowedOffers =
+                              await getAllowedOffers(context);
+
+                              setState(() {
+                                offersToDisplay = allowedOffers;
+                              });
                             },
                             backgroundColor: Colors.lightBlueAccent,
                           ),

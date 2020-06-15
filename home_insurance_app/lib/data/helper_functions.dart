@@ -3,6 +3,25 @@ import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:optional/optional.dart';
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Function for calling resource picker
 Future<bool> callResourcePicker() async {
   String status = await globals.user.requestDeviceAccess();
