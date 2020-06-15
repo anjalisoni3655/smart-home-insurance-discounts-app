@@ -62,6 +62,6 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.firebase:firebase-core:16.0.9'
-    //implementation project(':flutter_webview_plugin')
+    implementation project(':flutter_webview_plugin')
 }
 apply plugin: 'com.google.gms.google-services'
