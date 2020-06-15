@@ -34,6 +34,8 @@ dependencies:
   mockito: ^4.1.1
   enum_to_string: ^1.0.9
   firebase_remote_config: ^0.3.1
+#  flutter_secure_storage: ^3.3.3
+  optional: ^5.0.0
 
 
 dev_dependencies:
@@ -55,7 +57,6 @@ flutter:
   assets:
     - assets/HomePage.jpg
     - assets/user.png
-    - lib/credentials/akashag-step-interns-test.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

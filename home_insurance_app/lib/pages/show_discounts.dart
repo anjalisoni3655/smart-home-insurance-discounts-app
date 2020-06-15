@@ -3,26 +3,23 @@ import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
-import 'package:homeinsuranceapp/pages/list_structures.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:optional/optional.dart';
 import 'package:homeinsuranceapp/data/helper_functions.dart';
 
 //Offers selected by the user
-
+Offer selectedOffer;
 // Offers displayed by the company
 CompanyDataBase offers = new CompanyDataBase();
 
-Offer selectedOffer;
-
 class DisplayDiscounts extends StatefulWidget {
   @override
-  DisplayDiscountsState createState() => DisplayDiscountsState();
+  _DisplayDiscountsState createState() => _DisplayDiscountsState();
 }
 
-class DisplayDiscountsState extends State<DisplayDiscounts> {
-
-  List<Offer> offersToDisplay = CompanyDataBase.availableOffers; // This list stores which all offers will be displayed
+class _DisplayDiscountsState extends State<DisplayDiscounts> {
+  List<Offer> offersToDisplay = CompanyDataBase
+      .availableOffers; // This list stores which all offers will be displayed
 
   @override
   Widget build(BuildContext context) {
@@ -81,37 +78,13 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                                   CustomTextStyle(fontWeight: FontWeight.w900),
                             ),
                             onPressed: () async {
-                              //  Call the resource picker
-                            //  bool isAuthorise = await callResourcePicker();
-                              if (true) {
-                                Map selectedStructure; // Selected by the user
-                            //  Optional<List> response =
-                             //      await globals.user.getAllStructures();
-                              //  List structures = response.value;
-                                List structures = [
-                                  {"id": "12345", "customName": "Onyx Home"},
-                                  {"id": "23456", "customName": "Second Home"}
-                                ];
-                                // Helper function to show dialogue ox for displaying structure list
-                                await showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      // Returns a Alert DialogueBox displaying all user structures
-                                      return ListStructures(structures);
-                                    }).then((val) {
-                                  // Following statements are implemented after returning from dialogue box
-                                  setState(()  {
-                                    selectedStructure = val;
-                                  });
-                                });
-                                 List<Offer> allowedOffers  =
-                                await getValidOffers(selectedStructure);
-                                setState((){
-                              offersToDisplay = allowedOffers ;
-                              print(offersToDisplay.length);
-                                });
+                              // Get offers which the user is eligible to get after launching resource picker
+                              List<Offer> allowedOffers =
+                                  await getAllowedOffers(context);
 
-                              }
+                              setState(() {
+                                offersToDisplay = allowedOffers;
+                              });
                             },
                             backgroundColor: Colors.lightBlueAccent,
                           ),
@@ -159,11 +132,10 @@ class AllDiscounts extends StatefulWidget {
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
-  List<bool> isSelected = [] ;
-  int currSelected = 0;  // Currently no discount is selected
+  List<bool> isSelected = [];
+  int currSelected = 0; // Currently no discount is selected
 
-
-  void initState(){
+  void initState() {
     super.initState();
     isSelected = List.filled(widget.offerList.length,
         false); // Initially all policies are deselected
