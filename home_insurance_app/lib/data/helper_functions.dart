@@ -56,13 +56,11 @@ Future<List> getValidOffers(Map structure) async {
     {"type": "sdm.devices.types.THERMOSTAT"},
     {"type": "sdm.devices.types.CAMERA"}
   ];
-  Set<String> userDeviceTypes = {}; // Stores all unique 'types' of devices that user has
+  Set<String> userDeviceTypes =
+      {}; // Stores all unique 'types' of devices that user has
   for (int i = 0; i < devices.length; i++) {
 //    Remove "sdm.devices.types." from the type trait of the device
-    String type = devices[i]["type"].substring(
-        18,
-        devices[i]["type"]
-            .length);
+    String type = devices[i]["type"].substring(18, devices[i]["type"].length);
     userDeviceTypes.add(type);
   }
 //  Check which offer is valid
