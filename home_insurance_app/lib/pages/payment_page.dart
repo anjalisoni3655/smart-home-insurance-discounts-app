@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/database_utils.dart';
+import 'package:homeinsuranceapp/pages/home.dart';
 
 class Payment extends StatefulWidget {
   static const id = 'payment';
@@ -15,18 +16,20 @@ class _PaymentState extends State<Payment> {
   Widget build(BuildContext context) {
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
+      double totalDiscount = getFinalDiscount(
+          cost: arguments['selectedPolicy'].cost,
+          discount: arguments['selectedOffer'].discount);
+      double totalAmount = getFinalAmount(
+          cost: arguments['selectedPolicy'].cost,
+          discount: arguments['selectedOffer'].discount);
       purchase = {
 //        'structure_id': arguments['structure']['id'],
         'address': arguments['userAddress'],
         'policy': arguments['selectedPolicy'],
         'offer': arguments['selectedOffer'],
-        'total_discount': arguments['selectedPolicy'].cost *
-            0.01 *
-            arguments['selectedOffer'].discount,
-        'discounted_cost': arguments['selectedPolicy'].cost *
-            (1 - 0.01 * arguments['selectedOffer'].discount)
+        'total_discount': totalDiscount,
+        'discounted_cost': totalAmount,
       };
-      print(purchase);
     }
 
     return Scaffold(
@@ -34,6 +37,7 @@ class _PaymentState extends State<Payment> {
         title: Text('Payment details'),
         centerTitle: true,
         backgroundColor: Colors.brown,
+        //TODO :extract this layout details to separate css.dart file
       ),
       backgroundColor: Colors.white,
       body: Padding(
@@ -90,22 +94,58 @@ class _PaymentState extends State<Payment> {
                 leftText: 'Discounted Cost: ',
                 rightText: 'Rs ${purchase['discounted_cost']}' ?? '',
               ),
+              SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(HomePage.id);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.payment,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            'Confirm Payment',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.all(15.0),
+                      color: Colors.lightBlueAccent,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0))),
+                  SizedBox(width: 20),
+                  RaisedButton(
+                      onPressed: () {
+                        addInsurancePurchased(purchase);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.cancel,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            'Cancel Payment',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.all(15.0),
+                      color: Colors.lightBlueAccent,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0))),
+                ],
+              )
             ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          addInsurancePurchased(purchase);
-        }, // Goes to the payment page
-        backgroundColor: Colors.lightBlueAccent,
-        icon: Icon(Icons.payment),
-        label: Text(
-          'Confirm Payment',
-          style: TextStyle(
-            color: Colors.black54,
-            fontSize: 15.0,
-            fontWeight: FontWeight.bold,
           ),
         ),
       ),

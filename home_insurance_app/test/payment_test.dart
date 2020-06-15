@@ -12,6 +12,7 @@ void main() {
   final Policy selectedPolicy = Policy('tenants-policy', 5, 1000);
   final UserAddress userAddress =
       UserAddress('first_address', 'second_address', 'city', 'state', 208022);
+
   testWidgets('PaymentPage Widget Test', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
       navigatorKey: key,

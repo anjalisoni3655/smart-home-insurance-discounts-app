@@ -90,7 +90,6 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                                   CustomTextStyle(fontWeight: FontWeight.w900),
                             ),
                             onPressed: () {
-                              print(data['selectedPolicy']);
                               //pops the current page
                               Navigator.pop(context);
                               //Pops the previous page in the stack which is choose_policy page.

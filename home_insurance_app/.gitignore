@@ -44,3 +44,5 @@ app.*.map.json
 home_insurance_app/android/app/src/main/res/*
 home_insurance_app/android/app/google-service.json
 google-services.json
+.env
+pubspec.lock
