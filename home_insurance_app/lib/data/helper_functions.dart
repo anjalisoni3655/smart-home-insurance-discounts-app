@@ -7,7 +7,7 @@ import 'package:homeinsuranceapp/pages/list_structures.dart';
 
 Future<List> getAllowedOffers(BuildContext context) async {
   //Call the resource picker
-  bool isAuthorise = await callResourcePicker();
+  bool isAuthorise = await callResourcePicker(context);
   if (true) {
     List<Offer> allowedOffers;
 //  Optional<List> response =
@@ -33,8 +33,8 @@ Future<List> getAllowedOffers(BuildContext context) async {
 }
 
 // Function for calling resource picker
-Future<bool> callResourcePicker() async {
-  String status = await globals.user.requestDeviceAccess();
+Future<bool> callResourcePicker(BuildContext context) async {
+  String status = await globals.user.requestDeviceAccess(context);
   print(status);
   if (status == 'authorization successful') {
     //TODO : Redirect from the resource picker
