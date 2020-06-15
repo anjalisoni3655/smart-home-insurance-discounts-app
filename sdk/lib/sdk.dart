@@ -57,7 +57,7 @@ class SDK {
 class SDKBuilder {
   static SDK build(String clientId, String clientSecret, String enterpriseId,
       {Duration interactiveFlowTimeout = const Duration(minutes: 5),
-      Duration nonInteractiveFlowTimout = const Duration(seconds: 5)}) {
+      Duration nonInteractiveFlowTimout = const Duration(seconds: 10)}) {
     Login login = new Login(GoogleSignIn(),
         interactiveFlowTimeout: interactiveFlowTimeout,
         nonInteractiveFlowTimeout: nonInteractiveFlowTimout);
@@ -65,7 +65,7 @@ class SDKBuilder {
         auth.clientViaUserConsent, enterpriseId, clientId, clientSecret,
         resourcePickerTimeoutDuration: interactiveFlowTimeout);
     AccessDevices accessDevices =
-        new AccessDevices(http.Client(), enterpriseId,);
+        new AccessDevices(http.Client(), enterpriseId,accessDevicesTimeoutDuration:nonInteractiveFlowTimout);
 
     SDK sdk = new SDK._(login, resourcePicker, accessDevices);
     return sdk;
