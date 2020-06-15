@@ -8,5 +8,5 @@ double getFinalDiscount({int cost, int discount}) {
 }
 
 double getFinalAmount({int cost, int discount}) {
-  return cost * (1 - 0.01 * discount);
+  return cost - getFinalDiscount();
 }
