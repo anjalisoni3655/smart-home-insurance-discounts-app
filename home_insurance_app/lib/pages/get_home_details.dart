@@ -138,19 +138,16 @@ class _HomeDetailsState extends State<HomeDetails> {
                               'policies': available_policies,
                               'userAddress': curr_user_address,
                             });
-
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0)),
                       splashColor: Colors.blueGrey,
                       child: Text(
-
                         'SUBMIT',
                         style: TextStyle(
                           //color: Colors.black54,
                           fontSize: 16,
                         ),
-
                       ),
                     ),
                   ],
