@@ -80,13 +80,12 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                   CustomTextStyle(fontWeight: FontWeight.w900),
                             ),
                             onPressed: () async {
-                              // Get offers which the user is eligible to get after launching resource picker
-                            //  List<Offer> allowedOffers =
-                              //    await getAllowedOffers(context);
+                             //  Get offers which the user is eligible to get after launching resource picker
+                              List<Offer> allowedOffers =
+                                 await getAllowedOffers(context);
 
                               setState(() {
-                                //offersToDisplay = allowedOffers;
-                                offersToDisplay= CompanyDataBase.availableOffers;
+                                offersToDisplay = allowedOffers;
                                 disableDiscounts = false ; // Now the user can select them
                               });
                             },
