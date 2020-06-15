@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/components/css.dart';
 
 //widget for the my profile page displaying user's details
 class Profile extends StatelessWidget {
@@ -19,28 +20,17 @@ class Profile extends StatelessWidget {
             ),
             Text(
               'Mr. XYZ',
-              style: TextStyle(
-                fontFamily: 'Pacifico',
-                fontSize: 40.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+              style: kProfileNameStyle,
             ),
             Text(
               'Business Analyst',
-              style: TextStyle(
-                fontFamily: 'Source Sans Pro',
-                color: Colors.black,
-                fontSize: 20.0,
-                letterSpacing: 2.5,
-                fontWeight: FontWeight.bold,
-              ),
+              style: kDesignationTextStyle,
             ),
             SizedBox(
               height: 20.0,
               width: 150.0,
               child: Divider(
-                color: Colors.black,
+                color: kProfileIconColor,
               ),
             ),
             Card(
@@ -48,15 +38,11 @@ class Profile extends StatelessWidget {
                 child: ListTile(
                   leading: Icon(
                     Icons.phone,
-                    color: Colors.black,
+                    color: kProfileIconColor,
                   ),
                   title: Text(
-                    '+916203444943',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Source Sans Pro',
-                      fontSize: 20.0,
-                    ),
+                    '+91xxxxxxxxxx',
+                    style: kNormalTextStyle,
                   ),
                 )),
             Card(
@@ -64,14 +50,11 @@ class Profile extends StatelessWidget {
                 child: ListTile(
                   leading: Icon(
                     Icons.email,
-                    color: Colors.black,
+                    color: kProfileIconColor,
                   ),
                   title: Text(
                     'xyz@email.com',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                        fontFamily: 'Source Sans Pro'),
+                    style: kNormalTextStyle,
                   ),
                 ))
           ],

@@ -9,7 +9,9 @@ import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 // Offers displayed by the company
 CompanyDataBase offers = new CompanyDataBase();
 
+//Offers selected by the user
 Offer selectedOffer;
+
 
 class DisplayDiscounts extends StatefulWidget {
   @override
