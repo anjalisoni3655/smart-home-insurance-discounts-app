@@ -16,14 +16,16 @@ class _PaymentState extends State<Payment> {
   Widget build(BuildContext context) {
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
-
       purchase = {
 //        'structure_id': arguments['structure']['id'],
         'address': arguments['userAddress'],
         'policy': arguments['selectedPolicy'],
         'offer': arguments['selectedOffer'],
-        'total_discount': arguments['selectedPolicy'].cost * 0.01 * arguments['selectedOffer'].discount,
-        'discounted_cost': arguments['selectedPolicy'].cost - (1 - 0.01 * arguments['selectedOffer'].discount),
+        'total_discount': arguments['selectedPolicy'].cost *
+            0.01 *
+            arguments['selectedOffer'].discount,
+        'discounted_cost': arguments['selectedPolicy'].cost -
+            (1 - 0.01 * arguments['selectedOffer'].discount),
       };
     }
 
