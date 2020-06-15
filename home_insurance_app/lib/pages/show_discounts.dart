@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+
 import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
 //Offers selected by the user
+Offer selectedOffer;
 
 // Offers displayed by the company
 CompanyDataBase offers = new CompanyDataBase();
 
-Offer selectedOffer;
+
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -33,6 +35,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
             vertical: screenheight / 80, horizontal: screenwidth / 80),
         child: Column(
           children: <Widget>[
+
             Expanded(
               // To avoid renderflow in small device sizes , expanded widget is used
               flex: 6,
@@ -105,6 +108,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                       ],
                     ),
                   )
+
           ],
         ),
       ),
@@ -118,6 +122,7 @@ class AllDiscounts extends StatefulWidget {
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
+
   List<bool> isSelected = List.filled(CompanyDataBase.availableOffers.length,
       false); // Initially all policies are deselected
   int currSelected = 0; // Currently no discount is selected
@@ -127,7 +132,9 @@ class _AllDiscountsState extends State<AllDiscounts> {
     double screenwidth = MediaQuery.of(context).size.width;
     return Expanded(
       child: ListView.builder(
+
           itemCount: CompanyDataBase.availableOffers.length,
+
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -150,7 +157,9 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       isSelected[currSelected] = false;
                       currSelected = index;
                       isSelected[index] = true;
+
                       selectedOffer = CompanyDataBase.availableOffers[index];
+
                     });
                   },
                   child: Container(
@@ -159,13 +168,16 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 10,
                           child: Column(
+
                               children: (CompanyDataBase.availableOffers[index])
+
                                   .requirements
                                   .entries
                                   .map(
                                     (entry) => Align(
                                       alignment: Alignment.topLeft,
                                       child: Container(
+
                                         padding: EdgeInsets.symmetric(
                                             vertical: screenheight / 80,
                                             horizontal: screenwidth / 80),
@@ -176,6 +188,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                                           style: CustomTextStyle(fontSize: 17),
                                         ),
                                       ),
+
                                     ),
                                   )
                                   .toList()),
@@ -183,7 +196,9 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 2,
                           child: Text(
+
                             '${CompanyDataBase.availableOffers[index].discount} %',
+
                             textAlign: TextAlign.center,
                             style: CustomTextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 20.0),
