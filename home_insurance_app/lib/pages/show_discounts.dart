@@ -3,17 +3,14 @@ import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
-import 'package:homeinsuranceapp/pages/list_structures.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:optional/optional.dart';
 import 'package:homeinsuranceapp/data/helper_functions.dart';
 
 //Offers selected by the user
-
+Offer selectedOffer;
 // Offers displayed by the company
 CompanyDataBase offers = new CompanyDataBase();
-
-Offer selectedOffer;
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -21,8 +18,8 @@ class DisplayDiscounts extends StatefulWidget {
 }
 
 class _DisplayDiscountsState extends State<DisplayDiscounts> {
-
-  List<Offer> offersToDisplay = CompanyDataBase.availableOffers; // This list stores which all offers will be displayed
+  List<Offer> offersToDisplay = CompanyDataBase
+      .availableOffers; // This list stores which all offers will be displayed
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +78,9 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                   CustomTextStyle(fontWeight: FontWeight.w900),
                             ),
                             onPressed: () async {
+                              // Get offers which the user is eligible to get after launching resource picker
                               List<Offer> allowedOffers =
-                              await getAllowedOffers(context);
+                                  await getAllowedOffers(context);
 
                               setState(() {
                                 offersToDisplay = allowedOffers;
@@ -134,11 +132,10 @@ class AllDiscounts extends StatefulWidget {
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
-  List<bool> isSelected = [] ;
-  int currSelected = 0;  // Currently no discount is selected
+  List<bool> isSelected = [];
+  int currSelected = 0; // Currently no discount is selected
 
-
-  void initState(){
+  void initState() {
     super.initState();
     isSelected = List.filled(widget.offerList.length,
         false); // Initially all policies are deselected
