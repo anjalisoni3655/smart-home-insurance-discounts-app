@@ -1,4 +1,7 @@
 import 'dart:developer';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 
@@ -26,7 +29,7 @@ class ResourcePicker {
   Map getCredentials() =>
       {"accessToken": _accessToken, "refreshTokennn": _refreshToken};
 
-  Future<String> askForAuthorization() async {
+  Future<String> askForAuthorization(BuildContext context) async {
     // Launch URL for the resource picker and get back the access token that it returns
     try {
       auth.AuthClient authClient = await clientViaUserConsent(
@@ -34,8 +37,22 @@ class ResourcePicker {
         // remove the default 'https://accounts.google.com/o/oauth2' domain name by resource picker domain name
         url =
             'https://sdmresourcepicker-staging.sandbox.google.com/partnerconnections/$_enterpriseId' +
-                url.substring(36) + '&access_type=offline';
-        launch(url);
+                url.substring(36) +
+                '&access_type=offline';
+        // launch(url);
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return SafeArea(
+              child: WebviewScaffold(
+            url: url,
+            appBar: AppBar(
+              title: Text('Smart Home'),
+              centerTitle: true,
+            ),
+            withJavascript: true,
+            withLocalStorage: true,
+            withZoom: true,
+          ));
+        }));
       }).timeout(resourcePickerTimeoutDuration);
       _accessToken = authClient.credentials.accessToken.data;
       _refreshToken = authClient.credentials.refreshToken;

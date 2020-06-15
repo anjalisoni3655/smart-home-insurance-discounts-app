@@ -76,3 +76,4 @@ build/
 
 #secrets
 client_secret.json
+pubspec.lock

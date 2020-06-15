@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:googleapis_auth/auth.dart';
 import 'package:mockito/mockito.dart';
@@ -9,11 +10,13 @@ class MockAccessCredentials extends Mock implements AccessCredentials {}
 
 class MockAccessToken extends Mock implements AccessToken {}
 
+class MockBuildContext extends Mock implements BuildContext {}
+
 MockAuthClient mockAuthClient;
 MockAccessCredentials mockAccessCredentials;
 MockAccessToken mockAccessToken;
 MockAccessToken mockRefreshToken;
-
+MockBuildContext mockBuildContext;
 // setup the mock objects
 
 void main() {
@@ -23,6 +26,7 @@ void main() {
     mockAccessCredentials = new MockAccessCredentials();
     mockAccessToken = new MockAccessToken();
     mockRefreshToken = new MockAccessToken();
+    mockBuildContext = new MockBuildContext();
 
     when(mockAuthClient.credentials).thenReturn(mockAccessCredentials);
     when(mockAccessCredentials.accessToken).thenReturn(mockAccessToken);
@@ -41,8 +45,8 @@ void main() {
     ResourcePicker resourcePicker = new ResourcePicker(mockClientViaUserConsent,
         "enterprise_id", "client_id", "client_secret");
     // Expected results:
-    expect(
-        await resourcePicker.askForAuthorization(), "authorization successful");
+    expect(await resourcePicker.askForAuthorization(mockBuildContext),
+        "authorization successful");
     expect(resourcePicker.accessToken, "accessTokenTest");
     expect(resourcePicker.refreshToken, "refreshTokenTest");
   });
@@ -57,7 +61,8 @@ void main() {
     // Expected behaviour
     ResourcePicker resourcePicker = new ResourcePicker(mockClientViaUserConsent,
         "enterprise_id", "client_id", "client_secret");
-    expect(await resourcePicker.askForAuthorization(), "authorization failed");
+    expect(await resourcePicker.askForAuthorization(mockBuildContext),
+        "authorization failed");
   });
 
   test('test 3: API function takes longer than timeout set', () async {
@@ -72,6 +77,7 @@ void main() {
     ResourcePicker resourcePicker = new ResourcePicker(
         mockClientViaUserConsent, "enterprise_id", "client_id", "client_secret",
         resourcePickerTimeoutDuration: new Duration(milliseconds: 100));
-    expect(await resourcePicker.askForAuthorization(), "authorization failed");
+    expect(await resourcePicker.askForAuthorization(mockBuildContext),
+        "authorization failed");
   });
 }

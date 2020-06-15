@@ -1,5 +1,6 @@
 library sdk;
 
+import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:optional/optional.dart';
 import 'package:sdk/services/access_devices.dart';
@@ -31,8 +32,8 @@ class SDK {
   Future<Optional<Map>> getUserDetails() => _login.getUserDetails();
   Future<Optional<bool>> isSignedIn() => _login.isSignedIn();
 
-  Future<String> requestDeviceAccess() async {
-    String status = await _resourcePicker.askForAuthorization();
+  Future<String> requestDeviceAccess(BuildContext context) async {
+    String status = await _resourcePicker.askForAuthorization(context);
     if (status == 'authorization successful') {
       setCredentials(getCredentials());
     }
