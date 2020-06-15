@@ -50,30 +50,33 @@ Future<List> getValidOffers(Map structure) async {
   Optional<List> res = await globals.user.getAllDevices(); //TODO To be Changed
   List devices = res.value;
 
-  //Stores all unique 'types' of devices that user has
-  Set<String> userDeviceTypes = {};
+  if(devices!=null && devices.isNotEmpty){
+//Stores all unique 'types' of devices that user has
+    Set<String> userDeviceTypes = {};
 
-  for (int i = 0; i < devices.length; i++) {
-//    Remove "sdm.devices.types." from the type trait of the device
-    String type = devices[i]["type"].substring(18, devices[i]["type"].length);
+    for (int i = 0; i < devices.length; i++) {
+//Remove "sdm.devices.types." from the type trait of the device
+      String type = devices[i]["type"].substring(18, devices[i]["type"].length);
 
-    userDeviceTypes.add(type);
-  }
-//  Check which offer is valid . If valid add it to the list of allowed Offers .
-  bool isValid = true;
+      userDeviceTypes.add(type);
+    }
+//Check which offer is valid . If valid add it to the list of allowed Offers .
+    bool isValid = true;
 
-  for (int i = 0; i < allOffers.length; i++) {
-    isValid = true;
-    for (var k in allOffers[i].requirements.keys) {
-      if (!(userDeviceTypes.contains("$k"))) {
-        isValid = false;
-        print("$i break");
-        break;
+    for (int i = 0; i < allOffers.length; i++) {
+      isValid = true;
+      for (var k in allOffers[i].requirements.keys) {
+        if (!(userDeviceTypes.contains("$k"))) {
+          isValid = false;
+          print("$i break");
+          break;
+        }
+      }
+      if (isValid == true) {
+        allowedOffers.add(allOffers[i]);
       }
     }
-    if (isValid == true) {
-      allowedOffers.add(allOffers[i]);
-    }
   }
+// In case devices of the particular structure is 0 , empty list is returned .
   return (allowedOffers);
 }
