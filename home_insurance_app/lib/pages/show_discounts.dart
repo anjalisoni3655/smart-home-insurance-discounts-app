@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
@@ -6,11 +7,10 @@ import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //Offers selected by the user
+Offer selectedOffer;
 
 // Offers displayed by the company
 CompanyDataBase offers = new CompanyDataBase();
-
-Offer selectedOffer;
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -153,6 +153,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       isSelected[currSelected] = false;
                       currSelected = index;
                       isSelected[index] = true;
+
                       selectedOffer = CompanyDataBase.availableOffers[index];
                     });
                   },
