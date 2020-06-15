@@ -11,6 +11,8 @@ import 'package:homeinsuranceapp/data/helper_functions.dart';
 Offer selectedOffer;
 // Offers displayed by the company
 CompanyDataBase offers = new CompanyDataBase();
+// None of the discounts will be selected ( It should be globally defined because both the classes controls it )
+bool disableDiscounts = true ;
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -25,7 +27,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
-
+//    disableDiscounts = true ; // Whenever /showdiscounts route is called either through pop or pushNavigator
     Map data = ModalRoute.of(context)
         .settings
         .arguments; // data stores the policy selected by the user as a key/value pair
@@ -79,11 +81,13 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                             ),
                             onPressed: () async {
                               // Get offers which the user is eligible to get after launching resource picker
-                              List<Offer> allowedOffers =
-                                  await getAllowedOffers(context);
+                            //  List<Offer> allowedOffers =
+                              //    await getAllowedOffers(context);
 
                               setState(() {
-                                offersToDisplay = allowedOffers;
+                                //offersToDisplay = allowedOffers;
+                                offersToDisplay= CompanyDataBase.availableOffers;
+                                disableDiscounts = false ; // Now the user can select them
                               });
                             },
                             backgroundColor: Colors.lightBlueAccent,
@@ -144,7 +148,12 @@ class _AllDiscountsState extends State<AllDiscounts> {
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
-    return Expanded(
+    // If the offerList is not null then return list else return  container with text
+    return (widget.offerList == null|| widget.offerList.isEmpty) ?
+    Container(
+      child:Text("No Offers Available"),
+    )    :
+    Expanded(
       child: ListView.builder(
           itemCount: widget.offerList.length,
           itemBuilder: (context, index) {
@@ -165,11 +174,14 @@ class _AllDiscountsState extends State<AllDiscounts> {
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      //Current Selected state of corresponding discount is reversed
-                      isSelected[currSelected] = false;
-                      currSelected = index;
-                      isSelected[index] = true;
-                      selectedOffer = widget.offerList[index];
+                      if(disableDiscounts == false ){
+                        //Current Selected state of corresponding discount is reversed
+                        isSelected[currSelected] = false;
+                        currSelected = index;
+                        isSelected[index] = true;
+                        selectedOffer = widget.offerList[index];
+                      }
+
                     });
                   },
                   child: Container(
