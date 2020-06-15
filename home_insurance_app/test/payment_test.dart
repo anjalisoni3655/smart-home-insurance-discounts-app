@@ -43,6 +43,6 @@ void main() {
     expect(find.byType(TextWidget), findsNWidgets(7));
 
     // testing the FloatingActionButton
-    expect(find.byType(FloatingActionButton), findsOneWidget);
+    expect(find.byType(RaisedButton), findsNWidgets(2));
   });
 }
