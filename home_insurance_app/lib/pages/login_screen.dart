@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 
 // widget for login with google
@@ -14,10 +15,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
         title: Center(child: Text('Smart Home')),
-        backgroundColor: Colors.brown,
+        backgroundColor: kAppbarColor,
       ),
       body: Center(child: _buildBody()),
     );
@@ -31,10 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: <Widget>[
         TypewriterAnimatedTextKit(
           text: ['Smart Home'],
-          textStyle: TextStyle(
-            fontSize: 45.0,
-            fontWeight: FontWeight.w900,
-          ),
+          textStyle: kLoginScreenHeading,
         ),
         SizedBox(
           //height: MediaQuery.of(context).size.height,
@@ -47,8 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
         RaisedButton(
             key: Key('navigateToHome'),
             child: Text("LOG IN WITH GOOGLE"),
-            color: Colors.brown,
-            textColor: Colors.white,
+            color: kLoginButtonColor,
+            textColor: kLoginButtonTextColor,
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return HomePage();
