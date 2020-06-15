@@ -14,6 +14,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+final scaffoldKey = GlobalKey<ScaffoldState>(); // Used for testing the drawer
+
 class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
     if (value == 'Logout') {
@@ -35,7 +37,9 @@ class _HomePageState extends State<HomePage> {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
     return Scaffold(
+      key: scaffoldKey,
       drawer: AppDrawer(), // Sidebar
+
       appBar: AppBar(
         title: Text('Home Insurance Company'),
         centerTitle: true,

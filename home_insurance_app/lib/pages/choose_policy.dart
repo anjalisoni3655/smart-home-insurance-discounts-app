@@ -31,7 +31,6 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
 
     // data stores the policies available for the user as a key-value pair.
     Map data = ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
       appBar: CommonAppBar(),
       body: Container(
@@ -108,6 +107,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
 class RadioGroup extends StatefulWidget {
   Map data;
   RadioGroup(this.data);
+
   //  RadioGroup({Key key , this.data}):super(key:key);
   @override
   _RadioGroupState createState() => _RadioGroupState();
@@ -120,12 +120,14 @@ class _RadioGroupState extends State<RadioGroup> {
   @override
   void initState() {
     super.initState();
+
     // If data is null , atleast assign one policy so that test file don't fails
     if (widget.data == null) {
       widget.data = {
         "policies": [Policy("No Policy", 0, 0)]
       };
     }
+
     userChoice = widget.data['policies']
         [0]; //By default the first policy will be displayed as selected  .
     for (int i = 0; i < widget.data['policies'].length; i++) {
