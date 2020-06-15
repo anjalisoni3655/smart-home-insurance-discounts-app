@@ -2,6 +2,7 @@ library sdk;
 
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:optional/optional.dart';
+import 'package:sdk/integration_test/mock_apis.dart';
 import 'package:sdk/services/access_devices.dart';
 import 'package:sdk/services/login.dart';
 import 'package:sdk/services/resource_picker.dart';
@@ -56,16 +57,34 @@ class SDK {
 class SDKBuilder {
   static SDK build(String clientId, String clientSecret, String enterpriseId,
       {Duration interactiveFlowTimeout = const Duration(minutes: 5),
-      Duration nonInteractiveFlowTimout = const Duration(seconds: 1)}) {
-    Login login = new Login(GoogleSignIn(),
+      Duration nonInteractiveFlowTimout = const Duration(seconds: 1), testing = 0}) {
+    // External APIs
+    GoogleSignIn googleSignIn;
+    Function clientViaUserConsent;
+    http.Client client;
+
+    // Assigning external API as mock or real
+    if(testing == 1) {
+      googleSignIn = MockApis.googleSignIn;
+      clientViaUserConsent = MockApis.clientViaUserConsent;
+      client = MockApis.client;
+    } else {
+      googleSignIn = new GoogleSignIn();
+      clientViaUserConsent = auth.clientViaUserConsent;
+      client = new http.Client();
+    }
+
+    // inject API into login, resourcePicker, accessDevices
+    Login login = new Login(googleSignIn,
         interactiveFlowTimeout: interactiveFlowTimeout,
         nonInteractiveFlowTimeout: nonInteractiveFlowTimout);
     ResourcePicker resourcePicker = new ResourcePicker(
-        auth.clientViaUserConsent, enterpriseId, clientId, clientSecret,
+        clientViaUserConsent, enterpriseId, clientId, clientSecret,
         resourcePickerTimeoutDuration: interactiveFlowTimeout);
     AccessDevices accessDevices =
-        new AccessDevices(http.Client(), enterpriseId);
+        new AccessDevices(client, enterpriseId);
 
+    // inject login, resourcePicker, accessDevices into sdk
     SDK sdk = new SDK._(login, resourcePicker, accessDevices);
     return sdk;
   }
