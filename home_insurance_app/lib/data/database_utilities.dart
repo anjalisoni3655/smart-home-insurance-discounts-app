@@ -81,7 +81,6 @@ Future<void> addPurchase(String userId, Purchase purchase) async {
       'requirements': purchase.offer.requirements,
       'discount': purchase.offer.discount
     },
-    'total_discount': purchase.totalDiscount,
     'discounted_cost': purchase.discountedCost
   });
 }

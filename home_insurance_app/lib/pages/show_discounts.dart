@@ -116,17 +116,22 @@ class AllDiscounts extends StatefulWidget {
 
 class _AllDiscountsState extends State<AllDiscounts> {
   List<Offer> availableOffers = [];
-
-  List<bool> isSelected = List.filled(CompanyDataBase.availableOffers.length,
-      false); // Initially all policies are deselected
+  List<bool> isSelected = [];
   int currSelected = 0; // Currently no discount is selected
 
-  Widget build(BuildContext context) {
+  @override
+  void initState() {
+    super.initState();
     getOffers().then((offers) {
       setState(() {
         availableOffers = offers;
+        isSelected = List.filled(availableOffers.length,
+            false); // Initially all policies are deselected
       });
     });
+  }
+
+    Widget build(BuildContext context) {
 
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
