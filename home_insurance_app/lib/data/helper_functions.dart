@@ -43,38 +43,39 @@ Future<bool> callResourcePicker() async {
 
 // Returns the List of valid offers that user is eligible to get
 Future<List> getValidOffers(Map structure) async {
-  List<Offer> allowedOffers = [];
+  List<Offer> allowedOffers = CompanyDataBase.availableOffers;
   try {
     List<Offer> allOffers = CompanyDataBase.availableOffers;
     Optional<List> res =
     await globals.user.getDevicesOfStructure(structure["id"]);
     List devices = res.value;
-
+    print("devices gggggot ");
 // Stores all unique 'types' of devices that user has
-    Set<String> userDeviceTypes = {};
+//    Set<String> userDeviceTypes = {};
+//
+//    for (int i = 0; i < devices.length; i++) {
+////    Remove "sdm.devices.types." from the type trait of the device
+//      String type = devices[i]["type"].substring(18, devices[i]["type"].length);
+//      userDeviceTypes.add(type);
+//    }
+////  Check which offer is valid . If valid add it to the list of allowed Offers .
+//    bool isValid = true;
+//
+//    for (int i = 0; i < allOffers.length; i++) {
+//      isValid = true;
+//      for (var k in allOffers[i].requirements.keys) {
+//        if (!(userDeviceTypes.contains("$k"))) {
+//          isValid = false;
+//          print("$i break");
+//          break;
+//        }
+//      }s
+//      if (isValid == true) {
+//        allowedOffers.add(allOffers[i]);
+//      }
 
-    for (int i = 0; i < devices.length; i++) {
-//    Remove "sdm.devices.types." from the type trait of the device
-      String type = devices[i]["type"].substring(18, devices[i]["type"].length);
-      userDeviceTypes.add(type);
-    }
-//  Check which offer is valid . If valid add it to the list of allowed Offers .
-    bool isValid = true;
-
-    for (int i = 0; i < allOffers.length; i++) {
-      isValid = true;
-      for (var k in allOffers[i].requirements.keys) {
-        if (!(userDeviceTypes.contains("$k"))) {
-          isValid = false;
-          print("$i break");
-          break;
-        }
-      }
-      if (isValid == true) {
-        allowedOffers.add(allOffers[i]);
-      }
-    }
-    return (allowedOffers);
+//    }
+  return (allowedOffers);
   }
   catch(e){
     print("error");

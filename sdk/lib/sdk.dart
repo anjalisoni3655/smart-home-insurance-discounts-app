@@ -65,7 +65,7 @@ class SDKBuilder {
         auth.clientViaUserConsent, enterpriseId, clientId, clientSecret,
         resourcePickerTimeoutDuration: interactiveFlowTimeout);
     AccessDevices accessDevices =
-        new AccessDevices(http.Client(), enterpriseId);
+        new AccessDevices(http.Client(), enterpriseId,);
 
     SDK sdk = new SDK._(login, resourcePicker, accessDevices);
     return sdk;
