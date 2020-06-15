@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),
         '/showdiscounts': (context) => DisplayDiscounts(),
+        MyDevices.id:(context)=>MyDevices(),
       },
     );
   }
