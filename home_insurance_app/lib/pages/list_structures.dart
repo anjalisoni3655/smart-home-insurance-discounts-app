@@ -10,6 +10,7 @@ class Mapping {
     this.structure = structure;
   }
 }
+
 // Structure selected by the user
 Map userChoice = {};
 

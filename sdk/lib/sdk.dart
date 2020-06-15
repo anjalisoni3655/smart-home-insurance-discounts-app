@@ -36,6 +36,7 @@ class SDK {
     if (status == 'authorization successful') {
       setCredentials(getCredentials());
     }
+    return status ;
   }
 
   Map getCredentials() => _resourcePicker.getCredentials();
@@ -56,7 +57,7 @@ class SDK {
 class SDKBuilder {
   static SDK build(String clientId, String clientSecret, String enterpriseId,
       {Duration interactiveFlowTimeout = const Duration(minutes: 5),
-      Duration nonInteractiveFlowTimout = const Duration(seconds: 1)}) {
+      Duration nonInteractiveFlowTimout = const Duration(seconds: 5)}) {
     Login login = new Login(GoogleSignIn(),
         interactiveFlowTimeout: interactiveFlowTimeout,
         nonInteractiveFlowTimeout: nonInteractiveFlowTimout);
