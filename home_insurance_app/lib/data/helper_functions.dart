@@ -58,6 +58,7 @@ Future<bool> callResourcePicker() async {
 Future<List> getValidOffers(Map structure) async {
   List<Offer> allowedOffers = [];
   List<Offer> allOffers = CompanyDataBase.availableOffers;
+
   Optional<List> response;
   try {
     response = await globals.user.getDevicesOfStructure(structure["id"]);
@@ -69,7 +70,6 @@ Future<List> getValidOffers(Map structure) async {
     List devices = response.value;
     //Stores all unique 'types' of devices along with their respective count
     Map<String, int> userDevices = {};
-
     for (int i = 0; i < devices.length; i++) {
 //    Remove "sdm.devices.types." from the type trait of the device
       String type = devices[i]["type"].substring(18, devices[i]["type"].length);
