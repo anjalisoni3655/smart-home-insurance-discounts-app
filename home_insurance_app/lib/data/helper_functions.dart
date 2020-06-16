@@ -10,23 +10,23 @@ Future<List> getAllowedOffers(BuildContext context) async {
 //  Call the resource picker
   bool isAuthorise = await callResourcePicker();
   if (isAuthorise) {
-    allowedOffers = await SelectStructure(context);
+    allowedOffers = await selectStructure(context);
   }
   // In case authorisation is not successful or structure is empty , empty list is returned , else list with desired offers is returned
   return (allowedOffers);
 }
 
-Future<List> SelectStructure(BuildContext context) async {
+Future<List> selectStructure(BuildContext context) async {
   List<Offer> allowedOffers = [];
   Optional<List> response;
+  // Try catch is applied to catch exceptions thrown by sdk  when access token is not set
   try {
     response = await globals.user.getAllStructures();
-  }
-  catch (e) {
+  } catch (e) {
     //TODO  Snackbar showing  "NO HOMES FOUND"
     response = Optional.empty();
   }
-  if (response != Optional.empty() ) {
+  if (response != Optional.empty()) {
     List structures = response.value;
 //    Helper function to show dialogue box for displaying structure list
     await showDialog(
@@ -58,29 +58,27 @@ Future<bool> callResourcePicker() async {
 Future<List> getValidOffers(Map structure) async {
   List<Offer> allowedOffers = [];
   List<Offer> allOffers = CompanyDataBase.availableOffers;
-  Optional<List> response ;
+  Optional<List> response;
   try {
-    response =
-    await globals.user.getDevicesOfStructure(structure["id"]);
-  }
-  catch(e){
+    response = await globals.user.getDevicesOfStructure(structure["id"]);
+  } catch (e) {
     //TODO - Snackbar showing NO ACCESS TO DEVICES
     response = Optional.empty();
   }
   if (response != Optional.empty()) {
     List devices = response.value;
     //Stores all unique 'types' of devices along with their respective count
-    Map<String, int> userDevice = {};
+    Map<String, int> userDevices = {};
 
     for (int i = 0; i < devices.length; i++) {
 //    Remove "sdm.devices.types." from the type trait of the device
       String type = devices[i]["type"].substring(18, devices[i]["type"].length);
-      if (userDevice.containsKey(type)) {
-        userDevice[type]++;
+      if (userDevices.containsKey(type)) {
+        userDevices[type]++;
       }
 //    if device type is not present , create a new key in map
       else {
-        userDevice[type] = 1;
+        userDevices[type] = 1;
       }
     }
 
@@ -90,7 +88,7 @@ Future<List> getValidOffers(Map structure) async {
     for (int i = 0; i < allOffers.length; i++) {
       isValid = true;
       for (var k in allOffers[i].requirements.keys) {
-        int count = userDevice[k] == null ? 0 : userDevice[k];
+        int count = userDevices[k] == null ? 0 : userDevices[k];
         if (count < allOffers[i].requirements[k]) {
           isValid = false;
           break;
