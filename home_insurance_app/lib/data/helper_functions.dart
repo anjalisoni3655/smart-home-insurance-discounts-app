@@ -12,7 +12,7 @@ Future<List> getAllowedOffers(BuildContext context) async {
   if (isAuthorise) {
     Optional<List> response = await globals.user.getAllStructures();
     List structures = response.value;
-
+   print(structures);
 // Helper function to show dialogue box for displaying structure list
     await showDialog(
         barrierDismissible: false,
@@ -43,16 +43,17 @@ Future<bool> callResourcePicker() async {
 Future<List> getValidOffers(Map structure) async {
   List<Offer> allowedOffers = [];
   List<Offer> allOffers = CompanyDataBase.availableOffers;
+  print(structure["id"]);
   Optional<List> res = await globals.user.getDevicesOfStructure(structure["id"]);
   List devices = res.value;
-
+  print(devices.length);
   //Stores all unique 'types' of devices that user has
   Set<String> userDeviceTypes = {};
 
   for (int i = 0; i < devices.length; i++) {
 //    Remove "sdm.devices.types." from the type trait of the device
     String type = devices[i]["type"].substring(18, devices[i]["type"].length);
-
+     print("helper   -   $type");
     userDeviceTypes.add(type);
   }
 //  Check which offer is valid . If valid add it to the list of allowed Offers .
@@ -61,11 +62,13 @@ Future<List> getValidOffers(Map structure) async {
   for (int i = 0; i < allOffers.length; i++) {
     isValid = true;
     for (var k in allOffers[i].requirements.keys) {
+      print("$k");
       if (!(userDeviceTypes.contains("$k"))) {
         isValid = false;
         print("$i break");
         break;
       }
+
     }
     if (isValid == true) {
       allowedOffers.add(allOffers[i]);

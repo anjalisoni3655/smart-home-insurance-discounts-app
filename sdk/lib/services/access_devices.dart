@@ -83,6 +83,7 @@ class AccessDevices {
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {
+        print("getID   ${getId(device['assignee'])}");
         if (getId(device['assignee']) != structureId) continue;
         devices.add({
           'id': getId(device['name']),
