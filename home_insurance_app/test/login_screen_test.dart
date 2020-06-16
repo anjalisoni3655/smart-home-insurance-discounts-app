@@ -29,13 +29,5 @@ void main() {
     expect(messageFinder, findsOneWidget);
     //Finds Button
     expect(find.byType(RaisedButton), findsOneWidget);
-
-    //Checks whether Navigator gets pushed or not
-    await tester.tap(find.byType(RaisedButton));
-    await tester.pumpAndSettle();
-
-    verify(mockObserver.didPush(any, any));
-
-    expect(find.byType(HomePage), findsOneWidget);
   });
 }
