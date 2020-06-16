@@ -5,7 +5,7 @@ import 'package:optional/optional.dart';
 import 'dart:developer';
 
 Map<String, String> getId(String name) {
-  if(name[0] == '/') {
+  if (name[0] == '/') {
     name = name.substring(1);
   }
   Map<String, String> ids = {};
@@ -14,7 +14,7 @@ Map<String, String> getId(String name) {
   String value = '';
   for (int i = 0; i < name.length; ++i) {
     if (name[i] == '/') {
-      if(flag) {
+      if (flag) {
         ids[key] = value;
         key = '';
         value = '';
@@ -23,7 +23,7 @@ Map<String, String> getId(String name) {
         flag = true;
       }
     } else {
-      if(flag) {
+      if (flag) {
         value += name[i];
       } else {
         key += name[i];
@@ -76,7 +76,6 @@ class AccessDevices {
               ["customName"],
           'type': device['type'],
         });
-
       }
       return Optional.of(devices);
     } catch (error) {
