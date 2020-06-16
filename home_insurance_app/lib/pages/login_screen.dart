@@ -86,7 +86,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
               } catch (e) {
                 print(e);
-                //print('Error retrieving data from RemoteConfig');
               }
             },
             shape: RoundedRectangleBorder(
