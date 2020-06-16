@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/pages/common_widgets.dart';
+import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
@@ -8,27 +8,25 @@ import 'package:homeinsuranceapp/pages/profile.dart';
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
   static const String id = 'home_screen';
-  static const Key popmenuButton = Key('popmenu_key');
+  static const Key popmenuButton = Key('popmenu_button_key');
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-final scaffoldKey = GlobalKey<ScaffoldState>(); // Used for testing the drawer
-
 class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
     if (value == 'Logout') {
-      Navigator.pushNamed(context, LoginScreen.id);
-      //TODO: call SDK library's signout function
-
-    } else {
-      Navigator.pushNamed(context, Profile.id);
+      // Navigator.pushNamed(context, LoginScreen.id);
       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
         return LoginScreen();
       }));
       //TODO: call SDK library's signout function
 
+    } else {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        return Profile();
+      }));
     }
   }
 
@@ -37,9 +35,27 @@ class _HomePageState extends State<HomePage> {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
     return Scaffold(
-      key: scaffoldKey,
       drawer: AppDrawer(), // Sidebar
-      appBar: CommonAppBar(),
+      appBar: AppBar(
+        title: Text('Home Insurance Company'),
+        centerTitle: true,
+        backgroundColor: kAppbarColor,
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            key: HomePage.popmenuButton,
+            child: Icon(Icons.accessibility),
+            onSelected: onClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout', 'My Profile'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
       body: Stack(
         children: <Widget>[
           Container(
@@ -78,12 +94,9 @@ class _HomePageState extends State<HomePage> {
               child: Align(
                 heightFactor: 1.0,
                 child: Text(
-                    "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available ",
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                    )),
+                  "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available ",
+                  style: kHomeScreenTextStyle,
+                ),
               ),
             ),
           ),

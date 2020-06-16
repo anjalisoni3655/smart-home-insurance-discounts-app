@@ -5,7 +5,6 @@ import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
-//Offer selected by the user
 Offer selectedOffer;
 
 class DisplayDiscounts extends StatefulWidget {
