@@ -8,9 +8,7 @@ import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
-
   static const Key popmenuButton = Key('popmenu_button_key');
-
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -29,7 +27,6 @@ class _HomePageState extends State<HomePage> {
     } else {
       // user clicks on the profile option in Popup Menu Button
       Navigator.pushNamed(context, Profile.id);
-
     }
   }
 
@@ -42,7 +39,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Home Insurance Company'),
         centerTitle: true,
-
         backgroundColor: kAppbarColor,
         actions: <Widget>[
           PopupMenuButton<String>(

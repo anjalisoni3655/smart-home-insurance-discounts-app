@@ -6,18 +6,17 @@ import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:optional/optional.dart';
 import 'package:homeinsuranceapp/data/helper_functions.dart';
+import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //Offers selected by the user
 Offer selectedOffer;
-// Offers displayed by the company
-CompanyDataBase offers = new CompanyDataBase();
-
 
 class DisplayDiscounts extends StatefulWidget {
   @override
   _DisplayDiscountsState createState() => _DisplayDiscountsState();
 }
 
+// This class provides overall layout of the page .
 class _DisplayDiscountsState extends State<DisplayDiscounts> {
   List<Offer> offersToDisplay = CompanyDataBase
       .availableOffers; // This list stores which all offers will be displayed
@@ -82,7 +81,6 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                               // Get offers which the user is eligible to get after launching resource picker
                               List<Offer> allowedOffers =
                                   await getAllowedOffers(context);
-                              print(allowedOffers.isEmpty);
 
                               setState(() {
                                 offersToDisplay = allowedOffers;
@@ -106,11 +104,13 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                               Navigator.pop(context);
                               //Pops the previous page in the stack which is choose_policy page.
                               //For now all these arguments are  send to the home page
-                              Navigator.pop(context, {
-                                'selectedOffer': selectedOffer,
-                                'selectedPolicy': data['selectedPolicy'],
-                                'userAddress': data['userAddress'],
-                              });
+
+                              Navigator.pushNamed(context, Payment.id,
+                                  arguments: {
+                                    'selectedOffer': selectedOffer,
+                                    'selectedPolicy': data['selectedPolicy'],
+                                    'userAddress': data['userAddress'],
+                                  });
                             },
                             backgroundColor: Colors.lightBlueAccent,
                           ),
@@ -151,7 +151,6 @@ class _AllDiscountsState extends State<AllDiscounts> {
     return Expanded(
       child: ListView.builder(
           itemCount: widget.offerList.length,
-
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -175,7 +174,6 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       currSelected = index;
                       isSelected[index] = true;
                       selectedOffer = widget.offerList[index];
-
                     });
                   },
                   child: Container(
