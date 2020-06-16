@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/database_utilities.dart';
+import 'package:homeinsuranceapp/components/css.dart';
 
 //widget for the my profile page displaying user's details
 class Profile extends StatefulWidget {
@@ -52,29 +53,22 @@ class _ProfileState extends State<Profile> {
               child: Text(
                 name ?? '',
                 key: Profile.nameKey,
-                style: TextStyle(
-                  fontFamily: 'Pacifico',
-                  fontSize: 40.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: kProfileNameStyle,
               ),
             ),
             Text(
+              'Mr. XYZ',
+              style: kProfileNameStyle,
+            ),
+            Text(
               'Business Analyst',
-              style: TextStyle(
-                fontFamily: 'Source Sans Pro',
-                color: Colors.black,
-                fontSize: 20.0,
-                letterSpacing: 2.5,
-                fontWeight: FontWeight.bold,
-              ),
+              style: kDesignationTextStyle,
             ),
             SizedBox(
               height: 20.0,
               width: 150.0,
               child: Divider(
-                color: Colors.black,
+                color: kProfileIconColor,
               ),
             ),
             Card(
@@ -82,15 +76,11 @@ class _ProfileState extends State<Profile> {
                 child: ListTile(
                   leading: Icon(
                     Icons.phone,
-                    color: Colors.black,
+                    color: kProfileIconColor,
                   ),
                   title: Text(
                     '+91xxxxxxxxxx',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Source Sans Pro',
-                      fontSize: 20.0,
-                    ),
+                    style: kNormalTextStyle,
                   ),
                 )),
             Card(
@@ -98,14 +88,11 @@ class _ProfileState extends State<Profile> {
                 child: ListTile(
                   leading: Icon(
                     Icons.email,
-                    color: Colors.black,
+                    color: kProfileIconColor,
                   ),
                   title: Text(
                     email ?? '',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                        fontFamily: 'Source Sans Pro'),
+                    style: kNormalTextStyle,
                   ),
                 ))
           ],
