@@ -4,16 +4,32 @@ import 'package:http/http.dart' as http;
 import 'package:optional/optional.dart';
 import 'dart:developer';
 
-String getId(String name) {
-  String deviceId = '';
+Map<String, String> getId(String name) {
+  Map<String, String> ids = {};
+  bool flag = false;
+  String key = '';
+  String value = '';
   for (int i = 0; i < name.length; ++i) {
     if (name[i] == '/') {
-      deviceId = '';
+      if(flag) {
+        ids[key] = value;
+        key = '';
+        value = '';
+        flag = false;
+      } else {
+        flag = true;
+      }
     } else {
-      deviceId += name[i];
+      if(flag) {
+        value += name[i];
+      } else {
+        key += name[i];
+      }
     }
   }
-  return deviceId;
+  ids[key] = value;
+  print(ids);
+  return ids;
 }
 
 // Provides helper functions to get list of devices, structures, status of devices etc.
@@ -45,8 +61,6 @@ class AccessDevices {
     }
     try {
       String request = url + "enterprises/" + _enterpriseId + "/devices";
-      print(request);
-      print(_accessToken);
       final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
@@ -56,7 +70,7 @@ class AccessDevices {
       for (var device in result['devices']) {
         print(device);
         devices.add({
-          'id': getId(device['name']),
+          'id': getId(device['name'])['devices'],
           'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
@@ -72,15 +86,10 @@ class AccessDevices {
 
   Future<Optional<List>> getDevicesOfStructure(String structureId) async {
     if (_accessToken == null) {
-      throw Exception("Access token not set");
+      throw new Exception("Access Token not set");
     }
     try {
-      String request = url +
-          "enterprises/" +
-          _enterpriseId +
-          '/structures/' +
-          structureId +
-          "/devices";
+      String request = url + "enterprises/" + _enterpriseId + "/devices";
       final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
@@ -90,9 +99,10 @@ class AccessDevices {
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {
+        if (getId(device['assignee'])['structures'] != structureId) continue;
         devices.add({
-          'id': getId(device['name']),
-          'customName': device['traits']['sdm.devices.traits.Info']
+          'id': getId(device['name'])['devices'],
+          'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
         });
@@ -118,7 +128,7 @@ class AccessDevices {
       List structures = [];
       for (var structure in result['structures']) {
         structures.add({
-          'id': getId(structure['name']),
+          'id': getId(structure['name'])['structures'],
           'customName': structure['traits']['sdm.structures.traits.Info']
               ["customName"],
         });
