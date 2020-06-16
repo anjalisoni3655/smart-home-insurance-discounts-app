@@ -46,18 +46,18 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: screenwidth / 80,
-                        vertical: screenheight / 80),
+                        horizontal: screenwidth / 100,
+                        vertical: screenheight / 100),
                     child: Text(
                       'Available Discounts',
                       style: CustomTextStyle(fontSize: 30.0),
                     ),
                   ),
                   CustomDivider(
-                      height: screenheight / 100, width: screenwidth / 50),
-                  SizedBox(height: screenheight / 100),
+                      height: screenheight / 150, width: screenwidth / 50),
+                  SizedBox(height: screenheight / 150),
                   AllDiscounts(offersToDisplay),
-                  SizedBox(height: screenheight / 50),
+                  SizedBox(height: screenheight / 100),
                 ],
               ),
             ),
@@ -71,7 +71,30 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                     child: Stack(
                       children: <Widget>[
                         Align(
-                          alignment: Alignment.centerLeft,
+                          alignment: Alignment.topCenter,
+                          child: FloatingActionButton.extended(
+                            heroTag: 'home',
+                            icon: Icon(Icons.home),
+                            label: Text(
+                              'Your Homes',
+                              style:
+                              CustomTextStyle(fontWeight: FontWeight.w900),
+                            ),
+                            onPressed: () async {
+                              //    Get offers which the user is eligible to get after launching resource picker
+                              List<Offer> allowedOffers =
+                              await SelectStructure(context);
+                              setState(() {
+                                offersToDisplay = allowedOffers;
+                                disableDiscounts =
+                                false; // Now the user can select them
+                              });
+                            },
+                            backgroundColor: Colors.lightBlueAccent,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomLeft,
                           child: FloatingActionButton.extended(
                             heroTag: 'Discounts',
                             icon: Icon(Icons.money_off),
@@ -84,7 +107,6 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                             //    Get offers which the user is eligible to get after launching resource picker
                               List<Offer> allowedOffers =
                                  await getAllowedOffers(context);
-                              print(allowedOffers);
                               setState(() {
                                 offersToDisplay = allowedOffers;
                                 disableDiscounts =
@@ -95,7 +117,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                           ),
                         ),
                         Align(
-                          alignment: Alignment.centerRight,
+                          alignment: Alignment.bottomRight,
                           child: FloatingActionButton.extended(
                             heroTag: 'Payment',
                             icon: Icon(Icons.arrow_forward),
@@ -180,12 +202,26 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       child: InkWell(
                         onTap: () {
                           setState(() {
+
                             if (disableDiscounts == false) {
-                              //Current Selected state of corresponding discount is reversed
-                              isSelected[currSelected] = false;
-                              currSelected = index;
-                              isSelected[index] = true;
-                              selectedOffer = widget.offerList[index];
+                              //Current selected state of clicked discount is reversed in case same discount is clicked
+                              if(currSelected == index){
+                                isSelected[currSelected] = !isSelected[currSelected];
+                                if(isSelected[currSelected]==true){
+                                  selectedOffer = widget.offerList[index];
+                                }
+                                else {
+                                  selectedOffer = null ;
+                                }
+                              }
+                              // In case some other discount is clicked , previous one gets unselected and clicked one gets selected
+                              else{
+                                isSelected[currSelected] = false;
+                                currSelected = index;
+                                isSelected[index] = true;
+                                selectedOffer = widget.offerList[index];
+
+                              }
                             }
                           });
                         },

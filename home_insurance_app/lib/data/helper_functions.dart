@@ -10,27 +10,34 @@ Future<List> getAllowedOffers(BuildContext context) async {
 //  Call the resource picker
   bool isAuthorise = await callResourcePicker();
   if (isAuthorise) {
-    Optional<List> response = await globals.user.getAllStructures();
-    List structures = response.value;
-
-    if(structures!=null&&structures.isNotEmpty){
-// Helper function to show dialogue box for displaying structure list
-      await showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-// Returns a Alert DialogueBox displaying all user structures
-            return StructureAlertBox(structures);
-          }).then((selectedStructure) async {
-//Send the structure ( id and name ) and get all offers which the user can get
-        allowedOffers = await getValidOffers(selectedStructure);
-      });
-
-    }
+    allowedOffers = await SelectStructure(context);
   }
   // In case authorisation is not successful or structure is empty , empty list is returned , else list with desired offers is returned
   return (allowedOffers);
 }
+
+Future<List> SelectStructure (BuildContext context) async{
+  List<Offer> allowedOffers = [];
+
+  Optional<List> response = await globals.user.getAllStructures();
+  List structures = response.value;
+  if(structures!=null&&structures.isNotEmpty) {
+//    Helper function to show dialogue box for displaying structure list
+    await showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+// Returns a Alert DialogueBox displaying all user structures
+          return StructureAlertBox(structures);
+        }).then((selectedStructure) async {
+//Send the structure ( id and name ) and get all offers which the user can get
+      allowedOffers = await getValidOffers(selectedStructure);
+
+    });
+  }
+  return (allowedOffers);
+}
+
 
 // Function for calling resource picker
 Future<bool> callResourcePicker() async {
@@ -47,11 +54,10 @@ Future<bool> callResourcePicker() async {
 Future<List> getValidOffers(Map structure) async {
   List<Offer> allowedOffers = [];
   List<Offer> allOffers = CompanyDataBase.availableOffers;
-  print(structure["id"]);
   Optional<List> res =
       await globals.user.getDevicesOfStructure(structure["id"]);
   List devices = res.value;
-  print(devices.length);
+
   //Stores all unique 'types' of devices along with their respective count
   Map<String, int> userDevice = {};
 
@@ -78,6 +84,9 @@ Future<List> getValidOffers(Map structure) async {
         isValid = false;
         break;
       }
+    }
+    if (isValid == true) {
+      allowedOffers.add(allOffers[i]);
     }
   }
 // In case devices of the particular structure is 0 , empty list is returned .
