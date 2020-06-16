@@ -8,9 +8,12 @@ import 'package:homeinsuranceapp/pages/choose_policy.dart';
 import 'package:homeinsuranceapp/pages/show_discounts.dart';
 import 'package:homeinsuranceapp/pages/list_structures.dart';
 import 'pages/home.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // this is the root of our application
-void main() {
+void main({test = false}) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  globals.user = await globals.con(test: test);
   runApp(MyApp());
 }
 

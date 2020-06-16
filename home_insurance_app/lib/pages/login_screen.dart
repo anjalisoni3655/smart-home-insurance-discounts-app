@@ -15,7 +15,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
-    globals.user = await globals.con();
     String status = await globals.user.login();
     if (status == "login successful") {
       print(status);
@@ -63,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
           height: MediaQuery.of(context).size.width * 0.04,
         ),
         RaisedButton(
-            key: Key('navigateToHome'),
+            key: ValueKey('login'),
             child: Text("LOG IN WITH GOOGLE"),
             color: Colors.brown,
             textColor: Colors.white,
