@@ -101,7 +101,6 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                                     'selectedPolicy': data['selectedPolicy'],
                                     'userAddress': data['userAddress'],
                                   });
-
                             },
                             backgroundColor: Colors.lightBlueAccent,
                           ),
