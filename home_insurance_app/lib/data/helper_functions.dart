@@ -47,14 +47,21 @@ Future<List> getValidOffers(Map structure) async {
   Optional<List> res = await globals.user.getDevicesOfStructure(structure["id"]);
   List devices = res.value;
   print(devices.length);
-  //Stores all unique 'types' of devices that user has
-  Set<String> userDeviceTypes = {};
+  //Stores all unique 'types' of devices along with their respective count
+  Map<String , int> userDevice = {};
 
   for (int i = 0; i < devices.length; i++) {
 //    Remove "sdm.devices.types." from the type trait of the device
     String type = devices[i]["type"].substring(18, devices[i]["type"].length);
      print("helper   -   $type");
-    userDeviceTypes.add(type);
+
+     if(userDevice.containsKey(type)){
+       userDevice[type]++;
+     }
+//    if device type is not present , create a new key in map
+     else {
+       userDevice[type] = 1;
+     }
   }
 //  Check which offer is valid . If valid add it to the list of allowed Offers .
   bool isValid = true;
@@ -62,13 +69,12 @@ Future<List> getValidOffers(Map structure) async {
   for (int i = 0; i < allOffers.length; i++) {
     isValid = true;
     for (var k in allOffers[i].requirements.keys) {
-      print("$k");
-      if (!(userDeviceTypes.contains("$k"))) {
+      int count  = userDevice[k] == null ? 0 : userDevice[k];
+      if (count< allOffers[i].requirements[k] ) {
         isValid = false;
         print("$i break");
         break;
       }
-
     }
     if (isValid == true) {
       allowedOffers.add(allOffers[i]);
