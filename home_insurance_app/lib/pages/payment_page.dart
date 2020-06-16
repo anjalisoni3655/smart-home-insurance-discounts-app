@@ -108,7 +108,7 @@ class _PaymentState extends State<Payment> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            'Confirm Payment',
+                            'Cancel Payment',
                             style: TextStyle(color: Colors.white),
                           ),
                         ],
@@ -131,7 +131,7 @@ class _PaymentState extends State<Payment> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            'Cancel Payment',
+                            'Confirm Payment',
                             style: TextStyle(color: Colors.white),
                           ),
                         ],
