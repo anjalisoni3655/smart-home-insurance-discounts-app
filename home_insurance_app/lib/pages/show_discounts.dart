@@ -83,7 +83,6 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                               // Get offers which the user is eligible to get after launching resource picker
                               List<Offer> allowedOffers =
                                   await getAllowedOffers(context);
-                              print(allowedOffers.isEmpty);
 
                               setState(() {
                                 offersToDisplay = allowedOffers;
