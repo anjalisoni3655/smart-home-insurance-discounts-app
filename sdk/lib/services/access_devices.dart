@@ -54,12 +54,14 @@ class AccessDevices {
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {
+        print(device);
         devices.add({
           'id': getId(device['name']),
-          'customName': device['traits']['sdm.devices.traits.Info']
+          'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
         });
+
       }
       return Optional.of(devices);
     } catch (error) {
@@ -83,6 +85,8 @@ class AccessDevices {
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
+
+      print("$request ,, $_accessToken");
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {
