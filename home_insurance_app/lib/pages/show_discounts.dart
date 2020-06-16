@@ -12,6 +12,7 @@ Offer selectedOffer;
 // Offers displayed by the company
 CompanyDataBase offers = new CompanyDataBase();
 
+
 class DisplayDiscounts extends StatefulWidget {
   @override
   _DisplayDiscountsState createState() => _DisplayDiscountsState();
@@ -123,6 +124,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
   }
 }
 
+// This class provides overall layout of the page .
 class AllDiscounts extends StatefulWidget {
   final List<Offer> offerList; // This is the offer list that will be displayed
   const AllDiscounts(this.offerList);
@@ -144,9 +146,11 @@ class _AllDiscountsState extends State<AllDiscounts> {
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
+
     return Expanded(
       child: ListView.builder(
           itemCount: widget.offerList.length,
+
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -170,6 +174,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       currSelected = index;
                       isSelected[index] = true;
                       selectedOffer = widget.offerList[index];
+
                     });
                   },
                   child: Container(

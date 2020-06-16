@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/profile.dart';
@@ -7,7 +8,9 @@ import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
-  static const Key popmenuButton = Key('popmenu_key');
+
+  static const Key popmenuButton = Key('popmenu_button_key');
+
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -26,6 +29,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       // user clicks on the profile option in Popup Menu Button
       Navigator.pushNamed(context, Profile.id);
+
     }
   }
 
@@ -38,9 +42,11 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Home Insurance Company'),
         centerTitle: true,
-        backgroundColor: Colors.brown,
+
+        backgroundColor: kAppbarColor,
         actions: <Widget>[
           PopupMenuButton<String>(
+            key: HomePage.popmenuButton,
             child: Icon(Icons.accessibility),
             onSelected: onClick,
             itemBuilder: (BuildContext context) {
@@ -92,12 +98,9 @@ class _HomePageState extends State<HomePage> {
               child: Align(
                 heightFactor: 1.0,
                 child: Text(
-                    "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available ",
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                    )),
+                  "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available ",
+                  style: kHomeScreenTextStyle,
+                ),
               ),
             ),
           ),

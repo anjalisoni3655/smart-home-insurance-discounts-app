@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:sdk/sdk.dart';
 import 'dart:convert';
@@ -29,10 +30,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
         title: Center(child: Text('Smart Home')),
-        backgroundColor: Colors.brown,
+        backgroundColor: kAppbarColor,
       ),
       body: Center(child: _buildBody()),
     );
@@ -46,10 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: <Widget>[
         TypewriterAnimatedTextKit(
           text: ['Smart Home'],
-          textStyle: TextStyle(
-            fontSize: 45.0,
-            fontWeight: FontWeight.w900,
-          ),
+          textStyle: kLoginScreenHeading,
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.03,
@@ -65,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
             textColor: Colors.white,
             onPressed: () async {
               await userLogin();
+
             },
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0))),

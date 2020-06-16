@@ -43,7 +43,7 @@ Future<bool> callResourcePicker() async {
 Future<List> getValidOffers(Map structure) async {
   List<Offer> allowedOffers = [];
   List<Offer> allOffers = CompanyDataBase.availableOffers;
-  Optional<List> res = await globals.user.getAllDevices(); //TODO To be Changed
+  Optional<List> res = await globals.user.getDevicesOfStructure(structure["id"]);
   List devices = res.value;
 
   //Stores all unique 'types' of devices that user has

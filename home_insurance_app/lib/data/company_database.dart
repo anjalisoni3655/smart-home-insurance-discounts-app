@@ -2,6 +2,9 @@ import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/data/deviceType.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 
+
+// This class stores all the discount offers offered by the company
+
 class CompanyDataBase {
   // String of devices on which the company has the option to provide discounts
   static List<String> devices = EnumToString.toList(DeviceType.values);
