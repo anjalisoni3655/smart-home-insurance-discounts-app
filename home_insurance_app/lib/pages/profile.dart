@@ -57,10 +57,6 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Text(
-              'Mr. XYZ',
-              style: kProfileNameStyle,
-            ),
-            Text(
               'Business Analyst',
               style: kDesignationTextStyle,
             ),

@@ -6,6 +6,7 @@ import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:sdk/sdk.dart';
 import 'package:optional/optional.dart';
+import 'package:homeinsuranceapp/data/user.dart';
 
 // widget for login with google
 class LoginScreen extends StatefulWidget {
@@ -68,11 +69,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
               if (status == "login successful") {
                 Optional<Map> userDetailsOptional = await sdk.getUserDetails();
-
+                User user = User();
+                user.displayName = userDetailsOptional.value['displayName'];
+                user.email = userDetailsOptional.value['email'];
+                user.photoUrl = userDetailsOptional.value['photoUrl'];
                 await uploadUserDetails(
-                    name: userDetailsOptional.value['displayName'],
-                    email: userDetailsOptional.value['email'],
-                    photourl: userDetailsOptional.value['photoUrl']);
+                  name: user.displayName,
+                  email: user.email,
+                  photourl: user.photoUrl,
+                );
 
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {

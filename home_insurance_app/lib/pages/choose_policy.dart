@@ -193,7 +193,6 @@ class _RadioGroupState extends State<RadioGroup> {
                       userChoice = entry.policyOption;
                       //To make groupValue equal to value for the radio button .
                       choosenIndex = value;
-                      print(userChoice.policyName);
                     });
                   },
                 ))
