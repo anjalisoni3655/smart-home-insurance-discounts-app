@@ -12,7 +12,7 @@ Future<List> getAllowedOffers(BuildContext context) async {
   if (isAuthorise) {
     Optional<List> response = await globals.user.getAllStructures();
     List structures = response.value;
-   print(structures);
+
 // Helper function to show dialogue box for displaying structure list
     await showDialog(
         barrierDismissible: false,
@@ -53,8 +53,6 @@ Future<List> getValidOffers(Map structure) async {
   for (int i = 0; i < devices.length; i++) {
 //    Remove "sdm.devices.types." from the type trait of the device
     String type = devices[i]["type"].substring(18, devices[i]["type"].length);
-     print("helper   -   $type");
-
      if(userDevice.containsKey(type)){
        userDevice[type]++;
      }
@@ -63,6 +61,8 @@ Future<List> getValidOffers(Map structure) async {
        userDevice[type] = 1;
      }
   }
+
+
 //  Check which offer is valid . If valid add it to the list of allowed Offers .
   bool isValid = true;
 
@@ -72,7 +72,6 @@ Future<List> getValidOffers(Map structure) async {
       int count  = userDevice[k] == null ? 0 : userDevice[k];
       if (count< allOffers[i].requirements[k] ) {
         isValid = false;
-        print("$i break");
         break;
       }
     }

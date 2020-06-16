@@ -17,7 +17,7 @@ class DisplayDiscounts extends StatefulWidget {
   @override
   _DisplayDiscountsState createState() => _DisplayDiscountsState();
 }
-
+// This class provides overall layout of the page .
 class _DisplayDiscountsState extends State<DisplayDiscounts> {
   List<Offer> offersToDisplay = CompanyDataBase
       .availableOffers; // This list stores which all offers will be displayed
