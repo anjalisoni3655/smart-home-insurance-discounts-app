@@ -35,3 +35,15 @@ API_SCOPE= the scope string for SDM API
 4.In order to use the google sign in services, the google-services.json file obtained after registering of app in firebase console need to be pasted in the android/app/directory.
 
 For detailed instruction on how to setup environment variables in the project follow this link:https://github.com/ByneappLLC/flutter_config
+
+**To use firebase_remote_config to access the app credentials**:
+1. We have to install the dependency firebase_remote_config(https://pub.dev/packages/firebase_remote_config) using  flutter pub get command and then import this library in the dart file, import 'package:firebase_remote_config/firebase_remote_config.dart'; bye adding this line at the top
+2. Add the google-services.json file in the android/app directory.
+3. Here is the code snippet to use the firebase_remote_config in the code to access the credentials remotely.
+final RemoteConfig _remoteConfig = await RemoteConfig.instance;
+              await _remoteConfig.fetch();
+              await _remoteConfig.activateFetched();
+
+              String _clientId = _remoteConfig.getString('client_id');
+              String _clientSecret = _remoteConfig.getString('client_secret');
+              String _enterpriseId = _remoteConfig.getString('enterprise_id');
