@@ -33,7 +33,7 @@ void main() {
     //  Find "Login with Google" button and click on it
     test("Login Page", () async {
       SerializableFinder loginButton = find.text('LOG IN WITH GOOGLE');
-      await Future.delayed(const Duration(seconds: 1));
+//      await Future.delayed(const Duration(seconds: 1));
       await flutterDriver.runUnsynchronized(() async {
         await flutterDriver.tap(loginButton);
       });
@@ -45,7 +45,7 @@ void main() {
       await flutterDriver.tap(appDrawer);
       SerializableFinder purchaseTab = find.text("Purchase Policy");
       await flutterDriver.tap(purchaseTab);
-      await Future.delayed(const Duration(seconds: 1));
+//      await Future.delayed(const Duration(seconds: 1));
     });
 
     //  Find address textboxes and fill them. Click on submit.
@@ -73,7 +73,7 @@ void main() {
       SerializableFinder submitButton = find.text("SUBMIT");
       await flutterDriver.tap(submitButton);
 
-      await Future.delayed(const Duration(seconds: 1));
+//      await Future.delayed(const Duration(seconds: 1));
     });
 
     //  Find radio buttons and policy names and select a policy
@@ -85,7 +85,7 @@ void main() {
       SerializableFinder viewDiscountsButton = find.text("View Smart Device Discounts");
       await flutterDriver.tap(viewDiscountsButton);
 
-      await Future.delayed(const Duration(seconds: 2));
+//      await Future.delayed(const Duration(seconds: 2));
     });
 
     //  Find "Add Devices" button and click on it
@@ -93,7 +93,7 @@ void main() {
       SerializableFinder addDevicesButton = find.text("Add Devices");
       await flutterDriver.tap(addDevicesButton);
 
-      await Future.delayed(const Duration(seconds: 1));
+//      await Future.delayed(const Duration(seconds: 1));
     });
     
     //  Find the first a structure and select
@@ -104,7 +104,7 @@ void main() {
       SerializableFinder submitButton = find.text("Submit");
       await flutterDriver.tap(submitButton);
 
-      Future.delayed(const Duration(seconds: 1));
+//      Future.delayed(const Duration(seconds: 1));
     });
 
     // TODO:  Find list of offers and confirm that only offers that can be availed are present
@@ -117,7 +117,7 @@ void main() {
       SerializableFinder submitButton = find.text("Go to Payment");
       await flutterDriver.tap(submitButton);
 
-      Future.delayed(const Duration(seconds: 1));
+//      await Future.delayed(const Duration(seconds: 1));
     });
 
     //TODO:  Check if address, offers, structure and policies displayed are the ones chosen.
@@ -128,7 +128,23 @@ void main() {
       SerializableFinder confirmPaymentButton = find.text("Confirm Payment");
       await flutterDriver.tap(confirmPaymentButton);
 
-      await Future.delayed(const Duration(seconds: 1));
+//      await Future.delayed(const Duration(seconds: 1));
+    });
+
+    // Check if redirected to home page and Logout
+    test("Logout", () async {
+      await flutterDriver.waitFor(find.byType("HomePage"));
+
+      SerializableFinder settingsButton = find.byValueKey("settings");
+      await flutterDriver.tap(settingsButton);
+
+      SerializableFinder logout = find.text("Logout");
+      flutterDriver.tap(logout);
+    });
+
+    // Check if redirected to login screen
+    test("redirected to login", () async {
+      await flutterDriver.waitFor(find.byType("LoginScreen"));
     });
   });
 }
