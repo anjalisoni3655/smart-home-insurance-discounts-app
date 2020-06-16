@@ -6,17 +6,17 @@ import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:optional/optional.dart';
 import 'package:homeinsuranceapp/data/helper_functions.dart';
+import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //Offers selected by the user
 Offer selectedOffer;
-// Offers displayed by the company
-CompanyDataBase offers = new CompanyDataBase();
 
 class DisplayDiscounts extends StatefulWidget {
   @override
   _DisplayDiscountsState createState() => _DisplayDiscountsState();
 }
 
+// This class provides overall layout of the page .
 class _DisplayDiscountsState extends State<DisplayDiscounts> {
   List<Offer> offersToDisplay = CompanyDataBase
       .availableOffers; // This list stores which all offers will be displayed
@@ -104,11 +104,13 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                               Navigator.pop(context);
                               //Pops the previous page in the stack which is choose_policy page.
                               //For now all these arguments are  send to the home page
-                              Navigator.pop(context, {
-                                'selectedOffer': selectedOffer,
-                                'selectedPolicy': data['selectedPolicy'],
-                                'userAddress': data['userAddress'],
-                              });
+
+                              Navigator.pushNamed(context, Payment.id,
+                                  arguments: {
+                                    'selectedOffer': selectedOffer,
+                                    'selectedPolicy': data['selectedPolicy'],
+                                    'userAddress': data['userAddress'],
+                                  });
                             },
                             backgroundColor: Colors.lightBlueAccent,
                           ),
@@ -123,6 +125,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
   }
 }
 
+// This class provides overall layout of the page .
 class AllDiscounts extends StatefulWidget {
   final List<Offer> offerList; // This is the offer list that will be displayed
   const AllDiscounts(this.offerList);
@@ -144,6 +147,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
+
     return Expanded(
       child: ListView.builder(
           itemCount: widget.offerList.length,
