@@ -16,12 +16,18 @@ Future<List> getAllowedOffers(BuildContext context) async {
   return (allowedOffers);
 }
 
-Future<List> SelectStructure (BuildContext context) async{
+Future<List> SelectStructure(BuildContext context) async {
   List<Offer> allowedOffers = [];
-
-  Optional<List> response = await globals.user.getAllStructures();
-  List structures = response.value;
-  if(structures!=null&&structures.isNotEmpty) {
+  Optional<List> response;
+  try {
+    response = await globals.user.getAllStructures();
+  }
+  catch (e) {
+    //TODO  Snackbar showing  "NO HOMES FOUND"
+    response = Optional.empty();
+  }
+  if (response != Optional.empty() ) {
+    List structures = response.value;
 //    Helper function to show dialogue box for displaying structure list
     await showDialog(
         barrierDismissible: false,
@@ -32,12 +38,10 @@ Future<List> SelectStructure (BuildContext context) async{
         }).then((selectedStructure) async {
 //Send the structure ( id and name ) and get all offers which the user can get
       allowedOffers = await getValidOffers(selectedStructure);
-
     });
   }
   return (allowedOffers);
 }
-
 
 // Function for calling resource picker
 Future<bool> callResourcePicker() async {
@@ -54,41 +58,50 @@ Future<bool> callResourcePicker() async {
 Future<List> getValidOffers(Map structure) async {
   List<Offer> allowedOffers = [];
   List<Offer> allOffers = CompanyDataBase.availableOffers;
-  Optional<List> res =
-      await globals.user.getDevicesOfStructure(structure["id"]);
-  List devices = res.value;
-
-  //Stores all unique 'types' of devices along with their respective count
-  Map<String, int> userDevice = {};
-
-  for (int i = 0; i < devices.length; i++) {
-//    Remove "sdm.devices.types." from the type trait of the device
-    String type = devices[i]["type"].substring(18, devices[i]["type"].length);
-    if (userDevice.containsKey(type)) {
-      userDevice[type]++;
-    }
-//    if device type is not present , create a new key in map
-    else {
-      userDevice[type] = 1;
-    }
+  Optional<List> response ;
+  try {
+    response =
+    await globals.user.getDevicesOfStructure(structure["id"]);
   }
+  catch(e){
+    //TODO - Snackbar showing NO ACCESS TO DEVICES
+    response = Optional.empty();
+  }
+  if (response != Optional.empty()) {
+    List devices = response.value;
+    //Stores all unique 'types' of devices along with their respective count
+    Map<String, int> userDevice = {};
 
-//  Check which offer is valid . If valid add it to the list of allowed Offers .
-  bool isValid = true;
-
-  for (int i = 0; i < allOffers.length; i++) {
-    isValid = true;
-    for (var k in allOffers[i].requirements.keys) {
-      int count = userDevice[k] == null ? 0 : userDevice[k];
-      if (count < allOffers[i].requirements[k]) {
-        isValid = false;
-        break;
+    for (int i = 0; i < devices.length; i++) {
+//    Remove "sdm.devices.types." from the type trait of the device
+      String type = devices[i]["type"].substring(18, devices[i]["type"].length);
+      if (userDevice.containsKey(type)) {
+        userDevice[type]++;
+      }
+//    if device type is not present , create a new key in map
+      else {
+        userDevice[type] = 1;
       }
     }
-    if (isValid == true) {
-      allowedOffers.add(allOffers[i]);
+
+//  Check which offer is valid . If valid add it to the list of allowed Offers .
+    bool isValid = true;
+
+    for (int i = 0; i < allOffers.length; i++) {
+      isValid = true;
+      for (var k in allOffers[i].requirements.keys) {
+        int count = userDevice[k] == null ? 0 : userDevice[k];
+        if (count < allOffers[i].requirements[k]) {
+          isValid = false;
+          break;
+        }
+      }
+      if (isValid == true) {
+        allowedOffers.add(allOffers[i]);
+      }
     }
   }
+
 // In case devices of the particular structure is 0 , empty list is returned .
   return (allowedOffers);
 }

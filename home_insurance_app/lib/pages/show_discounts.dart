@@ -4,7 +4,6 @@ import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
-import 'package:optional/optional.dart';
 import 'package:homeinsuranceapp/data/helper_functions.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 
@@ -85,9 +84,14 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                               List<Offer> allowedOffers =
                               await SelectStructure(context);
                               setState(() {
-                                offersToDisplay = allowedOffers;
-                                disableDiscounts =
-                                false; // Now the user can select them
+                                if(allowedOffers.isNotEmpty) {
+                                  offersToDisplay = allowedOffers;
+                                  disableDiscounts =
+                                  false; // Now the user can select them
+                                }
+                                else {
+                                  //TODO Show a snackbar displaying that the user cannot get any offers right now
+                                }
                               });
                             },
                             backgroundColor: Colors.lightBlueAccent,
@@ -108,9 +112,14 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                               List<Offer> allowedOffers =
                                  await getAllowedOffers(context);
                               setState(() {
-                                offersToDisplay = allowedOffers;
-                                disableDiscounts =
-                                    false; // Now the user can select them
+                                if(allowedOffers.isNotEmpty) {
+                                  offersToDisplay = allowedOffers;
+                                  disableDiscounts =
+                                  false; // Now the user can select them
+                                }
+                                else {
+                                  //TODO Show a snackbar displaying that the user cannot get any offers right now
+                                }
                               });
                             },
                             backgroundColor: Colors.lightBlueAccent,
@@ -175,12 +184,8 @@ class _AllDiscountsState extends State<AllDiscounts> {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
 
-    // If the offerList is not null then return list else return  container with text
-    return (widget.offerList == null || widget.offerList.isEmpty)
-        ? Container(
-            child: Text("No Offers Available"),
-          )
-        : Expanded(
+
+    return  Expanded(
             child: ListView.builder(
                 itemCount: widget.offerList.length,
                 itemBuilder: (context, index) {
