@@ -10,8 +10,6 @@ import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //Offers selected by the user
 Offer selectedOffer;
-// Offers displayed by the company
-CompanyDataBase offers = new CompanyDataBase();
 
 class DisplayDiscounts extends StatefulWidget {
   @override
