@@ -15,15 +15,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
-    globals.user = await globals.con();
+    globals.user = await globals.initialiseSDK();
     String status = await globals.user.login();
-    if (status == "login successful") {
-      print(status);
+    if (status == "login successful"|| status == "already logged in") {
       Navigator.pushNamed(context, '/home'); // Navigates to the home page
-    } else if (status == "already logged in") {
-      print(status);
-      Navigator.pushNamed(context, '/home');
-    } else {
+    }  else {
       print("Login Failed");
       //TODO Show a snackbar for displaying login failed
     }
