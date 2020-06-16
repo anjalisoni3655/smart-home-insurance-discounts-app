@@ -79,7 +79,7 @@ void main() {
     //  Find radio buttons and policy names and select a policy
     //  Find "Smart Discounts" button and click on it
     test("Choose Policy", () async {
-      SerializableFinder secondPolicy = find.byValueKey("Policy 1");
+      SerializableFinder secondPolicy = find.byValueKey("Policy 1"); // 0 indexed
       await flutterDriver.tap(secondPolicy);
 
       SerializableFinder viewDiscountsButton = find.text("View Smart Device Discounts");
@@ -93,7 +93,7 @@ void main() {
       SerializableFinder addDevicesButton = find.text("Add Devices");
       await flutterDriver.tap(addDevicesButton);
 
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 4));
     });
     
     //  Find pop up for selecting a structure. Select a structure from list

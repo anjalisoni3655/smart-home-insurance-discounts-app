@@ -90,11 +90,14 @@ class AccessDevices {
     }
     try {
       String request = url + "enterprises/" + _enterpriseId + "/devices";
+      print(request);
+      print(_accessToken);
+      print(_client);
       final response = await _client.get(
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
-
+      print(response.body);
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {

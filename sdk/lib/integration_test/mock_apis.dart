@@ -45,16 +45,16 @@ class MockApis {
   }
 
   // returns a mock function to authenticate user
-  static get clientViaUserConsent => () async {
+  static get clientViaUserConsent => (ClientId clientId, List<String> scopes, Function userPrompt) async {
     MockAuthClient mockAuthClient = new MockAuthClient();
     MockAccessCredentials mockAccessCredentials = new MockAccessCredentials();
     MockAccessToken mockAccessToken = new MockAccessToken();
 
     when(mockAuthClient.credentials).thenReturn(mockAccessCredentials);
     when(mockAccessCredentials.accessToken).thenReturn(mockAccessToken);
-    when(mockAccessCredentials.refreshToken).thenReturn("refreshTokenTest");
-    when(mockAccessToken.data).thenReturn("accessTokenTest");
-    return mockAuthClient;
+    when(mockAccessCredentials.refreshToken).thenReturn("refreshToken");
+    when(mockAccessToken.data).thenReturn("accessToken");
+    return Future.value(mockAuthClient);
   };
 
   // returns a mock http client
@@ -63,13 +63,14 @@ class MockApis {
     MockResponse mockResponse = new MockResponse();
 
     defineResponse(mockClient, mockResponse);
+    return mockClient;
   }
 }
 
 void defineResponse(MockClient mockClient, MockResponse mockResponse) {
   // Naming enterprises, structures and devices
-  const url = 'https://sdm-api.googleapis.com/';
-  const enterpriseId = 'sdm-test';
+  const url = 'https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/';
+  const enterpriseId = 'akashag-step-interns-test';
   const structure1Id = 'home-1-structure-id';
   const structure1Name = 'home-1';
   const structure2Id = 'home-2-structure-id';
@@ -83,20 +84,17 @@ void defineResponse(MockClient mockClient, MockResponse mockResponse) {
 
   // Valid GET Request URLs
   const String getAllDevicesUrl = "${url}enterprises/$enterpriseId/devices";
-  const String getDevicesOfStructure1Url =
-      "${url}enterprises/$enterpriseId/structures/$structure1Id/devices";
   const String getAllStructuresUrl = "${url}enterprises/$enterpriseId/structures";
   const String getDevice1StatusUrl =
       "${url}enterprises/$enterpriseId/devices/$device1Id";
 
   // Responses returned by the SDM API
   const device1Response =
-      '{"name" : "/enterprises/$enterpriseId/devices/$device1Id","type" : "$device1Type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}, "sdm.devices.traits.Info": {"customName": "$device1Name"}}}';
+      '{"name" : "/enterprises/$enterpriseId/devices/$device1Id","type" : "$device1Type", "assignee": "/enterprises/$enterpriseId/structures/$structure1Id","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}, "sdm.devices.traits.DeviceInfoTrait": {"customName": "$device1Name"}}}';
   const device2Response =
-      '{"name" : "/enterprises/$enterpriseId/devices/$device2Id","type" : "$device2Type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "OFFLINE"}, "sdm.devices.traits.Info": {"customName": "$device2Name"}}}';
+      '{"name" : "/enterprises/$enterpriseId/devices/$device2Id","type" : "$device2Type", "assignee": "/enterprises/$enterpriseId/structures/$structure2Id","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "OFFLINE"}, "sdm.devices.traits.DeviceInfoTrait": {"customName": "$device2Name"}}}';
   const allDevicesListResponse =
       '{ "devices": [$device1Response, $device2Response] }';
-  const devicesOfStructureListResponse = '{ "devices": [$device1Response] }';
   const structure1Response =
       '{"name": "enterprises/$enterpriseId/structures/$structure1Id","traits": {"sdm.structures.traits.Info": {"customName": "$structure1Name"}}}';
   const structure2Response =
@@ -120,12 +118,6 @@ void defineResponse(MockClient mockClient, MockResponse mockResponse) {
       headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
       .thenAnswer((_) {
     when(mockResponse.body).thenReturn(device1Response);
-    return Future.value(mockResponse);
-  });
-  when(mockClient.get(getDevicesOfStructure1Url,
-      headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
-      .thenAnswer((_) {
-    when(mockResponse.body).thenReturn(devicesOfStructureListResponse);
     return Future.value(mockResponse);
   });
 }
