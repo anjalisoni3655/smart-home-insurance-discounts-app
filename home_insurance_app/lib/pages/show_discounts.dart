@@ -12,7 +12,6 @@ CompanyDataBase offers = new CompanyDataBase();
 //Offers selected by the user
 Offer selectedOffer;
 
-
 class DisplayDiscounts extends StatefulWidget {
   @override
   DisplayDiscountsState createState() => DisplayDiscountsState();
