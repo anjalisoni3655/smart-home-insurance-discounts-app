@@ -99,6 +99,7 @@ class _ShowStructuresState extends State<ShowStructures> {
         scrollDirection: Axis.vertical,
         children: choices
             .map((entry) => RadioListTile(
+                  key: Key('Structure ${entry.index}'),
                   title: Text('${entry.structure['customName']}'),
                   groupValue: choosenIndex,
                   activeColor: Colors.blue[500],

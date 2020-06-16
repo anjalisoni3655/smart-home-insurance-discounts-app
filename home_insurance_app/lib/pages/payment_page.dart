@@ -97,6 +97,7 @@ class _PaymentState extends State<Payment> {
                 children: <Widget>[
                   RaisedButton(
                       onPressed: () {
+                        addInsurancePurchased(purchase);
                         Navigator.of(context).pushNamed('/home');
                       },
                       child: Row(
@@ -108,7 +109,7 @@ class _PaymentState extends State<Payment> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            'Cancel Payment',
+                            'Confirm Payment',
                             style: TextStyle(color: Colors.white),
                           ),
                         ],
@@ -120,7 +121,7 @@ class _PaymentState extends State<Payment> {
                   SizedBox(width: 20),
                   RaisedButton(
                       onPressed: () {
-                        addInsurancePurchased(purchase);
+                        Navigator.of(context).pushNamed('/home');
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +132,7 @@ class _PaymentState extends State<Payment> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            'Confirm Payment',
+                            'Cancel Payment',
                             style: TextStyle(color: Colors.white),
                           ),
                         ],

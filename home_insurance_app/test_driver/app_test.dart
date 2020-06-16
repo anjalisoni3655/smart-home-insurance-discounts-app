@@ -93,14 +93,42 @@ void main() {
       SerializableFinder addDevicesButton = find.text("Add Devices");
       await flutterDriver.tap(addDevicesButton);
 
-      await Future.delayed(const Duration(seconds: 4));
+      await Future.delayed(const Duration(seconds: 1));
     });
     
-    //  Find pop up for selecting a structure. Select a structure from list
-    //  Find list of offers and confirm that only offers that can be availed are present
-    //  Select an offer
-    //  Find "Proceed To Payment" button and click on it
-    //  Check if address, offers, structure and policies displayed are correct.
+    //  Find the first a structure and select
+    test("Select Structure", () async {
+      SerializableFinder secondStructure = find.byValueKey("Structure 1");
+      await flutterDriver.tap(secondStructure);
+
+      SerializableFinder submitButton = find.text("Submit");
+      await flutterDriver.tap(submitButton);
+
+      Future.delayed(const Duration(seconds: 1));
+    });
+
+    // TODO:  Find list of offers and confirm that only offers that can be availed are present
+
+    //  Select an offer and click on "Go to Payment"
+    test("Select Offer", () async {
+      SerializableFinder firstOffer = find.byValueKey("Offer 0");
+      await flutterDriver.tap(firstOffer);
+
+      SerializableFinder submitButton = find.text("Go to Payment");
+      await flutterDriver.tap(submitButton);
+
+      Future.delayed(const Duration(seconds: 1));
+    });
+
+    //TODO:  Check if address, offers, structure and policies displayed are the ones chosen.
+
     //  Find "Pay" button and click on it
+    test("Confirm Payment", () async {
+      await flutterDriver.scroll(find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
+      SerializableFinder confirmPaymentButton = find.text("Confirm Payment");
+      await flutterDriver.tap(confirmPaymentButton);
+
+      await Future.delayed(const Duration(seconds: 1));
+    });
   });
 }

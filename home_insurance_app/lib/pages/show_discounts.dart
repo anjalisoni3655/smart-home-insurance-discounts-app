@@ -167,6 +167,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                   ),
                 ),
                 child: InkWell(
+                  key: Key('Offer $index'),
                   onTap: () {
                     setState(() {
                       //Current Selected state of corresponding discount is reversed
