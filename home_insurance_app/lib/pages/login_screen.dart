@@ -18,9 +18,9 @@ class _LoginScreenState extends State<LoginScreen> {
     //using global sdk object named user for calling sdk login function
     globals.user = await globals.initialiseSDK();
     String status = await globals.user.login();
-    if (status == "login successful"|| status == "already logged in") {
+    if (status == "login successful" || status == "already logged in") {
       Navigator.pushNamed(context, '/home'); // Navigates to the home page
-    }  else {
+    } else {
       print("Login Failed");
       //TODO Show a snackbar for displaying login failed
     }
@@ -63,7 +63,6 @@ class _LoginScreenState extends State<LoginScreen> {
             textColor: Colors.white,
             onPressed: () async {
               await userLogin();
-
             },
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0))),

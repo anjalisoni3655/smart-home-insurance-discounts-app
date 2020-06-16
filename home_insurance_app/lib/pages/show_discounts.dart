@@ -12,11 +12,11 @@ Offer selectedOffer;
 // Offers displayed by the company
 CompanyDataBase offers = new CompanyDataBase();
 
-
 class DisplayDiscounts extends StatefulWidget {
   @override
   _DisplayDiscountsState createState() => _DisplayDiscountsState();
 }
+
 // This class provides overall layout of the page .
 class _DisplayDiscountsState extends State<DisplayDiscounts> {
   List<Offer> offersToDisplay = CompanyDataBase
@@ -151,7 +151,6 @@ class _AllDiscountsState extends State<AllDiscounts> {
     return Expanded(
       child: ListView.builder(
           itemCount: widget.offerList.length,
-
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -175,7 +174,6 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       currSelected = index;
                       isSelected[index] = true;
                       selectedOffer = widget.offerList[index];
-
                     });
                   },
                   child: Container(

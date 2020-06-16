@@ -44,24 +44,24 @@ Future<List> getValidOffers(Map structure) async {
   List<Offer> allowedOffers = [];
   List<Offer> allOffers = CompanyDataBase.availableOffers;
   print(structure["id"]);
-  Optional<List> res = await globals.user.getDevicesOfStructure(structure["id"]);
+  Optional<List> res =
+      await globals.user.getDevicesOfStructure(structure["id"]);
   List devices = res.value;
   print(devices.length);
   //Stores all unique 'types' of devices along with their respective count
-  Map<String , int> userDevice = {};
+  Map<String, int> userDevice = {};
 
   for (int i = 0; i < devices.length; i++) {
 //    Remove "sdm.devices.types." from the type trait of the device
     String type = devices[i]["type"].substring(18, devices[i]["type"].length);
-     if(userDevice.containsKey(type)){
-       userDevice[type]++;
-     }
+    if (userDevice.containsKey(type)) {
+      userDevice[type]++;
+    }
 //    if device type is not present , create a new key in map
-     else {
-       userDevice[type] = 1;
-     }
+    else {
+      userDevice[type] = 1;
+    }
   }
-
 
 //  Check which offer is valid . If valid add it to the list of allowed Offers .
   bool isValid = true;
@@ -69,8 +69,8 @@ Future<List> getValidOffers(Map structure) async {
   for (int i = 0; i < allOffers.length; i++) {
     isValid = true;
     for (var k in allOffers[i].requirements.keys) {
-      int count  = userDevice[k] == null ? 0 : userDevice[k];
-      if (count< allOffers[i].requirements[k] ) {
+      int count = userDevice[k] == null ? 0 : userDevice[k];
+      if (count < allOffers[i].requirements[k]) {
         isValid = false;
         break;
       }
