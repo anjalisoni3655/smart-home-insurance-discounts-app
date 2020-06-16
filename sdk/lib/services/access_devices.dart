@@ -5,6 +5,9 @@ import 'package:optional/optional.dart';
 import 'dart:developer';
 
 Map<String, String> getId(String name) {
+  if(name[0] == '/') {
+    name = name.substring(1);
+  }
   Map<String, String> ids = {};
   bool flag = false;
   String key = '';
@@ -28,7 +31,6 @@ Map<String, String> getId(String name) {
     }
   }
   ids[key] = value;
-  print(ids);
   return ids;
 }
 
@@ -68,7 +70,6 @@ class AccessDevices {
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {
-        print(device);
         devices.add({
           'id': getId(device['name'])['devices'],
           'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
@@ -95,7 +96,6 @@ class AccessDevices {
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
 
-      print("$request ,, $_accessToken");
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {
