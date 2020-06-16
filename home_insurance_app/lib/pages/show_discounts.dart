@@ -73,7 +73,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                             heroTag: 'Discounts',
                             icon: Icon(Icons.money_off),
                             label: Text(
-                              'Get Discounts',
+                              'Add Devices',
                               style:
                                   CustomTextStyle(fontWeight: FontWeight.w900),
                             ),

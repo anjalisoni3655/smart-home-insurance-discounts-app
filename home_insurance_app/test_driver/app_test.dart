@@ -1,6 +1,8 @@
 import 'package:test/test.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 
+// Note: Please use flutterDriver.runUnsynchronized(() if animation on page
+
 
 Future<FlutterDriver> setupAndGetDriver() async {
   FlutterDriver driver = await FlutterDriver.connect();
@@ -30,25 +32,70 @@ void main() {
     //  Start at login page
     //  Find "Login with Google" button and click on it
     test("Login Page", () async {
-      var loginButton = find.text('LOG IN WITH GOOGLE');
-      await flutterDriver.runUnsynchronized(() async {
-        await flutterDriver.waitFor(loginButton);
-      });
-      print('button found finally :/');
+      SerializableFinder loginButton = find.text('LOG IN WITH GOOGLE');
       await Future.delayed(const Duration(seconds: 1));
       await flutterDriver.runUnsynchronized(() async {
         await flutterDriver.tap(loginButton);
       });
-      await Future.delayed(const Duration(seconds: 1));
-
     });
-    //  Find sidebar button and click on it
-    //  Sidebar with "Purchase Policy" tab should open up. Click on "Purchase Policy"
-    //  Find address textboxes and fill them
-    //  Find "Submit" button and click on it
+
+    //  Find sidebar button and click on it. Select "Purchase Policy"
+    test("Home Page", () async {
+      SerializableFinder appDrawer = find.byTooltip('Open navigation menu');
+      await flutterDriver.tap(appDrawer);
+      SerializableFinder purchaseTab = find.text("Purchase Policy");
+      await flutterDriver.tap(purchaseTab);
+      await Future.delayed(const Duration(seconds: 1));
+    });
+
+    //  Find address textboxes and fill them. Click on submit.
+    test("Enter address", () async {
+      SerializableFinder firstLineTextBox = find.byValueKey("First Address Line");
+      await flutterDriver.tap(firstLineTextBox);
+      await flutterDriver.enterText("A9 704, Tulip White");
+
+      SerializableFinder secondLineTextBox = find.byValueKey("Second Address Line");
+      await flutterDriver.tap(secondLineTextBox);
+      await flutterDriver.enterText("sector 69");
+
+      SerializableFinder cityTextBox = find.byValueKey("City");
+      await flutterDriver.tap(cityTextBox);
+      await flutterDriver.enterText("Gurgaon");
+
+      SerializableFinder stateTextBox = find.byValueKey("State");
+      await flutterDriver.tap(stateTextBox);
+      await flutterDriver.enterText("Haryana");
+
+      SerializableFinder pincodeTextBox = find.byValueKey("Pincode");
+      await flutterDriver.tap(pincodeTextBox);
+      await flutterDriver.enterText("122101");
+
+      SerializableFinder submitButton = find.text("SUBMIT");
+      await flutterDriver.tap(submitButton);
+
+      await Future.delayed(const Duration(seconds: 1));
+    });
+
     //  Find radio buttons and policy names and select a policy
     //  Find "Smart Discounts" button and click on it
+    test("Choose Policy", () async {
+      SerializableFinder secondPolicy = find.byValueKey("Policy 1");
+      await flutterDriver.tap(secondPolicy);
+
+      SerializableFinder viewDiscountsButton = find.text("View Smart Device Discounts");
+      await flutterDriver.tap(viewDiscountsButton);
+
+      await Future.delayed(const Duration(seconds: 2));
+    });
+
     //  Find "Add Devices" button and click on it
+    test("Smart Discounts Page", () async {
+      SerializableFinder addDevicesButton = find.text("Add Devices");
+      await flutterDriver.tap(addDevicesButton);
+
+      await Future.delayed(const Duration(seconds: 2));
+    });
+    
     //  Find pop up for selecting a structure. Select a structure from list
     //  Find list of offers and confirm that only offers that can be availed are present
     //  Select an offer

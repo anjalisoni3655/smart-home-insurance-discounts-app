@@ -149,6 +149,7 @@ class _RadioGroupState extends State<RadioGroup> {
         scrollDirection: Axis.vertical,
         children: choices
             .map((entry) => RadioListTile(
+                  key: Key('Policy ${entry.index}'),
                   title: Row(
                     children: <Widget>[
                       Expanded(
