@@ -28,20 +28,17 @@ const device2Type = "sdm.devices.types.CAMERA";
 
 // Valid GET Request URLs
 const String getAllDevicesUrl = "${url}enterprises/$enterpriseId/devices";
-const String getDevicesOfStructure1Url =
-    "${url}enterprises/$enterpriseId/structures/$structure1Id/devices";
 const String getAllStructuresUrl = "${url}enterprises/$enterpriseId/structures";
 const String getDevice1StatusUrl =
     "${url}enterprises/$enterpriseId/devices/$device1Id";
 
 // Responses returned by the SDM API
 const device1Response =
-    '{"name" : "/enterprises/$enterpriseId/devices/$device1Id","type" : "$device1Type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}, "sdm.devices.traits.Info": {"customName": "$device1Name"}}}';
+    '{"name" : "/enterprises/$enterpriseId/devices/$device1Id","type" : "$device1Type", "assignee": "/enterprises/$enterpriseId/structures/$structure1Id","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "ONLINE"}, "sdm.devices.traits.DeviceInfoTrait": {"customName": "$device1Name"}}}';
 const device2Response =
-    '{"name" : "/enterprises/$enterpriseId/devices/$device2Id","type" : "$device2Type","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "OFFLINE"}, "sdm.devices.traits.Info": {"customName": "$device2Name"}}}';
+    '{"name" : "/enterprises/$enterpriseId/devices/$device2Id","type" : "$device2Type", "assignee": "/enterprises/$enterpriseId/structures/$structure2Id","traits" : {"sdm.devices.traits.DeviceConnectivityTrait" : {"status" : "OFFLINE"}, "sdm.devices.traits.DeviceInfoTrait": {"customName": "$device2Name"}}}';
 const allDevicesListResponse =
     '{ "devices": [$device1Response, $device2Response] }';
-const devicesOfStructureListResponse = '{ "devices": [$device1Response] }';
 const structure1Response =
     '{"name": "enterprises/$enterpriseId/structures/$structure1Id","traits": {"sdm.structures.traits.Info": {"customName": "$structure1Name"}}}';
 const structure2Response =
@@ -78,9 +75,6 @@ void main() {
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenAnswer((_) => Future.value(mockResponse));
     when(mockClient.get(getDevice1StatusUrl,
-            headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
-        .thenAnswer((_) => Future.value(mockResponse));
-    when(mockClient.get(getDevicesOfStructure1Url,
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenAnswer((_) => Future.value(mockResponse));
 
@@ -193,7 +187,7 @@ void main() {
 
   test("test 4.1: get devices of structure successful http request", () async {
     // defining behaviour
-    when(mockResponse.body).thenReturn(devicesOfStructureListResponse);
+    when(mockResponse.body).thenReturn(allDevicesListResponse);
 
     // testing
     expect((await accessDevices.getDevicesOfStructure(structure1Id)).value,
@@ -203,7 +197,7 @@ void main() {
   test("test 4.2: get devices of structure exception on http request",
       () async {
     // Defining behaviour: throws error
-    when(mockClient.get(getDevicesOfStructure1Url,
+    when(mockClient.get(getAllDevicesUrl,
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenThrow(new Exception());
 
@@ -214,13 +208,13 @@ void main() {
 
   test("test 4.3: get devices of structure timeout on http request", () async {
     // Defining behaviour: returns a response after 200 ms
-    when(mockClient.get(getDevicesOfStructure1Url,
+    when(mockClient.get(getAllDevicesUrl,
             headers: {HttpHeaders.authorizationHeader: "Bearer accessToken"}))
         .thenAnswer((_) async {
       await Future.delayed(new Duration(milliseconds: 200));
       return Future.value(mockResponse);
     }); // Mock response returns a body
-    when(mockResponse.body).thenReturn(devicesOfStructureListResponse);
+    when(mockResponse.body).thenReturn(allDevicesListResponse);
 
     // testing
     expect((await accessDevices.getDevicesOfStructure(structure1Id)).isEmpty,
