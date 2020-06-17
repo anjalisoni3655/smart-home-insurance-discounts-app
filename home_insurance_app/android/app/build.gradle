@@ -64,9 +64,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.9'
 
 }
-<<<<<<< HEAD
 
 apply plugin: 'com.google.gms.google-services'
-=======
-apply plugin: 'com.google.gms.google-services'
->>>>>>> df32d798217a416480199a64c1b986f3eec958d7

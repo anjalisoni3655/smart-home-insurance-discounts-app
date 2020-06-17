@@ -12,7 +12,6 @@ import 'package:sdk/sdk.dart';
 import 'dart:convert';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
-
 // widget for login with google
 class LoginScreen extends StatefulWidget {
   static const String id = '/login';
@@ -74,34 +73,29 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           onPressed: () async {
             try {
-              final RemoteConfig _remoteConfig = await RemoteConfig.instance;
-              await _remoteConfig.fetch();
-              await _remoteConfig.activateFetched();
-
-              String _clientId = _remoteConfig.getString('client_id');
-              String _clientSecret = _remoteConfig.getString('client_secret');
-              String _enterpriseId = _remoteConfig.getString('enterprise_id');
-              SDK sdk =
-                  SDKBuilder.build(_clientId, _clientSecret, _enterpriseId);
-              String status = await sdk.login();
+              globals.sdk = await globals.initialiseSDK();
+              String status = await globals.sdk.login();
 
               if (status == "login successful") {
-                Optional<Map> userDetailsOptional = await sdk.getUserDetails();
+                Optional<Map> userDetailsOptional =
+                    await globals.sdk.getUserDetails();
                 User user = User();
                 user.displayName = userDetailsOptional.value['displayName'];
                 user.email = userDetailsOptional.value['email'];
                 user.photoUrl = userDetailsOptional.value['photoUrl'];
 
-                final doc = await Firestore.instance.collection('user').where('email', isEqualTo: user.email).getDocuments();
+                final doc = await Firestore.instance
+                    .collection('user')
+                    .where('email', isEqualTo: user.email)
+                    .getDocuments();
 
-                if (doc.documents.length == 0) {print(' ========= uploading');
-                await uploadUserDetails(
-                  name: user.displayName,
-                  email: user.email,
-                  photourl: user.photoUrl,
-                );
+                if (doc.documents.length == 0) {
+                  await uploadUserDetails(
+                    name: user.displayName,
+                    email: user.email,
+                    photourl: user.photoUrl,
+                  );
                 }
-                  print('No need to upload');
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
                   return HomePage();
@@ -117,7 +111,6 @@ class _LoginScreenState extends State<LoginScreen> {
             }
           },
         ),
-
       ],
     );
   }

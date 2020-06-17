@@ -83,7 +83,6 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
                   heroTag: "pay",
-
                   onPressed: () {
                     // Pop the current page and replace it by the payment page
                     Navigator

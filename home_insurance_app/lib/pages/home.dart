@@ -20,18 +20,7 @@ class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
     // When user clicks on logOut , global user object calls the logout function
     if (value == 'Logout') {
-
-
-      final RemoteConfig _remoteConfig = await RemoteConfig.instance;
-      await _remoteConfig.fetch();
-      await _remoteConfig.activateFetched();
-
-      String _clientId = _remoteConfig.getString('client_id');
-      String _clientSecret = _remoteConfig.getString('client_secret');
-      String _enterpriseId = _remoteConfig.getString('enterprise_id');
-
-      SDK sdk = SDKBuilder.build(_clientId, _clientSecret, _enterpriseId);
-      String status = await sdk.logout();
+      String status = await globals.sdk.logout();
 
       if (status == "logout successful") {
         Navigator.pushReplacementNamed(context, '/login');
