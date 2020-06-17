@@ -12,7 +12,7 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   Map purchase;
-  String userName;
+  String userName = "";
 
   @override
   initState() {
@@ -123,7 +123,7 @@ class _PaymentState extends State<Payment> {
                 children: <Widget>[
                   RaisedButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/home');
+                        Navigator.of(context).pop();
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
