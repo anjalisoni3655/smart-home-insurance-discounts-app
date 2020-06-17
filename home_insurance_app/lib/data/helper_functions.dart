@@ -103,16 +103,13 @@ Future<List> getValidOffers(Map structure) async {
 // In case devices of the particular structure is 0 , empty list is returned .
   return (allowedOffers);
 }
-
-
-
-Future<String> getUserName () async {
+// Returns User name to payment page
+Future<String> getUserName() async {
   Optional<Map> response = await globals.user.getUserDetails();
-   if(response == Optional.empty()){
-     return "YOUR NAME";
-   }
-   else {
-     Map userDetails = response.value ;
-     return ( userDetails["displayName"]);
-   }
+  if (response == Optional.empty()) {
+    return "YOUR NAME";
+  } else {
+    Map userDetails = response.value;
+    return (userDetails["displayName"]);
+  }
 }

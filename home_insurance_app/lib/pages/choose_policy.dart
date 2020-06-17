@@ -84,7 +84,8 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   heroTag: "pay",
                   onPressed: () {
                     // Pop the current page and replace it by the payment page
-                    Navigator.pushReplacementNamed(context, Payment.id , arguments :  {
+                    Navigator
+                        .pushReplacementNamed(context, Payment.id, arguments: {
                       'selectedPolicy': userChoice,
                       'userAddress': data['userAddress'],
                     }); // For now , clicking on payment takes back to the home page

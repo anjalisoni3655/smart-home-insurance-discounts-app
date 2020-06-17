@@ -12,35 +12,36 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   Map purchase;
-  String userName ;
+  String userName;
 
   @override
   initState() {
     super.initState();
-    // Before page is build , user name is retrieved from sdk for displaying it .
+    // Before page is displayed , user name is retrieved from sdk .
     getUserName().then((name) {
       setState(() {
-        userName = name ;
+        userName = name;
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
-      int discount = (arguments['selectedOffer']!=null)?
-      arguments['selectedOffer'].discount:0 ;
+      int discount = (arguments['selectedOffer'] != null)
+          ? arguments['selectedOffer'].discount
+          : 0;
       purchase = {
 //      'structure_id': arguments['structure']['id'],
         'address': arguments['userAddress'],
         'policy': arguments['selectedPolicy'],
         'offer': arguments['selectedOffer'],
-        'total_discount': arguments['selectedPolicy'].cost *
-            0.01 *discount,
-        'discounted_cost': arguments['selectedPolicy'].cost -
-            (1 - 0.01 * discount ),
+        'total_discount': arguments['selectedPolicy'].cost * 0.01 * discount,
+        'discounted_cost':
+            arguments['selectedPolicy'].cost - (1 - 0.01 * discount),
       };
     }
 
@@ -60,20 +61,22 @@ class _PaymentState extends State<Payment> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(
-                height: screenheight/200,
+                height: screenheight / 200,
               ),
               TextWidget(
-                //TODO Get the name from the user details from sdk
-                  key: Key('name'), leftText: 'Name: ', rightText: userName),
+                  //TODO Get the name from the user details from sdk
+                  key: Key('name'),
+                  leftText: 'Name: ',
+                  rightText: userName),
               SizedBox(
-                height:screenheight/200,
+                height: screenheight / 200,
               ),
               TextWidget(
                 leftText: 'Address: ',
                 rightText: '${purchase['address']}' ?? '',
               ),
               SizedBox(
-                height:screenheight/200,
+                height: screenheight / 200,
               ),
               TextWidget(
                 leftText: 'Selected Policy: ',
@@ -87,34 +90,34 @@ class _PaymentState extends State<Payment> {
                 rightText: 'Rs. ${purchase['policy'].cost}' ?? '',
               ),
               SizedBox(
-                height:screenheight/200,
+                height: screenheight / 200,
               ),
               // The discount and offer received by the user will only be shown when user has selected one .
-              arguments['selectedOffer']!=null?
-                  Column(
-                    children: <Widget>[
-                      TextWidget(
-                        leftText: 'Offers Availed: ',
-                        rightText: '${purchase['offer'].requirements}' ?? '',
-                      ),
-                      SizedBox(
-                        height:screenheight/200,
-                      ),
-                      TextWidget(
-                        leftText: 'Total Discount: ',
-                        rightText: 'Rs ${purchase['total_discount']}' ?? '',
-                      ),
-                      SizedBox(
-                        height:screenheight/200,
-                      ),
-                      TextWidget(
-                        leftText: 'Discounted Cost: ',
-                        rightText: 'Rs ${purchase['discounted_cost']}' ?? '',
-                      ),
-                      SizedBox(height: screenheight/100),
-
-                    ],
-                  ):Container(),
+              arguments['selectedOffer'] != null
+                  ? Column(
+                      children: <Widget>[
+                        TextWidget(
+                          leftText: 'Offers Availed: ',
+                          rightText: '${purchase['offer'].requirements}' ?? '',
+                        ),
+                        SizedBox(
+                          height: screenheight / 200,
+                        ),
+                        TextWidget(
+                          leftText: 'Total Discount: ',
+                          rightText: 'Rs ${purchase['total_discount']}' ?? '',
+                        ),
+                        SizedBox(
+                          height: screenheight / 200,
+                        ),
+                        TextWidget(
+                          leftText: 'Discounted Cost: ',
+                          rightText: 'Rs ${purchase['discounted_cost']}' ?? '',
+                        ),
+                        SizedBox(height: screenheight / 100),
+                      ],
+                    )
+                  : Container(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -129,7 +132,7 @@ class _PaymentState extends State<Payment> {
                             Icons.payment,
                             color: Colors.white,
                           ),
-                          SizedBox(width:screenwidth/200),
+                          SizedBox(width: screenwidth / 200),
                           Text(
                             'Cancel Payment',
                             style: TextStyle(color: Colors.white),
@@ -140,7 +143,7 @@ class _PaymentState extends State<Payment> {
                       color: Colors.lightBlueAccent,
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0))),
-                  SizedBox(width: screenwidth/80),
+                  SizedBox(width: screenwidth / 80),
                   RaisedButton(
                       onPressed: () {
                         addInsurancePurchased(purchase);
@@ -152,7 +155,7 @@ class _PaymentState extends State<Payment> {
                             Icons.cancel,
                             color: Colors.white,
                           ),
-                          SizedBox(width: screenwidth/200),
+                          SizedBox(width: screenwidth / 200),
                           Text(
                             'Confirm Payment',
                             style: TextStyle(color: Colors.white),
