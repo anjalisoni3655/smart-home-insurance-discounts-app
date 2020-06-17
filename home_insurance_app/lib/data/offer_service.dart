@@ -10,7 +10,7 @@ Future<List> getAllowedOffers(BuildContext context) async {
 //  Call the resource picker
   bool isAuthorise = await callResourcePicker();
   if (isAuthorise) {
-    Optional<List> response = await globals.user.getAllStructures();
+    Optional<List> response = await globals.sdk.getAllStructures();
     List structures = response.value;
 
 // Helper function to show dialogue box for displaying structure list
@@ -30,7 +30,7 @@ Future<List> getAllowedOffers(BuildContext context) async {
 
 // Function for calling resource picker
 Future<bool> callResourcePicker() async {
-  String status = await globals.user.requestDeviceAccess();
+  String status = await globals.sdk.requestDeviceAccess();
   if (status == 'authorization successful') {
     //TODO : Redirect from the resource picker
     return true;
@@ -44,7 +44,7 @@ Future<List> getValidOffers(Map structure) async {
   List<Offer> allowedOffers = [];
   List<Offer> allOffers = CompanyDataBase.availableOffers;
   Optional<List> response =
-      await globals.user.getDevicesOfStructure(structure["id"]);
+      await globals.sdk.getDevicesOfStructure(structure["id"]);
   List devices = response.value;
   //Stores all unique 'types' of devices along with their respective count
   Map<String, int> userDevice = {};
