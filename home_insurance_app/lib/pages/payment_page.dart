@@ -14,6 +14,7 @@ class _PaymentState extends State<Payment> {
   @override
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
+    double screenwidth = MediaQuery.of(context).size.width;
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
       int discount = (arguments['selectedOffer']!=null)?
@@ -115,7 +116,7 @@ class _PaymentState extends State<Payment> {
                             Icons.payment,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(width:screenwidth/200),
                           Text(
                             'Cancel Payment',
                             style: TextStyle(color: Colors.white),
@@ -126,7 +127,7 @@ class _PaymentState extends State<Payment> {
                       color: Colors.lightBlueAccent,
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0))),
-                  SizedBox(width: 20),
+                  SizedBox(width: screenwidth/80),
                   RaisedButton(
                       onPressed: () {
                         addInsurancePurchased(purchase);
@@ -138,7 +139,7 @@ class _PaymentState extends State<Payment> {
                             Icons.cancel,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(width: screenwidth/200),
                           Text(
                             'Confirm Payment',
                             style: TextStyle(color: Colors.white),
