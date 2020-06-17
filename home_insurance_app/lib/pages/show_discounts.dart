@@ -4,6 +4,7 @@ import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
+import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 Offer selectedOffer;
 
@@ -89,11 +90,13 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                               Navigator.pop(context);
                               //Pops the previous page in the stack which is choose_policy page.
                               //For now all these arguments are  send to the home page
-                              Navigator.pop(context, {
-                                'selectedOffer': selectedOffer,
-                                'selectedPolicy': data['selectedPolicy'],
-                                'userAddress': data['userAddress'],
-                              });
+
+                              Navigator.pushNamed(context, Payment.id,
+                                  arguments: {
+                                    'selectedOffer': selectedOffer,
+                                    'selectedPolicy': data['selectedPolicy'],
+                                    'userAddress': data['userAddress'],
+                                  });
                             },
                             backgroundColor: Colors.lightBlueAccent,
                           ),
