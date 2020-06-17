@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:homeinsuranceapp/pages/choose_policy.dart';
 
 void main() {
-  testWidgets('Widget Test', (WidgetTester tester) async {
+  testWidgets('Show Policies Page  Widget Test', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: DisplayPolicies(),
