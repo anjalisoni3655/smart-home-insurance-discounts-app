@@ -10,10 +10,24 @@ Future<List> getAllowedOffers(BuildContext context) async {
 //  Call the resource picker
   bool isAuthorise = await callResourcePicker();
   if (isAuthorise) {
-    Optional<List> response = await globals.sdk.getAllStructures();
-    List structures = response.value;
+    allowedOffers = await selectStructure(context);
+  }
+  // In case authorisation is not successful or structure is empty , empty list is returned , else list with desired offers is returned
+  return (allowedOffers);
+}
 
-// Helper function to show dialogue box for displaying structure list
+Future<List> selectStructure(BuildContext context) async {
+  List<Offer> allowedOffers = [];
+  Optional<List> response;
+  try {
+    response = await globals.sdk.getAllStructures();
+  } catch (e) {
+    //TODO  Snackbar showing  "NO HOMES FOUND"
+    response = Optional.empty();
+  }
+  if (response != Optional.empty()) {
+    List structures = response.value;
+//    Helper function to show dialogue box for displaying structure list
     await showDialog(
         barrierDismissible: false,
         context: context,
@@ -21,7 +35,7 @@ Future<List> getAllowedOffers(BuildContext context) async {
 // Returns a Alert DialogueBox displaying all user structures
           return StructureAlertBox(structures);
         }).then((selectedStructure) async {
-// Send the structure ( id and name ) and get all offers which the user can get
+//Send the structure ( id and name ) and get all offers which the user can get
       allowedOffers = await getValidOffers(selectedStructure);
     });
   }
@@ -43,39 +57,48 @@ Future<bool> callResourcePicker() async {
 Future<List> getValidOffers(Map structure) async {
   List<Offer> allowedOffers = [];
   List<Offer> allOffers = CompanyDataBase.availableOffers;
-  Optional<List> response =
-      await globals.sdk.getDevicesOfStructure(structure["id"]);
-  List devices = response.value;
-  //Stores all unique 'types' of devices along with their respective count
-  Map<String, int> userDevice = {};
 
-  for (int i = 0; i < devices.length; i++) {
-//    Remove "sdm.devices.types." from the type trait of the device
-    String type = devices[i]["type"].substring(18, devices[i]["type"].length);
-    if (userDevice.containsKey(type)) {
-      userDevice[type]++;
-    }
-//    if device type is not present , create a new key in map
-    else {
-      userDevice[type] = 1;
-    }
+  Optional<List> response;
+  try {
+    response = await globals.sdk.getDevicesOfStructure(structure["id"]);
+  } catch (e) {
+    //TODO - Snackbar showing NO ACCESS TO DEVICES
+    response = Optional.empty();
   }
-
-//  Check which offer is valid . If valid add it to the list of allowed Offers .
-  bool isValid = true;
-
-  for (int i = 0; i < allOffers.length; i++) {
-    isValid = true;
-    for (var k in allOffers[i].requirements.keys) {
-      int count = userDevice[k] == null ? 0 : userDevice[k];
-      if (count < allOffers[i].requirements[k]) {
-        isValid = false;
-        break;
+  if (response != Optional.empty()) {
+    List devices = response.value;
+    //Stores all unique 'types' of devices along with their respective count
+    Map<String, int> userDevices = {};
+    for (int i = 0; i < devices.length; i++) {
+//    Remove "sdm.devices.types." from the type trait of the device
+      String type = devices[i]["type"].substring(18, devices[i]["type"].length);
+      if (userDevices.containsKey(type)) {
+        userDevices[type]++;
+      }
+//    if device type is not present , create a new key in map
+      else {
+        userDevices[type] = 1;
       }
     }
-    if (isValid == true) {
-      allowedOffers.add(allOffers[i]);
+
+//  Check which offer is valid . If valid add it to the list of allowed Offers .
+    bool isValid = true;
+
+    for (int i = 0; i < allOffers.length; i++) {
+      isValid = true;
+      for (var k in allOffers[i].requirements.keys) {
+        int count = userDevices[k] == null ? 0 : userDevices[k];
+        if (count < allOffers[i].requirements[k]) {
+          isValid = false;
+          break;
+        }
+      }
+      if (isValid == true) {
+        allowedOffers.add(allOffers[i]);
+      }
     }
   }
+
+// In case devices of the particular structure is 0 , empty list is returned .
   return (allowedOffers);
 }
