@@ -145,8 +145,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                 //pops the current page
                                 Navigator.pop(context);
                                 //Pops the previous page in the stack which is choose_policy page.
+                                Navigator.pop(context);
                                 //For now all these arguments are  send to the home page
-
                                 Navigator.pushNamed(context, Payment.id,
                                     arguments: {
                                       'selectedOffer': selectedOffer,
