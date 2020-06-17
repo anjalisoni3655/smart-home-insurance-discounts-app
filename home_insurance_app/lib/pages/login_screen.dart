@@ -7,6 +7,10 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:sdk/sdk.dart';
 import 'package:optional/optional.dart';
 import 'package:homeinsuranceapp/data/user.dart';
+import 'package:sdk/sdk.dart';
+import 'dart:convert';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
+
 
 // widget for login with google
 class LoginScreen extends StatefulWidget {
@@ -16,6 +20,19 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Future<void> userLogin() async {
+    //using global sdk object named user for calling sdk login function
+    String status = await globals.sdk.login();
+    if (status == "login successful" || status == "already logged in") {
+      Navigator.pushReplacementNamed(
+          context, '/home'); // Navigates to the home page
+
+    } else {
+      print("Login Failed");
+      //TODO Show a snackbar for displaying login failed
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -94,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
             }
           },
         ),
+
       ],
     );
   }
