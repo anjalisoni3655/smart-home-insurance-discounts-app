@@ -11,21 +11,22 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   Map purchase;
-
   @override
   Widget build(BuildContext context) {
+    double screenheight = MediaQuery.of(context).size.height;
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
+      int discount = (arguments['selectedOffer']!=null)?
+      arguments['selectedOffer'].discount:0 ;
       purchase = {
-//        'structure_id': arguments['structure']['id'],
+//      'structure_id': arguments['structure']['id'],
         'address': arguments['userAddress'],
         'policy': arguments['selectedPolicy'],
         'offer': arguments['selectedOffer'],
         'total_discount': arguments['selectedPolicy'].cost *
-            0.01 *
-            arguments['selectedOffer'].discount,
+            0.01 *discount,
         'discounted_cost': arguments['selectedPolicy'].cost -
-            (1 - 0.01 * arguments['selectedOffer'].discount),
+            (1 - 0.01 * discount ),
       };
     }
 
@@ -45,19 +46,20 @@ class _PaymentState extends State<Payment> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(
-                height: 20.0,
+                height: screenheight/200,
               ),
               TextWidget(
+                //TODO Get the name from the user details from sdk
                   key: Key('name'), leftText: 'Name: ', rightText: 'XYZ'),
               SizedBox(
-                height: 20.0,
+                height:screenheight/200,
               ),
               TextWidget(
                 leftText: 'Address: ',
                 rightText: '${purchase['address']}' ?? '',
               ),
               SizedBox(
-                height: 20.0,
+                height:screenheight/200,
               ),
               TextWidget(
                 leftText: 'Selected Policy: ',
@@ -71,27 +73,34 @@ class _PaymentState extends State<Payment> {
                 rightText: 'Rs. ${purchase['policy'].cost}' ?? '',
               ),
               SizedBox(
-                height: 20.0,
+                height:screenheight/200,
               ),
-              TextWidget(
-                leftText: 'Offers Availed: ',
-                rightText: '${purchase['offer'].requirements}' ?? '',
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextWidget(
-                leftText: 'Total Discount: ',
-                rightText: 'Rs ${purchase['total_discount']}' ?? '',
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextWidget(
-                leftText: 'Discounted Cost: ',
-                rightText: 'Rs ${purchase['discounted_cost']}' ?? '',
-              ),
-              SizedBox(height: 30),
+              // The discount and offer received by the user will only be shown when user has selected one .
+              arguments['selectedOffer']!=null?
+                  Column(
+                    children: <Widget>[
+                      TextWidget(
+                        leftText: 'Offers Availed: ',
+                        rightText: '${purchase['offer'].requirements}' ?? '',
+                      ),
+                      SizedBox(
+                        height:screenheight/200,
+                      ),
+                      TextWidget(
+                        leftText: 'Total Discount: ',
+                        rightText: 'Rs ${purchase['total_discount']}' ?? '',
+                      ),
+                      SizedBox(
+                        height:screenheight/200,
+                      ),
+                      TextWidget(
+                        leftText: 'Discounted Cost: ',
+                        rightText: 'Rs ${purchase['discounted_cost']}' ?? '',
+                      ),
+                      SizedBox(height: screenheight/100),
+
+                    ],
+                  ):Container(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
