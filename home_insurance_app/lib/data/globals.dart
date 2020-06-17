@@ -14,10 +14,4 @@ Future<SDK> initialiseSDK() async {
   return sdk;
 }
 
-class User {
-  String displayName;
-  String photoUrl;
-  String email;
-}
-
 SDK sdk;
