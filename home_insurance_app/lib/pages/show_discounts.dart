@@ -21,12 +21,18 @@ class DisplayDiscounts extends StatefulWidget {
 
 // This class provides overall layout of the page .
 class _DisplayDiscountsState extends State<DisplayDiscounts> {
+  bool accessStructure ;
   List<Offer> offersToDisplay = CompanyDataBase
       .availableOffers; // This list stores which all offers will be displayed
   // When a system back button/ Back button on appBar is pressed , discounts will again be disabled .
   Future<bool> _onBackPressed() async {
     disableDiscounts = true;
     Navigator.of(context).pop(true);
+  }
+  @override
+  void initState(){
+    super.initState();
+   accessStructure =  hasAccess();
   }
 
   @override
@@ -68,7 +74,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                 ),
               ),
               //So that the last discount does not get hidden behind the floating button
-
+              accessStructure ? Container():
               data == null
                   ? Container()
                   : // if data is null , this means that the user has come to this page only to see the discounts so buttons for payment should not appear
@@ -76,6 +82,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                       flex: 1,
                       child: Stack(
                         children: <Widget>[
+                          accessStructure ?
                           Align(
                             alignment: Alignment.topCenter,
                             child: FloatingActionButton.extended(
@@ -102,6 +109,12 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                               },
                               backgroundColor: Colors.lightBlueAccent,
                             ),
+                          ):Container(
+                            padding:  EdgeInsets.symmetric(horizontal:screenwidth/50, vertical: screenheight/50),
+                            child: Center(
+                              child: Text('Link devices to select o',
+                                  style:CustomTextStyle(fontSize:15.0)),
+                            ),
                           ),
                           Align(
                             alignment: Alignment.bottomLeft,
@@ -109,7 +122,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                               heroTag: 'Discounts',
                               icon: Icon(Icons.money_off),
                               label: Text(
-                                'Get Discounts',
+                                'Link Devices',
                                 style: CustomTextStyle(
                                     fontWeight: FontWeight.w900),
                               ),
@@ -159,7 +172,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                           ),
                         ],
                       ),
-                    )
+                    ),
+              SizedBox(height:screenheight/80),
             ],
           ),
         ),

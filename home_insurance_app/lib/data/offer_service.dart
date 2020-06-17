@@ -115,3 +115,13 @@ Future<String> getUserName() async {
     return (userDetails["displayName"]);
   }
 }
+ bool hasAccess () {
+  Map response =  globals.sdk.getCredentials();
+  if(response["accessToken"] == null ){
+    return false ;
+  }
+  else {
+    return true ;
+  }
+
+}
