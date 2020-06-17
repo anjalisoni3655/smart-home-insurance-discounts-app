@@ -7,7 +7,7 @@ import 'package:homeinsuranceapp/pages/list_structures.dart';
 
 Future<List> getAllowedOffers(BuildContext context) async {
   List<Offer> allowedOffers = [];
-//  Call the resource picker
+  // Call the resource picker
   bool isAuthorise = await callResourcePicker();
   if (isAuthorise) {
     allowedOffers = await selectStructure(context);
@@ -32,7 +32,7 @@ Future<List> selectStructure(BuildContext context) async {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
-// Returns a Alert DialogueBox displaying all user structures
+          // Returns a Alert DialogueBox displaying all user structures
           return StructureAlertBox(structures);
         }).then((selectedStructure) async {
 //Send the structure ( id and name ) and get all offers which the user can get
@@ -75,6 +75,7 @@ Future<List> getValidOffers(Map structure) async {
       if (userDevices.containsKey(type)) {
         userDevices[type]++;
       }
+
 //    if device type is not present , create a new key in map
       else {
         userDevices[type] = 1;
