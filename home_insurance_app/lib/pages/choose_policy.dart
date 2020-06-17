@@ -48,14 +48,13 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                       vertical: screenheight / 50),
                   child: Text(
                     'Available Policies',
-                    style: TextStyle(fontSize: 30.0),
+                    style: CustomTextStyle(fontSize: 30.0),
                   ),
                 ),
               ),
+              // Returns a Divider widget whose some attributes are defined by the parameters and others take the default value
               CustomDivider(
-                  // Returns a Divider widget whose some attributes are defined by the parameters and others take the default value
-                  height: screenheight / 100,
-                  width: screenwidth / 100),
+                  height: screenheight / 100, width: screenwidth / 100),
               CustomSizedBox(height: screenheight / 100),
               RadioGroup(data),
               CustomSizedBox(height: screenheight / 50),
@@ -66,6 +65,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/showdiscounts', arguments: {
                       'selectedPolicy': userChoice,
+                      'userAddress': data['userAddress'],
                     });
                   },
                   backgroundColor: Colors.lightBlueAccent,
@@ -83,7 +83,8 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   heroTag: "pay",
                   onPressed: () {
                     Navigator.pop(context, {
-                      'selectedPolicy': userChoice
+                      'selectedPolicy': userChoice,
+                      'userAddress': data['userAddress'],
                     }); // For now , clicking on payment takes back to the home page
                   },
                   backgroundColor: Colors.lightBlueAccent,
@@ -105,8 +106,9 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
 
 // This class is used to display a list of policies preceded by the radio buttons
 class RadioGroup extends StatefulWidget {
-  final Map data;
-  const RadioGroup(this.data);
+  Map data;
+  RadioGroup(this.data);
+
   //  RadioGroup({Key key , this.data}):super(key:key);
   @override
   _RadioGroupState createState() => _RadioGroupState();
@@ -119,6 +121,14 @@ class _RadioGroupState extends State<RadioGroup> {
   @override
   void initState() {
     super.initState();
+
+    // If data is null , atleast assign one policy so that test file don't fails
+    if (widget.data == null) {
+      widget.data = {
+        "policies": [Policy("No Policy", 0, 0)]
+      };
+    }
+
     userChoice = widget.data['policies']
         [0]; //By default the first policy will be displayed as selected  .
     for (int i = 0; i < widget.data['policies'].length; i++) {
@@ -182,7 +192,6 @@ class _RadioGroupState extends State<RadioGroup> {
                       userChoice = entry.policyOption;
                       //To make groupValue equal to value for the radio button .
                       choosenIndex = value;
-                      print(userChoice.policyName);
                     });
                   },
                 ))

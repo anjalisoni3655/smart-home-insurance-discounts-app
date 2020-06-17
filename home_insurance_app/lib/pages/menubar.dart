@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/my_devices.dart';
+import 'package:homeinsuranceapp/pages/contact.dart';
 
 // widget for the different options in the menu bar
 class AppDrawer extends StatefulWidget {
@@ -11,7 +12,6 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      key: Key('Menu Bar'),
       child: ListView(
         children: <Widget>[
           DrawerHeader(
@@ -26,13 +26,14 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('Purchase Policy'),
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.pushNamed(context, '/gethomedetails');
+                Navigator.of(context).pushNamed('/gethomedetails');
               }),
           ListTile(
               leading: Icon(Icons.money_off),
               title: Text('Smart Devices Discounts'),
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/showdiscounts');
               }),
           ListTile(
               leading: Icon(Icons.devices),
@@ -44,7 +45,7 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.phone),
               title: Text('Contact Us'),
               onTap: () {
-                Navigator.of(context).pop();
+                Navigator.pushNamed(context, Contact.id);
               }),
         ],
       ),

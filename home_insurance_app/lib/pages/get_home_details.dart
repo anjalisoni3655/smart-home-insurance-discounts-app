@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/company_policies.dart';
-import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
 String firstLineOfAddress;
 String secondLineOfAddress;
@@ -20,7 +20,7 @@ class _HomeDetailsState extends State<HomeDetails> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Widget _buildAddressFirstLine() {
     return TextFormField(
-        key: Key('First Address Line'), // Used for testing
+        key: Key("First Address Line"),
         decoration: InputDecoration(labelText: "First Line Of Address"),
         validator: (String value) {
           if (value.isEmpty) {
@@ -34,7 +34,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildAddressSecondLine() {
     return TextFormField(
-        key: Key('Second Address Line'), // Used for testing
+        key: Key("Second Address Line"),
         decoration: InputDecoration(
             labelText:
                 "Second Line Of Address"), //validator is not required as this field can be left empty
@@ -45,7 +45,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildCity() {
     return TextFormField(
-        key: Key('City'), // Used for testing
+        key: Key("City"),
         decoration: InputDecoration(labelText: " City "),
         validator: (String value) {
           if (value.isEmpty) {
@@ -59,7 +59,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildState() {
     return TextFormField(
-        key: Key('State'), // Used for testing
+        key: Key("State"),
         decoration: InputDecoration(labelText: "State/Union Territory"),
         validator: (String value) {
           if (value.isEmpty) {
@@ -73,7 +73,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildPincode() {
     return TextFormField(
-        key: Key('Pin-code'), // Used for testing
+        key: Key("Pin-code"),
         decoration: InputDecoration(labelText: "Pincode"),
         keyboardType: TextInputType.number,
         validator: (String value) {
@@ -92,18 +92,18 @@ class _HomeDetailsState extends State<HomeDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: CommonAppBar(),
+      appBar: AppBar(
+        title: Text('Home Insurance Company'),
+        centerTitle: true,
+        backgroundColor: kAppbarColor,
+      ),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(24),
           child: Column(
             children: <Widget>[
-              Text('Enter Your Address Details',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  )),
+              Text('Enter Your Address Details ',
+                  style: kGetDetailsHeadTextStyle),
               Form(
                 key: _formKey,
                 child: Column(
@@ -116,6 +116,8 @@ class _HomeDetailsState extends State<HomeDetails> {
                     _buildPincode(),
                     SizedBox(height: 100),
                     RaisedButton(
+                      color: Colors.brown,
+                      textColor: Colors.white,
                       onPressed: () {
                         if (!_formKey.currentState.validate()) {
                           return;
@@ -123,24 +125,32 @@ class _HomeDetailsState extends State<HomeDetails> {
                         // If the form is valid , all the values are saved in respective variables
                         _formKey.currentState.save();
                         //User Address object is sent to User Address class
-                        UserAddress curr_user = UserAddress(firstLineOfAddress,
-                            secondLineOfAddress, city, state, pincode);
+                        UserAddress curr_user_address = UserAddress(
+                            firstLineOfAddress,
+                            secondLineOfAddress,
+                            city,
+                            state,
+                            pincode);
                         CompanyPolicies pin_to_policy =
                             CompanyPolicies(pincode);
                         //Available policies corresponding to the pincode is saved in list .
                         List<Policy> available_policies =
                             pin_to_policy.get_policies();
+
                         // Available policies sent to the next for user selection .
                         Navigator.pushReplacementNamed(context, '/choosepolicy',
                             arguments: {
                               'policies': available_policies,
+                              'userAddress': curr_user_address,
                             });
                       },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0)),
                       splashColor: Colors.blueGrey,
                       child: Text(
-                        'Submit',
+                        'SUBMIT',
                         style: TextStyle(
-                          color: Colors.black54,
+                          //color: Colors.black54,
                           fontSize: 16,
                         ),
                       ),
