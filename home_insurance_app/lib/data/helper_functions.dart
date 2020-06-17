@@ -19,7 +19,6 @@ Future<List> getAllowedOffers(BuildContext context) async {
 Future<List> selectStructure(BuildContext context) async {
   List<Offer> allowedOffers = [];
   Optional<List> response;
-  // Try catch is applied to catch exceptions thrown by sdk  when access token is not set
   try {
     response = await globals.user.getAllStructures();
   } catch (e) {
