@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/company_database.dart';
-import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
+import 'package:homeinsuranceapp/data/offer_dao.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
@@ -124,7 +123,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
   @override
   void initState() {
     super.initState();
-    getOffers().then((offers) {
+    OfferDao.getOffers().then((offers) {
       setState(() {
         availableOffers = offers;
         isSelected = List.filled(availableOffers.length,

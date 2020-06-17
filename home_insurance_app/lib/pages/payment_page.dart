@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/database_utils.dart';
+import 'package:homeinsuranceapp/data/purchase.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 
 class Payment extends StatefulWidget {
@@ -10,23 +12,14 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
-  Map purchase;
+  Purchase purchase;
 
   @override
   Widget build(BuildContext context) {
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
-      purchase = {
-//        'structure_id': arguments['structure']['id'],
-        'address': arguments['userAddress'],
-        'policy': arguments['selectedPolicy'],
-        'offer': arguments['selectedOffer'],
-        'total_discount': arguments['selectedPolicy'].cost *
-            0.01 *
-            arguments['selectedOffer'].discount,
-        'discounted_cost': arguments['selectedPolicy'].cost -
-            (1 - 0.01 * arguments['selectedOffer'].discount),
-      };
+//      purchase = new Purchase(arguments['selectedPolicy'], arguments['selectedOffer'], arguments['structure']['id'], Timestamp.now(), arguments['userAddress']);
+      purchase = new Purchase(arguments['selectedPolicy'], arguments['selectedOffer'], "structure-id", Timestamp.now(), arguments['userAddress']);
     }
 
     return Scaffold(
@@ -54,42 +47,42 @@ class _PaymentState extends State<Payment> {
               ),
               TextWidget(
                 leftText: 'Address: ',
-                rightText: '${purchase['address']}' ?? '',
+                rightText: '${purchase.address}' ?? '',
               ),
               SizedBox(
                 height: 20.0,
               ),
               TextWidget(
                 leftText: 'Selected Policy: ',
-                rightText: '${purchase['policy'].policyName}' ?? '',
+                rightText: '${purchase.policy.policyName}' ?? '',
               ),
               SizedBox(
                 height: 20.0,
               ),
               TextWidget(
                 leftText: 'Cost: ',
-                rightText: 'Rs. ${purchase['policy'].cost}' ?? '',
+                rightText: 'Rs. ${purchase.policy.cost}' ?? '',
               ),
               SizedBox(
                 height: 20.0,
               ),
               TextWidget(
                 leftText: 'Offers Availed: ',
-                rightText: '${purchase['offer'].requirements}' ?? '',
+                rightText: '${purchase.offer.requirements}' ?? '',
               ),
               SizedBox(
                 height: 20.0,
               ),
               TextWidget(
-                leftText: 'Total Discount: ',
-                rightText: 'Rs ${purchase['total_discount']}' ?? '',
+                leftText: 'Discount: ',
+                rightText: '${purchase.offer.discount} %' ?? '',
               ),
               SizedBox(
                 height: 20.0,
               ),
               TextWidget(
                 leftText: 'Discounted Cost: ',
-                rightText: 'Rs ${purchase['discounted_cost']}' ?? '',
+                rightText: 'Rs ${purchase.discountedCost}' ?? '',
               ),
               SizedBox(height: 30),
               Row(

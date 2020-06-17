@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/database_utilities.dart';
+import 'package:homeinsuranceapp/data/policy_dao.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/components/css.dart';
 
@@ -131,7 +131,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                             state,
                             pincode);
                         //Available policies corresponding to the pincode is saved in list .
-                        getPolicies(pincode).then((policies) {
+                        PolicyDao.getPolicies(pincode).then((policies) {
                           Navigator.pushReplacementNamed(
                               context, '/choosepolicy',
                               arguments: {
