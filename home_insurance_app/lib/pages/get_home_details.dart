@@ -19,6 +19,7 @@ class _HomeDetailsState extends State<HomeDetails> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Widget _buildAddressFirstLine() {
     return TextFormField(
+        key: Key("First Address Line"),
         decoration: InputDecoration(labelText: "First Line Of Address"),
         validator: (String value) {
           if (value.isEmpty) {
@@ -32,6 +33,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildAddressSecondLine() {
     return TextFormField(
+        key: Key("Second Address Line"),
         decoration: InputDecoration(
             labelText:
                 "Second Line Of Address"), //validator is not required as this field can be left empty
@@ -42,6 +44,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildCity() {
     return TextFormField(
+        key: Key("City"),
         decoration: InputDecoration(labelText: " City "),
         validator: (String value) {
           if (value.isEmpty) {
@@ -55,6 +58,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildState() {
     return TextFormField(
+        key: Key("State"),
         decoration: InputDecoration(labelText: "State/Union Territory"),
         validator: (String value) {
           if (value.isEmpty) {
@@ -68,6 +72,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildPincode() {
     return TextFormField(
+        key: Key("Pin-code"),
         decoration: InputDecoration(labelText: "Pincode"),
         keyboardType: TextInputType.number,
         validator: (String value) {

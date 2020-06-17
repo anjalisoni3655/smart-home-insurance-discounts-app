@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 
 // widget for login with google
 class LoginScreen extends StatefulWidget {
-  static const String id = '/';
+  static const String id = '/login';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
