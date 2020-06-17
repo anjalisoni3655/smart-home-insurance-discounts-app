@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/components/css.dart';
+import 'package:homeinsuranceapp/data/policy_dao.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
-import 'package:homeinsuranceapp/data/company_policies.dart';
+import 'package:homeinsuranceapp/components/css.dart';
 
 String firstLineOfAddress;
 String secondLineOfAddress;
@@ -131,18 +131,14 @@ class _HomeDetailsState extends State<HomeDetails> {
                             city,
                             state,
                             pincode);
-                        CompanyPolicies pin_to_policy =
-                            CompanyPolicies(pincode);
                         //Available policies corresponding to the pincode is saved in list .
-                        List<Policy> available_policies =
-                            pin_to_policy.get_policies();
-
-                        // Available policies sent to the next for user selection .
-                        Navigator.pushReplacementNamed(context, '/choosepolicy',
-                            arguments: {
-                              'policies': available_policies,
-                              'userAddress': curr_user_address,
-                            });
+                        PolicyDao.getPolicies(pincode).then((policies) {
+                          Navigator.pushReplacementNamed(
+                              context, '/choosepolicy', arguments: {
+                            'policies': policies,
+                            'userAddress': curr_user_address
+                          });
+                        });
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0)),
