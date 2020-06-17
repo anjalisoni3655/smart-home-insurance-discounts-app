@@ -14,7 +14,6 @@ Offer selectedOffer;
 
 // None of the discounts will be selected ( It should be globally defined because both the classes controls it )
 bool disableDiscounts = true;
-
 class DisplayDiscounts extends StatefulWidget {
   @override
   _DisplayDiscountsState createState() => _DisplayDiscountsState();
@@ -24,7 +23,6 @@ class DisplayDiscounts extends StatefulWidget {
 class _DisplayDiscountsState extends State<DisplayDiscounts> {
   List<Offer> offersToDisplay = CompanyDataBase
       .availableOffers; // This list stores which all offers will be displayed
-
   // When a system back button/ Back button on appBar is pressed , discounts will again be disabled .
   Future<bool> _onBackPressed() async {
     disableDiscounts = true;
@@ -207,8 +205,8 @@ class _AllDiscountsState extends State<AllDiscounts> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                   side: BorderSide(
-                    color: Colors.green,
-                    width: 5.0,
+                    color: Colors.brown[100],
+                    width: 1.0,
                   ),
                 ),
                 child: InkWell(

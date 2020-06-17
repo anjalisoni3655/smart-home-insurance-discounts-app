@@ -145,6 +145,7 @@ class _PaymentState extends State<Payment> {
                       child: RaisedButton(
                           onPressed: () {
                             addInsurancePurchased(purchase);
+                            Navigator.of(context).pop();
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
