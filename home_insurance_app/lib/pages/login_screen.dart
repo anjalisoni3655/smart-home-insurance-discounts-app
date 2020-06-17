@@ -7,6 +7,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:sdk/sdk.dart';
 import 'package:optional/optional.dart';
 import 'package:homeinsuranceapp/data/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // widget for login with google
 class LoginScreen extends StatefulWidget {
@@ -73,12 +74,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 user.displayName = userDetailsOptional.value['displayName'];
                 user.email = userDetailsOptional.value['email'];
                 user.photoUrl = userDetailsOptional.value['photoUrl'];
+
+                final doc = await Firestore.instance.collection('user').where('email', isEqualTo: user.email).getDocuments();
+
+                if (doc.documents.length == 0) {print(' ========= uploading');
                 await uploadUserDetails(
                   name: user.displayName,
                   email: user.email,
                   photourl: user.photoUrl,
                 );
-
+                }
+                  print('No need to upload');
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
                   return HomePage();

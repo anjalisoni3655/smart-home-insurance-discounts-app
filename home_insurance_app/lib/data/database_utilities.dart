@@ -31,8 +31,8 @@ Future<void> uploadUserDetails(
   await localStorage.write(key: 'name', value: name);
   await localStorage.write(key: 'email', value: email);
   await localStorage.write(key: 'photourl', value: photourl);
-  await Firestore.instance.collection('user').document(email).setData({
+  await Firestore.instance.collection('user').add({
     'name': name,
     'email': email,
-  }, merge: true);
+  },);
 }
