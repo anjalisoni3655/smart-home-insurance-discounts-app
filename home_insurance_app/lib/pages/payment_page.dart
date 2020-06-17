@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/database_utils.dart';
-import 'package:homeinsuranceapp/pages/home.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
+import 'package:homeinsuranceapp/data/helper_functions.dart';
 
 class Payment extends StatefulWidget {
   static const id = 'payment';
@@ -11,6 +12,18 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   Map purchase;
+  String userName ;
+
+  @override
+  initState() {
+    super.initState();
+    // Before page is build , user name is retrieved from sdk for displaying it .
+    getUserName().then((name) {
+      setState(() {
+        userName = name ;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
@@ -51,7 +64,7 @@ class _PaymentState extends State<Payment> {
               ),
               TextWidget(
                 //TODO Get the name from the user details from sdk
-                  key: Key('name'), leftText: 'Name: ', rightText: 'XYZ'),
+                  key: Key('name'), leftText: 'Name: ', rightText: userName),
               SizedBox(
                 height:screenheight/200,
               ),
