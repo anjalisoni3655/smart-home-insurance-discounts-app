@@ -17,8 +17,9 @@ class _PaymentState extends State<Payment> {
 
   @override
   void initState() {
-    super.initState();
     // Before page is displayed , user name is retrieved from sdk .
+    super.initState();
+    //While testing sdk is not initialised , so username is returned as empty string
     if (globals.user != null) {
       getUserName().then((name) {
         setState(() {
