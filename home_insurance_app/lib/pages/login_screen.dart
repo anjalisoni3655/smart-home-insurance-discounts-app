@@ -14,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
     globals.user = await globals.initialiseSDK();
@@ -22,7 +23,15 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushNamed(context, '/home'); // Navigates to the home page
     } else {
       print("Login Failed");
-      //TODO Show a snackbar for displaying login failed
+      final _snackBar = SnackBar(
+        content: Text('Logout Failed'),
+        action: SnackBarAction(
+            label: 'Retry',
+            onPressed: () async {
+              await userLogin();
+            }),
+      );
+      _globalKey.currentState.showSnackBar(_snackBar);
     }
   }
 

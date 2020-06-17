@@ -19,6 +19,8 @@ class DisplayDiscounts extends StatefulWidget {
 }
 
 // This class provides overall layout of the page .
+final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+
 class _DisplayDiscountsState extends State<DisplayDiscounts> {
   List<Offer> offersToDisplay = CompanyDataBase
       .availableOffers; // This list stores which all offers will be displayed
@@ -96,7 +98,11 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                     disableDiscounts =
                                         false; // Now the user can select them
                                   } else {
-                                    //TODO Show a snackbar displaying that the user cannot get any offers right now
+                                    final _snackBar = SnackBar(
+                                      content: Text('No offers selected'),
+                                    );
+                                    _globalKey.currentState
+                                        .showSnackBar(_snackBar);
                                   }
                                 });
                               },
@@ -123,7 +129,11 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                     disableDiscounts =
                                         false; // Now the user can select them
                                   } else {
-                                    //TODO Show a snackbar displaying that the user cannot get any offers right now
+                                    final _snackBar = SnackBar(
+                                      content: Text('No offers selected'),
+                                    );
+                                    _globalKey.currentState
+                                        .showSnackBar(_snackBar);
                                   }
                                 });
                               },

@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   void onClick(String value) async {
     // When user clicks on logOut , global user object calls the logout function
     if (value == 'Logout') {
@@ -22,7 +23,15 @@ class _HomePageState extends State<HomePage> {
       if (status == "logout successful") {
         Navigator.pop(context);
       } else {
-        //TODO : Add a snackbar displaying unsuccessful logout
+        final _snackBar = SnackBar(
+          content: Text('Logout Failed'),
+          action: SnackBarAction(
+              label: 'Retry',
+              onPressed: () async {
+                onClick('logout');
+              }),
+        );
+        _globalKey.currentState.showSnackBar(_snackBar);
       }
     } else {
       // user clicks on the profile option in Popup Menu Button

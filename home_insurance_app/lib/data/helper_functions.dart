@@ -5,6 +5,7 @@ import 'package:optional/optional.dart';
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/list_structures.dart';
 
+final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
 Future<List> getAllowedOffers(BuildContext context) async {
   List<Offer> allowedOffers = [];
 //  Call the resource picker
@@ -22,7 +23,10 @@ Future<List> selectStructure(BuildContext context) async {
   try {
     response = await globals.user.getAllStructures();
   } catch (e) {
-    //TODO  Snackbar showing  "NO HOMES FOUND"
+    final _snackBar = SnackBar(
+      content: Text('No Homes Found'),
+    );
+    _globalKey.currentState.showSnackBar(_snackBar);
     response = Optional.empty();
   }
   if (response != Optional.empty()) {
@@ -47,6 +51,7 @@ Future<bool> callResourcePicker() async {
   String status = await globals.user.requestDeviceAccess();
   if (status == 'authorization successful') {
     //TODO : Redirect from the resource picker
+
     return true;
   } else {
     return false;
@@ -62,7 +67,10 @@ Future<List> getValidOffers(Map structure) async {
   try {
     response = await globals.user.getDevicesOfStructure(structure["id"]);
   } catch (e) {
-    //TODO - Snackbar showing NO ACCESS TO DEVICES
+    final _snackBar = SnackBar(
+      content: Text('No Access to Devices'),
+    );
+    _globalKey.currentState.showSnackBar(_snackBar);
     response = Optional.empty();
   }
   if (response != Optional.empty()) {
