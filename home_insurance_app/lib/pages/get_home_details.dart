@@ -137,6 +137,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                               context, '/choosepolicy',
                               arguments: {
                                 'policies': policies,
+                                'userAddress': curr_user_address
                               });
                         });
                       },
