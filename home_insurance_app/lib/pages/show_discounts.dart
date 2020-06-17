@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
-
 import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
+import 'package:optional/optional.dart';
+import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //Offers selected by the user
 Offer selectedOffer;
 
-// Offers displayed by the company
-CompanyDataBase offers = new CompanyDataBase();
-
 class DisplayDiscounts extends StatefulWidget {
   @override
-  DisplayDiscountsState createState() => DisplayDiscountsState();
+  _DisplayDiscountsState createState() => _DisplayDiscountsState();
 }
 
 // This class provides overall layout of the page .
-class DisplayDiscountsState extends State<DisplayDiscounts> {
+class _DisplayDiscountsState extends State<DisplayDiscounts> {
+  List<Offer> offersToDisplay = CompanyDataBase
+      .availableOffers; // This list stores which all offers will be displayed
+
   @override
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
@@ -51,7 +53,7 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                   CustomDivider(
                       height: screenheight / 100, width: screenwidth / 50),
                   SizedBox(height: screenheight / 100),
-                  AllDiscounts(),
+                  AllDiscounts(offersToDisplay),
                   SizedBox(height: screenheight / 50),
                 ],
               ),
@@ -75,7 +77,15 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
                               style:
                                   CustomTextStyle(fontWeight: FontWeight.w900),
                             ),
-                            onPressed: () {}, // resource picker url is launched
+                            onPressed: () async {
+                              // Get offers which the user is eligible to get after launching resource picker
+                              List<Offer> allowedOffers =
+                                  await getAllowedOffers(context);
+
+                              setState(() {
+                                offersToDisplay = allowedOffers;
+                              });
+                            },
                             backgroundColor: Colors.lightBlueAccent,
                           ),
                         ),
@@ -115,22 +125,32 @@ class DisplayDiscountsState extends State<DisplayDiscounts> {
   }
 }
 
+// This class provides overall layout of the page .
 class AllDiscounts extends StatefulWidget {
+  final List<Offer> offerList; // This is the offer list that will be displayed
+  const AllDiscounts(this.offerList);
+
   @override
   _AllDiscountsState createState() => _AllDiscountsState();
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
-  List<bool> isSelected = List.filled(CompanyDataBase.availableOffers.length,
-      false); // Initially all policies are deselected
+  List<bool> isSelected = [];
   int currSelected = 0; // Currently no discount is selected
+
+  void initState() {
+    super.initState();
+    isSelected = List.filled(widget.offerList.length,
+        false); // Initially all policies are deselected
+  }
 
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
+
     return Expanded(
       child: ListView.builder(
-          itemCount: CompanyDataBase.availableOffers.length,
+          itemCount: widget.offerList.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -153,8 +173,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       isSelected[currSelected] = false;
                       currSelected = index;
                       isSelected[index] = true;
-
-                      selectedOffer = CompanyDataBase.availableOffers[index];
+                      selectedOffer = widget.offerList[index];
                     });
                   },
                   child: Container(
@@ -163,7 +182,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 10,
                           child: Column(
-                              children: (CompanyDataBase.availableOffers[index])
+                              children: (widget.offerList[index])
                                   .requirements
                                   .entries
                                   .map(
@@ -187,7 +206,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         Expanded(
                           flex: 2,
                           child: Text(
-                            '${CompanyDataBase.availableOffers[index].discount} %',
+                            '${widget.offerList[index].discount} %',
                             textAlign: TextAlign.center,
                             style: CustomTextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 20.0),

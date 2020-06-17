@@ -5,7 +5,6 @@ import 'package:homeinsuranceapp/pages/my_devices.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
 import 'package:homeinsuranceapp/pages/contact.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
-import 'package:homeinsuranceapp/pages/get_home_details.dart';
 import 'package:homeinsuranceapp/pages/choose_policy.dart';
 import 'package:homeinsuranceapp/pages/show_discounts.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
@@ -25,11 +24,10 @@ class MyApp extends StatelessWidget {
       initialRoute: LoginScreen.id,
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
-        HomePage.id: (context) => HomePage(),
         Profile.id: (context) => Profile(),
+        '/home': (context) => HomePage(),
         MyDevices.id: (context) => MyDevices(),
         Contact.id: (context) => Contact(),
-        '/': (context) => HomePage(),
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),
         '/showdiscounts': (context) => DisplayDiscounts(),
