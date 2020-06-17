@@ -22,7 +22,6 @@ class _HomePageState extends State<HomePage> {
       if (status == "logout successful") {
         Navigator.pushReplacementNamed(context, '/login');
       } else {
-        print("$status");
         //TODO : Add a snackbar displaying unsuccessful logout
       }
     } else {
