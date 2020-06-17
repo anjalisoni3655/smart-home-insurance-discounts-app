@@ -10,7 +10,10 @@ Future<SDK> con({test = 0}) async {
   String _clientId = _remoteConfig.getString('client_id');
   String _clientSecret = _remoteConfig.getString('client_secret');
   String _enterpriseId = _remoteConfig.getString('enterprise_id');
-  SDK sdk = SDKBuilder.build(_clientId, _clientSecret, _enterpriseId, testing: test, nonInteractiveFlowTimout: const Duration(seconds: 10), interactiveFlowTimeout: const Duration(minutes: 5));
+  SDK sdk = SDKBuilder.build(_clientId, _clientSecret, _enterpriseId,
+      testing: test,
+      nonInteractiveFlowTimout: const Duration(seconds: 10),
+      interactiveFlowTimeout: const Duration(minutes: 5));
   return sdk;
 }
 
