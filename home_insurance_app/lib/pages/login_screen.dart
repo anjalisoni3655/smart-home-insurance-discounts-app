@@ -20,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (status == "login successful" || status == "already logged in") {
       Navigator.pushReplacementNamed(
           context, '/home'); // Navigates to the home page
+
     } else {
       print("Login Failed");
       //TODO Show a snackbar for displaying login failed

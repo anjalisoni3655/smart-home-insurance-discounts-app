@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/show_discounts.dart';
 
 void main() {
-  testWidgets('Widget Test', (WidgetTester tester) async {
+  testWidgets('Show Discounts Page  Widget Test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
 
     await tester.pumpWidget(MaterialApp(

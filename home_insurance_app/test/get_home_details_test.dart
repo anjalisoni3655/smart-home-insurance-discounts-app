@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
 
 void main() {
-  testWidgets('Widget Test', (WidgetTester tester) async {
+  testWidgets('Test for getting home address details',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: HomeDetails(),

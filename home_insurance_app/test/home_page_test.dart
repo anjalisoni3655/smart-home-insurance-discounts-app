@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
 
 void main() {
-  testWidgets('Widget Test', (WidgetTester tester) async {
+  testWidgets('Home Page Widget Test ', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: HomePage(),
