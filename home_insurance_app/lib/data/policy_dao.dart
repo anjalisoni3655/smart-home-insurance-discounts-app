@@ -23,4 +23,3 @@ class PolicyDao {
     return (pincode % 3) + 1;
   }
 }
-

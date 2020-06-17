@@ -134,11 +134,10 @@ class _HomeDetailsState extends State<HomeDetails> {
                         //Available policies corresponding to the pincode is saved in list .
                         PolicyDao.getPolicies(pincode).then((policies) {
                           Navigator.pushReplacementNamed(
-                              context, '/choosepolicy',
-                              arguments: {
-                                'policies': policies,
-                                'userAddress': curr_user_address
-                              });
+                              context, '/choosepolicy', arguments: {
+                            'policies': policies,
+                            'userAddress': curr_user_address
+                          });
                         });
                       },
                       shape: RoundedRectangleBorder(
