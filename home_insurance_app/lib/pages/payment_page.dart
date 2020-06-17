@@ -41,7 +41,7 @@ class _PaymentState extends State<Payment> {
         'offer': arguments['selectedOffer'],
         'total_discount': arguments['selectedPolicy'].cost * 0.01 * discount,
         'discounted_cost':
-            arguments['selectedPolicy'].cost - (1 - 0.01 * discount),
+            arguments['selectedPolicy'].cost * (1 - 0.01 * discount),
       };
     }
 
@@ -99,10 +99,13 @@ class _PaymentState extends State<Payment> {
                 // The discount and offer received by the user will only be shown when user has selected one .
                 arguments['selectedOffer'] != null
                     ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           TextWidget(
                             leftText: 'Offers Availed: ',
-                            rightText: '${purchase['offer'].requirements}' ?? '',
+                            rightText:
+                                '${purchase['offer'].requirements}' ?? '',
                           ),
                           SizedBox(
                             height: screenheight / 200,
@@ -116,17 +119,17 @@ class _PaymentState extends State<Payment> {
                           ),
                           TextWidget(
                             leftText: 'Discounted Cost: ',
-                            rightText: 'Rs ${purchase['discounted_cost']}' ?? '',
+                            rightText:
+                                'Rs ${purchase['discounted_cost']}' ?? '',
                           ),
                           SizedBox(height: screenheight / 100),
                         ],
                       )
                     : Container(),
-
               ],
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 20),
+              margin: EdgeInsets.only(bottom: screenheight / 100),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -148,7 +151,7 @@ class _PaymentState extends State<Payment> {
                           ),
                         ],
                       ),
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(screenwidth / 100),
                       color: Colors.lightBlueAccent,
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0))),
@@ -171,7 +174,7 @@ class _PaymentState extends State<Payment> {
                           ),
                         ],
                       ),
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(screenwidth / 100),
                       color: Colors.lightBlueAccent,
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0))),
