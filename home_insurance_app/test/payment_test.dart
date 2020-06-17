@@ -4,11 +4,12 @@ import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 void main() {
   final GlobalKey<NavigatorState> key = GlobalKey<NavigatorState>();
   final ValueKey buttonKey = ValueKey('button_key');
-  final Offer selectedOffer = Offer({'thermostat': 1}, 2);
+  final Offer selectedOffer = Offer({'test': 1}, 2);
   final Policy selectedPolicy = Policy('tenants-policy', 5, 1000);
   final UserAddress userAddress =
       UserAddress('first_address', 'second_address', 'city', 'state', 208022);

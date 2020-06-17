@@ -27,7 +27,7 @@ Future<List> selectStructure(BuildContext context) async {
   }
   if (response != Optional.empty()) {
     List structures = response.value;
-    // Helper function to show dialogue box for displaying structure list
+//    Helper function to show dialogue box for displaying structure list
     await showDialog(
         barrierDismissible: false,
         context: context,
@@ -35,7 +35,7 @@ Future<List> selectStructure(BuildContext context) async {
           // Returns a Alert DialogueBox displaying all user structures
           return StructureAlertBox(structures);
         }).then((selectedStructure) async {
-      //Send the structure ( id and name ) and get all offers which the user can get
+//Send the structure ( id and name ) and get all offers which the user can get
       allowedOffers = await getValidOffers(selectedStructure);
     });
   }
@@ -70,18 +70,19 @@ Future<List> getValidOffers(Map structure) async {
     //Stores all unique 'types' of devices along with their respective count
     Map<String, int> userDevices = {};
     for (int i = 0; i < devices.length; i++) {
-      // Remove "sdm.devices.types." from the type trait of the device
+//    Remove "sdm.devices.types." from the type trait of the device
       String type = devices[i]["type"].substring(18, devices[i]["type"].length);
       if (userDevices.containsKey(type)) {
         userDevices[type]++;
       }
-      // if device type is not present , create a new key in map
+
+//    if device type is not present , create a new key in map
       else {
         userDevices[type] = 1;
       }
     }
 
-    // Check which offer is valid . If valid add it to the list of allowed Offers .
+//  Check which offer is valid . If valid add it to the list of allowed Offers .
     bool isValid = true;
 
     for (int i = 0; i < allOffers.length; i++) {
@@ -99,6 +100,18 @@ Future<List> getValidOffers(Map structure) async {
     }
   }
 
-  // In case devices of the particular structure is 0 , empty list is returned .
+// In case devices of the particular structure is 0 , empty list is returned .
   return (allowedOffers);
+}
+
+// Returns User name to payment page
+Future<String> getUserName() async {
+  Optional<Map> response = await globals.sdk.getUserDetails();
+  print(response);
+  if (response == Optional.empty()) {
+    return "YOUR NAME";
+  } else {
+    Map userDetails = response.value;
+    return (userDetails["displayName"]);
+  }
 }
