@@ -5,6 +5,8 @@ import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/data/helper_functions.dart';
+import 'package:optional/optional.dart';
+import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //Offers selected by the user
