@@ -55,70 +55,79 @@ class _PaymentState extends State<Payment> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              SizedBox(
-                height: screenheight / 200,
-              ),
-              TextWidget(
-                  //TODO Get the name from the user details from sdk
-                  key: Key('name'),
-                  leftText: 'Name: ',
-                  rightText: userName),
-              SizedBox(
-                height: screenheight / 200,
-              ),
-              TextWidget(
-                leftText: 'Address: ',
-                rightText: '${purchase['address']}' ?? '',
-              ),
-              SizedBox(
-                height: screenheight / 200,
-              ),
-              TextWidget(
-                leftText: 'Selected Policy: ',
-                rightText: '${purchase['policy'].policyName}' ?? '',
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextWidget(
-                leftText: 'Cost: ',
-                rightText: 'Rs. ${purchase['policy'].cost}' ?? '',
-              ),
-              SizedBox(
-                height: screenheight / 200,
-              ),
-              // The discount and offer received by the user will only be shown when user has selected one .
-              arguments['selectedOffer'] != null
-                  ? Column(
-                      children: <Widget>[
-                        TextWidget(
-                          leftText: 'Offers Availed: ',
-                          rightText: '${purchase['offer'].requirements}' ?? '',
-                        ),
-                        SizedBox(
-                          height: screenheight / 200,
-                        ),
-                        TextWidget(
-                          leftText: 'Total Discount: ',
-                          rightText: 'Rs ${purchase['total_discount']}' ?? '',
-                        ),
-                        SizedBox(
-                          height: screenheight / 200,
-                        ),
-                        TextWidget(
-                          leftText: 'Discounted Cost: ',
-                          rightText: 'Rs ${purchase['discounted_cost']}' ?? '',
-                        ),
-                        SizedBox(height: screenheight / 100),
-                      ],
-                    )
-                  : Container(),
-              Row(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                SizedBox(
+                  height: screenheight / 200,
+                ),
+                TextWidget(
+                    //TODO Get the name from the user details from sdk
+                    key: Key('name'),
+                    leftText: 'Name: ',
+                    rightText: userName),
+                SizedBox(
+                  height: screenheight / 200,
+                ),
+                TextWidget(
+                  leftText: 'Address: ',
+                  rightText: '${purchase['address']}' ?? '',
+                ),
+                SizedBox(
+                  height: screenheight / 200,
+                ),
+                TextWidget(
+                  leftText: 'Selected Policy: ',
+                  rightText: '${purchase['policy'].policyName}' ?? '',
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextWidget(
+                  leftText: 'Cost: ',
+                  rightText: 'Rs. ${purchase['policy'].cost}' ?? '',
+                ),
+                SizedBox(
+                  height: screenheight / 200,
+                ),
+                // The discount and offer received by the user will only be shown when user has selected one .
+                arguments['selectedOffer'] != null
+                    ? Column(
+                        children: <Widget>[
+                          TextWidget(
+                            leftText: 'Offers Availed: ',
+                            rightText: '${purchase['offer'].requirements}' ?? '',
+                          ),
+                          SizedBox(
+                            height: screenheight / 200,
+                          ),
+                          TextWidget(
+                            leftText: 'Total Discount: ',
+                            rightText: 'Rs ${purchase['total_discount']}' ?? '',
+                          ),
+                          SizedBox(
+                            height: screenheight / 200,
+                          ),
+                          TextWidget(
+                            leftText: 'Discounted Cost: ',
+                            rightText: 'Rs ${purchase['discounted_cost']}' ?? '',
+                          ),
+                          SizedBox(height: screenheight / 100),
+                        ],
+                      )
+                    : Container(),
+
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   RaisedButton(
@@ -129,7 +138,7 @@ class _PaymentState extends State<Payment> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
-                            Icons.payment,
+                            Icons.cancel,
                             color: Colors.white,
                           ),
                           SizedBox(width: screenwidth / 200),
@@ -152,7 +161,7 @@ class _PaymentState extends State<Payment> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
-                            Icons.cancel,
+                            Icons.payment,
                             color: Colors.white,
                           ),
                           SizedBox(width: screenwidth / 200),
@@ -167,9 +176,9 @@ class _PaymentState extends State<Payment> {
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0))),
                 ],
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
