@@ -24,7 +24,7 @@ class _PaymentState extends State<Payment> {
         'total_discount': arguments['selectedPolicy'].cost *
             0.01 *
             arguments['selectedOffer'].discount,
-        'discounted_cost': arguments['selectedPolicy'].cost -
+        'discounted_cost': arguments['selectedPolicy'].cost *
             (1 - 0.01 * arguments['selectedOffer'].discount),
       };
     }
@@ -97,7 +97,7 @@ class _PaymentState extends State<Payment> {
                 children: <Widget>[
                   RaisedButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(HomePage.id);
+                        Navigator.of(context).pushNamed('/home');
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

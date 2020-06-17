@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
-import 'package:optional/optional.dart';
-import 'package:sdk/sdk.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 class Loading extends StatefulWidget {
   @override
@@ -9,17 +8,10 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  // Remove this and call sdk isSignedIn
-  Future<Optional<bool>> isSignedIn() async {
-    await Future.delayed(new Duration(seconds: 4));
-    return Optional.of(true);
-  }
-
   @override
   void initState() {
     super.initState();
-    SDK sdk = SDKBuilder.build('clientId', 'clientSecret', 'enterpriseId');
-    isSignedIn().then((value) {
+    globals.sdk.isSignedIn().then((value) {
       if (value.isEmpty || value.value == false) {
         Navigator.pushReplacementNamed(context, '/login');
       } else {

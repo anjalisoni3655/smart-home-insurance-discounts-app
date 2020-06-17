@@ -6,7 +6,7 @@ class UserAddress {
   String state;
   int pincode;
   UserAddress(this.firstLineOfAddress, this.secondLineOfAddress, this.city,
-      this.state, this.pincode) {}
+      this.state, this.pincode);
 
   @override
   String toString() {
