@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/database_utils.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/data/helper_functions.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
 class Payment extends StatefulWidget {
   static const id = 'payment';
@@ -15,14 +16,17 @@ class _PaymentState extends State<Payment> {
   String userName = "";
 
   @override
-  initState() {
+  void initState() {
     super.initState();
     // Before page is displayed , user name is retrieved from sdk .
-    getUserName().then((name) {
-      setState(() {
-        userName = name;
+    if (globals.user != null) {
+      getUserName().then((name) {
+        setState(() {
+          userName = name;
+        });
       });
-    });
+    } else
+      userName = "";
   }
 
   @override
@@ -46,14 +50,9 @@ class _PaymentState extends State<Payment> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Payment details'),
-        centerTitle: true,
-        backgroundColor: Colors.brown,
-        //TODO :extract this layout details to separate css.dart file
-      ),
+      appBar: CommonAppBar(),
       backgroundColor: Colors.white,
-      body: Padding(
+      body: Container(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,38 +63,25 @@ class _PaymentState extends State<Payment> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                SizedBox(
-                  height: screenheight / 200,
-                ),
                 TextWidget(
                     //TODO Get the name from the user details from sdk
                     key: Key('name'),
                     leftText: 'Name: ',
                     rightText: userName),
-                SizedBox(
-                  height: screenheight / 200,
-                ),
                 TextWidget(
                   leftText: 'Address: ',
                   rightText: '${purchase['address']}' ?? '',
-                ),
-                SizedBox(
-                  height: screenheight / 200,
                 ),
                 TextWidget(
                   leftText: 'Selected Policy: ',
                   rightText: '${purchase['policy'].policyName}' ?? '',
                 ),
-                SizedBox(
-                  height: 20.0,
-                ),
+
                 TextWidget(
                   leftText: 'Cost: ',
                   rightText: 'Rs. ${purchase['policy'].cost}' ?? '',
                 ),
-                SizedBox(
-                  height: screenheight / 200,
-                ),
+
                 // The discount and offer received by the user will only be shown when user has selected one .
                 arguments['selectedOffer'] != null
                     ? Column(
@@ -107,78 +93,79 @@ class _PaymentState extends State<Payment> {
                             rightText:
                                 '${purchase['offer'].requirements}' ?? '',
                           ),
-                          SizedBox(
-                            height: screenheight / 200,
-                          ),
                           TextWidget(
                             leftText: 'Total Discount: ',
                             rightText: 'Rs ${purchase['total_discount']}' ?? '',
-                          ),
-                          SizedBox(
-                            height: screenheight / 200,
                           ),
                           TextWidget(
                             leftText: 'Discounted Cost: ',
                             rightText:
                                 'Rs ${purchase['discounted_cost']}' ?? '',
                           ),
-                          SizedBox(height: screenheight / 100),
                         ],
                       )
                     : Container(),
               ],
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: screenheight / 100),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.cancel,
-                            color: Colors.white,
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(bottom: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: RaisedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.cancel,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: screenwidth / 200),
+                              Text(
+                                'Cancel Payment',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
-                          SizedBox(width: screenwidth / 200),
-                          Text(
-                            'Cancel Payment',
-                            style: TextStyle(color: Colors.white),
+                          padding: EdgeInsets.all(0.0),
+                          color: Colors.lightBlueAccent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0))),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: RaisedButton(
+                          onPressed: () {
+                            addInsurancePurchased(purchase);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.payment,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: screenwidth / 200),
+                              Text(
+                                'Confirm Payment',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      padding: EdgeInsets.all(screenwidth / 100),
-                      color: Colors.lightBlueAccent,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0))),
-                  SizedBox(width: screenwidth / 80),
-                  RaisedButton(
-                      onPressed: () {
-                        addInsurancePurchased(purchase);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.payment,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: screenwidth / 200),
-                          Text(
-                            'Confirm Payment',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                      padding: EdgeInsets.all(screenwidth / 100),
-                      color: Colors.lightBlueAccent,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0))),
-                ],
+                          padding: EdgeInsets.all(screenwidth / 100),
+                          color: Colors.lightBlueAccent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0))),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
