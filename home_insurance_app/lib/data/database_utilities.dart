@@ -32,7 +32,11 @@ Future<void> uploadUserDetails(
   await localStorage.write(key: 'email', value: email);
   await localStorage.write(key: 'photourl', value: photourl);
   await Firestore.instance.collection('user').add({
+
     'name': name,
     'email': email,
-  },);
+  },
+
+      );
+
 }

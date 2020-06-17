@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
-import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:sdk/sdk.dart';
+import 'package:sdk/sdk.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
-  static const String id = 'home_screen';
   static const Key popmenuButton = Key('popmenu_button_key');
 
   @override
@@ -18,8 +18,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
+    // When user clicks on logOut , global user object calls the logout function
     if (value == 'Logout') {
-      Navigator.pushNamed(context, LoginScreen.id);
+
+
       final RemoteConfig _remoteConfig = await RemoteConfig.instance;
       await _remoteConfig.fetch();
       await _remoteConfig.activateFetched();
@@ -30,13 +32,16 @@ class _HomePageState extends State<HomePage> {
 
       SDK sdk = SDKBuilder.build(_clientId, _clientSecret, _enterpriseId);
       String status = await sdk.logout();
+
       if (status == "logout successful") {
         Navigator.pushReplacementNamed(context, '/login');
+      } else {
+        //TODO : Add a snackbar displaying unsuccessful logout
+
       }
     } else {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return Profile();
-      }));
+      // user clicks on the profile option in Popup Menu Button
+      Navigator.pushNamed(context, Profile.id);
     }
   }
 
@@ -95,9 +100,8 @@ class _HomePageState extends State<HomePage> {
           Container(
             child: Container(
               margin: EdgeInsets.only(
-                  top: 15.0,
-                  left: screenwidth / 16,
-                  right: screenwidth / 16), //Orientation compactible
+                  top: 15.0, left: screenwidth / 16, right: screenwidth / 16),
+              //Orientation compatible
               padding: EdgeInsets.all(15.0),
               width: 6 * screenwidth / 7,
               decoration: BoxDecoration(

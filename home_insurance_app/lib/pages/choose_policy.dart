@@ -3,6 +3,7 @@ import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
+import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //This class maps each policy to a index value which is used in selecting radio buttons
 class Mapping {
@@ -82,8 +83,11 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
                   heroTag: "pay",
-                  onPressed: () async {
-                    Navigator.pop(context, {
+
+                  onPressed: () {
+                    // Pop the current page and replace it by the payment page
+                    Navigator
+                        .pushReplacementNamed(context, Payment.id, arguments: {
                       'selectedPolicy': userChoice,
                       'userAddress': data['userAddress'],
                     }); // For now , clicking on payment takes back to the home page

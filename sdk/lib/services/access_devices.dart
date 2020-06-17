@@ -4,16 +4,38 @@ import 'package:http/http.dart' as http;
 import 'package:optional/optional.dart';
 import 'dart:developer';
 
-String getId(String name) {
-  String deviceId = '';
+// Input: String of format: /key_1/value_1/key_2/value_2/../key_n/value_n. or key_1/value_1/key_2/value_2/../key_n/value_n
+// Output: Map = {key_1: value_1, key_2: value_2, ..., key_n: value_n}
+// Use case: to get enterprise id, structure id, device id, etc from assignee or name: enteprises/enterprise-id/structures/structure-id/... etc
+// TODO: Replace with regex
+Map<String, String> getId(String name) {
+  if (name[0] == '/') {
+    name = name.substring(1);
+  }
+  Map<String, String> ids = {};
+  bool flag = false;
+  String key = '';
+  String value = '';
   for (int i = 0; i < name.length; ++i) {
     if (name[i] == '/') {
-      deviceId = '';
+      if (flag) {
+        ids[key] = value;
+        key = '';
+        value = '';
+        flag = false;
+      } else {
+        flag = true;
+      }
     } else {
-      deviceId += name[i];
+      if (flag) {
+        value += name[i];
+      } else {
+        key += name[i];
+      }
     }
   }
-  return deviceId;
+  ids[key] = value;
+  return ids;
 }
 
 // Provides helper functions to get list of devices, structures, status of devices etc.
@@ -53,7 +75,7 @@ class AccessDevices {
       List devices = [];
       for (var device in result['devices']) {
         devices.add({
-          'id': getId(device['name']),
+          'id': getId(device['name'])['devices'],
           'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
@@ -76,12 +98,13 @@ class AccessDevices {
         request,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $_accessToken'},
       ).timeout(accessDevicesTimeoutDuration);
+
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {
-        if (getId(device['assignee']) != structureId) continue;
+        if (getId(device['assignee'])['structures'] != structureId) continue;
         devices.add({
-          'id': getId(device['name']),
+          'id': getId(device['name'])['devices'],
           'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
@@ -108,7 +131,7 @@ class AccessDevices {
       List structures = [];
       for (var structure in result['structures']) {
         structures.add({
-          'id': getId(structure['name']),
+          'id': getId(structure['name'])['structures'],
           'customName': structure['traits']['sdm.structures.traits.Info']
               ["customName"],
         });
