@@ -19,9 +19,8 @@ Future<List> getAllowedOffers(BuildContext context) async {
 Future<List> selectStructure(BuildContext context) async {
   List<Offer> allowedOffers = [];
   Optional<List> response;
-  // Try catch is applied to catch exceptions thrown by sdk  when access token is not set
   try {
-    response = await globals.user.getAllStructures();
+    response = await globals.sdk.getAllStructures();
   } catch (e) {
     //TODO  Snackbar showing  "NO HOMES FOUND"
     response = Optional.empty();
@@ -45,7 +44,7 @@ Future<List> selectStructure(BuildContext context) async {
 
 // Function for calling resource picker
 Future<bool> callResourcePicker() async {
-  String status = await globals.user.requestDeviceAccess();
+  String status = await globals.sdk.requestDeviceAccess();
   if (status == 'authorization successful') {
     //TODO : Redirect from the resource picker
     return true;
@@ -61,7 +60,7 @@ Future<List> getValidOffers(Map structure) async {
 
   Optional<List> response;
   try {
-    response = await globals.user.getDevicesOfStructure(structure["id"]);
+    response = await globals.sdk.getDevicesOfStructure(structure["id"]);
   } catch (e) {
     //TODO - Snackbar showing NO ACCESS TO DEVICES
     response = Optional.empty();
@@ -106,7 +105,7 @@ Future<List> getValidOffers(Map structure) async {
 
 // Returns User name to payment page
 Future<String> getUserName() async {
-  Optional<Map> response = await globals.user.getUserDetails();
+  Optional<Map> response = await globals.sdk.getUserDetails();
   print(response);
   if (response == Optional.empty()) {
     return "YOUR NAME";

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/database_utils.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
-import 'package:homeinsuranceapp/data/helper_functions.dart';
+import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
 class Payment extends StatefulWidget {
@@ -20,7 +20,7 @@ class _PaymentState extends State<Payment> {
     // Before page is displayed , user name is retrieved from sdk .
     super.initState();
     //While testing sdk is not initialised , so username is returned as empty string
-    if (globals.user != null) {
+    if (globals.sdk != null) {
       getUserName().then((name) {
         setState(() {
           userName = name;
