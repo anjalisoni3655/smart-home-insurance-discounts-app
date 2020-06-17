@@ -41,6 +41,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
+        key: _globalKey,
         appBar: CommonAppBar(),
         body: Container(
           margin: EdgeInsets.symmetric(

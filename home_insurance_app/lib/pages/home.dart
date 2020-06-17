@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
     return Scaffold(
+      key: _globalKey,
       drawer: AppDrawer(), // Sidebar
       appBar: AppBar(
         title: Text('Home Insurance Company'),
