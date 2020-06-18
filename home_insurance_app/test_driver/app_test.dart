@@ -4,7 +4,6 @@ import 'package:flutter_driver/flutter_driver.dart';
 // Note: All functions assume that the driver is on the correct page and checks if redirected to the correct next page.
 // Note: Please use flutterDriver.runUnsynchronized(() if animation on page
 
-
 Future<FlutterDriver> setupAndGetDriver() async {
   FlutterDriver driver = await FlutterDriver.connect();
   var connected = false;
@@ -19,18 +18,31 @@ Future<FlutterDriver> setupAndGetDriver() async {
 
 FlutterDriver flutterDriver;
 
-
-
 //dynamic openApp() async {
 //  SerializableFinder loadingText = find.text('Loading');
 //  await flutterDriver.waitFor(find.byType("HomePage"));
 //}
 
+//Go back to the previous page
+dynamic goBack() async {
+  final backButton = find.byTooltip('Back');
+  await flutterDriver.tap(backButton);
+}
+
+//Check the presence of
+//isPresent(SerializableFinder byValueKey, FlutterDriver driver,
+//    {Duration timeout = const Duration(seconds: 1)}) async {
+//  try {
+//    await driver.waitFor(byValueKey, timeout: timeout);
+//    return true;
+//  } catch (exception) {
+//    return false;
+//  }
+//}
 
 // Clicks on LOGIN WITH GOOGLE button and checks if directed to homepage
 dynamic login() async {
   SerializableFinder loginButton = find.text('LOG IN WITH GOOGLE');
-//      await Future.delayed(const Duration(seconds: 1));
   await flutterDriver.runUnsynchronized(() async {
     await flutterDriver.tap(loginButton);
   });
@@ -44,31 +56,40 @@ dynamic homePageSelectPurchasePolicyTab() async {
   await flutterDriver.tap(appDrawer);
   SerializableFinder purchaseTab = find.text("Purchase Policy");
   await flutterDriver.tap(purchaseTab);
-
   await flutterDriver.waitFor(find.byType("HomeDetails"));
 }
 
-
-// Opens app drawer and selects purchase policy tab. Checks if next page opens.
-dynamic homePageSelectSmartDeviceDiscountsTab() async {
+// Opens app drawer and select the Smart Device  Discounts Tab . Checks if next page opens.
+dynamic menuBarSmartDeviceDiscountsTab() async {
   SerializableFinder appDrawer = find.byTooltip('Open navigation menu');
   await flutterDriver.tap(appDrawer);
   SerializableFinder purchaseTab = find.text("Smart Devices Discounts");
   await flutterDriver.tap(purchaseTab);
-
   await flutterDriver.waitFor(find.byType("DisplayDiscounts"));
+
+  //Check that the page is only for viewing discounts
+//  final isExists = await isPresent(find.byValueKey('textKey'), flutterDriver);
+//  if (isExists) {
+//    print('widget is present');
+//  } else {
+//    print('widget is not present');
+//  }
+
+  await goBack();
+  await flutterDriver.waitFor(find.byType("HomePage"));
 }
 
-
-
-
-
-
-
-
-
-
-
+// Opens app drawer and select the Contact Us Tab . Checks if next page opens.
+dynamic menuBarContactUsTab() async {
+  SerializableFinder appDrawer = find.byTooltip('Open navigation menu');
+  await flutterDriver.tap(appDrawer);
+  SerializableFinder purchaseTab = find.text('Contact Us');
+  await flutterDriver.tap(purchaseTab);
+  await flutterDriver.waitFor(find.byType("Contact"));
+  //GoBack to home page
+  await goBack();
+  await flutterDriver.waitFor(find.byType("HomePage"));
+}
 
 // Enter address and click on submit. Check if redirected to choose policy
 dynamic enterAddress() async {
@@ -106,11 +127,13 @@ dynamic choosePolicy() async {
 
 // Click on View Smart Device Discounts on Policy Page
 dynamic viewSmartDiscountsAfterPolicy() async {
-  SerializableFinder viewDiscountsButton = find.text("Avail Smart Device Discounts");
+  SerializableFinder viewDiscountsButton =
+      find.text("Avail Smart Device Discounts");
   await flutterDriver.tap(viewDiscountsButton);
 
   await flutterDriver.waitFor(find.byType("DisplayDiscounts"));
 }
+
 
 // Click on Payment on Policy Page
 dynamic paymentAfterPolicy() async {
@@ -118,12 +141,12 @@ dynamic paymentAfterPolicy() async {
   await flutterDriver.tap(paymentButton);
 
   await flutterDriver.waitFor(find.byType("Payment"));
-
 }
+
 
 // Click on add devices on Show Discounts page
 dynamic addDevices() async {
-  SerializableFinder addDevicesButton = find.text("Add Devices");
+  SerializableFinder addDevicesButton = find.text("Link Devices");
   await flutterDriver.tap(addDevicesButton);
 }
 
@@ -151,7 +174,8 @@ dynamic selectOffer() async {
 
 // Click on confirm payment on payments page. Check if redirected to home page
 dynamic confirmPayment() async {
-  await flutterDriver.scroll(find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
+  await flutterDriver.scroll(
+      find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
   SerializableFinder confirmPaymentButton = find.text("Confirm Payment");
   await flutterDriver.tap(confirmPaymentButton);
 
@@ -160,13 +184,13 @@ dynamic confirmPayment() async {
 
 // Click on confirm payment on payments page. Check if redirected to home page
 dynamic cancelPayment() async {
-  await flutterDriver.scroll(find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
+  await flutterDriver.scroll(
+      find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
   SerializableFinder confirmPaymentButton = find.text("Cancel Payment");
   await flutterDriver.tap(confirmPaymentButton);
 
   await flutterDriver.waitFor(find.byType("HomePage"));
 }
-
 
 // Click on logout on home page. Check if redirected to login page.
 dynamic logout() async {
@@ -180,7 +204,14 @@ dynamic logout() async {
 
   await flutterDriver.waitFor(find.byType("LoginScreen"));
 }
+dynamic onlyBuyPolicy() async {
+  await homePageSelectPurchasePolicyTab();
+  await enterAddress();
+  await choosePolicy();
+  await paymentAfterPolicy();
+  await confirmPayment();
 
+}
 
 void main() {
   group("End-to-end flow with offer", () {
@@ -189,35 +220,32 @@ void main() {
     });
 
     tearDownAll(() async {
-      if(flutterDriver != null) {
+      if (flutterDriver != null) {
         flutterDriver.close();
       }
     });
 
-
-   // test("Loading Page",openApp);
-   // either login or home page
+    // test("Loading Page",openApp);
+    // either login or home page
 
     //  Start at login page
     //  Find "Login with Google" button and click on it
     test("Login Page", login);
 
+//    test("Only Buy Policy" , onlyBuyPolicy);
+
     //  Find sidebar button and click on it. Select "Purchase Policy"
-   // test("Home Page", homePageSelectPurchasePolicyTab);
-
-
-    test("View Discounts",homePageSelectSmartDeviceDiscountsTab);
-
+     test("Home Page", homePageSelectPurchasePolicyTab);
 
 //
 //    //  Find address textboxes and fill them. Click on submit.
-//    test("Enter address", enterAddress);
+    test("Enter address", enterAddress);
 //
-//    //  Find radio buttons and policy names and select a policy
-//    test("Choose Policy", choosePolicy);
+    //  Find radio buttons and policy names and select a policy
+    test("Choose Policy", choosePolicy);
 //
 //    //  Find "Smart Discounts" button and click on it
-//    test("View Smart Discounts button", viewSmartDiscountsAfterPolicy);
+    test("View Smart Discounts button", viewSmartDiscountsAfterPolicy);
 //
 //    //  Find "Add Devices" button and click on it
 //    test("Smart Discounts Page", addDevices);
@@ -234,20 +262,13 @@ void main() {
 //
 //    //  Find "Pay" button and click on it
 //    test("Confirm Payment", confirmPayment);
+
+//    test("View Discounts", menuBarSmartDeviceDiscountsTab);
+//    test("Contact Company", menuBarContactUsTab);
 //
-//    //Go back
-//    // view smart discounts ( buttonns no )
-//    // go back
-//    // contaact uuuus
-//    // menu bar
-//    //contact
-//    // back
 //
 //
 //    // Check if redirected to home page and Logout
 //    test("Logout", logout);
-
-
-
- });
+  });
 }
