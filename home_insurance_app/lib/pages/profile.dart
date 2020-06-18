@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/components/css.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 //widget for the my profile page displaying user's details
 class Profile extends StatefulWidget {
@@ -13,28 +13,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String name;
-  String email;
-  String photoUrl;
-
-  void getUserDetails() async {
-    String _name = await localStorage.read(key: 'name');
-    String _email = await localStorage.read(key: 'email');
-    String _photoUrl = await localStorage.read(key: 'photourl');
-    setState(() {
-      name = _name;
-      email = _email;
-      photoUrl = _photoUrl;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    getUserDetails();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,12 +24,12 @@ class _ProfileState extends State<Profile> {
           children: <Widget>[
             CircleAvatar(
               radius: 50.0,
-              backgroundImage: NetworkImage(photoUrl ??
+              backgroundImage: NetworkImage(globals.user.photoUrl ??
                   'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI9VCNp1MXFz_NDRV_JJR-ym1EGhvHfit3lfbzfHLMkEBZlJ9T&usqp=CAU'),
             ),
             Center(
               child: Text(
-                name ?? '',
+                globals.user.displayName ?? '',
                 key: Profile.nameKey,
                 style: kProfileNameStyle,
               ),
@@ -87,7 +65,7 @@ class _ProfileState extends State<Profile> {
                     color: kProfileIconColor,
                   ),
                   title: Text(
-                    email ?? '',
+                    globals.user.email ?? '',
                     style: kNormalTextStyle,
                   ),
                 ))

@@ -15,3 +15,11 @@ Future<SDK> initialiseSDK() async {
 }
 
 SDK sdk;
+
+class User {
+  String displayName;
+  String photoUrl;
+  String email;
+}
+
+User user;
