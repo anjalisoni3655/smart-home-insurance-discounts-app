@@ -14,4 +14,7 @@ Future<SDK> initialiseSDK() async {
   return sdk;
 }
 
+
+SDK user;
 SDK sdk;
+
