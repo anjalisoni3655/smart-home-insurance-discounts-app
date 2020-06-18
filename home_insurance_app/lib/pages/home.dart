@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/components/css.dart';
+import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/profile.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:sdk/sdk.dart';
 import 'package:sdk/sdk.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
@@ -19,9 +22,9 @@ class _HomePageState extends State<HomePage> {
   void onClick(String value) async {
     // When user clicks on logOut , global user object calls the logout function
     if (value == 'Logout') {
-      String status = await globals.user.logout();
+      String status = await globals.sdk.logout();
       if (status == "logout successful") {
-        Navigator.pop(context);
+        Navigator.pushNamed(context, LoginScreen.id);
       } else {
         final _snackBar = SnackBar(
           content: Text('Logout Failed'),
@@ -32,8 +35,8 @@ class _HomePageState extends State<HomePage> {
               }),
         );
         _globalKey.currentState.showSnackBar(_snackBar);
-      String status = await globals.sdk.logout();
-      
+        String status = await globals.sdk.logout();
+      }
     } else {
       // user clicks on the profile option in Popup Menu Button
       Navigator.pushNamed(context, Profile.id);
@@ -42,6 +45,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final scaffoldKey =
+        GlobalKey<ScaffoldState>(); // Used for testing the drawer
+
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
     return Scaffold(
