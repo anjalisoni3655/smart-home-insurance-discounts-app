@@ -72,7 +72,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
-                    'View Smart Device Discounts',
+                    'Avail Smart Device Discounts',
                     style: CustomTextStyle(),
                   ),
                 ),
@@ -93,7 +93,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
-                    'Payment',
+                    'Skip to Payment',
                     maxLines: 2,
                     style: CustomTextStyle(),
                   ),
