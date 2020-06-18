@@ -24,13 +24,7 @@ int getCategoryFromPincode(pincode) {
   return (pincode % 3) + 1;
 }
 
-final localStorage = FlutterSecureStorage();
-
-Future<void> uploadUserDetails(
-    {String name, String email, String photourl}) async {
-  await localStorage.write(key: 'name', value: name);
-  await localStorage.write(key: 'email', value: email);
-  await localStorage.write(key: 'photourl', value: photourl);
+Future<void> uploadUserDetails({String name, String email}) async {
   await Firestore.instance.collection('user').add(
     {
       'name': name,

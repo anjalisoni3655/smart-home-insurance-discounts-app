@@ -14,10 +14,12 @@ Future<SDK> initialiseSDK() async {
   return sdk;
 }
 
+SDK sdk;
+
 class User {
   String displayName;
   String photoUrl;
   String email;
 }
 
-SDK sdk;
+User user;

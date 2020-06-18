@@ -3,13 +3,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:sdk/sdk.dart';
 import 'package:optional/optional.dart';
-import 'package:homeinsuranceapp/data/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sdk/sdk.dart';
-import 'dart:convert';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // widget for login with google
@@ -79,21 +74,20 @@ class _LoginScreenState extends State<LoginScreen> {
               if (status == "login successful") {
                 Optional<Map> userDetailsOptional =
                     await globals.sdk.getUserDetails();
-                User user = User();
-                user.displayName = userDetailsOptional.value['displayName'];
-                user.email = userDetailsOptional.value['email'];
-                user.photoUrl = userDetailsOptional.value['photoUrl'];
+                globals.user.displayName =
+                    userDetailsOptional.value['displayName'];
+                globals.user.email = userDetailsOptional.value['email'];
+                globals.user.photoUrl = userDetailsOptional.value['photoUrl'];
 
                 final doc = await Firestore.instance
                     .collection('user')
-                    .where('email', isEqualTo: user.email)
+                    .where('email', isEqualTo: globals.user.email)
                     .getDocuments();
 
                 if (doc.documents.length == 0) {
                   await uploadUserDetails(
-                    name: user.displayName,
-                    email: user.email,
-                    photourl: user.photoUrl,
+                    name: globals.user.displayName,
+                    email: globals.user.email,
                   );
                 }
                 Navigator.of(context)
