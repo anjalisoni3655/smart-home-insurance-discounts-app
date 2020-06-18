@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       print("Login Failed");
       final _snackBar = SnackBar(
-        content: Text('Logout Failed'),
+        content: Text('Login Failed'),
         action: SnackBarAction(
             label: 'Retry',
             onPressed: () async {
