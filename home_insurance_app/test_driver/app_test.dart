@@ -19,6 +19,14 @@ Future<FlutterDriver> setupAndGetDriver() async {
 
 FlutterDriver flutterDriver;
 
+
+
+//dynamic openApp() async {
+//  SerializableFinder loadingText = find.text('Loading');
+//  await flutterDriver.waitFor(find.byType("HomePage"));
+//}
+
+
 // Clicks on LOGIN WITH GOOGLE button and checks if directed to homepage
 dynamic login() async {
   SerializableFinder loginButton = find.text('LOG IN WITH GOOGLE');
@@ -39,6 +47,28 @@ dynamic homePageSelectPurchasePolicyTab() async {
 
   await flutterDriver.waitFor(find.byType("HomeDetails"));
 }
+
+
+// Opens app drawer and selects purchase policy tab. Checks if next page opens.
+dynamic homePageSelectSmartDeviceDiscountsTab() async {
+  SerializableFinder appDrawer = find.byTooltip('Open navigation menu');
+  await flutterDriver.tap(appDrawer);
+  SerializableFinder purchaseTab = find.text("Smart Devices Discounts");
+  await flutterDriver.tap(purchaseTab);
+
+  await flutterDriver.waitFor(find.byType("DisplayDiscounts"));
+}
+
+
+
+
+
+
+
+
+
+
+
 
 // Enter address and click on submit. Check if redirected to choose policy
 dynamic enterAddress() async {
@@ -76,7 +106,7 @@ dynamic choosePolicy() async {
 
 // Click on View Smart Device Discounts on Policy Page
 dynamic viewSmartDiscountsAfterPolicy() async {
-  SerializableFinder viewDiscountsButton = find.text("View Smart Device Discounts");
+  SerializableFinder viewDiscountsButton = find.text("Avail Smart Device Discounts");
   await flutterDriver.tap(viewDiscountsButton);
 
   await flutterDriver.waitFor(find.byType("DisplayDiscounts"));
@@ -84,7 +114,7 @@ dynamic viewSmartDiscountsAfterPolicy() async {
 
 // Click on Payment on Policy Page
 dynamic paymentAfterPolicy() async {
-  SerializableFinder paymentButton = find.text("Payment");
+  SerializableFinder paymentButton = find.text("Skip to Payment");
   await flutterDriver.tap(paymentButton);
 
   await flutterDriver.waitFor(find.byType("Payment"));
@@ -164,39 +194,60 @@ void main() {
       }
     });
 
+
+   // test("Loading Page",openApp);
+   // either login or home page
+
     //  Start at login page
     //  Find "Login with Google" button and click on it
     test("Login Page", login);
 
     //  Find sidebar button and click on it. Select "Purchase Policy"
-    test("Home Page", homePageSelectPurchasePolicyTab);
+   // test("Home Page", homePageSelectPurchasePolicyTab);
 
-    //  Find address textboxes and fill them. Click on submit.
-    test("Enter address", enterAddress);
 
-    //  Find radio buttons and policy names and select a policy
-    test("Choose Policy", choosePolicy);
+    test("View Discounts",homePageSelectSmartDeviceDiscountsTab);
 
-    //  Find "Smart Discounts" button and click on it
-    test("View Smart Discounts button", viewSmartDiscountsAfterPolicy);
 
-    //  Find "Add Devices" button and click on it
-    test("Smart Discounts Page", addDevices);
-    
-    //  Find the first a structure and select
-    test("Select Structure", selectStructure);
+//
+//    //  Find address textboxes and fill them. Click on submit.
+//    test("Enter address", enterAddress);
+//
+//    //  Find radio buttons and policy names and select a policy
+//    test("Choose Policy", choosePolicy);
+//
+//    //  Find "Smart Discounts" button and click on it
+//    test("View Smart Discounts button", viewSmartDiscountsAfterPolicy);
+//
+//    //  Find "Add Devices" button and click on it
+//    test("Smart Discounts Page", addDevices);
+//
+//    //  Find the first a structure and select
+//    test("Select Structure", selectStructure);
+//
+//    // TODO:  Find list of offers and confirm that only offers that can be availed are present
+//
+//    //  Select an offer and click on "Go to Payment"
+//    test("Select Offer", selectOffer);
+//
+//    //TODO:  Check if address, offers, structure and policies displayed are the ones chosen.
+//
+//    //  Find "Pay" button and click on it
+//    test("Confirm Payment", confirmPayment);
+//
+//    //Go back
+//    // view smart discounts ( buttonns no )
+//    // go back
+//    // contaact uuuus
+//    // menu bar
+//    //contact
+//    // back
+//
+//
+//    // Check if redirected to home page and Logout
+//    test("Logout", logout);
 
-    // TODO:  Find list of offers and confirm that only offers that can be availed are present
 
-    //  Select an offer and click on "Go to Payment"
-    test("Select Offer", selectOffer);
 
-    //TODO:  Check if address, offers, structure and policies displayed are the ones chosen.
-
-    //  Find "Pay" button and click on it
-    test("Confirm Payment", confirmPayment);
-
-    // Check if redirected to home page and Logout
-    test("Logout", logout);
-  });
+ });
 }
