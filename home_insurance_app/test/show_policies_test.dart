@@ -16,8 +16,8 @@ void main() {
     //Check presence and tapping  of  buttons
     final buttons = find.byIcon(Icons.payment);
     expect(buttons, findsNWidgets(2));
-    expect(find.text("Payment"), findsOneWidget);
-    expect(find.text('View Smart Device Discounts'), findsOneWidget);
+    expect(find.text("Skip to Payment"), findsOneWidget);
+    expect(find.text('Avail Smart Device Discounts'), findsOneWidget);
 
     //Check for one or more policies ( Only policies are preceded by this Icon )
     final policyIcon = find.byIcon(Icons.attach_money);

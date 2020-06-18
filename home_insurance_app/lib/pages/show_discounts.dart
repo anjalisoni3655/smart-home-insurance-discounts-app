@@ -146,7 +146,6 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                           await getAllowedOffers(context);
                                       setState(() {
                                         accessStructure = hasAccess();
-                                        print(hasAccess());
                                         if (allowedOffers.isNotEmpty) {
                                           offersToDisplay = allowedOffers;
                                           disableDiscounts =
