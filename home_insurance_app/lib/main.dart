@@ -13,7 +13,7 @@ import 'pages/home.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // this is the root of our application
-void main({test = true}) async {
+void main({test = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
   globals.sdk = await globals.initialiseSDK(test: test);
   runApp(MyApp());
