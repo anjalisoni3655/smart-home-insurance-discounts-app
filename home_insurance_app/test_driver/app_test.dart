@@ -18,12 +18,12 @@ Future<FlutterDriver> setupAndGetDriver() async {
 
 FlutterDriver flutterDriver;
 
-//The app opens with the loading page . The login page should come since the user is not Signed In 
+//The app opens with the loading page . The login page should come since the user is not Signed In
 dynamic openApp() async {
   await flutterDriver.runUnsynchronized(() async {
     await flutterDriver.waitFor(find.byType("Loading"));
   });
-  
+
   await flutterDriver.runUnsynchronized(() async {
     await flutterDriver.waitFor(find.byType("LoginScreen"));
   });
@@ -73,7 +73,7 @@ dynamic menuBarContactUsTab() async {
   SerializableFinder purchaseTab = find.text('Contact Us');
   await flutterDriver.tap(purchaseTab);
   await flutterDriver.waitFor(find.byType("Contact"));
-  
+
   await goBack();
   await flutterDriver.waitFor(find.byType("HomePage"));
 }
@@ -219,8 +219,8 @@ void main() {
       }
     });
     // The app opens with loading page and takes to the login page .
-     test("Loading Page",openApp);
-     
+    test("Loading Page", openApp);
+
     //  Find "Login with Google" button and click on it
     test("Login Page", login);
 
@@ -275,9 +275,8 @@ void main() {
     test("Direct payment after policy", paymentAfterPolicy);
     test("Confirm Payment", confirmPayment);
     test("Logout", logout);
-
   });
-  
+
   //Test for working of other tabs in menu bar
   group("Other Tabs of Menu Bar ", () {
     setUpAll(() async {
@@ -291,7 +290,7 @@ void main() {
     });
 
     test("Login Page", login);
-   // Select the smart device discounts tab in menu bar and check if desired page comes up
+    // Select the smart device discounts tab in menu bar and check if desired page comes up
     test("View Discounts", menuBarSmartDeviceDiscountsTab);
     // Go to Contact Us page by selecting option in  menu bar .
     test("Contact Company", menuBarContactUsTab);
