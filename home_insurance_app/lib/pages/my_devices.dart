@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:homeinsuranceapp/data/device_type.dart';
 import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
@@ -123,16 +124,16 @@ class _MyDevicesState extends State<MyDevices> {
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text('Type: ${device['type']}'),
+                                    child: Text('Type: ${deviceName[getDeviceType[device['type']].index]}'),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Structure: ${device['structure']}'),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Room: ${device['room']}'),
-                                  ),
+//                                  Padding(
+//                                    padding: const EdgeInsets.all(8.0),
+//                                    child: Text('Structure: ${device['structure']}'),
+//                                  ),
+//                                  Padding(
+//                                    padding: const EdgeInsets.all(8.0),
+//                                    child: Text('Room: ${device['room']}'),
+//                                  ),
                                 ],
                               ),
                             ),

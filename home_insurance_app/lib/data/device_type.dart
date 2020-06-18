@@ -12,3 +12,10 @@ List<String> deviceName = [
   'Camera',
   'Doorbell'
 ];
+
+Map<String, DeviceType> getDeviceType = {
+  'sdm.devices.types.SMOKE_CO_DETECTOR': DeviceType.SMOKE_CO_DETECTOR,
+  'sdm.devices.types.THERMOSTAT': DeviceType.THERMOSTAT,
+  'sdm.devices.types.CAMERA': DeviceType.CAMERA,
+  'sdm.devices.types.DOORBELL': DeviceType.DOORBELL,
+};
