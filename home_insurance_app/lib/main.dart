@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Smart Home',
-      initialRoute: '/myDevices',
+      initialRoute: '/loading',
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         Profile.id: (context) => Profile(),
