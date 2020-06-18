@@ -6,4 +6,9 @@ enum DeviceType {
   DOORBELL,
 }
 
-List<String> deviceName = ['Smoke Detector', 'Thermostat', 'Camera', 'Doorbell'];
+List<String> deviceName = [
+  'Smoke Detector',
+  'Thermostat',
+  'Camera',
+  'Doorbell'
+];

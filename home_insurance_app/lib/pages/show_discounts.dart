@@ -14,6 +14,7 @@ Offer selectedOffer;
 
 // None of the discounts will be selected ( It should be globally defined because both the classes controls it )
 bool disableDiscounts = true;
+
 class DisplayDiscounts extends StatefulWidget {
   @override
   _DisplayDiscountsState createState() => _DisplayDiscountsState();
@@ -21,7 +22,7 @@ class DisplayDiscounts extends StatefulWidget {
 
 // This class provides overall layout of the page .
 class _DisplayDiscountsState extends State<DisplayDiscounts> {
-  bool accessStructure ;
+  bool accessStructure;
   List<Offer> offersToDisplay = CompanyDataBase
       .availableOffers; // This list stores which all offers will be displayed
   // When a system back button/ Back button on appBar is pressed , discounts will again be disabled .
@@ -29,10 +30,11 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
     disableDiscounts = true;
     Navigator.of(context).pop(true);
   }
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
-   accessStructure =  hasAccess();
+    accessStructure = hasAccess();
   }
 
   @override
@@ -67,21 +69,26 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                     ),
                     CustomDivider(
                         height: screenheight / 150, width: screenwidth / 50),
-                    accessStructure ? Container(
-                      margin:  EdgeInsets.symmetric(horizontal:screenwidth/50, vertical: screenheight/50),
-                      child: Center(
-                        child: Text('Select Offer',
-                            style:CustomTextStyle(fontSize:15.0)),
-                      ),
-                    ) :
-                    Container(
-                      margin:  EdgeInsets.symmetric(horizontal:screenwidth/50, vertical: screenheight/50),
-                      child: Center(
-                        child: Text('Link devices and then pick a structure to avail offer',
-                            style:CustomTextStyle(fontSize:15.0)),
-                      ),
-                    ),
-
+                    accessStructure
+                        ? Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: screenwidth / 50,
+                                vertical: screenheight / 50),
+                            child: Center(
+                              child: Text('Select Offer',
+                                  style: CustomTextStyle(fontSize: 15.0)),
+                            ),
+                          )
+                        : Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: screenwidth / 50,
+                                vertical: screenheight / 50),
+                            child: Center(
+                              child: Text(
+                                  'Link devices and then pick a structure to avail offer',
+                                  style: CustomTextStyle(fontSize: 15.0)),
+                            ),
+                          ),
                     SizedBox(height: screenheight / 150),
                     AllDiscounts(offersToDisplay),
                     SizedBox(height: screenheight / 30),
@@ -98,67 +105,70 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              accessStructure ? Expanded(
-                                flex: 1,
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: FloatingActionButton.extended(
-                                    heroTag: 'home',
-                                    icon: Icon(Icons.home),
-                                    label: Text(
-                                      'Pick Structure',
-                                      style: CustomTextStyle(
-                                          fontWeight: FontWeight.w900),
+                              accessStructure
+                                  ? Expanded(
+                                      flex: 1,
+                                      child: Align(
+                                        alignment: Alignment.topCenter,
+                                        child: FloatingActionButton.extended(
+                                          heroTag: 'home',
+                                          icon: Icon(Icons.home),
+                                          label: Text(
+                                            'Pick Structure',
+                                            style: CustomTextStyle(
+                                                fontWeight: FontWeight.w900),
+                                          ),
+                                          onPressed: () async {
+                                            //    Get offers which the user is eligible to get after launching resource picker
+                                            List<Offer> allowedOffers =
+                                                await selectStructure(context);
+                                            setState(() {
+                                              if (allowedOffers.isNotEmpty) {
+                                                offersToDisplay = allowedOffers;
+                                                disableDiscounts =
+                                                    false; // Now the user can select them
+                                              } else {
+                                                //TODO Show a snackbar displaying that the user cannot get any offers right now
+                                              }
+                                            });
+                                          },
+                                          backgroundColor:
+                                              Colors.lightBlueAccent,
+                                        ),
+                                      ),
+                                    )
+                                  : Expanded(
+                                      flex: 1,
+                                      child: Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: FloatingActionButton.extended(
+                                          heroTag: 'Discounts',
+                                          icon: Icon(Icons.money_off),
+                                          label: Text(
+                                            'Link Devices',
+                                            style: CustomTextStyle(
+                                                fontWeight: FontWeight.w900),
+                                          ),
+                                          onPressed: () async {
+                                            //    Get offers which the user is eligible to get after launching resource picker
+                                            List<Offer> allowedOffers =
+                                                await getAllowedOffers(context);
+                                            setState(() {
+                                              accessStructure = hasAccess();
+                                              if (allowedOffers.isNotEmpty) {
+                                                offersToDisplay = allowedOffers;
+                                                disableDiscounts =
+                                                    false; // Now the user can select them
+                                              } else {
+                                                //TODO Show a snackbar displaying that the user cannot get any offers right now
+                                              }
+                                            });
+                                          },
+                                          backgroundColor:
+                                              Colors.lightBlueAccent,
+                                        ),
+                                      ),
                                     ),
-                                    onPressed: () async {
-                                      //    Get offers which the user is eligible to get after launching resource picker
-                                      List<Offer> allowedOffers =
-                                      await selectStructure(context);
-                                      setState(() {
-                                        if (allowedOffers.isNotEmpty) {
-                                          offersToDisplay = allowedOffers;
-                                          disableDiscounts =
-                                          false; // Now the user can select them
-                                        } else {
-                                          //TODO Show a snackbar displaying that the user cannot get any offers right now
-                                        }
-                                      });
-                                    },
-                                    backgroundColor: Colors.lightBlueAccent,
-                                  ),
-                                ),
-                              ):
-                              Expanded(
-                                flex: 1,
-                                child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: FloatingActionButton.extended(
-                                    heroTag: 'Discounts',
-                                    icon: Icon(Icons.money_off),
-                                    label: Text(
-                                      'Link Devices',
-                                      style: CustomTextStyle(
-                                          fontWeight: FontWeight.w900),
-                                    ),
-                                    onPressed: () async {
-                                      //    Get offers which the user is eligible to get after launching resource picker
-                                      List<Offer> allowedOffers =
-                                          await getAllowedOffers(context);
-                                      setState(() {
-                                        accessStructure = hasAccess();
-                                        if (allowedOffers.isNotEmpty) {
-                                          offersToDisplay = allowedOffers;
-                                          disableDiscounts =
-                                              false; // Now the user can select them
-                                        } else {
-                                          //TODO Show a snackbar displaying that the user cannot get any offers right now
-                                        }
-                                      });
-                                    },
-                                    backgroundColor: Colors.lightBlueAccent,
-                                  ),
-                                ),
-                              ),
                               Expanded(
                                 flex: 1,
                                 child: Align(
@@ -181,7 +191,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                       Navigator.pushNamed(context, Payment.id,
                                           arguments: {
                                             'selectedOffer': selectedOffer,
-                                            'selectedPolicy': data['selectedPolicy'],
+                                            'selectedPolicy':
+                                                data['selectedPolicy'],
                                             'userAddress': data['userAddress'],
                                           });
                                     },
@@ -194,7 +205,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                         ],
                       ),
                     ),
-              SizedBox(height:screenheight/80),
+              SizedBox(height: screenheight / 80),
             ],
           ),
         ),
@@ -231,7 +242,8 @@ class _AllDiscountsState extends State<AllDiscounts> {
           itemCount: widget.offerList.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: EdgeInsets.symmetric(vertical: screenheight/200, horizontal: screenwidth/100),
+              padding: EdgeInsets.symmetric(
+                  vertical: screenheight / 200, horizontal: screenwidth / 100),
               child: Card(
                 color: isSelected[index]
                     ? Colors.teal[100]

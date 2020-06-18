@@ -15,7 +15,8 @@ void main() {
   testWidgets('Show Discounts before access', (WidgetTester tester) async {
     // Build our app and trigger a frame.
 
-    when(globals.sdk.getCredentials()).thenReturn({'accessToken': null, 'refreshToken': null});
+    when(globals.sdk.getCredentials())
+        .thenReturn({'accessToken': null, 'refreshToken': null});
 
     await tester.pumpWidget(MaterialApp(
       home: DisplayDiscounts(),
@@ -38,7 +39,8 @@ void main() {
   testWidgets("Show Discounts after access", (WidgetTester tester) async {
     // Build our app and trigger a frame.
 
-    when(globals.sdk.getCredentials()).thenReturn({'accessToken': 'accessToken', 'refreshToken': 'refreshToken'});
+    when(globals.sdk.getCredentials()).thenReturn(
+        {'accessToken': 'accessToken', 'refreshToken': 'refreshToken'});
 
     await tester.pumpWidget(MaterialApp(
       home: DisplayDiscounts(),
