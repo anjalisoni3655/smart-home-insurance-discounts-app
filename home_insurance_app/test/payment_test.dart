@@ -12,7 +12,7 @@ void main() {
   final Policy selectedPolicy = Policy('tenants-policy', 5, 1000);
   final UserAddress userAddress =
       UserAddress('first_address', 'second_address', 'city', 'state', 208022);
-  final  Offer selectedOffer1 = Offer({'test': 1}, 2);
+  final Offer selectedOffer1 = Offer({'test': 1}, 2);
 
   testWidgets('PaymentPage Widget Test', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
@@ -47,8 +47,8 @@ void main() {
     expect(find.byType(RaisedButton), findsNWidgets(2));
   });
 
- // Payment Page Test if No Discount Offer is choosen
-  final selectedOffer2 = null ;
+  // Payment Page Test if No Discount Offer is choosen
+  final selectedOffer2 = null;
 
   testWidgets('PaymentPage Widget Test 2', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
@@ -59,14 +59,14 @@ void main() {
       home: Scaffold(
         body: Center(
             child: FlatButton(
-              key: buttonKey,
-              child: Text("A"),
-              onPressed: () => key.currentState.pushNamed(Payment.id, arguments: {
-                'selectedOffer': selectedOffer2,
-                'selectedPolicy': selectedPolicy,
-                'userAddress': userAddress,
-              }),
-            )),
+          key: buttonKey,
+          child: Text("A"),
+          onPressed: () => key.currentState.pushNamed(Payment.id, arguments: {
+            'selectedOffer': selectedOffer2,
+            'selectedPolicy': selectedPolicy,
+            'userAddress': userAddress,
+          }),
+        )),
       ),
     ));
 

@@ -18,10 +18,15 @@ Future<FlutterDriver> setupAndGetDriver() async {
 
 FlutterDriver flutterDriver;
 
+//The app opens with the loading page . The login page should come since the user is not Signed In 
 dynamic openApp() async {
-//  await flutterDriver.waitFor(find.byType("Loading"));
-//  print("Loaded");
-  await flutterDriver.waitFor(find.byType("LoginScreen"));
+  await flutterDriver.runUnsynchronized(() async {
+    await flutterDriver.waitFor(find.byType("Loading"));
+  });
+  
+  await flutterDriver.runUnsynchronized(() async {
+    await flutterDriver.waitFor(find.byType("LoginScreen"));
+  });
 }
 
 //Go back to the previous page
@@ -135,15 +140,12 @@ dynamic viewSmartDiscountsAfterPolicy() async {
   await flutterDriver.waitFor(find.byType("DisplayDiscounts"));
 }
 
-
 // Click on Payment on Policy Page
 dynamic paymentAfterPolicy() async {
   SerializableFinder paymentButton = find.text("Skip to Payment");
   await flutterDriver.tap(paymentButton);
   await flutterDriver.waitFor(find.byType("Payment"));
-
 }
-
 
 // Click on add devices on Show Discounts page
 dynamic addDevices() async {
@@ -201,9 +203,11 @@ dynamic logout() async {
   await flutterDriver.tap(settingsButton);
 
   SerializableFinder logout = find.text("Logout");
-  flutterDriver.tap(logout);
 
-  await flutterDriver.waitFor(find.byType("LoginScreen"));
+  await flutterDriver.tap(logout);
+  await flutterDriver.runUnsynchronized(() async {
+    await flutterDriver.waitFor(find.byType("LoginScreen"));
+  });
 }
 
 dynamic selectPickStructureButton() async {
@@ -211,8 +215,8 @@ dynamic selectPickStructureButton() async {
   await flutterDriver.tap(pickStructureButton);
 
   await selectStructure();
-
 }
+
 dynamic noOfferSelected() async {
   await homePageSelectPurchasePolicyTab();
   await enterAddress();
@@ -220,7 +224,6 @@ dynamic noOfferSelected() async {
   await addDevices();
   await selectStructure();
   await confirmPayment();
-
 }
 
 void main() {
@@ -234,18 +237,16 @@ void main() {
         flutterDriver.close();
       }
     });
-
-//     test("Loading Page",openApp);
-    // either login or home page
-
-    //  Start at login page
+    // The app opens with loading page and takes to the login page .
+     test("Loading Page",openApp);
+     
     //  Find "Login with Google" button and click on it
     test("Login Page", login);
 
     //  Find sidebar button and click on it. Select "Purchase Policy"
-     test("Home Page", homePageSelectPurchasePolicyTab);
+    test("Home Page", homePageSelectPurchasePolicyTab);
 
-   //  Find address textboxes and fill them. Click on submit.
+    //  Find address textboxes and fill them. Click on submit.
     test("Enter address", enterAddress);
 
     //  Find radio buttons and policy names and select a policy
@@ -260,8 +261,9 @@ void main() {
     test("Select Structure", selectStructure);
 
     // TODO:  Find list of offers and confirm that only offers that can be availed are present
-      //Find Pick Structure Structure , click on it .
-      test("Check the presence of Pick Structure Button",selectPickStructureButton);
+    //Find Pick Structure Structure , click on it .
+    test("Check the presence of Pick Structure Button",
+        selectPickStructureButton);
 
     //  Select an offer and click on "Go to Payment"
     test("Select Offer", selectOffer);
@@ -272,7 +274,6 @@ void main() {
 
     // Check if redirected to home page and Logout
     test("Logout", logout);
-
   });
 //  group("Flow When No Discounts Are Availed ", () {
 //    setUpAll(() async {
@@ -319,13 +320,4 @@ void main() {
 //
 ////    test("Logout", logout);
 //  });
-
-  }
-
-
-
-
-
-
-
-
+}
