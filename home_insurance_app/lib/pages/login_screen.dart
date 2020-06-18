@@ -22,7 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
     if (status == "login successful" || status == "already logged in") {
       Navigator.pushNamed(context, '/home'); // Navigates to the home page
     } else {
-      print("Login Failed");
       final _snackBar = SnackBar(
         content: Text('Login Failed'),
         action: SnackBarAction(
@@ -32,8 +31,6 @@ class _LoginScreenState extends State<LoginScreen> {
             }),
       );
       _globalKey.currentState.showSnackBar(_snackBar);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
+import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //This class maps each policy to a index value which is used in selecting radio buttons
 class Mapping {
@@ -71,7 +72,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
-                    'View Smart Device Discounts',
+                    'Avail Smart Device Discounts',
                     style: CustomTextStyle(),
                   ),
                 ),
@@ -82,7 +83,9 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                 child: FloatingActionButton.extended(
                   heroTag: "pay",
                   onPressed: () {
-                    Navigator.pop(context, {
+                    // Pop the current page and replace it by the payment page
+                    Navigator
+                        .pushReplacementNamed(context, Payment.id, arguments: {
                       'selectedPolicy': userChoice,
                       'userAddress': data['userAddress'],
                     }); // For now , clicking on payment takes back to the home page
@@ -90,7 +93,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
-                    'Payment',
+                    'Skip to Payment',
                     maxLines: 2,
                     style: CustomTextStyle(),
                   ),

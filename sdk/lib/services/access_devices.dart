@@ -4,6 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:optional/optional.dart';
 import 'dart:developer';
 
+
+// Input: String of format: /key_1/value_1/key_2/value_2/../key_n/value_n. or key_1/value_1/key_2/value_2/../key_n/value_n
+// Output: Map = {key_1: value_1, key_2: value_2, ..., key_n: value_n}
+// Use case: to get enterprise id, structure id, device id, etc from assignee or name: enteprises/enterprise-id/structures/structure-id/... etc
+// TODO: Replace with regex
 Map<String, String> getId(String name) {
   if (name[0] == '/') {
     name = name.substring(1);

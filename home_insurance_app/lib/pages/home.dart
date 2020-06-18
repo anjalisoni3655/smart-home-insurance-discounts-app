@@ -32,7 +32,8 @@ class _HomePageState extends State<HomePage> {
               }),
         );
         _globalKey.currentState.showSnackBar(_snackBar);
-      }
+      String status = await globals.sdk.logout();
+      
     } else {
       // user clicks on the profile option in Popup Menu Button
       Navigator.pushNamed(context, Profile.id);
