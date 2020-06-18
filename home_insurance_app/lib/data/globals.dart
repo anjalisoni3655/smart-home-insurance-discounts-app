@@ -10,7 +10,7 @@ Future<SDK> initialiseSDK({test = false}) async {
   if(test) {
     _clientId = 'clientId';
     _clientSecret = 'clientSecret';
-    _enterpriseId = 'akashag-step-interns-test';
+    _enterpriseId = 'enterpriseId';
   } else {
     final RemoteConfig _remoteConfig = await RemoteConfig.instance;
     await _remoteConfig.fetch();
