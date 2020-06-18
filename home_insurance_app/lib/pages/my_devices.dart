@@ -106,6 +106,7 @@ class _MyDevicesState extends State<MyDevices> {
                   child: ListView(
                     children: List.from((allDevices).map(
                         (device) => Padding(
+                          key: Key('${device['customName']}'),
                           padding: EdgeInsets.symmetric(vertical: screenheight/100, horizontal: screenwidth/100),
                           child: Card(
                             color: Colors.white, // If selected then color of card is teal else no change in color
