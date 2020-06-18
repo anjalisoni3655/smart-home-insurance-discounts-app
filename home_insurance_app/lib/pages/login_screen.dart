@@ -18,8 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
-    globals.user = await globals.initialiseSDK();
-    String status = await globals.user.login();
+    globals.sdk = await globals.initialiseSDK();
+    String status = await globals.sdk.login();
     if (status == "login successful" || status == "already logged in") {
       Navigator.pushNamed(context, '/home'); // Navigates to the home page
     } else {
@@ -32,6 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
             }),
       );
       _globalKey.currentState.showSnackBar(_snackBar);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
               if (status == "login successful") {
                 Optional<Map> userDetailsOptional =
                     await globals.sdk.getUserDetails();
+
                 globals.user.displayName =
                     userDetailsOptional.value['displayName'];
+
                 globals.user.email = userDetailsOptional.value['email'];
                 globals.user.photoUrl = userDetailsOptional.value['photoUrl'];
 

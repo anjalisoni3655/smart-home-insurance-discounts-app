@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/components/css.dart';
+import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/profile.dart';
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     if (value == 'Logout') {
       String status = await globals.sdk.logout();
       if (status == "logout successful") {
-        Navigator.pop(context);
+        Navigator.pushNamed(context, LoginScreen.id);
       } else {
         final _snackBar = SnackBar(
           content: Text('Logout Failed'),
@@ -34,8 +35,8 @@ class _HomePageState extends State<HomePage> {
               }),
         );
         _globalKey.currentState.showSnackBar(_snackBar);
-      String status = await globals.sdk.logout();
-   
+        String status = await globals.sdk.logout();
+      }
     } else {
       // user clicks on the profile option in Popup Menu Button
       Navigator.pushNamed(context, Profile.id);
