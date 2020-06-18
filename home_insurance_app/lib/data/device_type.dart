@@ -5,3 +5,5 @@ enum DeviceType {
   CAMERA,
   DOORBELL,
 }
+
+List<String> deviceName = ['Smoke Detector', 'Thermostat', 'Camera', 'Doorbell'];
