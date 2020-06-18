@@ -15,16 +15,23 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
+    globals.sdk = await globals.initialiseSDK();
     String status = await globals.sdk.login();
     if (status == "login successful" || status == "already logged in") {
-      Navigator.pushReplacementNamed(
-          context, '/home'); // Navigates to the home page
-
+      Navigator.pushNamed(context, '/home'); // Navigates to the home page
     } else {
-      print("Login Failed");
-      //TODO Show a snackbar for displaying login failed
+      final _snackBar = SnackBar(
+        content: Text('Login Failed'),
+        action: SnackBarAction(
+            label: 'Retry',
+            onPressed: () async {
+              await userLogin();
+            }),
+      );
+      _globalKey.currentState.showSnackBar(_snackBar);
     }
   }
 
@@ -32,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
+      key: _globalKey,
       backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
         title: Center(child: Text('Smart Home')),
@@ -74,8 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
               if (status == "login successful") {
                 Optional<Map> userDetailsOptional =
                     await globals.sdk.getUserDetails();
+
                 globals.user.displayName =
                     userDetailsOptional.value['displayName'];
+
                 globals.user.email = userDetailsOptional.value['email'];
                 globals.user.photoUrl = userDetailsOptional.value['photoUrl'];
 

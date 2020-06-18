@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/components/css.dart';
+import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/profile.dart';
@@ -17,16 +18,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   void onClick(String value) async {
     // When user clicks on logOut , global user object calls the logout function
     if (value == 'Logout') {
       String status = await globals.sdk.logout();
-
       if (status == "logout successful") {
-        Navigator.pushReplacementNamed(context, '/login');
+        Navigator.pushNamed(context, LoginScreen.id);
       } else {
-        //TODO : Add a snackbar displaying unsuccessful logout
-
+        final _snackBar = SnackBar(
+          content: Text('Logout Failed'),
+          action: SnackBarAction(
+              label: 'Retry',
+              onPressed: () async {
+                onClick('logout');
+              }),
+        );
+        _globalKey.currentState.showSnackBar(_snackBar);
+        String status = await globals.sdk.logout();
       }
     } else {
       // user clicks on the profile option in Popup Menu Button
@@ -42,6 +51,7 @@ class _HomePageState extends State<HomePage> {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
     return Scaffold(
+      key: _globalKey,
       drawer: AppDrawer(), // Sidebar
       appBar: AppBar(
         title: Text('Home Insurance Company'),

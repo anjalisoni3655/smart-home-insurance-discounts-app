@@ -2,6 +2,7 @@ import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/data/device_type.dart';
 
 // This class stores all the discount offers offered by the company
+
 class CompanyDataBase {
   // String of devices on which the company has the option to provide discounts
   static List<Offer> availableOffers = [

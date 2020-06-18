@@ -5,9 +5,10 @@ import 'package:optional/optional.dart';
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/list_structures.dart';
 
+final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
 Future<List> getAllowedOffers(BuildContext context) async {
   List<Offer> allowedOffers = [];
-  // Call the resource picker
+//  Call the resource picker
   bool isAuthorise = await callResourcePicker();
   if (isAuthorise) {
     allowedOffers = await selectStructure(context);
@@ -22,7 +23,10 @@ Future<List> selectStructure(BuildContext context) async {
   try {
     response = await globals.sdk.getAllStructures();
   } catch (e) {
-    //TODO  Snackbar showing  "NO HOMES FOUND"
+    final _snackBar = SnackBar(
+      content: Text('No Homes Found'),
+    );
+    _globalKey.currentState.showSnackBar(_snackBar);
     response = Optional.empty();
   }
   if (response != Optional.empty()) {
@@ -32,7 +36,7 @@ Future<List> selectStructure(BuildContext context) async {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
-          // Returns a Alert DialogueBox displaying all user structures
+// Returns a Alert DialogueBox displaying all user structures
           return StructureAlertBox(structures);
         }).then((selectedStructure) async {
 //Send the structure ( id and name ) and get all offers which the user can get
@@ -47,6 +51,7 @@ Future<bool> callResourcePicker() async {
   String status = await globals.sdk.requestDeviceAccess();
   if (status == 'authorization successful') {
     //TODO : Redirect from the resource picker
+
     return true;
   } else {
     return false;
@@ -62,7 +67,10 @@ Future<List> getValidOffers(Map structure) async {
   try {
     response = await globals.sdk.getDevicesOfStructure(structure["id"]);
   } catch (e) {
-    //TODO - Snackbar showing NO ACCESS TO DEVICES
+    final _snackBar = SnackBar(
+      content: Text('No Access to Devices'),
+    );
+    _globalKey.currentState.showSnackBar(_snackBar);
     response = Optional.empty();
   }
   if (response != Optional.empty()) {
@@ -75,7 +83,6 @@ Future<List> getValidOffers(Map structure) async {
       if (userDevices.containsKey(type)) {
         userDevices[type]++;
       }
-
 //    if device type is not present , create a new key in map
       else {
         userDevices[type] = 1;
@@ -102,24 +109,4 @@ Future<List> getValidOffers(Map structure) async {
 
 // In case devices of the particular structure is 0 , empty list is returned .
   return (allowedOffers);
-}
-
-// Returns User name to payment page
-Future<String> getUserName() async {
-  Optional<Map> response = await globals.sdk.getUserDetails();
-  if (response == Optional.empty()) {
-    return "YOUR NAME";
-  } else {
-    Map userDetails = response.value;
-    return (userDetails["displayName"]);
-  }
-}
-
-bool hasAccess() {
-  Map response = globals.sdk.getCredentials();
-  if (response["accessToken"] == null) {
-    return false;
-  } else {
-    return true;
-  }
 }

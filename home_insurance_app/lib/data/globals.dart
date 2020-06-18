@@ -22,4 +22,4 @@ class User {
   String email;
 }
 
-User user;
+User user = User();
