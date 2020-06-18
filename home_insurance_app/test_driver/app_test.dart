@@ -139,8 +139,8 @@ dynamic viewSmartDiscountsAfterPolicy() async {
 dynamic paymentAfterPolicy() async {
   SerializableFinder paymentButton = find.text("Skip to Payment");
   await flutterDriver.tap(paymentButton);
-
   await flutterDriver.waitFor(find.byType("Payment"));
+
 }
 
 
@@ -160,7 +160,7 @@ dynamic selectStructure() async {
 }
 
 // Select first offer that appears after selecting devices. Select Go to payment (submit selection)
-// TODO: if no offer present select go to payment directly
+
 dynamic selectOffer() async {
   SerializableFinder firstOffer = find.byValueKey("Offer 0");
   await flutterDriver.tap(firstOffer);
@@ -204,48 +204,46 @@ dynamic logout() async {
 
   await flutterDriver.waitFor(find.byType("LoginScreen"));
 }
-dynamic onlyBuyPolicy() async {
+
+dynamic noOfferSelected() async {
   await homePageSelectPurchasePolicyTab();
   await enterAddress();
   await choosePolicy();
-  await paymentAfterPolicy();
+  await addDevices();
+  await selectStructure();
   await confirmPayment();
 
 }
 
 void main() {
-  group("End-to-end flow with offer", () {
-    setUpAll(() async {
-      flutterDriver = await setupAndGetDriver();
-    });
-
-    tearDownAll(() async {
-      if (flutterDriver != null) {
-        flutterDriver.close();
-      }
-    });
-
-    // test("Loading Page",openApp);
-    // either login or home page
-
-    //  Start at login page
-    //  Find "Login with Google" button and click on it
-    test("Login Page", login);
-
-//    test("Only Buy Policy" , onlyBuyPolicy);
-
-    //  Find sidebar button and click on it. Select "Purchase Policy"
-     test("Home Page", homePageSelectPurchasePolicyTab);
-
+//  group("End-to-end flow with offer", () {
+//    setUpAll(() async {
+//      flutterDriver = await setupAndGetDriver();
+//    });
 //
-//    //  Find address textboxes and fill them. Click on submit.
-    test("Enter address", enterAddress);
+//    tearDownAll(() async {
+//      if (flutterDriver != null) {
+//        flutterDriver.close();
+//      }
+//    });
 //
-    //  Find radio buttons and policy names and select a policy
-    test("Choose Policy", choosePolicy);
+//    // test("Loading Page",openApp);
+//    // either login or home page
 //
+//    //  Start at login page
+//    //  Find "Login with Google" button and click on it
+//    test("Login Page", login);
+//
+//    //  Find sidebar button and click on it. Select "Purchase Policy"
+//     test("Home Page", homePageSelectPurchasePolicyTab);
+//
+//   //  Find address textboxes and fill them. Click on submit.
+//    test("Enter address", enterAddress);
+//
+//    //  Find radio buttons and policy names and select a policy
+//    test("Choose Policy", choosePolicy);
 //    //  Find "Smart Discounts" button and click on it
-    test("View Smart Discounts button", viewSmartDiscountsAfterPolicy);
+//    test("View Smart Discounts button", viewSmartDiscountsAfterPolicy);
 //
 //    //  Find "Add Devices" button and click on it
 //    test("Smart Discounts Page", addDevices);
@@ -257,18 +255,71 @@ void main() {
 //
 //    //  Select an offer and click on "Go to Payment"
 //    test("Select Offer", selectOffer);
-//
 //    //TODO:  Check if address, offers, structure and policies displayed are the ones chosen.
 //
 //    //  Find "Pay" button and click on it
 //    test("Confirm Payment", confirmPayment);
-
-//    test("View Discounts", menuBarSmartDeviceDiscountsTab);
-//    test("Contact Company", menuBarContactUsTab);
 //
-//
+////   If no offer present select go to payment directly
+//     // test("NoOfferSelected", noOfferSelected);
 //
 //    // Check if redirected to home page and Logout
 //    test("Logout", logout);
-  });
-}
+//  });
+//  group("Flow When No Discounts Are Availed ", () {
+//    setUpAll(() async {
+//      flutterDriver = await setupAndGetDriver();
+//    });
+//
+//    tearDownAll(() async {
+//      if (flutterDriver != null) {
+//        flutterDriver.close();
+//      }
+//    });
+//    test("Login Page", login);
+//
+//    test("Home Page", homePageSelectPurchasePolicyTab);
+//
+//    test("Enter address", enterAddress);
+//
+//    test("Choose Policy", choosePolicy);
+//
+//    test("Direct payment after policy", paymentAfterPolicy);
+//
+//    test("Confirm Payment", confirmPayment);
+//
+//    test("Logout", logout);
+//
+//
+//  });
+//  group("Other Tabs of Menu Bar ", () {
+//    setUpAll(() async {
+//      flutterDriver = await setupAndGetDriver();
+//    });
+//
+//    tearDownAll(() async {
+//      if (flutterDriver != null) {
+//        flutterDriver.close();
+//      }
+//    });
+//
+//    test("Login Page", login);
+//
+////    test("View Discounts", menuBarSmartDeviceDiscountsTab);
+//
+//    test("Contact Company", menuBarContactUsTab);
+//
+////    test("Logout", logout);
+//  });
+
+
+
+  }
+
+
+
+
+
+
+
+
