@@ -19,7 +19,9 @@ class _HomePageState extends State<HomePage> {
     // When user clicks on logOut , global user object calls the logout function
     if (value == 'Logout') {
       String status = await globals.sdk.logout();
+      print(status);
       if (status == "logout successful") {
+
         Navigator.pushReplacementNamed(context, '/login');
       } else {
         //TODO : Add a snackbar displaying unsuccessful logout

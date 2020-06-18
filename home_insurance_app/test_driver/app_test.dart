@@ -18,10 +18,11 @@ Future<FlutterDriver> setupAndGetDriver() async {
 
 FlutterDriver flutterDriver;
 
-//dynamic openApp() async {
-//  SerializableFinder loadingText = find.text('Loading');
-//  await flutterDriver.waitFor(find.byType("HomePage"));
-//}
+dynamic openApp() async {
+//  await flutterDriver.waitFor(find.byType("Loading"));
+//  print("Loaded");
+  await flutterDriver.waitFor(find.byType("LoginScreen"));
+}
 
 //Go back to the previous page
 dynamic goBack() async {
@@ -205,6 +206,13 @@ dynamic logout() async {
   await flutterDriver.waitFor(find.byType("LoginScreen"));
 }
 
+dynamic selectPickStructureButton() async {
+  SerializableFinder pickStructureButton = find.text("Pick Structure");
+  await flutterDriver.tap(pickStructureButton);
+
+  await selectStructure();
+
+}
 dynamic noOfferSelected() async {
   await homePageSelectPurchasePolicyTab();
   await enterAddress();
@@ -216,56 +224,56 @@ dynamic noOfferSelected() async {
 }
 
 void main() {
-//  group("End-to-end flow with offer", () {
-//    setUpAll(() async {
-//      flutterDriver = await setupAndGetDriver();
-//    });
-//
-//    tearDownAll(() async {
-//      if (flutterDriver != null) {
-//        flutterDriver.close();
-//      }
-//    });
-//
-//    // test("Loading Page",openApp);
-//    // either login or home page
-//
-//    //  Start at login page
-//    //  Find "Login with Google" button and click on it
-//    test("Login Page", login);
-//
-//    //  Find sidebar button and click on it. Select "Purchase Policy"
-//     test("Home Page", homePageSelectPurchasePolicyTab);
-//
-//   //  Find address textboxes and fill them. Click on submit.
-//    test("Enter address", enterAddress);
-//
-//    //  Find radio buttons and policy names and select a policy
-//    test("Choose Policy", choosePolicy);
-//    //  Find "Smart Discounts" button and click on it
-//    test("View Smart Discounts button", viewSmartDiscountsAfterPolicy);
-//
-//    //  Find "Add Devices" button and click on it
-//    test("Smart Discounts Page", addDevices);
-//
-//    //  Find the first a structure and select
-//    test("Select Structure", selectStructure);
-//
-//    // TODO:  Find list of offers and confirm that only offers that can be availed are present
-//
-//    //  Select an offer and click on "Go to Payment"
-//    test("Select Offer", selectOffer);
-//    //TODO:  Check if address, offers, structure and policies displayed are the ones chosen.
-//
-//    //  Find "Pay" button and click on it
-//    test("Confirm Payment", confirmPayment);
-//
-////   If no offer present select go to payment directly
-//     // test("NoOfferSelected", noOfferSelected);
-//
-//    // Check if redirected to home page and Logout
-//    test("Logout", logout);
-//  });
+  group("End-to-end flow with offer", () {
+    setUpAll(() async {
+      flutterDriver = await setupAndGetDriver();
+    });
+
+    tearDownAll(() async {
+      if (flutterDriver != null) {
+        flutterDriver.close();
+      }
+    });
+
+//     test("Loading Page",openApp);
+    // either login or home page
+
+    //  Start at login page
+    //  Find "Login with Google" button and click on it
+    test("Login Page", login);
+
+    //  Find sidebar button and click on it. Select "Purchase Policy"
+     test("Home Page", homePageSelectPurchasePolicyTab);
+
+   //  Find address textboxes and fill them. Click on submit.
+    test("Enter address", enterAddress);
+
+    //  Find radio buttons and policy names and select a policy
+    test("Choose Policy", choosePolicy);
+    //  Find "Smart Discounts" button and click on it
+    test("View Smart Discounts button", viewSmartDiscountsAfterPolicy);
+
+    //  Find "Add Devices" button and click on it
+    test("Smart Discounts Page", addDevices);
+
+    //  Find the first a structure and select
+    test("Select Structure", selectStructure);
+
+    // TODO:  Find list of offers and confirm that only offers that can be availed are present
+      //Find Pick Structure Structure , click on it .
+      test("Check the presence of Pick Structure Button",selectPickStructureButton);
+
+    //  Select an offer and click on "Go to Payment"
+    test("Select Offer", selectOffer);
+    //TODO:  Check if address, offers, structure and policies displayed are the ones chosen.
+
+    //  Find "Pay" button and click on it
+    test("Confirm Payment", confirmPayment);
+
+    // Check if redirected to home page and Logout
+    test("Logout", logout);
+
+  });
 //  group("Flow When No Discounts Are Availed ", () {
 //    setUpAll(() async {
 //      flutterDriver = await setupAndGetDriver();
@@ -311,8 +319,6 @@ void main() {
 //
 ////    test("Logout", logout);
 //  });
-
-
 
   }
 
