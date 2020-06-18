@@ -55,39 +55,69 @@ class _PaymentState extends State<Payment> {
       backgroundColor: Colors.white,
       body: Container(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                TextWidget(
-                    //TODO Get the name from the user details from sdk
-                    key: Key('name'),
-                    leftText: 'Name: ',
-                    rightText: userName),
-                TextWidget(
-                  leftText: 'Address: ',
-                  rightText: '${purchase['address']}' ?? '',
-                ),
-                TextWidget(
-                  leftText: 'Selected Policy: ',
-                  rightText: '${purchase['policy'].policyName}' ?? '',
-                ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(
+                height: 20.0,
+              ),
+              TextWidget(
+                  key: Key('name'), leftText: 'Name: ', rightText: 'XYZ'),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextWidget(
+                leftText: 'Address: ',
+                rightText: '${purchase['address']}' ?? '',
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextWidget(
+                leftText: 'Selected Policy: ',
+                rightText: '${purchase['policy'].policyName}' ?? '',
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextWidget(
+                leftText: 'Cost: ',
+                rightText: 'Rs. ${purchase['policy'].cost}' ?? '',
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextWidget(
+                leftText: 'Offers Availed: ',
+                rightText: '${purchase['offer'].requirements}' ?? '',
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextWidget(
+                leftText: 'Total Discount: ',
+                rightText: 'Rs ${purchase['total_discount']}' ?? '',
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextWidget(
+                leftText: 'Discounted Cost: ',
+                rightText: 'Rs ${purchase['discounted_cost']}' ?? '',
+              ),
+              SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/home');
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
 
-                TextWidget(
-                  leftText: 'Cost: ',
-                  rightText: 'Rs. ${purchase['policy'].cost}' ?? '',
-                ),
-
-                // The discount and offer received by the user will only be shown when user has selected one .
-                arguments['selectedOffer'] != null
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           TextWidget(
                             leftText: 'Offers Availed: ',

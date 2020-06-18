@@ -15,23 +15,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
-    String status = await globals.sdk.login();
+    globals.user = await globals.initialiseSDK();
+    String status = await globals.user.login();
     if (status == "login successful" || status == "already logged in") {
-      Navigator.pushReplacementNamed(
-          context, '/home'); // Navigates to the home page
-
+      Navigator.pushNamed(context, '/home'); // Navigates to the home page
     } else {
-      print("Login Failed");
-      //TODO Show a snackbar for displaying login failed
-    }
-  }
+      final _snackBar = SnackBar(
+        content: Text('Login Failed'),
+        action: SnackBarAction(
+            label: 'Retry',
+            onPressed: () async {
+              await userLogin();
+            }),
+      );
+      _globalKey.currentState.showSnackBar(_snackBar);
 
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
+      key: _globalKey,
       backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
         title: Center(child: Text('Smart Home')),

@@ -14,7 +14,10 @@ Future<SDK> initialiseSDK() async {
   return sdk;
 }
 
+
+SDK user;
 SDK sdk;
+
 
 class User {
   String displayName;
@@ -23,3 +26,4 @@ class User {
 }
 
 User user;
+
