@@ -3,7 +3,7 @@ library globals;
 import 'package:sdk/sdk.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
-Future<SDK> con({test = 0}) async {
+Future<SDK> initialiseSDK({test = 0}) async {
   final RemoteConfig _remoteConfig = await RemoteConfig.instance;
   await _remoteConfig.fetch();
   await _remoteConfig.activateFetched();

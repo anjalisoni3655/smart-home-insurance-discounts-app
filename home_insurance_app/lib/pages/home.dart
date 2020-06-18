@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     if (value == 'Logout') {
       String status = await globals.sdk.logout();
       if (status == "logout successful") {
-        Navigator.pop(context);
+        Navigator.pushReplacementNamed(context, '/login');
       } else {
         //TODO : Add a snackbar displaying unsuccessful logout
       }

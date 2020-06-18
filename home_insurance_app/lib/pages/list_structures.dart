@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
-// Map eah structure with a unique index for selecting Radio Buttons
+// Map each structure with a unique index for selecting Radio Buttons
 class Mapping {
   Map structure;
   int index;
