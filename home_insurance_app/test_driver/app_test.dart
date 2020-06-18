@@ -35,17 +35,6 @@ dynamic goBack() async {
   await flutterDriver.tap(backButton);
 }
 
-//Check the presence of
-//isPresent(SerializableFinder byValueKey, FlutterDriver driver,
-//    {Duration timeout = const Duration(seconds: 1)}) async {
-//  try {
-//    await driver.waitFor(byValueKey, timeout: timeout);
-//    return true;
-//  } catch (exception) {
-//    return false;
-//  }
-//}
-
 // Clicks on LOGIN WITH GOOGLE button and checks if directed to homepage
 dynamic login() async {
   SerializableFinder loginButton = find.text('LOG IN WITH GOOGLE');
@@ -72,15 +61,7 @@ dynamic menuBarSmartDeviceDiscountsTab() async {
   SerializableFinder purchaseTab = find.text("Smart Devices Discounts");
   await flutterDriver.tap(purchaseTab);
   await flutterDriver.waitFor(find.byType("DisplayDiscounts"));
-
-  //Check that the page is only for viewing discounts
-//  final isExists = await isPresent(find.byValueKey('textKey'), flutterDriver);
-//  if (isExists) {
-//    print('widget is present');
-//  } else {
-//    print('widget is not present');
-//  }
-
+  //GoBack to home page
   await goBack();
   await flutterDriver.waitFor(find.byType("HomePage"));
 }
@@ -92,7 +73,7 @@ dynamic menuBarContactUsTab() async {
   SerializableFinder purchaseTab = find.text('Contact Us');
   await flutterDriver.tap(purchaseTab);
   await flutterDriver.waitFor(find.byType("Contact"));
-  //GoBack to home page
+  
   await goBack();
   await flutterDriver.waitFor(find.byType("HomePage"));
 }
@@ -261,13 +242,13 @@ void main() {
     test("Select Structure", selectStructure);
 
     // TODO:  Find list of offers and confirm that only offers that can be availed are present
-    //Find Pick Structure Structure , click on it .
+    //Find Pick Structure Button , click on it and select the structure .
     test("Check the presence of Pick Structure Button",
         selectPickStructureButton);
 
     //  Select an offer and click on "Go to Payment"
     test("Select Offer", selectOffer);
-    //TODO:  Check if address, offers, structure and policies displayed are the ones chosen.
+    //TODO:  Check if address, offers and policies displayed are the ones chosen.
 
     //  Find "Pay" button and click on it
     test("Confirm Payment", confirmPayment);
@@ -275,49 +256,45 @@ void main() {
     // Check if redirected to home page and Logout
     test("Logout", logout);
   });
-//  group("Flow When No Discounts Are Availed ", () {
-//    setUpAll(() async {
-//      flutterDriver = await setupAndGetDriver();
-//    });
-//
-//    tearDownAll(() async {
-//      if (flutterDriver != null) {
-//        flutterDriver.close();
-//      }
-//    });
-//    test("Login Page", login);
-//
-//    test("Home Page", homePageSelectPurchasePolicyTab);
-//
-//    test("Enter address", enterAddress);
-//
-//    test("Choose Policy", choosePolicy);
-//
-//    test("Direct payment after policy", paymentAfterPolicy);
-//
-//    test("Confirm Payment", confirmPayment);
-//
-//    test("Logout", logout);
-//
-//
-//  });
-//  group("Other Tabs of Menu Bar ", () {
-//    setUpAll(() async {
-//      flutterDriver = await setupAndGetDriver();
-//    });
-//
-//    tearDownAll(() async {
-//      if (flutterDriver != null) {
-//        flutterDriver.close();
-//      }
-//    });
-//
-//    test("Login Page", login);
-//
-////    test("View Discounts", menuBarSmartDeviceDiscountsTab);
-//
-//    test("Contact Company", menuBarContactUsTab);
-//
-////    test("Logout", logout);
-//  });
+
+  //Test if the flow works right if thw user goes to payment directly after selecting policy .
+  group("Direct Payment After Selecting Policy ", () {
+    setUpAll(() async {
+      flutterDriver = await setupAndGetDriver();
+    });
+
+    tearDownAll(() async {
+      if (flutterDriver != null) {
+        flutterDriver.close();
+      }
+    });
+    test("Login Page", login);
+    test("Home Page", homePageSelectPurchasePolicyTab);
+    test("Enter address", enterAddress);
+    test("Choose Policy", choosePolicy);
+    test("Direct payment after policy", paymentAfterPolicy);
+    test("Confirm Payment", confirmPayment);
+    test("Logout", logout);
+
+  });
+  
+  //Test for working of other tabs in menu bar
+  group("Other Tabs of Menu Bar ", () {
+    setUpAll(() async {
+      flutterDriver = await setupAndGetDriver();
+    });
+
+    tearDownAll(() async {
+      if (flutterDriver != null) {
+        flutterDriver.close();
+      }
+    });
+
+    test("Login Page", login);
+   // Select the smart device discounts tab in menu bar and check if desired page comes up
+    test("View Discounts", menuBarSmartDeviceDiscountsTab);
+    // Go to Contact Us page by selecting option in  menu bar .
+    test("Contact Company", menuBarContactUsTab);
+    test("Logout", logout);
+  });
 }
