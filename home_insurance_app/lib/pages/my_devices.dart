@@ -157,7 +157,6 @@ class _MyDevicesState extends State<MyDevices> {
                     label: Text('Link Devices'),
                     onPressed: () async {
                       String status = await globals.sdk.requestDeviceAccess();
-                      globals.sdk.setCredentials({'accessToken': '', 'refreshToken': ''});
                       setState(() {
                         hasDeviceAccess = hasAccess();
                         if(hasDeviceAccess) {
