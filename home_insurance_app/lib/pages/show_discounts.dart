@@ -46,7 +46,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
   @override
   Widget build(BuildContext context) {
     Map data = ModalRoute.of(context).settings.arguments;
-    if(data != null && data['onlyShow'] != null) {
+    if (data != null && data['onlyShow'] != null) {
       onlyShow = data['onlyShow'];
     } else {
       onlyShow = false;
@@ -78,18 +78,20 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                     ),
                     CustomDivider(
                         height: screenheight / 150, width: screenwidth / 50),
-                    _loading ?  Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: screenwidth / 100,
-                          vertical: screenheight / 100),
-                      child: Center(
-                        child: Text(
-                          'Loading...',
-                          style: CustomTextStyle(fontSize: 15.0),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ): Container(),
+                    _loading
+                        ? Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: screenwidth / 100,
+                                vertical: screenheight / 100),
+                            child: Center(
+                              child: Text(
+                                'Loading...',
+                                style: CustomTextStyle(fontSize: 15.0),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          )
+                        : Container(),
                     !onlyShow && _hasAuthorization
                         ? Container(
                             margin: EdgeInsets.symmetric(
@@ -104,7 +106,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                             ),
                           )
                         : Container(),
-                    !onlyShow && !_hasAuthorization ? Container(
+                    !onlyShow && !_hasAuthorization
+                        ? Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: screenwidth / 50,
                                 vertical: screenheight / 50),
@@ -113,7 +116,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                   'Link devices and then pick a structure to avail offer',
                                   style: CustomTextStyle(fontSize: 15.0)),
                             ),
-                          ): Container(),
+                          )
+                        : Container(),
                     !onlyShow && _hasAuthorization && !_hasDevices
                         ? Container(
                             margin: EdgeInsets.symmetric(
@@ -149,7 +153,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                             ),
                           )
                         : Container(height: 0),
-                    !onlyShow && _hasAuthorization &&
+                    !onlyShow &&
+                            _hasAuthorization &&
                             (!_hasStructures || !_isStructureSelected)
                         ? Container(
                             margin: EdgeInsets.symmetric(
@@ -192,8 +197,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                 ),
               ),
               onlyShow
-                  ? Container():
-                  Expanded(
+                  ? Container()
+                  : Expanded(
                       flex: 1,
                       child: Column(
                         children: <Widget>[
@@ -334,17 +339,19 @@ class _AllDiscountsState extends State<AllDiscounts> {
               padding: EdgeInsets.symmetric(
                   vertical: screenheight / 200, horizontal: screenwidth / 100),
               child: Container(
-                color: onlyShow? Colors.white : (selectedOffer == offers[index]
-                    ? Colors.blue[100]
-                    : canPickOffer(offers[index])
-                        ? Colors.blue[50]
-                        : Colors.grey[100]),
+                color: onlyShow
+                    ? Colors.white
+                    : (selectedOffer == offers[index]
+                        ? Colors.blue[100]
+                        : canPickOffer(offers[index])
+                            ? Colors.blue[50]
+                            : Colors.grey[100]),
                 child: ListTile(
                   enabled: onlyShow ? true : canPickOffer(offers[index]),
                   selected: (selectedOffer == offers[index]),
                   onTap: () {
                     setState(() {
-                      if(onlyShow) return;
+                      if (onlyShow) return;
                       if (selectedOffer == offers[index]) {
                         selectedOffer = null;
                       } else {

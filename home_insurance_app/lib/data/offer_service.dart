@@ -113,8 +113,8 @@ Future<String> getUserName() async {
 List<Offer> sortOffers(List<Offer> offers) {
   List<Offer> selectableOffers = [];
   List<Offer> unselectableOffers = [];
-  for(Offer offer in offers) {
-    if(canPickOffer(offer)) {
+  for (Offer offer in offers) {
+    if (canPickOffer(offer)) {
       selectableOffers.add(offer);
     } else {
       unselectableOffers.add(offer);
