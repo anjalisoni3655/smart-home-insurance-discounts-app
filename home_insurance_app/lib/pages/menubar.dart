@@ -33,7 +33,7 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('Smart Devices Discounts'),
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.pushNamed(context, '/showdiscounts');
+                Navigator.pushNamed(context, '/showdiscounts', arguments: {'onlyShow': true});
               }),
           ListTile(
               leading: Icon(Icons.devices),

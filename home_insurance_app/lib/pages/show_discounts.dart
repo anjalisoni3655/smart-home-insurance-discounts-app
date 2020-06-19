@@ -10,8 +10,8 @@ import 'package:homeinsuranceapp/pages/payment_page.dart';
 //Offers selected by the user
 Offer selectedOffer;
 String selectedStructure;
-List<Map> devices;
 List<Offer> offers;
+bool onlyShow = false;
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -24,6 +24,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
   bool _hasDevices;
   bool _hasStructures;
   bool _isStructureSelected;
+  bool _loading;
 
   List<Offer> offersToDisplay = CompanyDataBase
       .availableOffers; // This list stores which all offers will be displayed
@@ -39,15 +40,19 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
     _hasDevices = hasDevices();
     _hasStructures = hasStructures();
     _isStructureSelected = isStructureSelected();
+    _loading = false;
   }
 
   @override
   Widget build(BuildContext context) {
+    Map data = ModalRoute.of(context).settings.arguments;
+    if(data['onlyShow'] != null) {
+      onlyShow = data['onlyShow'];
+    } else {
+      onlyShow = false;
+    }
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
-    Map data = ModalRoute.of(context)
-        .settings
-        .arguments; // data stores the policy selected by the user as a key/value pair
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
@@ -73,7 +78,19 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                     ),
                     CustomDivider(
                         height: screenheight / 150, width: screenwidth / 50),
-                    _hasAuthorization
+                    _loading ?  Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: screenwidth / 100,
+                          vertical: screenheight / 100),
+                      child: Center(
+                        child: Text(
+                          'Loading...',
+                          style: CustomTextStyle(fontSize: 15.0),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ): Container(),
+                    !onlyShow && _hasAuthorization
                         ? Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: screenwidth / 100,
@@ -86,7 +103,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                               ),
                             ),
                           )
-                        : Container(
+                        : Container(),
+                    !onlyShow && !_hasAuthorization ? Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: screenwidth / 50,
                                 vertical: screenheight / 50),
@@ -95,8 +113,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                   'Link devices and then pick a structure to avail offer',
                                   style: CustomTextStyle(fontSize: 15.0)),
                             ),
-                          ),
-                    _hasAuthorization && !_hasDevices
+                          ): Container(),
+                    !onlyShow && _hasAuthorization && !_hasDevices
                         ? Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: screenwidth / 100,
@@ -131,7 +149,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                             ),
                           )
                         : Container(height: 0),
-                    _hasAuthorization &&
+                    !onlyShow && _hasAuthorization &&
                             (!_hasStructures || !_isStructureSelected)
                         ? Container(
                             margin: EdgeInsets.symmetric(
@@ -173,10 +191,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                   ],
                 ),
               ),
-              //So that the last discount does not get hidden behind the floating button
-              data == null
-                  ? Container()
-                  : // if data is null , this means that the user has come to this page only to see the discounts so buttons for payment should not appear
+              onlyShow
+                  ? Container():
                   Expanded(
                       flex: 1,
                       child: Column(
@@ -227,7 +243,13 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                           ),
                                           onPressed: () async {
                                             //    Get offers which the user is eligible to get after launching resource picker
+                                            setState(() {
+                                              _loading = true;
+                                            });
                                             await linkDevices();
+                                            setState(() {
+                                              _loading = false;
+                                            });
                                             await selectStructure(context);
                                             offers = sortOffers(offers);
                                             setState(() {
@@ -294,11 +316,10 @@ class AllDiscounts extends StatefulWidget {
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
-  List devices;
-
   void initState() {
     super.initState();
     offers = CompanyDataBase.availableOffers;
+    selectedOffer = null;
   }
 
   Widget build(BuildContext context) {
@@ -313,16 +334,17 @@ class _AllDiscountsState extends State<AllDiscounts> {
               padding: EdgeInsets.symmetric(
                   vertical: screenheight / 200, horizontal: screenwidth / 100),
               child: Container(
-                color: selectedOffer == offers[index]
+                color: onlyShow? Colors.white : (selectedOffer == offers[index]
                     ? Colors.blue[100]
                     : canPickOffer(offers[index])
                         ? Colors.blue[50]
-                        : Colors.grey[100],
+                        : Colors.grey[100]),
                 child: ListTile(
-                  enabled: canPickOffer(offers[index]),
+                  enabled: onlyShow ? true : canPickOffer(offers[index]),
                   selected: (selectedOffer == offers[index]),
                   onTap: () {
                     setState(() {
+                      if(onlyShow) return;
                       if (selectedOffer == offers[index]) {
                         selectedOffer = null;
                       } else {
@@ -339,7 +361,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                           '${offers[index]}',
                           textAlign: TextAlign.left,
                           style: CustomTextStyle(
-                              color: canPickOffer(offers[index])
+                              color: onlyShow || canPickOffer(offers[index])
                                   ? Colors.black
                                   : Colors.grey),
                         )),
