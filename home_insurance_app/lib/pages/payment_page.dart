@@ -65,10 +65,7 @@ class _PaymentState extends State<Payment> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 TextWidget(
-                    //TODO Get the name from the user details from sdk
-                    key: Key('name'),
-                    leftText: 'Name: ',
-                    rightText: userName),
+                    key: Key('name'), leftText: 'Name: ', rightText: userName),
                 TextWidget(
                   leftText: 'Address: ',
                   rightText: '${purchase['address']}' ?? '',
