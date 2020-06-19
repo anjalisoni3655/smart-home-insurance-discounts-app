@@ -32,8 +32,8 @@ void main() {
     expect(button2, findsNothing);
 
     //Check for one or more discount cards
-    final card = find.byType(Card);
-    expect(card, findsWidgets);
+    final offer = find.byType(ListTile);
+    expect(offer, findsWidgets);
   });
 
   testWidgets("Show Discounts after access", (WidgetTester tester) async {
@@ -56,7 +56,7 @@ void main() {
     expect(button2, findsNothing);
 
     //Check for one or more discount cards
-    final card = find.byType(Card);
-    expect(card, findsWidgets);
+    final offer = find.byType(ListTile);
+    expect(offer, findsWidgets);
   });
 }
