@@ -46,7 +46,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
   @override
   Widget build(BuildContext context) {
     Map data = ModalRoute.of(context).settings.arguments;
-    if(data['onlyShow'] != null) {
+    if(data != null && data['onlyShow'] != null) {
       onlyShow = data['onlyShow'];
     } else {
       onlyShow = false;
