@@ -4,6 +4,7 @@ import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:optional/optional.dart';
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/list_structures.dart';
+import 'package:homeinsuranceapp/data/device_type.dart';
 
 Future<List> getAllowedOffers(BuildContext context) async {
   List<Offer> allowedOffers = [];
@@ -25,6 +26,7 @@ Future<List> selectStructure(BuildContext context) async {
     //TODO  Snackbar showing  "NO HOMES FOUND"
     response = Optional.empty();
   }
+
   if (response != Optional.empty()) {
     List structures = response.value;
 //    Helper function to show dialogue box for displaying structure list
@@ -65,6 +67,7 @@ Future<List> getValidOffers(Map structure) async {
     //TODO - Snackbar showing NO ACCESS TO DEVICES
     response = Optional.empty();
   }
+
   if (response != Optional.empty()) {
     List devices = response.value;
     //Stores all unique 'types' of devices along with their respective count
@@ -88,7 +91,9 @@ Future<List> getValidOffers(Map structure) async {
     for (int i = 0; i < allOffers.length; i++) {
       isValid = true;
       for (var k in allOffers[i].requirements.keys) {
-        int count = userDevices[k] == null ? 0 : userDevices[k];
+        // Since k is the string  value separately to each enum  which is  of type "First letter Capital" and others small.
+        String t = k.toUpperCase();
+        int count = userDevices[t] == null ? 0 : userDevices[t];
         if (count < allOffers[i].requirements[k]) {
           isValid = false;
           break;
@@ -99,7 +104,6 @@ Future<List> getValidOffers(Map structure) async {
       }
     }
   }
-
 // In case devices of the particular structure is 0 , empty list is returned .
   return (allowedOffers);
 }
@@ -107,7 +111,6 @@ Future<List> getValidOffers(Map structure) async {
 // Returns User name to payment page
 Future<String> getUserName() async {
   Optional<Map> response = await globals.sdk.getUserDetails();
-  print(response);
   if (response == Optional.empty()) {
     return "YOUR NAME";
   } else {
