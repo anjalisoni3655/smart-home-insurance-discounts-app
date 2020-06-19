@@ -3,9 +3,7 @@ import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/policy_dao.dart';
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 
-
 void main() {
-
   MockFirestoreInstance database;
   const int pincode = 123456;
   const int category = pincode % 3 + 1;

@@ -6,6 +6,7 @@ class PolicyDao {
   static setFirestoreInstance(var instance) {
     database = instance;
   }
+
   static Future<List<Policy>> getPolicies(int pincode) async {
     int category = _getCategoryFromPincode(pincode);
     QuerySnapshot snapshot = await database
