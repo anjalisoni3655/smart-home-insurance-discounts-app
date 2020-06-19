@@ -87,17 +87,14 @@ bool hasAccess() {
 }
 
 bool hasDevices() {
-//  print(devices);
   return devices.isPresent;
 }
 
 bool hasStructures() {
-//  print(structures);
   return structures.isPresent;
 }
 
 bool isStructureSelected() {
-//  print(selectedStructure);
   return selectedStructure.isPresent;
 }
 
@@ -110,4 +107,18 @@ Future<String> getUserName() async {
     Map userDetails = response.value;
     return (userDetails["displayName"]);
   }
+}
+
+// return a sorted list of offers (selectable first)
+List<Offer> sortOffers(List<Offer> offers) {
+  List<Offer> selectableOffers = [];
+  List<Offer> unselectableOffers = [];
+  for(Offer offer in offers) {
+    if(canPickOffer(offer)) {
+      selectableOffers.add(offer);
+    } else {
+      unselectableOffers.add(offer);
+    }
+  }
+  return selectableOffers + unselectableOffers;
 }

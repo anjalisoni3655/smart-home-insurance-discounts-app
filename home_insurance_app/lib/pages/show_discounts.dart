@@ -11,6 +11,7 @@ import 'package:homeinsuranceapp/pages/payment_page.dart';
 Offer selectedOffer;
 String selectedStructure;
 List<Map> devices;
+List<Offer> offers;
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -198,6 +199,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                           onPressed: () async {
                                             //    Get offers which the user is eligible to get after launching resource picker
                                             await selectStructure(context);
+                                            offers = sortOffers(offers);
                                             setState(() {
                                               _hasAuthorization = hasAccess();
                                               _hasDevices = hasDevices();
@@ -227,6 +229,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                             //    Get offers which the user is eligible to get after launching resource picker
                                             await linkDevices();
                                             await selectStructure(context);
+                                            offers = sortOffers(offers);
                                             setState(() {
                                               _hasAuthorization = hasAccess();
                                               _hasDevices = hasDevices();
@@ -291,7 +294,6 @@ class AllDiscounts extends StatefulWidget {
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
-  List<Offer> offers;
   List devices;
 
   void initState() {
@@ -346,7 +348,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         flex: 1,
                         child: Container(
                             child: Text(
-                          '${offers[index].discount}',
+                          '${offers[index].discount} %',
                           textAlign: TextAlign.right,
                           style: CustomTextStyle(
                               color: canPickOffer(offers[index])
