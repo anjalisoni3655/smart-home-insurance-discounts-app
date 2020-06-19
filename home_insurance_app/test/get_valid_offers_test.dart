@@ -56,7 +56,6 @@ void main() {
   group(
       'Unit test for checking the business logic for returning valid offers to the user ',
       () {
-
     //Test when authorisation through resource picker fails
     test(
         "Test 1 - Return Empty list of Offers when authorisation through Resource picker fails",
@@ -70,7 +69,6 @@ void main() {
     //Test for the case when app has access to none of the user structures
     test("Test 2 - Return Empty list of Offers when user has no structure ",
         () async {
-
       //Resource picker authorisation is successful
       when(globals.sdk.requestDeviceAccess())
           .thenAnswer((_) async => Future.value('authorization successful'));
@@ -85,7 +83,7 @@ void main() {
     test(
         "Test 3 - Return Empty list of Offers when error is thrown while accessing structures of the user ",
         () async {
-          //Resource picker authorisation is successful
+      //Resource picker authorisation is successful
       when(globals.sdk.requestDeviceAccess())
           .thenAnswer((_) async => Future.value('authorization successful'));
 
@@ -95,8 +93,7 @@ void main() {
     });
 
     //Test when valid offers are returned
-    test("Test 4 - List of valid Offers is non- empty ",
-        () async {
+    test("Test 4 - List of valid Offers is non- empty ", () async {
       when(globals.sdk.getDevicesOfStructure('home-1-structure-id')).thenAnswer(
           (_) async => Future.value(Optional.of(devicesOfStructure1)));
 
