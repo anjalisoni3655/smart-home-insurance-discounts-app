@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/pages/home.dart';
-import 'package:sdk/sdk.dart';
-import 'dart:convert';
+import 'package:optional/optional.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // widget for login with google
@@ -14,15 +15,25 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
+    globals.sdk = await globals.initialiseSDK();
     String status = await globals.sdk.login();
     if (status == "login successful" || status == "already logged in") {
       Navigator.pushReplacementNamed(
           context, '/home'); // Navigates to the home page
+
     } else {
-      print("Login Failed");
-      //TODO Show a snackbar for displaying login failed
+      final _snackBar = SnackBar(
+        content: Text('Login Failed'),
+        action: SnackBarAction(
+            label: 'Retry',
+            onPressed: () async {
+              await userLogin();
+            }),
+      );
+      _globalKey.currentState.showSnackBar(_snackBar);
     }
   }
 
@@ -30,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
+      key: _globalKey,
       backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
         title: Center(child: Text('Smart Home')),
@@ -57,15 +69,55 @@ class _LoginScreenState extends State<LoginScreen> {
           height: MediaQuery.of(context).size.width * 0.04,
         ),
         RaisedButton(
-            key: ValueKey('login'),
-            child: Text("LOG IN WITH GOOGLE"),
-            color: Colors.brown,
-            textColor: Colors.white,
-            onPressed: () async {
-              await userLogin();
-            },
-            shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0))),
+          key: Key('navigateToHome'),
+          child: Text("LOG IN WITH GOOGLE"),
+          color: kLoginButtonColor,
+          textColor: kLoginButtonTextColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0),
+          ),
+          onPressed: () async {
+            try {
+              globals.sdk = await globals.initialiseSDK();
+              String status = await globals.sdk.login();
+
+              if (status == "login successful") {
+                Optional<Map> userDetailsOptional =
+                    await globals.sdk.getUserDetails();
+
+                globals.user.displayName =
+                    userDetailsOptional.value['displayName'];
+
+                globals.user.email = userDetailsOptional.value['email'];
+                globals.user.photoUrl = userDetailsOptional.value['photoUrl'];
+
+                final doc = await Firestore.instance
+                    .collection('user')
+                    .where('email', isEqualTo: globals.user.email)
+                    .getDocuments();
+
+                if (doc.documents.length == 0) {
+                  await uploadUserDetails(
+                    name: globals.user.displayName,
+                    email: globals.user.email,
+                  );
+                }
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return HomePage();
+                }));
+              } else if (status == 'already logged in') {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return HomePage();
+                }));
+              }
+            } catch (e) {
+              print(e);
+            }
+          },
+        ),
+
       ],
     );
   }
