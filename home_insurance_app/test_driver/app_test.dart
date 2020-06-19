@@ -35,7 +35,7 @@ dynamic goBack() async {
   await flutterDriver.tap(backButton);
 }
 
-// Clicks on LOGIN WITH GOOGLE button and checks if directed to homepage
+// Clicks on LOG IN WITH GOOGLE button and checks if directed to homepage
 dynamic login() async {
   SerializableFinder loginButton = find.text('LOG IN WITH GOOGLE');
   await flutterDriver.runUnsynchronized(() async {
@@ -323,4 +323,6 @@ void main() {
     test("Contact Company", menuBarContactUsTab);
     test("Logout", logout);
   });
+
+
 }
