@@ -39,6 +39,7 @@ dependencies:
   optional: ^5.0.0
   enum_to_string: ^1.0.9
   firebase_remote_config: ^0.3.1
+  cloud_firestore_mocks: ^0.4.4
 
 
 

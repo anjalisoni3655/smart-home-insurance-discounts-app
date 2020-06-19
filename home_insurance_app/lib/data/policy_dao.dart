@@ -2,9 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 
 class PolicyDao {
+  static var database;
+  static setFirestoreInstance(var instance) {
+    database = instance;
+  }
   static Future<List<Policy>> getPolicies(int pincode) async {
     int category = _getCategoryFromPincode(pincode);
-    QuerySnapshot snapshot = await Firestore.instance
+    QuerySnapshot snapshot = await database
         .collection('policy')
         .where('category', isEqualTo: category)
         .where('deactivated', isEqualTo: false)
