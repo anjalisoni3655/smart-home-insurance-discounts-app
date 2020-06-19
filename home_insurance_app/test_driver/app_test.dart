@@ -156,11 +156,9 @@ dynamic selectOffer() async {
 }
 
 dynamic paymentWithNoOfferSelected() async {
-
   SerializableFinder submitButton = find.text("Go to Payment");
   await flutterDriver.tap(submitButton);
   await flutterDriver.waitFor(find.byType("Payment"));
-
 }
 
 // Click on confirm payment on payments page. Check if redirected to home page
@@ -196,6 +194,7 @@ dynamic logout() async {
     await flutterDriver.waitFor(find.byType("LoginScreen"));
   });
 }
+
 // Test for choosing the structure using Pick Structure button
 dynamic selectPickStructureButton() async {
   SerializableFinder pickStructureButton = find.text("Pick Structure");
@@ -282,7 +281,6 @@ void main() {
     test("Logout", logout);
   });
 
-
   group("Checking payment cancellation and No Offer Available Scenario ", () {
     setUpAll(() async {
       flutterDriver = await setupAndGetDriver();
@@ -301,11 +299,10 @@ void main() {
     test("View Smart Discounts button", viewSmartDiscountsAfterPolicy);
     test("Choose Structure", selectPickStructureButton);
     // Since no offer is available , directly click on payment
-    test("Click on Payment",paymentWithNoOfferSelected);
+    test("Click on Payment", paymentWithNoOfferSelected);
     test("Cancel Payment", cancelPayment);
     test("Logout", logout);
   });
-
 
   //Test for working of other tabs in menu bar
   group("Checks the functioning of other tabs of Menu Bar ", () {
