@@ -144,7 +144,6 @@ dynamic selectStructure() async {
 }
 
 // Select first offer that appears after selecting devices. Select Go to payment (submit selection)
-
 dynamic selectOffer() async {
   SerializableFinder firstOffer = find.byValueKey("Offer 0");
   await flutterDriver.tap(firstOffer);
@@ -154,6 +153,14 @@ dynamic selectOffer() async {
 
   await flutterDriver.waitFor(find.byType("Payment"));
 //      await Future.delayed(const Duration(seconds: 1));
+}
+
+dynamic paymentWithNoOfferSelected() async {
+
+  SerializableFinder submitButton = find.text("Go to Payment");
+  await flutterDriver.tap(submitButton);
+  await flutterDriver.waitFor(find.byType("Payment"));
+
 }
 
 // Click on confirm payment on payments page. Check if redirected to home page
@@ -184,17 +191,15 @@ dynamic logout() async {
   await flutterDriver.tap(settingsButton);
 
   SerializableFinder logout = find.text("Logout");
-
   await flutterDriver.tap(logout);
   await flutterDriver.runUnsynchronized(() async {
     await flutterDriver.waitFor(find.byType("LoginScreen"));
   });
 }
-
+// Test for choosing the structure using Pick Structure button
 dynamic selectPickStructureButton() async {
   SerializableFinder pickStructureButton = find.text("Pick Structure");
   await flutterDriver.tap(pickStructureButton);
-
   await selectStructure();
 }
 
@@ -241,9 +246,8 @@ void main() {
     //  Find the first a structure and select
     test("Select Structure", selectStructure);
 
-    // TODO:  Find list of offers and confirm that only offers that can be availed are present
-    //Find Pick Structure Button , click on it and select the structure .
-    test("Check the presence of Pick Structure Button",
+    //Find Pick Structure Button , click on it and change the structure .
+    test("Change Structure using Pick Structure Button ",
         selectPickStructureButton);
 
     //  Select an offer and click on "Go to Payment"
@@ -257,7 +261,7 @@ void main() {
     test("Logout", logout);
   });
 
-  //Test if the flow works right if thw user goes to payment directly after selecting policy .
+  //Test if the flow works right if the user goes to payment directly after selecting policy .
   group("Direct Payment After Selecting Policy ", () {
     setUpAll(() async {
       flutterDriver = await setupAndGetDriver();
@@ -268,6 +272,7 @@ void main() {
         flutterDriver.close();
       }
     });
+
     test("Login Page", login);
     test("Home Page", homePageSelectPurchasePolicyTab);
     test("Enter address", enterAddress);
@@ -277,8 +282,33 @@ void main() {
     test("Logout", logout);
   });
 
+
+  group("Checking payment cancellation and No Offer Available Scenario ", () {
+    setUpAll(() async {
+      flutterDriver = await setupAndGetDriver();
+    });
+
+    tearDownAll(() async {
+      if (flutterDriver != null) {
+        flutterDriver.close();
+      }
+    });
+
+    test("Login Page", login);
+    test("Home Page", homePageSelectPurchasePolicyTab);
+    test("Enter address", enterAddress);
+    test("Choose Policy", choosePolicy);
+    test("View Smart Discounts button", viewSmartDiscountsAfterPolicy);
+    test("Choose Structure", selectPickStructureButton);
+    // Since no offer is available , directly click on payment
+    test("Click on Payment",paymentWithNoOfferSelected);
+    test("Cancel Payment", cancelPayment);
+    test("Logout", logout);
+  });
+
+
   //Test for working of other tabs in menu bar
-  group("Other Tabs of Menu Bar ", () {
+  group("Checks the functioning of other tabs of Menu Bar ", () {
     setUpAll(() async {
       flutterDriver = await setupAndGetDriver();
     });
