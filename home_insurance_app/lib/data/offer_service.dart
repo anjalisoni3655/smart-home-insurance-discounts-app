@@ -107,7 +107,6 @@ Future<List> getValidOffers(Map structure) async {
 // Returns User name to payment page
 Future<String> getUserName() async {
   Optional<Map> response = await globals.sdk.getUserDetails();
-  print(response);
   if (response == Optional.empty()) {
     return "YOUR NAME";
   } else {
