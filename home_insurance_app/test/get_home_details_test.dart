@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
+import 'package:homeinsuranceapp/data/policy_dao.dart';
 
 void main() {
   testWidgets('Test for getting home address details',
@@ -25,5 +27,15 @@ void main() {
     await tester.enterText(find.byKey(Key('City')), 'Delhi');
     await tester.enterText(find.byKey(Key('State')), 'Delhi');
     await tester.enterText(find.byKey(Key('Pin-code')), '110033');
+  });
+
+  test('getPolicies() returns correct list of policies', () async {
+    List<Policy> expectedPolicies = [
+      Policy("Liability Coverage Insurance", 5, 6000),
+      Policy("Theft Insurance", 4, 6000),
+    ];
+    List<Policy> policies = await PolicyDao.getPolicies(208022);
+
+    expect(policies, expectedPolicies);
   });
 }
