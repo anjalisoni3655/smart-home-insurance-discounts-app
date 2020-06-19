@@ -77,6 +77,8 @@ dynamic menuBarContactUsTab() async {
   await goBack();
   await flutterDriver.waitFor(find.byType("HomePage"));
 }
+//my devices
+
 
 // Enter address and click on submit. Check if redirected to choose policy
 dynamic enterAddress() async {

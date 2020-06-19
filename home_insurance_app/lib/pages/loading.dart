@@ -30,7 +30,7 @@ class _LoadingState extends State<Loading> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset(
-                'assets/loading.gif',
+                'assets/HomePage.jpg',
                 width: 400,
                 height: 100,
               ),
