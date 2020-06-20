@@ -8,15 +8,13 @@ class Offer {
     this.discount = discount;
   }
 
-  // copy constructor
-  Offer.copy(Offer other) {
-    this.requirements.addAll(other.requirements);
-    this.discount = other.discount;
-  }
-
   @override
   String toString() {
-    // TODO: implement toString
-    return '$requirements, $discount';
+    String offer = '';
+    for (String device in requirements.keys) {
+      offer += '${requirements[device]} $device\n';
+    }
+    offer = offer.substring(0, offer.length - 1);
+    return offer;
   }
 }

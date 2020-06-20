@@ -5,8 +5,12 @@ import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 
 class PurchaseDao {
-  static Future<List<Purchase>> getInsurances(userId) async {
-    QuerySnapshot snapshot = await Firestore.instance
+  Firestore _database;
+
+  PurchaseDao(this._database);
+
+  Future<List<Purchase>> getInsurances(userId) async {
+    QuerySnapshot snapshot = await _database
         .collection("user")
         .document(userId)
         .collection("insurances_purchased")
@@ -30,8 +34,8 @@ class PurchaseDao {
     return list;
   }
 
-  static Future<void> addPurchase(String userId, Purchase purchase) async {
-    await Firestore.instance
+  Future<void> addPurchase(String userId, Purchase purchase) async {
+    await _database
         .collection('user')
         .document(userId)
         .collection('insurances_purchased')

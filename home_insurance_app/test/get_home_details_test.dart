@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
 
 void main() {
-  testWidgets('Widget Test', (WidgetTester tester) async {
+  testWidgets('Test for getting home address details',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: HomeDetails(),
@@ -23,6 +24,6 @@ void main() {
     await tester.enterText(find.byKey(Key('Second Address Line')), 'Rohini');
     await tester.enterText(find.byKey(Key('City')), 'Delhi');
     await tester.enterText(find.byKey(Key('State')), 'Delhi');
-    await tester.enterText(find.byKey(Key('Pin-code')), '110033');
+    await tester.enterText(find.byKey(Key('Pincode')), '110033');
   });
 }

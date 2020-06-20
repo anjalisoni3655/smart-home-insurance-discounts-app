@@ -5,14 +5,17 @@ import 'package:homeinsuranceapp/pages/my_devices.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
 import 'package:homeinsuranceapp/pages/contact.dart';
 import 'package:homeinsuranceapp/pages/get_home_details.dart';
-import 'package:homeinsuranceapp/pages/get_home_details.dart';
 import 'package:homeinsuranceapp/pages/choose_policy.dart';
 import 'package:homeinsuranceapp/pages/show_discounts.dart';
+import 'package:homeinsuranceapp/pages/loading.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 import 'pages/home.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // this is the root of our application
-void main() {
+void main({test = false}) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await globals.initialise(test: test);
   runApp(MyApp());
 }
 
@@ -22,12 +25,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Smart Home',
-      initialRoute: LoginScreen.id,
+      initialRoute: '/loading',
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
-        HomePage.id: (context) => HomePage(),
         Profile.id: (context) => Profile(),
+        '/home': (context) => HomePage(),
         MyDevices.id: (context) => MyDevices(),
+        'login': (context) => LoginScreen(),
+        '/loading': (context) => Loading(),
         Contact.id: (context) => Contact(),
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),

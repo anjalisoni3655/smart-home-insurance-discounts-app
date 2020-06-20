@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/database_utils.dart';
 import 'package:homeinsuranceapp/data/purchase.dart';
-import 'package:homeinsuranceapp/pages/home.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
+import 'package:homeinsuranceapp/data/offer_service.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
 class Payment extends StatefulWidget {
   static const id = 'payment';
@@ -13,9 +14,27 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   Purchase purchase;
+  String userName = "";
+
+  @override
+  void initState() {
+    // Before page is displayed , user name is retrieved from sdk .
+    super.initState();
+    //While testing sdk is not initialised , so username is returned as empty string
+    if (globals.sdk != null) {
+      getUserName().then((name) {
+        setState(() {
+          userName = name;
+        });
+      });
+    } else
+      userName = "";
+  }
 
   @override
   Widget build(BuildContext context) {
+    double screenheight = MediaQuery.of(context).size.height;
+    double screenwidth = MediaQuery.of(context).size.width;
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
 //      purchase = new Purchase(arguments['selectedPolicy'], arguments['selectedOffer'], arguments['structure']['id'], Timestamp.now(), arguments['userAddress']);
@@ -23,120 +42,125 @@ class _PaymentState extends State<Payment> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Payment details'),
-        centerTitle: true,
-        backgroundColor: Colors.brown,
-        //TODO :extract this layout details to separate css.dart file
-      ),
+      appBar: CommonAppBar(),
       backgroundColor: Colors.white,
-      body: Padding(
+      body: Container(
         padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              SizedBox(
-                height: 20.0,
-              ),
-              TextWidget(
-                  key: Key('name'), leftText: 'Name: ', rightText: 'XYZ'),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextWidget(
-                leftText: 'Address: ',
-                rightText: '${purchase.address}' ?? '',
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextWidget(
-                leftText: 'Selected Policy: ',
-                rightText: '${purchase.policy.policyName}' ?? '',
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextWidget(
-                leftText: 'Cost: ',
-                rightText: 'Rs. ${purchase.policy.cost}' ?? '',
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextWidget(
-                leftText: 'Offers Availed: ',
-                rightText: '${purchase.offer.requirements}' ?? '',
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextWidget(
-                leftText: 'Discount: ',
-                rightText: '${purchase.offer.discount} %' ?? '',
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextWidget(
-                leftText: 'Discounted Cost: ',
-                rightText: 'Rs ${purchase.discountedCost}' ?? '',
-              ),
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(HomePage.id);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                TextWidget(
+                    //TODO Get the name from the user details from sdk
+                    key: Key('name'),
+                    leftText: 'Name: ',
+                    rightText: userName),
+                TextWidget(
+                  leftText: 'Address: ',
+                  rightText: '${purchase.address}' ?? '',
+                ),
+                TextWidget(
+                  leftText: 'Selected Policy: ',
+                  rightText: '${purchase.policy.policyName}' ?? '',
+                ),
+
+                TextWidget(
+                  leftText: 'Cost: ',
+                  rightText: 'Rs. ${purchase.policy.cost}' ?? '',
+                ),
+
+                // The discount and offer received by the user will only be shown when user has selected one .
+                arguments['selectedOffer'] != null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
-                          Icon(
-                            Icons.payment,
-                            color: Colors.white,
+                          TextWidget(
+                            leftText: 'Offers Availed: ',
+                            rightText:
+                                '${purchase.offer.requirements}' ?? '',
                           ),
-                          SizedBox(width: 5),
-                          Text(
-                            'Cancel Payment',
-                            style: TextStyle(color: Colors.white),
+                          TextWidget(
+                            leftText: 'Discounted Cost: ',
+                            rightText:
+                                'Rs ${purchase.discountedCost}' ?? '',
                           ),
                         ],
-                      ),
-                      padding: EdgeInsets.all(15.0),
-                      color: Colors.lightBlueAccent,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0))),
-                  SizedBox(width: 20),
-                  RaisedButton(
-                      onPressed: () {
-                        addInsurancePurchased(purchase);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.cancel,
-                            color: Colors.white,
+                      )
+                    : Container(),
+              ],
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(bottom: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: RaisedButton(
+                          key: Key('Cancel Payment'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.cancel,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: screenwidth / 200),
+                              Text(
+                                'Cancel Payment',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
-                          SizedBox(width: 5),
-                          Text(
-                            'Confirm Payment',
-                            style: TextStyle(color: Colors.white),
+                          padding: EdgeInsets.all(0.0),
+                          color: Colors.lightBlueAccent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0))),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: RaisedButton(
+                          key: Key('Confirm Payment'),
+                          onPressed: () {
+                            // TODO: Insert into database
+                            // globals.purchaseDao.addPurchase(user.userId, purchase);
+                            Navigator.of(context).pop();
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.payment,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: screenwidth / 200),
+                              Text(
+                                'Confirm Payment',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      padding: EdgeInsets.all(15.0),
-                      color: Colors.lightBlueAccent,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0))),
-                ],
-              )
-            ],
-          ),
+                          padding: EdgeInsets.all(screenwidth / 100),
+                          color: Colors.lightBlueAccent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0))),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

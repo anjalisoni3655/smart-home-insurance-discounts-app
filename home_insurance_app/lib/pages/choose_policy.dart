@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
+import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //This class maps each policy to a index value which is used in selecting radio buttons
 class Mapping {
@@ -61,6 +63,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
+                  key: Key('Avail Smart Device Discounts'),
                   heroTag: "View",
                   onPressed: () {
                     Navigator.pushNamed(context, '/showdiscounts', arguments: {
@@ -71,7 +74,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
-                    'View Smart Device Discounts',
+                    'Avail Smart Device Discounts',
                     style: CustomTextStyle(),
                   ),
                 ),
@@ -80,9 +83,12 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
+                  key: Key('Payment'),
                   heroTag: "pay",
                   onPressed: () {
-                    Navigator.pop(context, {
+                    // Pop the current page and replace it by the payment page
+                    Navigator
+                        .pushReplacementNamed(context, Payment.id, arguments: {
                       'selectedPolicy': userChoice,
                       'userAddress': data['userAddress'],
                     }); // For now , clicking on payment takes back to the home page
@@ -90,7 +96,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
-                    'Payment',
+                    'Skip to Payment',
                     maxLines: 2,
                     style: CustomTextStyle(),
                   ),
@@ -149,6 +155,7 @@ class _RadioGroupState extends State<RadioGroup> {
         scrollDirection: Axis.vertical,
         children: choices
             .map((entry) => RadioListTile(
+                  key: Key('Policy ${entry.index}'),
                   title: Row(
                     children: <Widget>[
                       Expanded(

@@ -24,7 +24,7 @@ class ResourcePicker {
   }
 
   Map getCredentials() =>
-      {"accessToken": _accessToken, "refreshTokennn": _refreshToken};
+      {"accessToken": _accessToken, "refreshToken": _refreshToken};
 
   Future<String> askForAuthorization() async {
     // Launch URL for the resource picker and get back the access token that it returns
@@ -34,7 +34,8 @@ class ResourcePicker {
         // remove the default 'https://accounts.google.com/o/oauth2' domain name by resource picker domain name
         url =
             'https://sdmresourcepicker-staging.sandbox.google.com/partnerconnections/$_enterpriseId' +
-                url.substring(36);
+                url.substring(36) +
+                '&access_type=offline';
         launch(url);
       }).timeout(resourcePickerTimeoutDuration);
       _accessToken = authClient.credentials.accessToken.data;
