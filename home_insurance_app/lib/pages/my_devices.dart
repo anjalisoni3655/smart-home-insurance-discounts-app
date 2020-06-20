@@ -121,7 +121,8 @@ class _MyDevicesState extends State<MyDevices> {
                                           ),
                                           child: ListTile(
                                             title: Text(
-                                              '${device['customName']}',
+                                              //If device name is empty display Unknown
+                                              device['customName']!=""?'${device['customName']}':"Unknown",
                                               textAlign: TextAlign.center,
                                             ),
                                             subtitle: Column(
