@@ -18,7 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
-    globals.sdk = await globals.initialiseSDK();
     String status = await globals.sdk.login();
     if (status == "login successful" || status == "already logged in") {
       Navigator.pushReplacementNamed(
@@ -76,47 +75,8 @@ class _LoginScreenState extends State<LoginScreen> {
               await userLogin();
             },
             shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0))),
-          onPressed: () async {
-            try {
-              globals.sdk = await globals.initialiseSDK();
-              String status = await globals.sdk.login();
-
-              if (status == "login successful") {
-                Optional<Map> userDetailsOptional =
-                    await globals.sdk.getUserDetails();
-
-                globals.user.displayName =
-                    userDetailsOptional.value['displayName'];
-
-                globals.user.email = userDetailsOptional.value['email'];
-                globals.user.photoUrl = userDetailsOptional.value['photoUrl'];
-
-                final doc = await Firestore.instance
-                    .collection('user')
-                    .where('email', isEqualTo: globals.user.email)
-                    .getDocuments();
-
-                if (doc.documents.length == 0) {
-                  await uploadUserDetails(
-                    name: globals.user.displayName,
-                    email: globals.user.email,
-                  );
-                }
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return HomePage();
-                }));
-              } else if (status == 'already logged in') {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return HomePage();
-                }));
-              }
-            } catch (e) {
-              print(e);
-            }
-          },
+                borderRadius: new BorderRadius.circular(30.0)
+            ),
         ),
       ],
     );

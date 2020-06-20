@@ -65,6 +65,7 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (BuildContext context) {
               return {'Logout', 'My Profile'}.map((String choice) {
                 return PopupMenuItem<String>(
+                  key: Key(choice),
                   value: choice,
                   child: Text(choice),
                 );

@@ -116,6 +116,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                     _buildPincode(),
                     SizedBox(height: 100),
                     RaisedButton(
+                      key: Key('Submit'),
                       color: Colors.brown,
                       textColor: Colors.white,
                       onPressed: () {

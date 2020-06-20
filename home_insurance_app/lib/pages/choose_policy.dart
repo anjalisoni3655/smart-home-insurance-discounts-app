@@ -63,6 +63,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
+                  key: Key('Avail Smart Device Discounts'),
                   heroTag: "View",
                   onPressed: () {
                     Navigator.pushNamed(context, '/showdiscounts', arguments: {
@@ -82,6 +83,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
+                  key: Key('Payment'),
                   heroTag: "pay",
                   onPressed: () {
                     // Pop the current page and replace it by the payment page

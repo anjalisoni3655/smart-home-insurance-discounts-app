@@ -139,6 +139,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                       child: Align(
                                         alignment: Alignment.bottomLeft,
                                         child: FloatingActionButton.extended(
+                                          key: Key('Link Devices'),
                                           heroTag: 'Discounts',
                                           icon: Icon(Icons.money_off),
                                           label: Text(
@@ -171,6 +172,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                 child: Align(
                                   alignment: Alignment.bottomRight,
                                   child: FloatingActionButton.extended(
+                                    key: Key('Payment'),
                                     heroTag: 'Payment',
                                     icon: Icon(Icons.arrow_forward),
                                     label: Text(
