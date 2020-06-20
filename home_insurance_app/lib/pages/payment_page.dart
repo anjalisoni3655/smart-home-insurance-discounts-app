@@ -4,6 +4,8 @@ import 'package:homeinsuranceapp/data/purchase.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
+
 
 class Payment extends StatefulWidget {
   static const id = 'payment';
@@ -64,7 +66,7 @@ class _PaymentState extends State<Payment> {
                     //TODO Get the name from the user details from sdk
                     key: Key('name'),
                     leftText: 'Name: ',
-                    rightText: userName),
+                    rightText: globals.user.displayName ?? '',),
                 TextWidget(
                   leftText: 'Address: ',
                   rightText: '${purchase.address}' ?? '',
