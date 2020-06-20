@@ -1,27 +1,31 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:homeinsuranceapp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/my_devices.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
+
+const device1Name = 'device-1-name';
+const device2Name = 'device-2-name';
 
 void main() {
-  testWidgets('My Devices Page  Widget Test', (WidgetTester tester) async {
+  setUp(() async {
+    globals.sdk = await globals.initialiseSDK(test: true);
+  });
+
+  testWidgets('My Devices when SDK returns devices normally',
+      (WidgetTester tester) async {
     // Build our app and trigger a frame.
 
     await tester.pumpWidget(MaterialApp(
       home: MyDevices(),
     ));
 
-    expect(find.byType(FloatingActionButton), findsNWidgets(4));
-    await tester.tap(find.byIcon(Icons.devices_other));
+    Finder linkDevicesButton = find.text("Link Devices");
+    await tester.tap(linkDevicesButton);
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byIcon(Icons.smoke_free));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.byIcon(Icons.home));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.byIcon(Icons.camera_alt));
-    await tester.pumpAndSettle();
+    Finder device1 = find.text('$device1Name');
+    Finder device2 = find.text('$device2Name');
+    expect(device1, findsOneWidget);
+    expect(device2, findsOneWidget);
   });
 }

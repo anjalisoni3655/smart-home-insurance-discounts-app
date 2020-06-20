@@ -41,7 +41,7 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.devices),
               title: Text('My Devices'),
               onTap: () {
-                Navigator.pushNamed(context, MyDevices.id);
+                Navigator.pushNamed(context, '/myDevices');
               }),
           ListTile(
               leading: Icon(Icons.phone),

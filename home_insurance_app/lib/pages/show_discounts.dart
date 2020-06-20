@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
+import 'package:homeinsuranceapp/data/company_database.dart';
+
+import '../data/offer_service.dart';
 
 //Offers selected by the user
 Offer selectedOffer;
@@ -26,8 +28,6 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
   bool _isStructureSelected;
   bool _loading;
 
-  List<Offer> offersToDisplay = CompanyDataBase
-      .availableOffers; // This list stores which all offers will be displayed
   // When a system back button/ Back button on appBar is pressed , discounts will again be disabled .
   Future<bool> _onBackPressed() async {
     Navigator.of(context).pop(true);
@@ -131,7 +131,12 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                     color: Colors.blue,
                                   ),
                                   onPressed: () async {
+                                    setState(() {
+                                      _loading = true;
+                                    });
                                     await getDevices();
+                                    _loading = false;
+                                    offers = sortOffers(offers);
                                     setState(() {
                                       _hasAuthorization = hasAccess();
                                       _hasDevices = hasDevices();
@@ -169,6 +174,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                   ),
                                   onPressed: () async {
                                     await selectStructure(context);
+                                    offers = sortOffers(offers);
                                     setState(() {
                                       _hasAuthorization = hasAccess();
                                       _hasDevices = hasDevices();
@@ -326,6 +332,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
   void initState() {
     super.initState();
     offers = CompanyDataBase.availableOffers;
+    offers = sortOffers(offers);
     selectedOffer = null;
   }
 
@@ -383,7 +390,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                           '${offers[index].discount} %',
                           textAlign: TextAlign.right,
                           style: CustomTextStyle(
-                              color: canPickOffer(offers[index])
+                              color: onlyShow || canPickOffer(offers[index])
                                   ? Colors.black
                                   : Colors.grey),
                         )),

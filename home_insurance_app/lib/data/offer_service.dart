@@ -5,7 +5,6 @@ import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/pages/list_structures.dart';
 import 'package:optional/optional.dart';
 
-Optional<List> devices = Optional.empty();
 Optional<List> structures = Optional.empty();
 Optional<Map> selectedStructure = Optional.empty();
 
@@ -16,12 +15,12 @@ Future<void> linkDevices() async {
   // If authorization was successful fetch all devices and structures at once.
   if (hasAccess()) {
     structures = await globals.sdk.getAllStructures();
-    devices = await globals.sdk.getAllDevices();
+    globals.devices = await globals.sdk.getAllDevices();
   }
 }
 
 Future<void> getDevices() async {
-  devices = await globals.sdk.getAllDevices();
+  globals.devices = await globals.sdk.getAllDevices();
 }
 
 // If has access but deosnt have list of structures retries to fetch list of structures
@@ -51,7 +50,7 @@ Future<Optional<Map>> selectStructure(BuildContext context) async {
 
 // given an offer returns whether this offer is valid considering the devices that the user has
 bool canPickOffer(Offer offer) {
-  if (devices.isEmpty) return false;
+  if (globals.devices.isEmpty) return false;
   if (selectedStructure.isEmpty) return false;
 
   Map<DeviceType, int> userDeviceCount = {
@@ -61,7 +60,7 @@ bool canPickOffer(Offer offer) {
     DeviceType.DOORBELL: 0
   };
 
-  for (Map device in devices.value) {
+  for (Map device in globals.devices.value) {
     if (device['structureId'] != selectedStructure.value['id']) {
       continue;
     }
@@ -87,7 +86,7 @@ bool hasAccess() {
 }
 
 bool hasDevices() {
-  return devices.isPresent;
+  return globals.devices.isPresent;
 }
 
 bool hasStructures() {
