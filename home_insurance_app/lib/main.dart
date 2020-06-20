@@ -9,12 +9,13 @@ import 'package:homeinsuranceapp/pages/choose_policy.dart';
 import 'package:homeinsuranceapp/pages/show_discounts.dart';
 import 'package:homeinsuranceapp/pages/loading.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
+import 'pages/home.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // this is the root of our application
-void main() async {
+void main({test = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
-  globals.sdk = await globals.initialiseSDK();
+  globals.sdk = await globals.initialiseSDK(test: test);
   runApp(MyApp());
 }
 

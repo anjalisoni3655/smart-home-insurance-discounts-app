@@ -59,12 +59,13 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: kAppbarColor,
         actions: <Widget>[
           PopupMenuButton<String>(
-            key: HomePage.popmenuButton,
+            key: Key("settings"),
             child: Icon(Icons.accessibility),
             onSelected: onClick,
             itemBuilder: (BuildContext context) {
               return {'Logout', 'My Profile'}.map((String choice) {
                 return PopupMenuItem<String>(
+                  key: Key(choice),
                   value: choice,
                   child: Text(choice),
                 );

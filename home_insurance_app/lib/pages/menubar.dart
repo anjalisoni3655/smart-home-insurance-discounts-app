@@ -22,6 +22,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     fit: BoxFit.cover)),
           ),
           ListTile(
+              key: Key('Purchase Policy'),
               leading: Icon(Icons.home),
               title: Text('Purchase Policy'),
               onTap: () {

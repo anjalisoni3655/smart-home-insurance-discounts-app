@@ -48,6 +48,7 @@ class _StructureAlertBoxState extends State<StructureAlertBox> {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: FloatingActionButton.extended(
+                      key: Key('Submit'),
                       label: Text('Submit'),
                       onPressed: () {
                         Navigator.pop(context, userChoice);
@@ -99,6 +100,7 @@ class _ShowStructuresState extends State<ShowStructures> {
         scrollDirection: Axis.vertical,
         children: choices
             .map((entry) => RadioListTile(
+                  key: Key('Structure ${entry.index}'),
                   title: Text('${entry.structure['customName']}'),
                   groupValue: choosenIndex,
                   activeColor: Colors.blue[500],

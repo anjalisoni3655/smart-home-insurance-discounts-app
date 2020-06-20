@@ -118,6 +118,7 @@ class _PaymentState extends State<Payment> {
                     Expanded(
                       flex: 1,
                       child: RaisedButton(
+                          key: Key('Cancel Payment'),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -143,6 +144,7 @@ class _PaymentState extends State<Payment> {
                     Expanded(
                       flex: 1,
                       child: RaisedButton(
+                          key: Key('Confirm Payment'),
                           onPressed: () {
                             addInsurancePurchased(purchase);
                             Navigator.of(context).pop();

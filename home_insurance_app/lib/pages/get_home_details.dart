@@ -73,7 +73,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildPincode() {
     return TextFormField(
-        key: Key("Pin-code"),
+        key: Key("Pincode"),
         decoration: InputDecoration(labelText: "Pincode"),
         keyboardType: TextInputType.number,
         validator: (String value) {
@@ -116,6 +116,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                     _buildPincode(),
                     SizedBox(height: 100),
                     RaisedButton(
+                      key: Key('Submit'),
                       color: Colors.brown,
                       textColor: Colors.white,
                       onPressed: () {
