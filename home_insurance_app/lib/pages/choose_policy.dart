@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
+import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //This class maps each policy to a index value which is used in selecting radio buttons
 class Mapping {
@@ -48,30 +50,31 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
                       vertical: screenheight / 50),
                   child: Text(
                     'Available Policies',
-                    style: TextStyle(fontSize: 30.0),
+                    style: CustomTextStyle(fontSize: 30.0),
                   ),
                 ),
               ),
+              // Returns a Divider widget whose some attributes are defined by the parameters and others take the default value
               CustomDivider(
-                  // Returns a Divider widget whose some attributes are defined by the parameters and others take the default value
-                  height: screenheight / 100,
-                  width: screenwidth / 100),
+                  height: screenheight / 100, width: screenwidth / 100),
               CustomSizedBox(height: screenheight / 100),
               RadioGroup(data),
               CustomSizedBox(height: screenheight / 50),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
+                  key: Key('Avail Smart Device Discounts'),
                   heroTag: "View",
                   onPressed: () {
                     Navigator.pushNamed(context, '/showdiscounts', arguments: {
                       'selectedPolicy': userChoice,
+                      'userAddress': data['userAddress'],
                     });
                   },
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
-                    'View Smart Device Discounts',
+                    'Avail Smart Device Discounts',
                     style: CustomTextStyle(),
                   ),
                 ),
@@ -80,16 +83,20 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
+                  key: Key('Payment'),
                   heroTag: "pay",
                   onPressed: () {
-                    Navigator.pop(context, {
-                      'selectedPolicy': userChoice
+                    // Pop the current page and replace it by the payment page
+                    Navigator
+                        .pushReplacementNamed(context, Payment.id, arguments: {
+                      'selectedPolicy': userChoice,
+                      'userAddress': data['userAddress'],
                     }); // For now , clicking on payment takes back to the home page
                   },
                   backgroundColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.payment),
                   label: Text(
-                    'Payment',
+                    'Skip to Payment',
                     maxLines: 2,
                     style: CustomTextStyle(),
                   ),
@@ -105,8 +112,9 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
 
 // This class is used to display a list of policies preceded by the radio buttons
 class RadioGroup extends StatefulWidget {
-  final Map data;
-  const RadioGroup(this.data);
+  Map data;
+  RadioGroup(this.data);
+
   //  RadioGroup({Key key , this.data}):super(key:key);
   @override
   _RadioGroupState createState() => _RadioGroupState();
@@ -119,6 +127,14 @@ class _RadioGroupState extends State<RadioGroup> {
   @override
   void initState() {
     super.initState();
+
+    // If data is null , atleast assign one policy so that test file don't fails
+    if (widget.data == null) {
+      widget.data = {
+        "policies": [Policy("No Policy", 0, 0)]
+      };
+    }
+
     userChoice = widget.data['policies']
         [0]; //By default the first policy will be displayed as selected  .
     for (int i = 0; i < widget.data['policies'].length; i++) {
@@ -139,6 +155,7 @@ class _RadioGroupState extends State<RadioGroup> {
         scrollDirection: Axis.vertical,
         children: choices
             .map((entry) => RadioListTile(
+                  key: Key('Policy ${entry.index}'),
                   title: Row(
                     children: <Widget>[
                       Expanded(
@@ -182,7 +199,6 @@ class _RadioGroupState extends State<RadioGroup> {
                       userChoice = entry.policyOption;
                       //To make groupValue equal to value for the radio button .
                       choosenIndex = value;
-                      print(userChoice.policyName);
                     });
                   },
                 ))

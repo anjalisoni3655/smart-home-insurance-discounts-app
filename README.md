@@ -13,6 +13,7 @@ to enable home insurance providers give discounts to home owners if they have ce
 4. Go to settings -> flutter and add the path to flutter SDK if not already present.
 5. If prompted to run 'flutter pub get' accept, else go to terminal in the IDE and run flutter pub get.
 6. Connect device device to your laptop via USB. It should show up in the top bar. 
+7. Download google-services.json (firebase access credentials) from the firebase console project page and add it to home_insurance_app/android/app.
 7. Once connected to a devices go to run tab and select run.
 
 **Common issues faced:**
