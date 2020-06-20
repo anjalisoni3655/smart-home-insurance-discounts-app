@@ -7,4 +7,14 @@ class Offer {
     this.requirements = requirements;
     this.discount = discount;
   }
+
+  @override
+  String toString() {
+    String offer = '';
+    for (String device in requirements.keys) {
+      offer += '${requirements[device]} $device\n';
+    }
+    offer = offer.substring(0, offer.length - 1);
+    return offer;
+  }
 }

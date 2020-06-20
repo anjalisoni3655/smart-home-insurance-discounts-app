@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/data/company_database.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
@@ -8,9 +9,9 @@ import 'package:homeinsuranceapp/pages/payment_page.dart';
 
 //Offers selected by the user
 Offer selectedOffer;
-
-// None of the discounts will be selected ( It should be globally defined because both the classes controls it )
-bool disableDiscounts = true;
+String selectedStructure;
+List<Offer> offers;
+bool onlyShow = false;
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -19,28 +20,39 @@ class DisplayDiscounts extends StatefulWidget {
 
 // This class provides overall layout of the page .
 class _DisplayDiscountsState extends State<DisplayDiscounts> {
-  bool accessStructure;
+  bool _hasAuthorization;
+  bool _hasDevices;
+  bool _hasStructures;
+  bool _isStructureSelected;
+  bool _loading;
+
   List<Offer> offersToDisplay = CompanyDataBase
       .availableOffers; // This list stores which all offers will be displayed
   // When a system back button/ Back button on appBar is pressed , discounts will again be disabled .
   Future<bool> _onBackPressed() async {
-    disableDiscounts = true;
     Navigator.of(context).pop(true);
   }
 
   @override
   void initState() {
     super.initState();
-    accessStructure = hasAccess();
+    _hasAuthorization = hasAccess();
+    _hasDevices = hasDevices();
+    _hasStructures = hasStructures();
+    _isStructureSelected = isStructureSelected();
+    _loading = false;
   }
 
   @override
   Widget build(BuildContext context) {
+    Map data = ModalRoute.of(context).settings.arguments;
+    if (data != null && data['onlyShow'] != null) {
+      onlyShow = data['onlyShow'];
+    } else {
+      onlyShow = false;
+    }
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
-    Map data = ModalRoute.of(context)
-        .settings
-        .arguments; // data stores the policy selected by the user as a key/value pair
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
@@ -66,17 +78,36 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                     ),
                     CustomDivider(
                         height: screenheight / 150, width: screenwidth / 50),
-                    accessStructure
+                    _loading
                         ? Container(
                             margin: EdgeInsets.symmetric(
-                                horizontal: screenwidth / 50,
-                                vertical: screenheight / 50),
+                                horizontal: screenwidth / 100,
+                                vertical: screenheight / 100),
                             child: Center(
-                              child: Text('Select Offer',
-                                  style: CustomTextStyle(fontSize: 15.0)),
+                              child: Text(
+                                'Loading...',
+                                style: CustomTextStyle(fontSize: 15.0),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           )
-                        : Container(
+                        : Container(),
+                    !onlyShow && _hasAuthorization
+                        ? Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: screenwidth / 100,
+                                vertical: screenheight / 100),
+                            child: Center(
+                              child: Text(
+                                'Select Offer',
+                                style: CustomTextStyle(fontSize: 15.0),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          )
+                        : Container(),
+                    !onlyShow && !_hasAuthorization
+                        ? Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: screenwidth / 50,
                                 vertical: screenheight / 50),
@@ -85,24 +116,95 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                   'Link devices and then pick a structure to avail offer',
                                   style: CustomTextStyle(fontSize: 15.0)),
                             ),
-                          ),
+                          )
+                        : Container(),
+                    !onlyShow && _hasAuthorization && !_hasDevices
+                        ? Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: screenwidth / 100,
+                                vertical: screenheight / 100),
+                            child: Row(
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.cached,
+                                    color: Colors.blue,
+                                  ),
+                                  onPressed: () async {
+                                    await getDevices();
+                                    setState(() {
+                                      _hasAuthorization = hasAccess();
+                                      _hasDevices = hasDevices();
+                                      _hasStructures = hasStructures();
+                                      _isStructureSelected =
+                                          isStructureSelected();
+                                    });
+                                  },
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'An error occurred while fetching devices. Retry.',
+                                    style: CustomTextStyle(fontSize: 15.0),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(height: 0),
+                    !onlyShow &&
+                            _hasAuthorization &&
+                            (!_hasStructures || !_isStructureSelected)
+                        ? Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: screenwidth / 100,
+                                vertical: screenheight / 100),
+                            child: Row(
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.cached,
+                                    color: Colors.blue,
+                                  ),
+                                  onPressed: () async {
+                                    await selectStructure(context);
+                                    setState(() {
+                                      _hasAuthorization = hasAccess();
+                                      _hasDevices = hasDevices();
+                                      _hasStructures = hasStructures();
+                                      _isStructureSelected =
+                                          isStructureSelected();
+                                    });
+                                  },
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'An error occurred while selecting structures. Retry',
+                                    style: CustomTextStyle(fontSize: 15.0),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(height: 0),
                     SizedBox(height: screenheight / 150),
-                    AllDiscounts(offersToDisplay),
+                    AllDiscounts(),
                     SizedBox(height: screenheight / 30),
                   ],
                 ),
               ),
-              //So that the last discount does not get hidden behind the floating button
-              data == null
+              onlyShow
                   ? Container()
-                  : // if data is null , this means that the user has come to this page only to see the discounts so buttons for payment should not appear
-                  Expanded(
+                  : Expanded(
                       flex: 1,
                       child: Column(
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              accessStructure
+                              _hasAuthorization
                                   ? Expanded(
                                       flex: 1,
                                       child: Align(
@@ -117,16 +219,14 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                           ),
                                           onPressed: () async {
                                             //    Get offers which the user is eligible to get after launching resource picker
-                                            List<Offer> allowedOffers =
-                                                await selectStructure(context);
+                                            await selectStructure(context);
+                                            offers = sortOffers(offers);
                                             setState(() {
-                                              if (allowedOffers.isNotEmpty) {
-                                                offersToDisplay = allowedOffers;
-                                                disableDiscounts =
-                                                    false; // Now the user can select them
-                                              } else {
-                                                //TODO Show a snackbar displaying that the user cannot get any offers right now
-                                              }
+                                              _hasAuthorization = hasAccess();
+                                              _hasDevices = hasDevices();
+                                              _hasStructures = hasStructures();
+                                              _isStructureSelected =
+                                                  isStructureSelected();
                                             });
                                           },
                                           backgroundColor:
@@ -149,17 +249,21 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                           ),
                                           onPressed: () async {
                                             //    Get offers which the user is eligible to get after launching resource picker
-                                            List<Offer> allowedOffers =
-                                                await getAllowedOffers(context);
                                             setState(() {
-                                              accessStructure = hasAccess();
-                                              if (allowedOffers.isNotEmpty) {
-                                                offersToDisplay = allowedOffers;
-                                                disableDiscounts =
-                                                    false; // Now the user can select them
-                                              } else {
-                                                //TODO Show a snackbar displaying that the user cannot get any offers right now
-                                              }
+                                              _loading = true;
+                                            });
+                                            await linkDevices();
+                                            setState(() {
+                                              _loading = false;
+                                            });
+                                            await selectStructure(context);
+                                            offers = sortOffers(offers);
+                                            setState(() {
+                                              _hasAuthorization = hasAccess();
+                                              _hasDevices = hasDevices();
+                                              _hasStructures = hasStructures();
+                                              _isStructureSelected =
+                                                  isStructureSelected();
                                             });
                                           },
                                           backgroundColor:
@@ -181,7 +285,6 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                           fontWeight: FontWeight.w900),
                                     ),
                                     onPressed: () {
-                                      disableDiscounts = true;
                                       //pops the current page
                                       Navigator.pop(context);
                                       //Pops the previous page in the stack which is choose_policy page.
@@ -215,21 +318,15 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
 
 // This class provides overall layout of the page .
 class AllDiscounts extends StatefulWidget {
-  final List<Offer> offerList; // This is the offer list that will be displayed
-  const AllDiscounts(this.offerList);
-
   @override
   _AllDiscountsState createState() => _AllDiscountsState();
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
-  List<bool> isSelected = [];
-  int currSelected = 0; // Currently no discount is selected
-
   void initState() {
     super.initState();
-    isSelected = List.filled(widget.offerList.length,
-        false); // Initially all policies are deselected
+    offers = CompanyDataBase.availableOffers;
+    selectedOffer = null;
   }
 
   Widget build(BuildContext context) {
@@ -238,85 +335,59 @@ class _AllDiscountsState extends State<AllDiscounts> {
 
     return Expanded(
       child: ListView.builder(
-          itemCount: widget.offerList.length,
+          itemCount: offers.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(
                   vertical: screenheight / 200, horizontal: screenwidth / 100),
-              child: Card(
-                color: isSelected[index]
-                    ? Colors.teal[100]
-                    : Colors
-                        .white, // If selected then color of card is teal else no change in color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                  side: BorderSide(
-                    color: Colors.brown[100],
-                    width: 1.0,
-                  ),
-                ),
-                child: InkWell(
-                  key: Key('Offer $index'),
+              child: Container(
+                color: onlyShow
+                    ? Colors.white
+                    : (selectedOffer == offers[index]
+                        ? Colors.blue[100]
+                        : canPickOffer(offers[index])
+                            ? Colors.blue[50]
+                            : Colors.grey[100]),
+                child: ListTile(
+                  enabled: onlyShow ? true : canPickOffer(offers[index]),
+                  selected: (selectedOffer == offers[index]),
                   onTap: () {
                     setState(() {
-                      if (disableDiscounts == false) {
-                        //Current selected state of clicked discount is reversed in case same discount is clicked
-                        if (currSelected == index) {
-                          isSelected[currSelected] = !isSelected[currSelected];
-                          if (isSelected[currSelected] == true) {
-                            selectedOffer = widget.offerList[index];
-                          } else {
-                            selectedOffer = null;
-                          }
-                        }
-                        // In case some other discount is clicked , previous one gets unselected and clicked one gets selected
-                        else {
-                          isSelected[currSelected] = false;
-                          currSelected = index;
-                          isSelected[index] = true;
-                          selectedOffer = widget.offerList[index];
-                        }
+                      if (onlyShow) return;
+                      if (selectedOffer == offers[index]) {
+                        selectedOffer = null;
+                      } else {
+                        selectedOffer = offers[index];
                       }
                     });
                   },
-                  child: Container(
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 10,
-                          child: Column(
-                              children: (widget.offerList[index])
-                                  .requirements
-                                  .entries
-                                  .map(
-                                    (entry) => Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: screenheight / 80,
-                                            horizontal: screenwidth / 80),
-                                        decoration: BoxDecoration(),
-                                        child: Text(
-                                          '${entry.value} ${entry.key}',
-                                          textAlign: TextAlign.left,
-                                          style: CustomTextStyle(fontSize: 17),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                  .toList()),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            '${widget.offerList[index].discount} %',
-                            textAlign: TextAlign.center,
-                            style: CustomTextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 20.0),
-                          ),
-                        )
-                      ],
-                    ),
+                  title: Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                            child: Text(
+                          '${offers[index]}',
+                          textAlign: TextAlign.left,
+                          style: CustomTextStyle(
+                              color: onlyShow || canPickOffer(offers[index])
+                                  ? Colors.black
+                                  : Colors.grey),
+                        )),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                            child: Text(
+                          '${offers[index].discount} %',
+                          textAlign: TextAlign.right,
+                          style: CustomTextStyle(
+                              color: canPickOffer(offers[index])
+                                  ? Colors.black
+                                  : Colors.grey),
+                        )),
+                      )
+                    ],
                   ),
                 ),
               ),

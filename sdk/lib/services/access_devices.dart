@@ -79,6 +79,7 @@ class AccessDevices {
           'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
+          'structureId': getId(device['assignee'])['structures']
         });
       }
       return Optional.of(devices);
@@ -108,6 +109,7 @@ class AccessDevices {
           'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
+          'structureId': getId(device['assignee'])['structures']
         });
       }
       return Optional.of(devices);
