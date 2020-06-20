@@ -338,6 +338,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
           itemCount: offers.length,
           itemBuilder: (context, index) {
             return Padding(
+              key: Key('Offer $index'),
               padding: EdgeInsets.symmetric(
                   vertical: screenheight / 200, horizontal: screenwidth / 100),
               child: Container(

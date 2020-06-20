@@ -67,16 +67,15 @@ class _LoginScreenState extends State<LoginScreen> {
           height: MediaQuery.of(context).size.width * 0.04,
         ),
         RaisedButton(
-            key: ValueKey('login'),
-            child: Text("LOG IN WITH GOOGLE"),
-            color: Colors.brown,
-            textColor: Colors.white,
-            onPressed: () async {
-              await userLogin();
-            },
-            shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0)
-            ),
+          key: ValueKey('login'),
+          child: Text("LOG IN WITH GOOGLE"),
+          color: Colors.brown,
+          textColor: Colors.white,
+          onPressed: () async {
+            await userLogin();
+          },
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30.0)),
         ),
       ],
     );
