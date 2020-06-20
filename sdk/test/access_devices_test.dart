@@ -50,12 +50,14 @@ const allStructuresListResponse =
 const device1 = {
   'id': device1Id,
   'customName': device1Name,
-  'type': device1Type
+  'type': device1Type,
+  'structureId': structure1Id
 };
 const device2 = {
   'id': device2Id,
   'customName': device2Name,
-  'type': device2Type
+  'type': device2Type,
+  'structureId': structure2Id
 };
 const allDevicesResult = [device1, device2];
 const devicesOfStructure1Result = [device1];

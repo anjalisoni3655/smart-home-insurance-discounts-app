@@ -25,15 +25,14 @@ void main() {
     final head1 = find.text('Available Offers');
     expect(head1, findsOneWidget);
 
-    //Check the absence of Payment and Get Discounts Button ( Since this page is directly tested , selected policy  will be null and payment buttons should not be shown )
     final button1 = find.text('Link Devices');
     final button2 = find.text('Go to Payment');
-    expect(button1, findsNothing);
-    expect(button2, findsNothing);
+    expect(button1, findsOneWidget);
+    expect(button2, findsOneWidget);
 
     //Check for one or more discount cards
-    final card = find.byType(Card);
-    expect(card, findsWidgets);
+    final offer = find.byType(ListTile);
+    expect(offer, findsWidgets);
   });
 
   testWidgets("Show Discounts after access", (WidgetTester tester) async {
@@ -49,14 +48,13 @@ void main() {
     final head1 = find.text('Available Offers');
     expect(head1, findsOneWidget);
 
-    //Check the absence of Payment and Get Discounts Button ( Since this page is directly tested , selected policy  will be null and payment buttons should not be shown )
     final button1 = find.text('Pick Structure');
     final button2 = find.text('Go to Payment');
-    expect(button1, findsNothing);
-    expect(button2, findsNothing);
+    expect(button1, findsOneWidget);
+    expect(button2, findsOneWidget);
 
     //Check for one or more discount cards
-    final card = find.byType(Card);
-    expect(card, findsWidgets);
+    final offer = find.byType(ListTile);
+    expect(offer, findsWidgets);
   });
 }
