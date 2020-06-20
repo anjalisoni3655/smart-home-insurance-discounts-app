@@ -6,14 +6,14 @@ import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 import 'package:homeinsuranceapp/data/company_database.dart';
-
+import'package:optional/optional.dart';
 import '../data/offer_service.dart';
 
+
 //Offers selected by the user
-Offer selectedOffer;
-String selectedStructure;
-List<Offer> offers;
-bool onlyShow = false;
+Offer selectedOffer ;
+List<Offer> offers ;
+bool onlyShow = false ;
 
 class DisplayDiscounts extends StatefulWidget {
   @override
@@ -29,12 +29,18 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
   bool _loading;
 
   // When a system back button/ Back button on appBar is pressed , discounts will again be disabled .
-  Future<bool> _onBackPressed() async {
+  Future<bool> _onBackPressed( ) async {
+
+    //State should get reinitialised if the user clicks on back button in middle of flow
     Navigator.of(context).pop(true);
+    _isStructureSelected = false ;
+    _hasDevices= false ;
+    selectedStructure = Optional.empty( );
+    selectedOffer = null ;
   }
 
   @override
-  void initState() {
+  void initState( ) {
     super.initState();
     _hasAuthorization = hasAccess();
     _hasDevices = hasDevices();
@@ -80,121 +86,121 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                         height: screenheight / 150, width: screenwidth / 50),
                     _loading
                         ? Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: screenwidth / 100,
-                                vertical: screenheight / 100),
-                            child: Center(
-                              child: Text(
-                                'Loading...',
-                                style: CustomTextStyle(fontSize: 15.0),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          )
+                      margin: EdgeInsets.symmetric(
+                          horizontal: screenwidth / 100,
+                          vertical: screenheight / 100),
+                      child: Center(
+                        child: Text(
+                          'Loading...',
+                          style: CustomTextStyle(fontSize: 15.0),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
                         : Container(),
                     !onlyShow && _hasAuthorization
                         ? Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: screenwidth / 100,
-                                vertical: screenheight / 100),
-                            child: Center(
-                              child: Text(
-                                'Select Offer',
-                                style: CustomTextStyle(fontSize: 15.0),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          )
+                      margin: EdgeInsets.symmetric(
+                          horizontal: screenwidth / 100,
+                          vertical: screenheight / 100),
+                      child: Center(
+                        child: Text(
+                          'Select Offer',
+                          style: CustomTextStyle(fontSize: 15.0),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
                         : Container(),
                     !onlyShow && !_hasAuthorization
                         ? Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: screenwidth / 50,
-                                vertical: screenheight / 50),
-                            child: Center(
-                              child: Text(
-                                  'Link devices and then pick a structure to avail offer',
-                                  style: CustomTextStyle(fontSize: 15.0)),
-                            ),
-                          )
+                      margin: EdgeInsets.symmetric(
+                          horizontal: screenwidth / 50,
+                          vertical: screenheight / 50),
+                      child: Center(
+                        child: Text(
+                            'Link devices and then pick a structure to avail offer',
+                            style: CustomTextStyle(fontSize: 15.0)),
+                      ),
+                    )
                         : Container(),
                     !onlyShow && _hasAuthorization && !_hasDevices
                         ? Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: screenwidth / 100,
-                                vertical: screenheight / 100),
-                            child: Row(
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.cached,
-                                    color: Colors.blue,
-                                  ),
-                                  onPressed: () async {
-                                    setState(() {
-                                      _loading = true;
-                                    });
-                                    await getDevices();
-                                    _loading = false;
-                                    offers = sortOffers(offers);
-                                    setState(() {
-                                      _hasAuthorization = hasAccess();
-                                      _hasDevices = hasDevices();
-                                      _hasStructures = hasStructures();
-                                      _isStructureSelected =
-                                          isStructureSelected();
-                                    });
-                                  },
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'An error occurred while fetching devices. Retry.',
-                                    style: CustomTextStyle(fontSize: 15.0),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ],
+                      margin: EdgeInsets.symmetric(
+                          horizontal: screenwidth / 100,
+                          vertical: screenheight / 100),
+                      child: Row(
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(
+                              Icons.cached,
+                              color: Colors.blue,
                             ),
-                          )
+                            onPressed: () async {
+                              setState(() {
+                                _loading = true;
+                              });
+                              await getDevices();
+                              _loading = false;
+                              offers = sortOffers(offers);
+                              setState(() {
+                                _hasAuthorization = hasAccess();
+                                _hasDevices = hasDevices();
+                                _hasStructures = hasStructures();
+                                _isStructureSelected =
+                                    isStructureSelected();
+                              });
+                            },
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'An error occurred while fetching devices. Retry.',
+                              style: CustomTextStyle(fontSize: 15.0),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                         : Container(height: 0),
                     !onlyShow &&
-                            _hasAuthorization &&
-                            (!_hasStructures || !_isStructureSelected)
+                        _hasAuthorization &&
+                        (!_hasStructures || !_isStructureSelected)
                         ? Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: screenwidth / 100,
-                                vertical: screenheight / 100),
-                            child: Row(
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.cached,
-                                    color: Colors.blue,
-                                  ),
-                                  onPressed: () async {
-                                    await selectStructure(context);
-                                    offers = sortOffers(offers);
-                                    setState(() {
-                                      _hasAuthorization = hasAccess();
-                                      _hasDevices = hasDevices();
-                                      _hasStructures = hasStructures();
-                                      _isStructureSelected =
-                                          isStructureSelected();
-                                    });
-                                  },
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'An error occurred while selecting structures. Retry',
-                                    style: CustomTextStyle(fontSize: 15.0),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ],
+                      margin: EdgeInsets.symmetric(
+                          horizontal: screenwidth / 100,
+                          vertical: screenheight / 100),
+                      child: Row(
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(
+                              Icons.cached,
+                              color: Colors.blue,
                             ),
-                          )
+                            onPressed: () async {
+                              await selectStructure(context);
+                              offers = sortOffers(offers);
+                              setState(() {
+                                _hasAuthorization = hasAccess();
+                                _hasDevices = hasDevices();
+                                _hasStructures = hasStructures();
+                                _isStructureSelected =
+                                    isStructureSelected();
+                              });
+                            },
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'Structure has not been selected . Select the structure to avail discounts ',
+                              style: CustomTextStyle(fontSize: 15.0),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                         : Container(height: 0),
                     SizedBox(height: screenheight / 150),
                     AllDiscounts(),
@@ -205,114 +211,120 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
               onlyShow
                   ? Container()
                   : Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              _hasAuthorization
-                                  ? Expanded(
-                                      flex: 1,
-                                      child: Align(
-                                        alignment: Alignment.topCenter,
-                                        child: FloatingActionButton.extended(
-                                          heroTag: 'home',
-                                          icon: Icon(Icons.home),
-                                          label: Text(
-                                            'Pick Structure',
-                                            style: CustomTextStyle(
-                                                fontWeight: FontWeight.w900),
-                                          ),
-                                          onPressed: () async {
-                                            //    Get offers which the user is eligible to get after launching resource picker
-                                            await selectStructure(context);
-                                            offers = sortOffers(offers);
-                                            setState(() {
-                                              _hasAuthorization = hasAccess();
-                                              _hasDevices = hasDevices();
-                                              _hasStructures = hasStructures();
-                                              _isStructureSelected =
-                                                  isStructureSelected();
-                                            });
-                                          },
-                                          backgroundColor:
-                                              Colors.lightBlueAccent,
-                                        ),
-                                      ),
-                                    )
-                                  : Expanded(
-                                      flex: 1,
-                                      child: Align(
-                                        alignment: Alignment.bottomLeft,
-                                        child: FloatingActionButton.extended(
-                                          key: Key('Link Devices'),
-                                          heroTag: 'Discounts',
-                                          icon: Icon(Icons.money_off),
-                                          label: Text(
-                                            'Link Devices',
-                                            style: CustomTextStyle(
-                                                fontWeight: FontWeight.w900),
-                                          ),
-                                          onPressed: () async {
-                                            //    Get offers which the user is eligible to get after launching resource picker
-                                            setState(() {
-                                              _loading = true;
-                                            });
-                                            await linkDevices();
-                                            setState(() {
-                                              _loading = false;
-                                            });
-                                            await selectStructure(context);
-                                            offers = sortOffers(offers);
-                                            setState(() {
-                                              _hasAuthorization = hasAccess();
-                                              _hasDevices = hasDevices();
-                                              _hasStructures = hasStructures();
-                                              _isStructureSelected =
-                                                  isStructureSelected();
-                                            });
-                                          },
-                                          backgroundColor:
-                                              Colors.lightBlueAccent,
-                                        ),
-                                      ),
-                                    ),
-                              Expanded(
-                                flex: 1,
-                                child: Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: FloatingActionButton.extended(
-                                    key: Key('Payment'),
-                                    heroTag: 'Payment',
-                                    icon: Icon(Icons.arrow_forward),
-                                    label: Text(
-                                      'Go to Payment',
-                                      style: CustomTextStyle(
-                                          fontWeight: FontWeight.w900),
-                                    ),
-                                    onPressed: () {
-                                      //pops the current page
-                                      Navigator.pop(context);
-                                      //Pops the previous page in the stack which is choose_policy page.
-                                      Navigator.pop(context);
-                                      //For now all these arguments are  send to the home page
-                                      Navigator.pushNamed(context, Payment.id,
-                                          arguments: {
-                                            'selectedOffer': selectedOffer,
-                                            'selectedPolicy':
-                                                data['selectedPolicy'],
-                                            'userAddress': data['userAddress'],
-                                          });
-                                    },
-                                    backgroundColor: Colors.lightBlueAccent,
-                                  ),
-                                ),
+                flex: 1,
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        _hasAuthorization
+                            ? Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: FloatingActionButton.extended(
+                              heroTag: 'home',
+                              icon: Icon(Icons.home),
+                              label: Text(
+                                'Pick Structure',
+                                style: CustomTextStyle(
+                                    fontWeight: FontWeight.w900),
                               ),
-                            ],
+                              onPressed: () async {
+                                //    Get offers which the user is eligible to get after launching resource picker
+                                await selectStructure(context);
+                                offers = sortOffers(offers);
+                                setState(() {
+                                  _hasAuthorization = hasAccess();
+                                  _hasDevices = hasDevices();
+                                  _hasStructures = hasStructures();
+                                  _isStructureSelected =
+                                      isStructureSelected();
+                                });
+                              },
+                              backgroundColor:
+                              Colors.lightBlueAccent,
+                            ),
                           ),
-                        ],
-                      ),
+                        )
+                            : Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: FloatingActionButton.extended(
+                              key: Key('Link Devices'),
+                              heroTag: 'Discounts',
+                              icon: Icon(Icons.money_off),
+                              label: Text(
+                                'Link Devices',
+                                style: CustomTextStyle(
+                                    fontWeight: FontWeight.w900),
+                              ),
+                              onPressed: () async {
+                                //    Get offers which the user is eligible to get after launching resource picker
+                                setState(() {
+                                  _loading = true;
+                                });
+                                await linkDevices();
+                                setState(() {
+                                  _loading = false;
+                                });
+                                await selectStructure(context);
+                                offers = sortOffers(offers);
+                                setState(() {
+                                  _hasAuthorization = hasAccess();
+                                  _hasDevices = hasDevices();
+                                  _hasStructures = hasStructures();
+                                  _isStructureSelected =
+                                      isStructureSelected();
+                                });
+                              },
+                              backgroundColor:
+                              Colors.lightBlueAccent,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: FloatingActionButton.extended(
+                              key: Key('Payment'),
+                              heroTag: 'Payment',
+                              icon: Icon(Icons.arrow_forward),
+                              label: Text(
+                                'Go to Payment',
+                                style: CustomTextStyle(
+                                    fontWeight: FontWeight.w900),
+                              ),
+                              onPressed: () {
+
+                                // Clear the initial state and then go for payment
+                                _isStructureSelected = false ;
+                                _hasDevices= false ;
+                                selectedStructure = Optional.empty( );
+
+                                //pops the current page
+                                Navigator.of(context).pop();
+                                //Pops the previous page in the stack which is choose_policy page.
+                                Navigator.pop(context);
+                                //For now all these arguments are  send to the home page
+                                Navigator.pushNamed(context, Payment.id,
+                                    arguments: {
+                                      'selectedOffer': selectedOffer,
+                                      'selectedPolicy':
+                                      data['selectedPolicy'],
+                                      'userAddress': data['userAddress'],
+                                    });
+                              },
+                              backgroundColor: Colors.lightBlueAccent,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+                  ],
+                ),
+              ),
               SizedBox(height: screenheight / 80),
             ],
           ),
@@ -352,10 +364,10 @@ class _AllDiscountsState extends State<AllDiscounts> {
                 color: onlyShow
                     ? Colors.white
                     : (selectedOffer == offers[index]
-                        ? Colors.blue[100]
-                        : canPickOffer(offers[index])
-                            ? Colors.blue[50]
-                            : Colors.grey[100]),
+                    ? Colors.blue[100]
+                    : canPickOffer(offers[index])
+                    ? Colors.blue[50]
+                    : Colors.grey[100]),
                 child: ListTile(
                   enabled: onlyShow ? true : canPickOffer(offers[index]),
                   selected: (selectedOffer == offers[index]),
@@ -375,25 +387,25 @@ class _AllDiscountsState extends State<AllDiscounts> {
                         flex: 1,
                         child: Container(
                             child: Text(
-                          '${offers[index]}',
-                          textAlign: TextAlign.left,
-                          style: CustomTextStyle(
-                              color: onlyShow || canPickOffer(offers[index])
-                                  ? Colors.black
-                                  : Colors.grey),
-                        )),
+                              '${offers[index]}',
+                              textAlign: TextAlign.left,
+                              style: CustomTextStyle(
+                                  color: onlyShow || canPickOffer(offers[index])
+                                      ? Colors.black
+                                      : Colors.grey),
+                            )),
                       ),
                       Expanded(
                         flex: 1,
                         child: Container(
                             child: Text(
-                          '${offers[index].discount} %',
-                          textAlign: TextAlign.right,
-                          style: CustomTextStyle(
-                              color: onlyShow || canPickOffer(offers[index])
-                                  ? Colors.black
-                                  : Colors.grey),
-                        )),
+                              '${offers[index].discount} %',
+                              textAlign: TextAlign.right,
+                              style: CustomTextStyle(
+                                  color: onlyShow || canPickOffer(offers[index])
+                                      ? Colors.black
+                                      : Colors.grey),
+                            )),
                       )
                     ],
                   ),
