@@ -22,6 +22,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     fit: BoxFit.cover)),
           ),
           ListTile(
+              key: Key('Purchase Policy'),
               leading: Icon(Icons.home),
               title: Text('Purchase Policy'),
               onTap: () {
@@ -33,7 +34,8 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('Smart Devices Discounts'),
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.pushNamed(context, '/showdiscounts');
+                Navigator.pushNamed(context, '/showdiscounts',
+                    arguments: {'onlyShow': true});
               }),
           ListTile(
               leading: Icon(Icons.devices),

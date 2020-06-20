@@ -21,8 +21,7 @@ FlutterDriver flutterDriver;
 
 // Clicks on LOGIN WITH GOOGLE button and checks if directed to homepage
 dynamic login() async {
-  SerializableFinder loginButton = find.text('LOG IN WITH GOOGLE');
-//      await Future.delayed(const Duration(seconds: 1));
+  SerializableFinder loginButton = find.byValueKey('login');
   await flutterDriver.runUnsynchronized(() async {
     await flutterDriver.tap(loginButton);
   });
@@ -34,7 +33,7 @@ dynamic login() async {
 dynamic homePageSelectPurchasePolicyTab() async {
   SerializableFinder appDrawer = find.byTooltip('Open navigation menu');
   await flutterDriver.tap(appDrawer);
-  SerializableFinder purchaseTab = find.text("Purchase Policy");
+  SerializableFinder purchaseTab = find.byValueKey("Purchase Policy");
   await flutterDriver.tap(purchaseTab);
 
   await flutterDriver.waitFor(find.byType("HomeDetails"));
@@ -62,7 +61,7 @@ dynamic enterAddress() async {
   await flutterDriver.tap(pincodeTextBox);
   await flutterDriver.enterText("122101");
 
-  SerializableFinder submitButton = find.text("SUBMIT");
+  SerializableFinder submitButton = find.byValueKey("Submit");
   await flutterDriver.tap(submitButton);
 
   await flutterDriver.waitFor(find.byType("DisplayPolicies"));
@@ -76,7 +75,7 @@ dynamic choosePolicy() async {
 
 // Click on View Smart Device Discounts on Policy Page
 dynamic viewSmartDiscountsAfterPolicy() async {
-  SerializableFinder viewDiscountsButton = find.text("View Smart Device Discounts");
+  SerializableFinder viewDiscountsButton = find.byValueKey("Avail Smart Device Discounts");
   await flutterDriver.tap(viewDiscountsButton);
 
   await flutterDriver.waitFor(find.byType("DisplayDiscounts"));
@@ -84,7 +83,7 @@ dynamic viewSmartDiscountsAfterPolicy() async {
 
 // Click on Payment on Policy Page
 dynamic paymentAfterPolicy() async {
-  SerializableFinder paymentButton = find.text("Payment");
+  SerializableFinder paymentButton = find.byValueKey("Payment");
   await flutterDriver.tap(paymentButton);
 
   await flutterDriver.waitFor(find.byType("Payment"));
@@ -93,7 +92,7 @@ dynamic paymentAfterPolicy() async {
 
 // Click on add devices on Show Discounts page
 dynamic addDevices() async {
-  SerializableFinder addDevicesButton = find.text("Add Devices");
+  SerializableFinder addDevicesButton = find.byValueKey("Link Devices");
   await flutterDriver.tap(addDevicesButton);
 }
 
@@ -102,7 +101,7 @@ dynamic selectStructure() async {
   SerializableFinder secondStructure = find.byValueKey("Structure 1");
   await flutterDriver.tap(secondStructure);
 
-  SerializableFinder submitButton = find.text("Submit");
+  SerializableFinder submitButton = find.byValueKey("Submit");
   await flutterDriver.tap(submitButton);
 }
 
@@ -112,7 +111,7 @@ dynamic selectOffer() async {
   SerializableFinder firstOffer = find.byValueKey("Offer 0");
   await flutterDriver.tap(firstOffer);
 
-  SerializableFinder submitButton = find.text("Go to Payment");
+  SerializableFinder submitButton = find.byValueKey("Payment");
   await flutterDriver.tap(submitButton);
 
   await flutterDriver.waitFor(find.byType("Payment"));
@@ -122,7 +121,7 @@ dynamic selectOffer() async {
 // Click on confirm payment on payments page. Check if redirected to home page
 dynamic confirmPayment() async {
   await flutterDriver.scroll(find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
-  SerializableFinder confirmPaymentButton = find.text("Confirm Payment");
+  SerializableFinder confirmPaymentButton = find.byValueKey("Confirm Payment");
   await flutterDriver.tap(confirmPaymentButton);
 
   await flutterDriver.waitFor(find.byType("HomePage"));
@@ -131,7 +130,7 @@ dynamic confirmPayment() async {
 // Click on confirm payment on payments page. Check if redirected to home page
 dynamic cancelPayment() async {
   await flutterDriver.scroll(find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
-  SerializableFinder confirmPaymentButton = find.text("Cancel Payment");
+  SerializableFinder confirmPaymentButton = find.byValueKey("Cancel Payment");
   await flutterDriver.tap(confirmPaymentButton);
 
   await flutterDriver.waitFor(find.byType("HomePage"));
@@ -145,10 +144,12 @@ dynamic logout() async {
   SerializableFinder settingsButton = find.byValueKey("settings");
   await flutterDriver.tap(settingsButton);
 
-  SerializableFinder logout = find.text("Logout");
+  SerializableFinder logout = find.byValueKey("Logout");
   flutterDriver.tap(logout);
 
-  await flutterDriver.waitFor(find.byType("LoginScreen"));
+  await flutterDriver.runUnsynchronized(() async {
+    await flutterDriver.waitFor(find.byType("LoginScreen"));
+  });
 }
 
 

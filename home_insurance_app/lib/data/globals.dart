@@ -1,5 +1,6 @@
 library globals;
 
+import 'package:optional/optional.dart';
 import 'package:sdk/sdk.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
@@ -27,3 +28,13 @@ Future<SDK> initialiseSDK({test = false}) async {
 }
 
 SDK sdk;
+
+class User {
+  String displayName;
+  String photoUrl;
+  String email;
+}
+
+User user = User();
+
+Optional<List> devices = Optional.empty();

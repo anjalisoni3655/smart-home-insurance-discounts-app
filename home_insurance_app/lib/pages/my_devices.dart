@@ -6,6 +6,8 @@ import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
+import '../data/device_type.dart';
+
 
 class MyDevices extends StatefulWidget {
   @override
@@ -14,25 +16,25 @@ class MyDevices extends StatefulWidget {
 
 class _MyDevicesState extends State<MyDevices> {
   bool hasDeviceAccess;
+  bool hasDevices;
   bool reload;
   bool loading;
-  List allDevices = [];
   @override
   void initState() {
     reload = false;
     loading = false;
+    hasDevices = globals.devices.isPresent;
     super.initState();
     hasDeviceAccess = hasAccess();
-    if(hasDeviceAccess) {
+    if(hasDeviceAccess && !hasDevices) {
       loading = true;
       globals.sdk.getAllDevices().then((value) {
         setState(() {
           loading = false;
           if(value.isEmpty) {
             reload = true;
-          } else {
-            allDevices = value.value;
           }
+          globals.devices = value;
         });
       });
     }
@@ -81,9 +83,8 @@ class _MyDevicesState extends State<MyDevices> {
                         loading = false;
                         if(value.isEmpty) {
                           reload = true;
-                        } else {
-                          allDevices = value.value;
                         }
+                        globals.devices = value;
                       });
                     });
                   },
@@ -105,7 +106,7 @@ class _MyDevicesState extends State<MyDevices> {
                   height: screenheight * 0.60,
                   width: screenwidth * 0.90,
                   child: ListView(
-                    children: List.from((allDevices).map(
+                    children: List.from((globals.devices.value).map(
                         (device) => Padding(
                           key: Key('${device['customName']}'),
                           padding: EdgeInsets.symmetric(vertical: screenheight/100, horizontal: screenwidth/100),
@@ -124,7 +125,7 @@ class _MyDevicesState extends State<MyDevices> {
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text('Type: ${deviceName[getDeviceType[device['type']].index]}'),
+                                    child: Text('Type: ${deviceName[sdmToDeviceType[device['type']].index]}'),
                                   ),
 //                                  Padding(
 //                                    padding: const EdgeInsets.all(8.0),
@@ -169,7 +170,7 @@ class _MyDevicesState extends State<MyDevices> {
                               if(value.isEmpty) {
                                 reload = true;
                               } else {
-                                allDevices = value.value;
+                                globals.devices = value;
                               }
                             });
                           });

@@ -48,6 +48,7 @@ class _StructureAlertBoxState extends State<StructureAlertBox> {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: FloatingActionButton.extended(
+                      key: Key('Submit'),
                       label: Text('Submit'),
                       onPressed: () {
                         Navigator.pop(context, userChoice);

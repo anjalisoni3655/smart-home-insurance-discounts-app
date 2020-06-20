@@ -116,6 +116,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                     _buildPincode(),
                     SizedBox(height: 100),
                     RaisedButton(
+                      key: Key('Submit'),
                       color: Colors.brown,
                       textColor: Colors.white,
                       onPressed: () {
@@ -124,6 +125,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                         }
                         // If the form is valid , all the values are saved in respective variables
                         _formKey.currentState.save();
+
                         //User Address object is sent to User Address class
                         UserAddress curr_user_address = UserAddress(
                             firstLineOfAddress,

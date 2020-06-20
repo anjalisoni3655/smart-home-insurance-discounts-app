@@ -1,10 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/components/css.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 //widget for the my profile page displaying user's details
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   static const String id = 'profile';
+  static const Key nameKey = Key('name_widget_key');
+
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,11 +24,15 @@ class Profile extends StatelessWidget {
           children: <Widget>[
             CircleAvatar(
               radius: 50.0,
-              backgroundImage: AssetImage('assets/user.png'),
+              backgroundImage: NetworkImage(globals.user.photoUrl ??
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI9VCNp1MXFz_NDRV_JJR-ym1EGhvHfit3lfbzfHLMkEBZlJ9T&usqp=CAU'),
             ),
-            Text(
-              'Mr. XYZ',
-              style: kProfileNameStyle,
+            Center(
+              child: Text(
+                globals.user.displayName ?? '',
+                key: Profile.nameKey,
+                style: kProfileNameStyle,
+              ),
             ),
             Text(
               'Business Analyst',
@@ -53,7 +65,7 @@ class Profile extends StatelessWidget {
                     color: kProfileIconColor,
                   ),
                   title: Text(
-                    'xyz@email.com',
+                    globals.user.email ?? '',
                     style: kNormalTextStyle,
                   ),
                 ))

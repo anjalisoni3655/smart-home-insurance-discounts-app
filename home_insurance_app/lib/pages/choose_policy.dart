@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
@@ -62,6 +63,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
+                  key: Key('Avail Smart Device Discounts'),
                   heroTag: "View",
                   onPressed: () {
                     Navigator.pushNamed(context, '/showdiscounts', arguments: {
@@ -81,6 +83,7 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton.extended(
+                  key: Key('Payment'),
                   heroTag: "pay",
                   onPressed: () {
                     // Pop the current page and replace it by the payment page
