@@ -37,7 +37,6 @@ class _PaymentState extends State<Payment> {
     double screenwidth = MediaQuery.of(context).size.width;
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
-      //TODO Handle the case when selectedOffer is null
       purchase = new Purchase(
           arguments['selectedPolicy'],
           arguments['selectedOffer'],

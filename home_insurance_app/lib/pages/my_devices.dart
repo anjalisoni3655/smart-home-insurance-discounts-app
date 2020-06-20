@@ -122,7 +122,9 @@ class _MyDevicesState extends State<MyDevices> {
                                           child: ListTile(
                                             title: Text(
                                               //If device name is empty display Unknown
-                                              device['customName']!=""?'${device['customName']}':"Unknown",
+                                              device['customName'] != ""
+                                                  ? '${device['customName']}'
+                                                  : "Unknown",
                                               textAlign: TextAlign.center,
                                             ),
                                             subtitle: Column(
@@ -143,44 +145,45 @@ class _MyDevicesState extends State<MyDevices> {
                 : Container(),
             // The user can link to devices anytime .
             Container(
-                    child: Column(
-                      children: <Widget>[
-                        !hasDeviceAccess?Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: screenheight / 10,
-                                horizontal: screenwidth / 10),
-                            child: Text(
-                                'Device Access not provided. Please link devices to view your devices.',
-                                style: CustomTextStyle(
-                                  color: Colors.brown,
-                                ),
-                                textAlign: TextAlign.center)):Container(),
-                        FloatingActionButton.extended(
-                          label: Text('Link Devices'),
-                          onPressed: () async {
-                            String status =
-                                await globals.sdk.requestDeviceAccess();
+              child: Column(
+                children: <Widget>[
+                  !hasDeviceAccess
+                      ? Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenheight / 10,
+                              horizontal: screenwidth / 10),
+                          child: Text(
+                              'Device Access not provided. Please link devices to view your devices.',
+                              style: CustomTextStyle(
+                                color: Colors.brown,
+                              ),
+                              textAlign: TextAlign.center))
+                      : Container(),
+                  FloatingActionButton.extended(
+                    label: Text('Link Devices'),
+                    onPressed: () async {
+                      String status = await globals.sdk.requestDeviceAccess();
+                      setState(() {
+                        hasDeviceAccess = hasAccess();
+                        if (hasDeviceAccess) {
+                          loading = true;
+                          globals.sdk.getAllDevices().then((value) {
                             setState(() {
-                              hasDeviceAccess = hasAccess();
-                              if (hasDeviceAccess) {
-                                loading = true;
-                                globals.sdk.getAllDevices().then((value) {
-                                  setState(() {
-                                    loading = false;
-                                    if (value.isEmpty) {
-                                      reload = true;
-                                    } else {
-                                      globals.devices = value;
-                                    }
-                                  });
-                                });
+                              loading = false;
+                              if (value.isEmpty) {
+                                reload = true;
+                              } else {
+                                globals.devices = value;
                               }
                             });
-                          },
-                        )
-                      ],
-                    ),
-                  ),
+                          });
+                        }
+                      });
+                    },
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
