@@ -11,7 +11,8 @@ void main() {
     globals.sdk = await globals.initialiseSDK(test: true);
   });
 
-  testWidgets('My Devices when SDK returns devices normally', (WidgetTester tester) async {
+  testWidgets('My Devices when SDK returns devices normally',
+      (WidgetTester tester) async {
     // Build our app and trigger a frame.
 
     await tester.pumpWidget(MaterialApp(

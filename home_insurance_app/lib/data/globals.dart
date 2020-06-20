@@ -8,7 +8,7 @@ Future<SDK> initialiseSDK({test = false}) async {
   String _clientId;
   String _clientSecret;
   String _enterpriseId;
-  if(test) {
+  if (test) {
     _clientId = 'clientId';
     _clientSecret = 'clientSecret';
     _enterpriseId = 'enterpriseId';

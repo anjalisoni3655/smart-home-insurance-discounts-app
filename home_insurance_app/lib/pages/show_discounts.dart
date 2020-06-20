@@ -9,7 +9,6 @@ import 'package:homeinsuranceapp/data/company_database.dart';
 
 import '../data/offer_service.dart';
 
-
 //Offers selected by the user
 Offer selectedOffer;
 String selectedStructure;
