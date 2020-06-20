@@ -343,7 +343,6 @@ class _AllDiscountsState extends State<AllDiscounts> {
   }
 
   Widget build(BuildContext context) {
-
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
 
@@ -408,12 +407,14 @@ class _AllDiscountsState extends State<AllDiscounts> {
                       ),
                     ),
                   ),
-                  _loadingOffers ? Container(
-                    child: Text(
-                      'Loading Offers ...',
-                      style: CustomTextStyle(),
-                    ),
-                  ) : Container(),
+                  _loadingOffers
+                      ? Container(
+                          child: Text(
+                            'Loading Offers ...',
+                            style: CustomTextStyle(),
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
             );

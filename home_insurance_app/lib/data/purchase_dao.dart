@@ -20,7 +20,8 @@ class PurchaseDao {
       list.add(new Purchase(
           new Policy(doc.data['policy']['name'], doc.data['policy']['validity'],
               doc.data['policy']['cost']),
-          new Offer(new Map<String, int>.from(doc.data['offer']['requirements']),
+          new Offer(
+              new Map<String, int>.from(doc.data['offer']['requirements']),
               doc.data['offer']['discount']),
           doc.data['structure_id'],
           doc.data['date_of_purchase'],

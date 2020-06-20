@@ -38,7 +38,12 @@ class _PaymentState extends State<Payment> {
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
 //      purchase = new Purchase(arguments['selectedPolicy'], arguments['selectedOffer'], arguments['structure']['id'], Timestamp.now(), arguments['userAddress']);
-      purchase = new Purchase(arguments['selectedPolicy'], arguments['selectedOffer'], "structure-id", Timestamp.now(), arguments['userAddress']);
+      purchase = new Purchase(
+          arguments['selectedPolicy'],
+          arguments['selectedOffer'],
+          "structure-id",
+          Timestamp.now(),
+          arguments['userAddress']);
     }
 
     return Scaffold(
@@ -82,13 +87,11 @@ class _PaymentState extends State<Payment> {
                         children: <Widget>[
                           TextWidget(
                             leftText: 'Offers Availed: ',
-                            rightText:
-                                '${purchase.offer.requirements}' ?? '',
+                            rightText: '${purchase.offer.requirements}' ?? '',
                           ),
                           TextWidget(
                             leftText: 'Discounted Cost: ',
-                            rightText:
-                                'Rs ${purchase.discountedCost}' ?? '',
+                            rightText: 'Rs ${purchase.discountedCost}' ?? '',
                           ),
                         ],
                       )

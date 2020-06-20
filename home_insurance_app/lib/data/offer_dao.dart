@@ -5,8 +5,7 @@ class OfferDao {
   Firestore _database;
   OfferDao(this._database);
   Future<List<Offer>> getOffers() async {
-    QuerySnapshot snapshot =
-    await _database.collection("offer").getDocuments();
+    QuerySnapshot snapshot = await _database.collection("offer").getDocuments();
     List<Offer> list = [];
     for (var doc in snapshot.documents) {
       list.add(new Offer(new Map<String, int>.from(doc.data['requirements']),
