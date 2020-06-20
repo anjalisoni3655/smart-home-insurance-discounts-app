@@ -148,10 +148,12 @@ class _MyDevicesState extends State<MyDevices> {
                                       ))),
                             ),
                           )
-                : Container(
+                : Container(),
+            // The user can link to devices anytime .
+            Container(
                     child: Column(
                       children: <Widget>[
-                        Container(
+                        !hasDeviceAccess?Container(
                             padding: EdgeInsets.symmetric(
                                 vertical: screenheight / 10,
                                 horizontal: screenwidth / 10),
@@ -160,7 +162,7 @@ class _MyDevicesState extends State<MyDevices> {
                                 style: CustomTextStyle(
                                   color: Colors.brown,
                                 ),
-                                textAlign: TextAlign.center)),
+                                textAlign: TextAlign.center)):Container(),
                         FloatingActionButton.extended(
                           label: Text('Link Devices'),
                           onPressed: () async {
