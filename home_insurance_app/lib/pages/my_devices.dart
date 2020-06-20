@@ -133,14 +133,6 @@ class _MyDevicesState extends State<MyDevices> {
                                                   child: Text(
                                                       'Type: ${deviceName[sdmToDeviceType[device['type']].index]}'),
                                                 ),
-//                                  Padding(
-//                                    padding: const EdgeInsets.all(8.0),
-//                                    child: Text('Structure: ${device['structure']}'),
-//                                  ),
-//                                  Padding(
-//                                    padding: const EdgeInsets.all(8.0),
-//                                    child: Text('Room: ${device['room']}'),
-//                                  ),
                                               ],
                                             ),
                                           ),

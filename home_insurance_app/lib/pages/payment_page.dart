@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/insurance_dao.dart';
+import 'package:homeinsuranceapp/data/purchase.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
@@ -12,7 +13,7 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
-  Map purchase;
+  Purchase purchase;
   String userName = "";
 
   @override
@@ -36,18 +37,13 @@ class _PaymentState extends State<Payment> {
     double screenwidth = MediaQuery.of(context).size.width;
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
-      int discount = (arguments['selectedOffer'] != null)
-          ? arguments['selectedOffer'].discount
-          : 0;
-      purchase = {
-//      'structure_id': arguments['structure']['id'],
-        'address': arguments['userAddress'],
-        'policy': arguments['selectedPolicy'],
-        'offer': arguments['selectedOffer'],
-        'total_discount': arguments['selectedPolicy'].cost * 0.01 * discount,
-        'discounted_cost':
-            arguments['selectedPolicy'].cost * (1 - 0.01 * discount),
-      };
+//      purchase = new Purchase(arguments['selectedPolicy'], arguments['selectedOffer'], arguments['structure']['id'], Timestamp.now(), arguments['userAddress']);
+      purchase = new Purchase(
+          arguments['selectedPolicy'],
+          arguments['selectedOffer'],
+          "structure-id",
+          Timestamp.now(),
+          arguments['userAddress']);
     }
 
     return Scaffold(
@@ -71,16 +67,16 @@ class _PaymentState extends State<Payment> {
                     rightText: userName),
                 TextWidget(
                   leftText: 'Address: ',
-                  rightText: '${purchase['address']}' ?? '',
+                  rightText: '${purchase.address}' ?? '',
                 ),
                 TextWidget(
                   leftText: 'Selected Policy: ',
-                  rightText: '${purchase['policy'].policyName}' ?? '',
+                  rightText: '${purchase.policy.policyName}' ?? '',
                 ),
 
                 TextWidget(
                   leftText: 'Cost: ',
-                  rightText: 'Rs. ${purchase['policy'].cost}' ?? '',
+                  rightText: 'Rs. ${purchase.policy.cost}' ?? '',
                 ),
 
                 // The discount and offer received by the user will only be shown when user has selected one .
@@ -91,17 +87,11 @@ class _PaymentState extends State<Payment> {
                         children: <Widget>[
                           TextWidget(
                             leftText: 'Offers Availed: ',
-                            rightText:
-                                '${purchase['offer'].requirements}' ?? '',
-                          ),
-                          TextWidget(
-                            leftText: 'Total Discount: ',
-                            rightText: 'Rs ${purchase['total_discount']}' ?? '',
+                            rightText: '${purchase.offer.requirements}' ?? '',
                           ),
                           TextWidget(
                             leftText: 'Discounted Cost: ',
-                            rightText:
-                                'Rs ${purchase['discounted_cost']}' ?? '',
+                            rightText: 'Rs ${purchase.discountedCost}' ?? '',
                           ),
                         ],
                       )
@@ -146,7 +136,8 @@ class _PaymentState extends State<Payment> {
                       child: RaisedButton(
                           key: Key('Confirm Payment'),
                           onPressed: () {
-                            addInsurancePurchased(purchase);
+                            // TODO: Insert into database
+                            // globals.purchaseDao.addPurchase(user.userId, purchase);
                             Navigator.of(context).pop();
                           },
                           child: Row(
