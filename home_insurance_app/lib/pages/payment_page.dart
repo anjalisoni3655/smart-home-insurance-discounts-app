@@ -77,7 +77,7 @@ class _PaymentState extends State<Payment> {
                   leftText: 'Cost: ',
                   rightText: 'Rs. ${purchase.policy.cost}' ?? '',
                 ),
-                // The discount and offer received by the user will only be shown when user has selected one .
+                // The discount and offer received by tFhe user will only be shown when user has selected one .
                 arguments['selectedOffer'] != null
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,

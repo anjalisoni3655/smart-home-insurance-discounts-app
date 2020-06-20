@@ -14,8 +14,8 @@ class Purchase {
   //TODO - Handle  the case when Offer is NULL .
   Purchase(this.policy, this.offer, this.structureId, this.dateOfPurchase,
       this.address) {
-    print('${policy.cost}, ${offer.discount}, ${1 - 0.01 * offer.discount}');
-    this.discountedCost = policy.cost * (1 - 0.01 * offer.discount);
+//    print('${policy.cost}, ${offer.discount}, ${1 - 0.01 * offer.discount}');
+//    this.discountedCost = policy.cost * (1 - 0.01 * offer.discount);
   }
 
   @override
