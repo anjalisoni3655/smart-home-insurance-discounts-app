@@ -128,7 +128,12 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                     color: Colors.blue,
                                   ),
                                   onPressed: () async {
+                                    setState(() {
+                                      _loading = true;
+                                    });
                                     await getDevices();
+                                    _loading = false;
+                                    offers = sortOffers(offers);
                                     setState(() {
                                       _hasAuthorization = hasAccess();
                                       _hasDevices = hasDevices();
@@ -166,6 +171,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                   ),
                                   onPressed: () async {
                                     await selectStructure(context);
+                                    offers = sortOffers(offers);
                                     setState(() {
                                       _hasAuthorization = hasAccess();
                                       _hasDevices = hasDevices();
@@ -393,7 +399,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                               '${offers[index].discount} %',
                               textAlign: TextAlign.right,
                               style: CustomTextStyle(
-                                  color: canPickOffer(offers[index])
+                                  color: onlyShow || canPickOffer(offers[index])
                                       ? Colors.black
                                       : Colors.grey),
                             )),

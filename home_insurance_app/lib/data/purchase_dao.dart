@@ -61,5 +61,4 @@ class PurchaseDao {
       'discounted_cost': purchase.discountedCost
     });
   }
-
 }
