@@ -320,17 +320,23 @@ class AllDiscounts extends StatefulWidget {
 }
 
 class _AllDiscountsState extends State<AllDiscounts> {
+  bool _loadingOffers;
 
   void initState() {
     super.initState();
     offers = [];
-    globals.offerDao.getOffers().then((value) {
-      offers = value;
-    });
+    _loadingOffers = true;
     selectedOffer = null;
+
+    globals.offerDao.getOffers().then((value) {
+      setState(() {
+        offers = value;
+      });
+      _loadingOffers = false;
+    });
   }
 
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
 
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
@@ -343,56 +349,66 @@ class _AllDiscountsState extends State<AllDiscounts> {
               key: Key('Offer $index'),
               padding: EdgeInsets.symmetric(
                   vertical: screenheight / 200, horizontal: screenwidth / 100),
-              child: Container(
-                color: onlyShow
-                    ? Colors.white
-                    : (selectedOffer == offers[index]
-                        ? Colors.blue[100]
-                        : canPickOffer(offers[index])
-                            ? Colors.blue[50]
-                            : Colors.grey[100]),
-                child: ListTile(
-                  enabled: onlyShow ? true : canPickOffer(offers[index]),
-                  selected: (selectedOffer == offers[index]),
-                  onTap: () {
-                    setState(() {
-                      if (onlyShow) return;
-                      if (selectedOffer == offers[index]) {
-                        selectedOffer = null;
-                      } else {
-                        selectedOffer = offers[index];
-                      }
-                    });
-                  },
-                  title: Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                            child: Text(
-                          '${offers[index]}',
-                          textAlign: TextAlign.left,
-                          style: CustomTextStyle(
-                              color: onlyShow || canPickOffer(offers[index])
-                                  ? Colors.black
-                                  : Colors.grey),
-                        )),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    color: onlyShow
+                        ? Colors.white
+                        : (selectedOffer == offers[index]
+                            ? Colors.blue[100]
+                            : canPickOffer(offers[index])
+                                ? Colors.blue[50]
+                                : Colors.grey[100]),
+                    child: ListTile(
+                      enabled: onlyShow ? true : canPickOffer(offers[index]),
+                      selected: (selectedOffer == offers[index]),
+                      onTap: () {
+                        setState(() {
+                          if (onlyShow) return;
+                          if (selectedOffer == offers[index]) {
+                            selectedOffer = null;
+                          } else {
+                            selectedOffer = offers[index];
+                          }
+                        });
+                      },
+                      title: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                                child: Text(
+                              '${offers[index]}',
+                              textAlign: TextAlign.left,
+                              style: CustomTextStyle(
+                                  color: onlyShow || canPickOffer(offers[index])
+                                      ? Colors.black
+                                      : Colors.grey),
+                            )),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                                child: Text(
+                              '${offers[index].discount} %',
+                              textAlign: TextAlign.right,
+                              style: CustomTextStyle(
+                                  color: canPickOffer(offers[index])
+                                      ? Colors.black
+                                      : Colors.grey),
+                            )),
+                          )
+                        ],
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                            child: Text(
-                          '${offers[index].discount} %',
-                          textAlign: TextAlign.right,
-                          style: CustomTextStyle(
-                              color: canPickOffer(offers[index])
-                                  ? Colors.black
-                                  : Colors.grey),
-                        )),
-                      )
-                    ],
+                    ),
                   ),
-                ),
+                  _loadingOffers ? Container(
+                    child: Text(
+                      'Loading Offers ...',
+                      style: CustomTextStyle(),
+                    ),
+                  ) : Container(),
+                ],
               ),
             );
           }),
