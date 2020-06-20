@@ -8,7 +8,7 @@ const device2Name = 'device-2-name';
 
 void main() {
   setUp(() async {
-    globals.sdk = await globals.initialiseSDK(test: true);
+    await globals.initialise(test: true);
   });
 
   testWidgets('My Devices when SDK returns devices normally',

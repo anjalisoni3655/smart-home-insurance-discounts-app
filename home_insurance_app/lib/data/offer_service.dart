@@ -69,6 +69,8 @@ bool canPickOffer(Offer offer) {
 
   for (String deviceName in offer.requirements.keys) {
     DeviceType deviceType = getDeviceType[deviceName];
+    print(offer);
+    print(userDeviceCount);
     if (offer.requirements[deviceName] > userDeviceCount[deviceType]) {
       return false;
     }
