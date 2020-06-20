@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/components/css.dart';
+import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
-import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:sdk/sdk.dart';
+import 'package:sdk/sdk.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
-  static const String id = 'home_screen';
   static const Key popmenuButton = Key('popmenu_button_key');
 
   @override
@@ -15,26 +18,40 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   void onClick(String value) async {
+    // When user clicks on logOut , global user object calls the logout function
     if (value == 'Logout') {
-      // Navigator.pushNamed(context, LoginScreen.id);
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return LoginScreen();
-      }));
-      //TODO: call SDK library's signout function
-
+      String status = await globals.sdk.logout();
+      if (status == "logout successful") {
+        Navigator.pushNamed(context, LoginScreen.id);
+      } else {
+        final _snackBar = SnackBar(
+          content: Text('Logout Failed'),
+          action: SnackBarAction(
+              label: 'Retry',
+              onPressed: () async {
+                onClick('logout');
+              }),
+        );
+        _globalKey.currentState.showSnackBar(_snackBar);
+        String status = await globals.sdk.logout();
+      }
     } else {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return Profile();
-      }));
+      // user clicks on the profile option in Popup Menu Button
+      Navigator.pushNamed(context, Profile.id);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final scaffoldKey =
+        GlobalKey<ScaffoldState>(); // Used for testing the drawer
+
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
     return Scaffold(
+      key: _globalKey,
       drawer: AppDrawer(), // Sidebar
       appBar: AppBar(
         title: Text('Home Insurance Company'),
@@ -82,9 +99,8 @@ class _HomePageState extends State<HomePage> {
           Container(
             child: Container(
               margin: EdgeInsets.only(
-                  top: 15.0,
-                  left: screenwidth / 16,
-                  right: screenwidth / 16), //Orientation compactible
+                  top: 15.0, left: screenwidth / 16, right: screenwidth / 16),
+              //Orientation compatible
               padding: EdgeInsets.all(15.0),
               width: 6 * screenwidth / 7,
               decoration: BoxDecoration(
