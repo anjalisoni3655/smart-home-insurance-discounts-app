@@ -3,8 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
+
 
 void main() {
   final GlobalKey<NavigatorState> key = GlobalKey<NavigatorState>();
@@ -41,8 +43,8 @@ void main() {
     await tester.pump(Duration(seconds: 1));
 
     // Testing whether TextWidgets are painted or not
-    //TODO: fix this test case
-    //expect(find.byType(TextWidget), findsNWidgets(6));
+    
+    expect(find.byType(TextWidget), findsNWidgets(6));
 
     // testing the RaisedButton
     expect(find.byType(RaisedButton), findsNWidgets(2));
