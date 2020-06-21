@@ -18,20 +18,50 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
-    String status = await globals.sdk.login();
-    if (status == "login successful" || status == "already logged in") {
-      Navigator.pushReplacementNamed(
-          context, '/home'); // Navigates to the home page
-    } else {
-      final _snackBar = SnackBar(
-        content: Text('Login Failed'),
-        action: SnackBarAction(
-            label: 'Retry',
-            onPressed: () async {
-              await userLogin();
-            }),
-      );
-      _globalKey.currentState.showSnackBar(_snackBar);
+    try {
+      await globals.initialise();
+      String status = await globals.sdk.login();
+
+      if (status == "login successful") {
+        Optional<Map> userDetailsOptional = await globals.sdk.getUserDetails();
+
+        globals.user.displayName = userDetailsOptional.value['displayName'];
+        globals.user.email = userDetailsOptional.value['email'];
+        globals.user.photoUrl = userDetailsOptional.value['photoUrl'];
+
+        final doc = await Firestore.instance
+            .collection('user')
+            .where('email', isEqualTo: globals.user.email)
+            .getDocuments();
+
+        if (doc.documents.length == 0) {
+          globals.user.userId = await uploadUserDetailsGetUID(
+            name: globals.user.displayName,
+            email: globals.user.email,
+          );
+        } else {
+          globals.user.userId = doc.documents[0].documentID;
+        }
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return HomePage();
+        }));
+      } else if (status == 'already logged in') {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return HomePage();
+        }));
+      } else {
+        final _snackBar = SnackBar(
+          content: Text('Login Failed'),
+          action: SnackBarAction(
+              label: 'Retry',
+              onPressed: () async {
+                await userLogin();
+              }),
+        );
+        _globalKey.currentState.showSnackBar(_snackBar);
+      }
+    } catch (e) {
+      print(e);
     }
   }
 

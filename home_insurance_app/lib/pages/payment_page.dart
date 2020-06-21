@@ -60,10 +60,10 @@ class _PaymentState extends State<Payment> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 TextWidget(
-                    //TODO Get the name from the user details from sdk
-                    key: Key('name'),
-                    leftText: 'Name: ',
-                    rightText: userName),
+                  key: Key('name'),
+                  leftText: 'Name: ',
+                  rightText: globals.user.displayName ?? '',
+                ),
                 TextWidget(
                   leftText: 'Address: ',
                   rightText: '${purchase.address}' ?? '',
@@ -134,8 +134,10 @@ class _PaymentState extends State<Payment> {
                       child: RaisedButton(
                           key: Key('Confirm Payment'),
                           onPressed: () {
-                            // TODO: Insert into database
-                            // globals.purchaseDao.addPurchase(user.userId, purchase);
+                            print('insurance purchased');
+                            print(purchase.toString());
+                            globals.purchaseDao
+                                .addPurchase(globals.user.userId, purchase);
                             Navigator.of(context).pop();
                           },
                           child: Row(
