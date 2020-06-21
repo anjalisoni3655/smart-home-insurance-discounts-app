@@ -11,6 +11,7 @@ import 'package:homeinsuranceapp/pages/loading.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 import 'pages/home.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
+import 'package:homeinsuranceapp/pages/payment_history.dart';
 
 // this is the root of our application
 void main({test = false}) async {
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/choosepolicy': (context) => DisplayPolicies(),
         '/showdiscounts': (context) => DisplayDiscounts(),
         Payment.id: (context) => Payment(),
+        PurchaseHistory.id: (context) => PurchaseHistory(),
       },
     );
   }

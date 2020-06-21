@@ -17,7 +17,12 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.white70,
+        appBar: AppBar(
+          title: Text('My Profile'),
+          centerTitle: true,
+          backgroundColor: kAppbarColor,
+        ),
+        backgroundColor: Colors.white,
         body: SafeArea(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
