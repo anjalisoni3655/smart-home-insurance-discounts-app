@@ -153,6 +153,7 @@ class CardCustom extends StatelessWidget {
                 ),
                 _purchase.offer != null
                     ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           TextWidget(
