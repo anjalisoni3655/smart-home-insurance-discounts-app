@@ -16,12 +16,11 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       home: Scaffold(
         appBar: AppBar(
-        title: Text('My Profile'),
-        centerTitle: true,
-        backgroundColor: kAppbarColor,
+          title: Text('My Profile'),
+          centerTitle: true,
+          backgroundColor: kAppbarColor,
         ),
         backgroundColor: Colors.white,
         body: SafeArea(

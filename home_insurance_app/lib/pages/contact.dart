@@ -7,18 +7,13 @@ class Contact extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
-       
-      
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        
-         appBar: AppBar(
-          
-        title: Text('Contact Us'),
-        centerTitle: true,
-        backgroundColor: kAppbarColor,),
-        
+        appBar: AppBar(
+          title: Text('Contact Us'),
+          centerTitle: true,
+          backgroundColor: kAppbarColor,
+        ),
         backgroundColor: new Color(0xFFFFFFFF),
         body: ContactUs(
           cardColor: Colors.lightBlueAccent,
