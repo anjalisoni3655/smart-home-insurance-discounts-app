@@ -153,9 +153,12 @@ class CardCustom extends StatelessWidget {
                 ),
                 _purchase.offer != null
                     ? Column(
+                  mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           TextWidget(
                             leftText: 'Offers Availed: ',
+
+
                             rightText: '${_purchase.offer.requirements}' ?? '',
                           ),
                           TextWidget(
@@ -174,6 +177,7 @@ class CardCustom extends StatelessWidget {
   }
 }
 
+//TODO: Reuse the widget
 class TextWidget extends StatelessWidget {
   TextWidget(
       {Key key,
