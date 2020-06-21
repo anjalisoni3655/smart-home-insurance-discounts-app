@@ -8,33 +8,15 @@ import 'dart:developer';
 // Output: Map = {key_1: value_1, key_2: value_2, ..., key_n: value_n}
 // Use case: to get enterprise id, structure id, device id, etc from assignee or name: enteprises/enterprise-id/structures/structure-id/... etc
 // TODO: Replace with regex
-Map<String, String> getId(String name) {
-  if (name[0] == '/') {
-    name = name.substring(1);
+Map<String, String> getId(String url) {
+  RegExp re = new RegExp(r'[^//]+');
+  Map ids = {};
+  Iterable matches = re.allMatches(url);
+  //  Iterate all matches
+  for(int i = 0 ; i < matches.length ; i+=2 ) {
+    ids[matches.elementAt(i).group(0)] = matches.elementAt(i+1).group(0);
   }
-  Map<String, String> ids = {};
-  bool flag = false;
-  String key = '';
-  String value = '';
-  for (int i = 0; i < name.length; ++i) {
-    if (name[i] == '/') {
-      if (flag) {
-        ids[key] = value;
-        key = '';
-        value = '';
-        flag = false;
-      } else {
-        flag = true;
-      }
-    } else {
-      if (flag) {
-        value += name[i];
-      } else {
-        key += name[i];
-      }
-    }
-  }
-  ids[key] = value;
+  ids.forEach((key,value) => print('$key: $value'));
   return ids;
 }
 
