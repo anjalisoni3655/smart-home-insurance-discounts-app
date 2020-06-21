@@ -41,68 +41,71 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
         margin: EdgeInsets.symmetric(
             vertical: screenheight / 100, horizontal: screenwidth / 100),
         child: Center(
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: screenwidth / 40,
-                      vertical: screenheight / 50),
-                  child: Text(
-                    'Available Policies',
-                    style: CustomTextStyle(fontSize: 30.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenwidth / 40,
+                        vertical: screenheight / 50),
+                    child: Text(
+                      'Available Policies',
+                      style: CustomTextStyle(fontSize: 30.0),
+                    ),
                   ),
                 ),
-              ),
-              // Returns a Divider widget whose some attributes are defined by the parameters and others take the default value
-              CustomDivider(
-                  height: screenheight / 100, width: screenwidth / 100),
-              CustomSizedBox(height: screenheight / 100),
-              RadioGroup(data),
-              CustomSizedBox(height: screenheight / 50),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: FloatingActionButton.extended(
-                  key: Key('Avail Smart Device Discounts'),
-                  heroTag: "View",
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/showdiscounts', arguments: {
-                      'selectedPolicy': userChoice,
-                      'userAddress': data['userAddress'],
-                    });
-                  },
-                  backgroundColor: Colors.lightBlueAccent,
-                  icon: Icon(Icons.payment),
-                  label: Text(
-                    'Avail Smart Device Discounts',
-                    style: CustomTextStyle(),
+                // Returns a Divider widget whose some attributes are defined by the parameters and others take the default value
+                CustomDivider(
+                    height: screenheight / 100, width: screenwidth / 100),
+                CustomSizedBox(height: screenheight / 100),
+                RadioGroup(data),
+                CustomSizedBox(height: screenheight / 50),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: FloatingActionButton.extended(
+                    key: Key('Avail Smart Device Discounts'),
+                    heroTag: "View",
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/showdiscounts',
+                          arguments: {
+                            'selectedPolicy': userChoice,
+                            'userAddress': data['userAddress'],
+                          });
+                    },
+                    backgroundColor: Colors.lightBlueAccent,
+                    icon: Icon(Icons.payment),
+                    label: Text(
+                      'Avail Smart Device Discounts',
+                      style: CustomTextStyle(),
+                    ),
                   ),
                 ),
-              ),
-              CustomSizedBox(height: screenheight / 100),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: FloatingActionButton.extended(
-                  key: Key('Payment'),
-                  heroTag: "pay",
-                  onPressed: () {
-                    // Pop the current page and replace it by the payment page
-                    Navigator
-                        .pushReplacementNamed(context, Payment.id, arguments: {
-                      'selectedPolicy': userChoice,
-                      'userAddress': data['userAddress'],
-                    }); // For now , clicking on payment takes back to the home page
-                  },
-                  backgroundColor: Colors.lightBlueAccent,
-                  icon: Icon(Icons.payment),
-                  label: Text(
-                    'Skip to Payment',
-                    maxLines: 2,
-                    style: CustomTextStyle(),
+                CustomSizedBox(height: screenheight / 100),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: FloatingActionButton.extended(
+                    key: Key('Payment'),
+                    heroTag: "pay",
+                    onPressed: () {
+                      // Pop the current page and replace it by the payment page
+                      Navigator
+                          .pushReplacementNamed(context, Payment.id, arguments: {
+                        'selectedPolicy': userChoice,
+                        'userAddress': data['userAddress'],
+                      }); // For now , clicking on payment takes back to the home page
+                    },
+                    backgroundColor: Colors.lightBlueAccent,
+                    icon: Icon(Icons.payment),
+                    label: Text(
+                      'Skip to Payment',
+                      maxLines: 2,
+                      style: CustomTextStyle(),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
