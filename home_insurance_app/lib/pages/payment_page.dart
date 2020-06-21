@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/data/purchase.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/data/offer_service.dart';
@@ -39,8 +40,10 @@ class _PaymentState extends State<Payment> {
     if (arguments != null) {
       purchase = new Purchase(
           arguments['selectedPolicy'],
-          arguments['selectedOffer'],
-          arguments['structureId'],
+          arguments['selectedOffer'] == null
+              ? Offer({'No offer': 0}, 0)
+              : arguments['selectedOffer'],
+          arguments['structureId'] == null ? '' : arguments['structureId'],
           Timestamp.now(),
           arguments['userAddress']);
     }

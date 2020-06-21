@@ -12,16 +12,22 @@ class PurchaseHistory extends StatefulWidget {
 
 class _PurchaseHistoryState extends State<PurchaseHistory> {
   List<Purchase> _purchaseList = [];
+  bool showProgess = false;
 
   Future<void> _updatePurchaseList() async {
+    setState(() {
+      showProgess = true;
+    });
     final _list = await globals.purchaseDao.getInsurances(globals.user.userId);
     setState(() {
       _purchaseList = _list;
+      showProgess = false;
     });
   }
 
   Widget displayPurchaseList() {
-    if (_purchaseList == null || _purchaseList.length == 0) {
+    if ((_purchaseList == null || _purchaseList.length == 0) &&
+        showProgess == false) {
       return Center(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.8,
@@ -58,19 +64,21 @@ class _PurchaseHistoryState extends State<PurchaseHistory> {
 
   @override
   void initState() {
-    print('purchase list: ${_purchaseList.toString()}');
+    setState(() {
+      showProgess = true;
+    });
     globals.purchaseDao.getInsurances(globals.user.userId).then((value) {
       setState(() {
         _purchaseList = value;
+        showProgess = false;
       });
     });
-    print('purchase list 2222: ${_purchaseList.toString()}');
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_purchaseList.length);
     return Scaffold(
       appBar: AppBar(
         title: Text('Insurances Purchased'),
@@ -88,7 +96,16 @@ class _PurchaseHistoryState extends State<PurchaseHistory> {
         ],
       ),
       body: Container(
-        child: displayPurchaseList(),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Opacity(
+                opacity: showProgess ? 0.5 : 1.0, child: displayPurchaseList()),
+            showProgess
+                ? Center(child: CircularProgressIndicator())
+                : Container(),
+          ],
+        ),
       ),
     );
   }
@@ -100,8 +117,14 @@ class CardCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(15.0),
       child: Material(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(
+              width: 1.2,
+              color: Colors.brown[500],
+            )),
         elevation: 10.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,7 +138,7 @@ class CardCustom extends StatelessWidget {
                 TextWidget(
                     leftText: 'Date purchased:',
                     rightText:
-                        '${_purchase.dateOfPurchase.toDate().toIso8601String()}'),
+                        '${_purchase.dateOfPurchase.toDate().toIso8601String().substring(0, 10)}'),
                 TextWidget(
                   leftText: 'Address: ',
                   rightText: '${_purchase.address}' ?? '',
@@ -175,7 +198,7 @@ class TextWidget extends StatelessWidget {
     return Container(
       child: Card(
         elevation: 2.0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         child: Padding(
           padding: EdgeInsets.all(_padding),
           child: Wrap(

@@ -42,7 +42,6 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
             vertical: screenheight / 100, horizontal: screenwidth / 100),
         child: Center(
           child: SingleChildScrollView(
-
             child: Column(
               children: <Widget>[
                 Container(

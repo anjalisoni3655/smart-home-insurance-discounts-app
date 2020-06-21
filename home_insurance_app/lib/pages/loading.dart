@@ -51,11 +51,9 @@ class _LoadingState extends State<Loading> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Image.asset(
-                    'assets/loading.gif',
-                    width: 400,
-                    height: 100,
-                  ),
+                  Container(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: LinearProgressIndicator()),
                   Text(
                     'Loading',
                     style: TextStyle(fontSize: 20),
