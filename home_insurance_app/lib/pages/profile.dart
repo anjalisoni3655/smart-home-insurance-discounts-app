@@ -41,6 +41,7 @@ class _ProfileState extends State<Profile> {
               child: Text(
                 '${globals.user.displayName}',
                 key: Profile.nameKey,
+                textAlign: TextAlign.center,
                 style: kProfileNameStyle.copyWith(color: Colors.black),
               ),
             ),
