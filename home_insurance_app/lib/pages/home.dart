@@ -6,7 +6,6 @@ import 'dart:ui';
 import 'package:homeinsuranceapp/pages/profile.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:sdk/sdk.dart';
-import 'package:sdk/sdk.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // widget for the home page, that contains all menu bar options.
@@ -25,6 +24,8 @@ class _HomePageState extends State<HomePage> {
       String status = await globals.sdk.logout();
       if (status == "logout successful") {
         Navigator.pushNamed(context, LoginScreen.id);
+        //Reinitialise state of sdk on logOut
+        await globals.initialise(test: false);
       } else {
         final _snackBar = SnackBar(
           content: Text('Logout Failed'),

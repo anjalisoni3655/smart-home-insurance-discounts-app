@@ -42,12 +42,14 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.devices),
               title: Text('My Devices'),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamed(context, '/myDevices');
               }),
           ListTile(
               leading: Icon(Icons.phone),
               title: Text('Contact Us'),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamed(context, Contact.id);
               }),
           ListTile(

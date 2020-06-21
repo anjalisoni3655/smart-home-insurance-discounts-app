@@ -6,9 +6,11 @@ import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
+import 'package:optional/optional.dart';
+import '../data/offer_service.dart';
 
+//Offers selected by the user
 Offer selectedOffer;
-String selectedStructure;
 List<Offer> offers;
 bool onlyShow = false;
 
@@ -25,9 +27,13 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
   bool _isStructureSelected;
   bool _loading;
 
-  // When a system back button/ Back button on appBar is pressed , discounts will again be disabled .
+  //Offer State should get reinitialised if the user clicks on back button in middle of flow
   Future<bool> _onBackPressed() async {
     Navigator.of(context).pop(true);
+    _isStructureSelected = false;
+    _hasDevices = false;
+    selectedStructure = Optional.empty();
+    selectedOffer = null;
   }
 
   @override
@@ -170,7 +176,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                     color: Colors.blue,
                                   ),
                                   onPressed: () async {
-                                    await selectStructure(context);
+                                    selectedStructure =
+                                        await selectStructure(context);
                                     offers = sortOffers(offers);
                                     setState(() {
                                       _hasAuthorization = hasAccess();
@@ -184,7 +191,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                 Expanded(
                                   flex: 1,
                                   child: Text(
-                                    'An error occurred while selecting structures. Retry',
+                                    'Structure has not been selected . Select the structure to avail discounts ',
                                     style: CustomTextStyle(fontSize: 15.0),
                                     textAlign: TextAlign.left,
                                   ),
@@ -222,7 +229,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                           ),
                                           onPressed: () async {
                                             //    Get offers which the user is eligible to get after launching resource picker
-                                            await selectStructure(context);
+                                            selectedStructure =
+                                                await selectStructure(context);
                                             offers = sortOffers(offers);
                                             setState(() {
                                               _hasAuthorization = hasAccess();
@@ -259,7 +267,8 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                             setState(() {
                                               _loading = false;
                                             });
-                                            await selectStructure(context);
+                                            selectedStructure =
+                                                await selectStructure(context);
                                             offers = sortOffers(offers);
                                             setState(() {
                                               _hasAuthorization = hasAccess();
@@ -288,8 +297,20 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                           fontWeight: FontWeight.w900),
                                     ),
                                     onPressed: () {
+                                      //Store structure id  since selectedStructure needs to get reinitialised before navigating to payment page
+                                      String structureId = "";
+                                      if (selectedStructure !=
+                                          Optional.empty()) {
+                                        structureId =
+                                            (selectedStructure.value)['id'];
+                                      }
+                                      // Clear the initial state and before going for payment
+                                      _isStructureSelected = false;
+                                      _hasDevices = false;
+                                      selectedStructure = Optional.empty();
+
                                       //pops the current page
-                                      Navigator.pop(context);
+                                      Navigator.of(context).pop();
                                       //Pops the previous page in the stack which is choose_policy page.
                                       Navigator.pop(context);
                                       //For now all these arguments are  send to the home page
@@ -299,6 +320,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                             'selectedPolicy':
                                                 data['selectedPolicy'],
                                             'userAddress': data['userAddress'],
+                                            'structureId': structureId,
                                           });
                                     },
                                     backgroundColor: Colors.lightBlueAccent,

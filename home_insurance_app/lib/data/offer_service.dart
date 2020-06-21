@@ -11,16 +11,24 @@ Optional<Map> selectedStructure = Optional.empty();
 // Calls resource picker and fetches devices and structures
 Future<void> linkDevices() async {
   await globals.sdk.requestDeviceAccess();
-
   // If authorization was successful fetch all devices and structures at once.
   if (hasAccess()) {
-    structures = await globals.sdk.getAllStructures();
-    globals.devices = await globals.sdk.getAllDevices();
+    try {
+      structures = await globals.sdk.getAllStructures();
+      globals.devices = await globals.sdk.getAllDevices();
+    } catch (error) {
+      structures = Optional.empty();
+      globals.devices = Optional.empty();
+    }
   }
 }
 
 Future<void> getDevices() async {
-  globals.devices = await globals.sdk.getAllDevices();
+  try {
+    globals.devices = await globals.sdk.getAllDevices();
+  } catch (error) {
+    globals.devices = Optional.empty();
+  }
 }
 
 // If has access but deosnt have list of structures retries to fetch list of structures
@@ -31,7 +39,11 @@ Future<Optional<Map>> selectStructure(BuildContext context) async {
     return selectedStructure;
   }
   if (structures.isEmpty) {
-    structures = await globals.sdk.getAllStructures();
+    try {
+      structures = await globals.sdk.getAllStructures();
+    } catch (error) {
+      structures = Optional.empty();
+    }
     if (structures.isEmpty) {
       return selectedStructure;
     }
@@ -69,8 +81,6 @@ bool canPickOffer(Offer offer) {
 
   for (String deviceName in offer.requirements.keys) {
     DeviceType deviceType = getDeviceType[deviceName];
-    print(offer);
-    print(userDeviceCount);
     if (offer.requirements[deviceName] > userDeviceCount[deviceType]) {
       return false;
     }
