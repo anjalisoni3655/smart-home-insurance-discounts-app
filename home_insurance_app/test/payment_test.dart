@@ -7,7 +7,6 @@ import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
-
 void main() {
   final GlobalKey<NavigatorState> key = GlobalKey<NavigatorState>();
   final ValueKey buttonKey = ValueKey('button_key');
@@ -43,7 +42,7 @@ void main() {
     await tester.pump(Duration(seconds: 1));
 
     // Testing whether TextWidgets are painted or not
-    
+
     expect(find.byType(TextWidget), findsNWidgets(6));
 
     // testing the RaisedButton
