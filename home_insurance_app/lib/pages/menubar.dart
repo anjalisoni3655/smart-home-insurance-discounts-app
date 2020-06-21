@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/my_devices.dart';
 import 'package:homeinsuranceapp/pages/contact.dart';
+import 'package:homeinsuranceapp/pages/payment_history.dart';
 
 // widget for the different options in the menu bar
 class AppDrawer extends StatefulWidget {
@@ -49,6 +50,13 @@ class _AppDrawerState extends State<AppDrawer> {
               onTap: () {
                 Navigator.pushNamed(context, Contact.id);
               }),
+          ListTile(
+            leading: Icon(Icons.account_balance_wallet),
+            title: Text('Insurances Purchased'),
+            onTap: () {
+              Navigator.pushNamed(context, PurchaseHistory.id);
+            },
+          ),
         ],
       ),
     );

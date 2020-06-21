@@ -4,8 +4,6 @@ import 'package:homeinsuranceapp/data/purchase.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
-import 'package:homeinsuranceapp/data/globals.dart' as globals;
-
 
 class Payment extends StatefulWidget {
   static const id = 'payment';
@@ -63,10 +61,10 @@ class _PaymentState extends State<Payment> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 TextWidget(
-                    //TODO Get the name from the user details from sdk
-                    key: Key('name'),
-                    leftText: 'Name: ',
-                    rightText: globals.user.displayName ?? '',),
+                  key: Key('name'),
+                  leftText: 'Name: ',
+                  rightText: globals.user.displayName ?? '',
+                ),
                 TextWidget(
                   leftText: 'Address: ',
                   rightText: '${purchase.address}' ?? '',
@@ -138,8 +136,10 @@ class _PaymentState extends State<Payment> {
                       child: RaisedButton(
                           key: Key('Confirm Payment'),
                           onPressed: () {
-                            // TODO: Insert into database
-                            // globals.purchaseDao.addPurchase(user.userId, purchase);
+                            print('insurance purchased');
+                            print(purchase.toString());
+                            globals.purchaseDao
+                                .addPurchase(globals.user.userId, purchase);
                             Navigator.of(context).pop();
                           },
                           child: Row(
