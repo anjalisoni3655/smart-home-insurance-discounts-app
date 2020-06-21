@@ -15,13 +15,19 @@ class Purchase {
   Purchase(this.policy, this.offer, this.structureId, this.dateOfPurchase,
       this.address) {
     //Calculate discounted cost if offer is availed
-    if (this.offer != null) {
-      this.discountedCost = policy.cost * (1 - 0.01 * offer.discount);
-    }
+    this.discountedCost = getDiscountedCost(this.policy, this.offer);
   }
 
   @override
   String toString() {
     return '{Policy: $policy\nOffer: $offer\nDate: $dateOfPurchase\nstructureId: $structureId\naddress: $address\nDiscounted cost$discountedCost}';
+  }
+
+  double getDiscountedCost(Policy policy, Offer offer) {
+    //Calculate discounted cost if offer is availed
+    if (offer != null) {
+      double discountedCost = policy.cost * (1 - 0.01 * offer.discount);
+      return discountedCost;
+    }
   }
 }
