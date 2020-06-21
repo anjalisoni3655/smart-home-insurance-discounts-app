@@ -153,12 +153,10 @@ class CardCustom extends StatelessWidget {
                 ),
                 _purchase.offer != null
                     ? Column(
-                  mainAxisSize: MainAxisSize.max,
+                        mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           TextWidget(
                             leftText: 'Offers Availed: ',
-
-
                             rightText: '${_purchase.offer.requirements}' ?? '',
                           ),
                           TextWidget(
