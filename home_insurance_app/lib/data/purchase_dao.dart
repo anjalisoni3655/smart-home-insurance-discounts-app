@@ -4,6 +4,7 @@ import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/data/offer.dart';
 
+//TODO Handle case for 0 offers
 class PurchaseDao {
   Firestore _database;
 

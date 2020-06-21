@@ -121,7 +121,10 @@ class _MyDevicesState extends State<MyDevices> {
                                           ),
                                           child: ListTile(
                                             title: Text(
-                                              '${device['customName']}',
+                                              //If device name is empty display Unknown
+                                              device['customName'] != ""
+                                                  ? '${device['customName']}'
+                                                  : "Unknown",
                                               textAlign: TextAlign.center,
                                             ),
                                             subtitle: Column(
@@ -132,14 +135,6 @@ class _MyDevicesState extends State<MyDevices> {
                                                   child: Text(
                                                       'Type: ${deviceName[sdmToDeviceType[device['type']].index]}'),
                                                 ),
-//                                  Padding(
-//                                    padding: const EdgeInsets.all(8.0),
-//                                    child: Text('Structure: ${device['structure']}'),
-//                                  ),
-//                                  Padding(
-//                                    padding: const EdgeInsets.all(8.0),
-//                                    child: Text('Room: ${device['room']}'),
-//                                  ),
                                               ],
                                             ),
                                           ),
@@ -147,45 +142,48 @@ class _MyDevicesState extends State<MyDevices> {
                                       ))),
                             ),
                           )
-                : Container(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: screenheight / 10,
-                                horizontal: screenwidth / 10),
-                            child: Text(
-                                'Device Access not provided. Please link devices to view your devices.',
-                                style: CustomTextStyle(
-                                  color: Colors.brown,
-                                ),
-                                textAlign: TextAlign.center)),
-                        FloatingActionButton.extended(
-                          label: Text('Link Devices'),
-                          onPressed: () async {
-                            String status =
-                                await globals.sdk.requestDeviceAccess();
+                : Container(),
+            // The user can link to devices anytime .
+            Container(
+              child: Column(
+                children: <Widget>[
+                  !hasDeviceAccess
+                      ? Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenheight / 10,
+                              horizontal: screenwidth / 10),
+                          child: Text(
+                              'Device Access not provided. Please link devices to view your devices.',
+                              style: CustomTextStyle(
+                                color: Colors.brown,
+                              ),
+                              textAlign: TextAlign.center))
+                      : Container(),
+                  FloatingActionButton.extended(
+                    label: Text('Link Devices'),
+                    onPressed: () async {
+                      String status = await globals.sdk.requestDeviceAccess();
+                      setState(() {
+                        hasDeviceAccess = hasAccess();
+                        if (hasDeviceAccess) {
+                          loading = true;
+                          globals.sdk.getAllDevices().then((value) {
                             setState(() {
-                              hasDeviceAccess = hasAccess();
-                              if (hasDeviceAccess) {
-                                loading = true;
-                                globals.sdk.getAllDevices().then((value) {
-                                  setState(() {
-                                    loading = false;
-                                    if (value.isEmpty) {
-                                      reload = true;
-                                    } else {
-                                      globals.devices = value;
-                                    }
-                                  });
-                                });
+                              loading = false;
+                              if (value.isEmpty) {
+                                reload = true;
+                              } else {
+                                globals.devices = value;
                               }
                             });
-                          },
-                        )
-                      ],
-                    ),
-                  ),
+                          });
+                        }
+                      });
+                    },
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),

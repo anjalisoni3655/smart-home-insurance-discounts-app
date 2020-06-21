@@ -4,7 +4,6 @@ import 'package:flutter_driver/flutter_driver.dart';
 // Note: All functions assume that the driver is on the correct page and checks if redirected to the correct next page.
 // Note: Please use flutterDriver.runUnsynchronized(() if animation on page
 
-
 Future<FlutterDriver> setupAndGetDriver() async {
   FlutterDriver driver = await FlutterDriver.connect();
   var connected = false;
@@ -75,7 +74,8 @@ dynamic choosePolicy() async {
 
 // Click on View Smart Device Discounts on Policy Page
 dynamic viewSmartDiscountsAfterPolicy() async {
-  SerializableFinder viewDiscountsButton = find.byValueKey("Avail Smart Device Discounts");
+  SerializableFinder viewDiscountsButton =
+      find.byValueKey("Avail Smart Device Discounts");
   await flutterDriver.tap(viewDiscountsButton);
 
   await flutterDriver.waitFor(find.byType("DisplayDiscounts"));
@@ -87,7 +87,6 @@ dynamic paymentAfterPolicy() async {
   await flutterDriver.tap(paymentButton);
 
   await flutterDriver.waitFor(find.byType("Payment"));
-
 }
 
 // Click on add devices on Show Discounts page
@@ -120,7 +119,8 @@ dynamic selectOffer() async {
 
 // Click on confirm payment on payments page. Check if redirected to home page
 dynamic confirmPayment() async {
-  await flutterDriver.scroll(find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
+  await flutterDriver.scroll(
+      find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
   SerializableFinder confirmPaymentButton = find.byValueKey("Confirm Payment");
   await flutterDriver.tap(confirmPaymentButton);
 
@@ -129,13 +129,13 @@ dynamic confirmPayment() async {
 
 // Click on confirm payment on payments page. Check if redirected to home page
 dynamic cancelPayment() async {
-  await flutterDriver.scroll(find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
+  await flutterDriver.scroll(
+      find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
   SerializableFinder confirmPaymentButton = find.byValueKey("Cancel Payment");
   await flutterDriver.tap(confirmPaymentButton);
 
   await flutterDriver.waitFor(find.byType("HomePage"));
 }
-
 
 // Click on logout on home page. Check if redirected to login page.
 dynamic logout() async {
@@ -152,7 +152,6 @@ dynamic logout() async {
   });
 }
 
-
 void main() {
   group("End-to-end flow with offer", () {
     setUpAll(() async {
@@ -160,7 +159,7 @@ void main() {
     });
 
     tearDownAll(() async {
-      if(flutterDriver != null) {
+      if (flutterDriver != null) {
         flutterDriver.close();
       }
     });
@@ -183,7 +182,7 @@ void main() {
 
     //  Find "Add Devices" button and click on it
     test("Smart Discounts Page", addDevices);
-    
+
     //  Find the first a structure and select
     test("Select Structure", selectStructure);
 
