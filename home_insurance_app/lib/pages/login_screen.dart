@@ -33,13 +33,14 @@ class _LoginScreenState extends State<LoginScreen> {
             .collection('user')
             .where('email', isEqualTo: globals.user.email)
             .getDocuments();
-        print(doc.documents.toString());
+
         if (doc.documents.length == 0) {
           globals.user.userId = await uploadUserDetailsGetUID(
             name: globals.user.displayName,
             email: globals.user.email,
           );
-          print(globals.user.userId);
+        } else {
+          globals.user.userId = doc.documents[0].documentID;
         }
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return HomePage();
