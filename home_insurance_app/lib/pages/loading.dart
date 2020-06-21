@@ -13,21 +13,18 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   Future<void> _gotoLoginOrSignup() async {
-    print('future started');
     Optional<bool> _alreadyLoggedInOptional = await globals.sdk.isSignedIn();
     bool _alreadyLoggedIn = _alreadyLoggedInOptional.value;
-    print('already logged in : $_alreadyLoggedIn');
+
     if (_alreadyLoggedIn) {
-      print('already logged in functionality started');
-      //  final _googleSignIn = GoogleSignIn();
-      //  final signedin = _googleSignIn.currentUser;
-      //  print(signedin.toString());
-      // print(_googleSignIn.currentUser.displayName);
-      Optional<Map> userDetailsOptional = await globals.sdk.getUserDetails();
-      print(userDetailsOptional.value.toString());
-      globals.user.displayName = userDetailsOptional.value['displayName'];
-      globals.user.email = userDetailsOptional.value['email'];
-      globals.user.photoUrl = userDetailsOptional.value['photoUrl'];
+      // A new googleSignIn instance to silently login the current signedIn user and get the required details
+      final _googleSignIn = GoogleSignIn();
+      await _googleSignIn.signInSilently();
+      final _currentUser = _googleSignIn.currentUser;
+
+      globals.user.displayName = _currentUser.displayName;
+      globals.user.email = _currentUser.email;
+      globals.user.photoUrl = _currentUser.photoUrl;
 
       final doc = await Firestore.instance
           .collection('user')
