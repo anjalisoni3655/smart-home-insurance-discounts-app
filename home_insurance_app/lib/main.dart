@@ -33,7 +33,6 @@ class MyApp extends StatelessWidget {
         Profile.id: (context) => Profile(),
         '/home': (context) => HomePage(),
         '/myDevices': (context) => MyDevices(),
-        '/login': (context) => LoginScreen(),
         '/loading': (context) => Loading(),
         Contact.id: (context) => Contact(),
         '/gethomedetails': (context) => HomeDetails(),

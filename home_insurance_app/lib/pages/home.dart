@@ -4,8 +4,6 @@ import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/profile.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:sdk/sdk.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 // widget for the home page, that contains all menu bar options.

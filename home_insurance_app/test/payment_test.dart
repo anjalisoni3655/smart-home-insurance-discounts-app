@@ -5,7 +5,6 @@ import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
-import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 void main() {
   final GlobalKey<NavigatorState> key = GlobalKey<NavigatorState>();

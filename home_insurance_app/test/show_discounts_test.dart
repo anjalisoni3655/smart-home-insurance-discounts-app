@@ -2,8 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/show_discounts.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mockito/mockito.dart';
 
 void main() {
   setUp(() async {
