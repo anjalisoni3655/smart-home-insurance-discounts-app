@@ -67,7 +67,6 @@ class _PaymentState extends State<Payment> {
               ),
             ),
             CustomDivider(height: screenheight / 150, width: screenwidth / 50),
-            SizedBox(height: screenheight/20),
             Container(
               height: screenheight * 0.6,
               child: ListView(
