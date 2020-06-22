@@ -44,7 +44,6 @@ class _PaymentState extends State<Payment> {
               ? Offer({'No offer': 0}, 0)
               : arguments['selectedOffer'],
           arguments['structureId'] == null ? '' : arguments['structureId'],
-
           Timestamp.now(),
           arguments['userAddress']);
     }

@@ -151,7 +151,6 @@ dynamic selectStructure() async {
 }
 
 // Select first offer that appears after selecting devices. Select Go to payment (submit selection)
-
 dynamic selectOffer() async {
   SerializableFinder firstOffer = find.byValueKey("Offer 0");
   await flutterDriver.tap(firstOffer);
@@ -204,7 +203,6 @@ dynamic logout() async {
     await flutterDriver.waitFor(find.byType("LoginScreen"));
   });
 }
-
 
 // Test for choosing the structure using Pick Structure button
 dynamic selectPickStructureButton() async {

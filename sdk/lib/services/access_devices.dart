@@ -97,6 +97,7 @@ class AccessDevices {
       }
       return Optional.of(devices);
     } catch (error) {
+      log(error.toString());
       return Optional.empty();
     }
   }
