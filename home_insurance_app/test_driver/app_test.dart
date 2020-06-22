@@ -120,7 +120,6 @@ dynamic choosePolicy() async {
 dynamic viewSmartDiscountsAfterPolicy() async {
   SerializableFinder viewDiscountsButton =
       find.byValueKey("Avail Smart Device Discounts");
-
   await flutterDriver.tap(viewDiscountsButton);
 
   await flutterDriver.waitFor(find.byType("DisplayDiscounts"));
@@ -152,7 +151,6 @@ dynamic selectStructure() async {
 }
 
 // Select first offer that appears after selecting devices. Select Go to payment (submit selection)
-
 dynamic selectOffer() async {
   SerializableFinder firstOffer = find.byValueKey("Offer 0");
   await flutterDriver.tap(firstOffer);
