@@ -19,9 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
     try {
-      await globals.initialise();
       String status = await globals.sdk.login();
-
       if (status == "login successful") {
         Optional<Map> userDetailsOptional = await globals.sdk.getUserDetails();
 
