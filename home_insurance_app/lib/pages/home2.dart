@@ -10,14 +10,14 @@ import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
 // widget for the home page, that contains all menu bar options.
-class HomePage extends StatefulWidget {
+class HomePage2 extends StatefulWidget {
   static const Key popmenuButton = Key('popmenu_button_key');
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePage2State createState() => _HomePage2State();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePage2State extends State<HomePage2> {
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   void onClick(String value) async {
     // When user clicks on logOut , global user object calls the logout function
@@ -77,84 +77,36 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          Expanded(
-            flex: 4,
-            child: Card(
-              color: Colors.brown[50],
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch, // add this
-                children: <Widget>[
-                  ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8.0),
-                        topRight: Radius.circular(8.0),
-                      ),
-                      child: Image.asset('assets/HomePage.jpg',
-                          height: screenheight / 3, fit: BoxFit.fill)
-//                    Container(
-//                      // Container will contain a blur background image
-//                      decoration: BoxDecoration(
-//                          image: DecorationImage(
-//                        image: AssetImage('assets/HomePage.jpg'),
-//                      )),
-//                      child: BackdropFilter(
-//                        filter: ImageFilter.blur(
-//                          sigmaX: 1.0,
-//                          sigmaY: 1.0,
-//                        ),
-//                        child: Container(
-//                          decoration: BoxDecoration(
-//                            //BoxDecoration required for setting the opacity why ?
-//                            color: Colors.black.withOpacity(0.2),
-//                          ),
-//                        ),
-//                     ),
-//                    ),
-                      ),
-                ],
+          Container(
+            // Container will contain a blur background image
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage('assets/HomePage.jpg'),
+              fit: BoxFit.cover,
+            )),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: 2.0,
+                sigmaY: 2.0,
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  //BoxDecoration required for setting the opacity why ?
+                  color: Colors.black.withOpacity(0.2),
+                ),
               ),
             ),
           ),
-//            Expanded(
-//              flex:2,
-//            child: Container(
-//              // Container will contain a blur background image
-//              decoration: BoxDecoration(
-//                  image: DecorationImage(
-//                image: AssetImage('assets/HomePage.jpg'),
-//              )),
-//              child: BackdropFilter(
-//                filter: ImageFilter.blur(
-//                  sigmaX: 1.0,
-//                  sigmaY: 1.0,
-//                ),
-//                child: Container(
-//                  decoration: BoxDecoration(
-//                    //BoxDecoration required for setting the opacity why ?
-//                    color: Colors.black.withOpacity(0.2),
-//                  ),
-//                ),
-//              ),
-//            ),
-//          ),
-          Expanded(
-            child: Container(),
-            flex: 1,
-          ),
-
-          SizedBox(height: screenheight / 50),
-          Expanded(
-            flex: 5,
+          Container(
+            margin: EdgeInsets.only(
+                top:3*screenheight/5, left: screenwidth / 16, right: screenwidth / 16),
             child: Column(
               children: <Widget>[
                 RaisedButton(
                   onPressed: () {},
-                  textColor: Colors.white,
-                  color: Colors.white,
+                  color:Colors.blueGrey[200],
                   padding: const EdgeInsets.all(0.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
@@ -163,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                     width: 13 * screenwidth / 20,
                     padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
-                      color: Colors.brown.withOpacity(0.3),
+                      color: Colors.grey.withOpacity(0.3),
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(30.0),
                     ),
@@ -177,8 +129,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: screenheight / 50),
                 RaisedButton(
                   onPressed: () {},
-                  textColor: Colors.white,
-                  color: Colors.white,
+                  color:Colors.blueGrey[200],
                   padding: const EdgeInsets.all(0.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
@@ -187,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                     width: 13 * screenwidth / 20,
                     padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
-                      color: Colors.brown.withOpacity(0.3),
+                      color: Colors.grey.withOpacity(0.1),
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(30.0),
                     ),
@@ -201,8 +152,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: screenheight / 50),
                 RaisedButton(
                   onPressed: () {},
-                  textColor: Colors.white,
-                  color: Colors.white,
+                   color:Colors.blueGrey[200],
                   padding: const EdgeInsets.all(0.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
@@ -211,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                     width: 13 * screenwidth / 20,
                     padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
-                      color: Colors.brown.withOpacity(0.3),
+                      color: Colors.grey.withOpacity(0.1),
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(30.0),
                     ),
