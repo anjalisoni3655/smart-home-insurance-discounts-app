@@ -11,11 +11,14 @@ import 'package:homeinsuranceapp/pages/loading.dart';
 import 'package:homeinsuranceapp/pages/payment_page.dart';
 import 'pages/home.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
+import 'package:homeinsuranceapp/pages/payment_history.dart';
 
 // this is the root of our application
 void main({test = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await globals.initialise(test: test);
+
   runApp(MyApp());
 }
 
@@ -26,18 +29,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Smart Home',
       initialRoute: '/loading',
+      debugShowCheckedModeBanner: false,
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         Profile.id: (context) => Profile(),
+        'login': (context) => LoginScreen(),
         '/home': (context) => HomePage(),
         '/myDevices': (context) => MyDevices(),
-        '/login': (context) => LoginScreen(),
         '/loading': (context) => Loading(),
         Contact.id: (context) => Contact(),
         '/gethomedetails': (context) => HomeDetails(),
         '/choosepolicy': (context) => DisplayPolicies(),
         '/showdiscounts': (context) => DisplayDiscounts(),
         Payment.id: (context) => Payment(),
+        PurchaseHistory.id: (context) => PurchaseHistory(),
       },
     );
   }

@@ -220,6 +220,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                       child: Align(
                                         alignment: Alignment.topCenter,
                                         child: FloatingActionButton.extended(
+                                          key: Key("Pick Structure"),
                                           heroTag: 'home',
                                           icon: Icon(Icons.home),
                                           label: Text(
@@ -288,7 +289,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                 child: Align(
                                   alignment: Alignment.bottomRight,
                                   child: FloatingActionButton.extended(
-                                    key: Key('Payment'),
+                                    key: Key('Go to Payment'),
                                     heroTag: 'Payment',
                                     icon: Icon(Icons.arrow_forward),
                                     label: Text(

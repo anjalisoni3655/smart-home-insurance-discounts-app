@@ -13,7 +13,7 @@ Map<String, String> getId(String url) {
   Map <String,String> ids = {};
   //Find all substrings in url separated by '/'
   Iterable matches = pattern.allMatches(url);
-  //  Iterate through all the matches and form key-valuuuue pair for adjacent elements in list .
+  //  Iterate through all the matches and form key-value pair for adjacent elements in list .
   for(int i = 0 ; i < matches.length ; i+=2 ) {
     ids[matches.elementAt(i).group(0)] = matches.elementAt(i+1).group(0);
   }

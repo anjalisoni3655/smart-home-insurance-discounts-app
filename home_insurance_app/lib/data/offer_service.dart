@@ -17,7 +17,8 @@ Future<void> linkDevices() async {
       structures = await globals.sdk.getAllStructures();
       globals.devices = await globals.sdk.getAllDevices();
     } catch (error) {
-      print(error);
+      structures = Optional.empty();
+      globals.devices = Optional.empty();
     }
   }
 }
@@ -26,7 +27,7 @@ Future<void> getDevices() async {
   try {
     globals.devices = await globals.sdk.getAllDevices();
   } catch (error) {
-    print(error);
+    globals.devices = Optional.empty();
   }
 }
 
@@ -41,7 +42,7 @@ Future<Optional<Map>> selectStructure(BuildContext context) async {
     try {
       structures = await globals.sdk.getAllStructures();
     } catch (error) {
-      print(error);
+      structures = Optional.empty();
     }
     if (structures.isEmpty) {
       return selectedStructure;
