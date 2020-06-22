@@ -106,7 +106,7 @@ class _HomePage2State extends State<HomePage2> {
               children: <Widget>[
                 RaisedButton(
                   onPressed: () {},
-                  color:Colors.blueGrey[200],
+                  color:Colors.blueGrey[100],
                   padding: const EdgeInsets.all(0.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
@@ -129,7 +129,7 @@ class _HomePage2State extends State<HomePage2> {
                 SizedBox(height: screenheight / 50),
                 RaisedButton(
                   onPressed: () {},
-                  color:Colors.blueGrey[200],
+                  color:Colors.blueGrey[100],
                   padding: const EdgeInsets.all(0.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
@@ -152,7 +152,7 @@ class _HomePage2State extends State<HomePage2> {
                 SizedBox(height: screenheight / 50),
                 RaisedButton(
                   onPressed: () {},
-                   color:Colors.blueGrey[200],
+                   color:Colors.blueGrey[100],
                   padding: const EdgeInsets.all(0.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
