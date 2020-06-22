@@ -13,6 +13,11 @@ class Contact extends StatelessWidget {
           title: Text('Contact Us'),
           centerTitle: true,
           backgroundColor: kAppbarColor,
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
         ),
         backgroundColor: new Color(0xFFFFFFFF),
         body: ContactUs(

@@ -5,6 +5,7 @@ import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
+
 //widget to show the payments history of a user
 class PurchaseHistory extends StatefulWidget {
   static const id = 'purchase_history';
@@ -14,11 +15,16 @@ class PurchaseHistory extends StatefulWidget {
 
 class _PurchaseHistoryState extends State<PurchaseHistory> {
   List<Purchase> _purchaseList = [];
+  bool showProgess = false;
 
   Future<void> _updatePurchaseList() async {
+    setState(() {
+      showProgess = true;
+    });
     final _list = await globals.purchaseDao.getInsurances(globals.user.userId);
     setState(() {
       _purchaseList = _list;
+      showProgess = false;
     });
   }
 
@@ -65,11 +71,16 @@ class _PurchaseHistoryState extends State<PurchaseHistory> {
 
   @override
   void initState() {
+    setState(() {
+      showProgess = true;
+    });
     globals.purchaseDao.getInsurances(globals.user.userId).then((value) {
       setState(() {
         _purchaseList = value;
+        showProgess = false;
       });
     });
+
     super.initState();
   }
 
