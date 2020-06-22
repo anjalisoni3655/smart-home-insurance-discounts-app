@@ -270,25 +270,6 @@ void main() {
     test("Confirm Payment", confirmPayment);
   });
 
-  //Test if the flow works right if the user goes to payment directly after selecting policy .
-  group("Direct Payment After Selecting Policy ", () {
-    setUpAll(() async {
-      flutterDriver = await setupAndGetDriver();
-    });
-
-    tearDownAll(() async {
-      if (flutterDriver != null) {
-        flutterDriver.close();
-      }
-    });
-
-    test("Home Page", homePageSelectPurchasePolicyTab);
-    test("Enter address", enterAddress);
-    test("Choose Policy", choosePolicy);
-    test("Direct payment after policy", paymentAfterPolicy);
-    test("Confirm Payment", confirmPayment);
-  });
-
   group("Checking payment cancellation and No Offer Available Scenario ", () {
     setUpAll(() async {
       flutterDriver = await setupAndGetDriver();
@@ -310,6 +291,25 @@ void main() {
     test("Cancel Payment", cancelPayment);
   });
 
+  //Test if the flow works right if the user goes to payment directly after selecting policy .
+  group("Direct Payment After Selecting Policy ", () {
+    setUpAll(() async {
+      flutterDriver = await setupAndGetDriver();
+    });
+
+    tearDownAll(() async {
+      if (flutterDriver != null) {
+        flutterDriver.close();
+      }
+    });
+
+    test("Home Page", homePageSelectPurchasePolicyTab);
+    test("Enter address", enterAddress);
+    test("Choose Policy", choosePolicy);
+    test("Direct payment after policy", paymentAfterPolicy);
+    test("Confirm Payment", confirmPayment);
+  });
+
   //Test for working of other tabs in menu bar
   group("Checks the functioning of other tabs of Menu Bar ", () {
     setUpAll(() async {
@@ -321,6 +321,7 @@ void main() {
         flutterDriver.close();
       }
     });
+
     // Select the smart device discounts tab in menu bar and check if desired page comes up
     test("View Discounts", menuBarSmartDeviceDiscountsTab);
     // Go to Contact Us page by selecting option in  menu bar .
