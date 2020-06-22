@@ -61,8 +61,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
       child: Scaffold(
         appBar: CommonAppBar(),
         body: Container(
-          margin: EdgeInsets.symmetric(
-              vertical: screenheight / 80, horizontal: screenwidth / 80),
+          color: Colors.brown[50],
           child: Column(
             children: <Widget>[
               Expanded(
@@ -200,7 +199,6 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                             ),
                           )
                         : Container(height: 0),
-                    SizedBox(height: screenheight / 150),
                     AllDiscounts(),
                     SizedBox(height: screenheight / 30),
                   ],
@@ -359,7 +357,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
 
     globals.offerDao.getOffers().then((value) {
       setState(() {
-        offers = value;
+        offers = sortOffers(value);
       });
       _loadingOffers = false;
     });
@@ -376,17 +374,17 @@ class _AllDiscountsState extends State<AllDiscounts> {
             return Padding(
               key: Key('Offer $index'),
               padding: EdgeInsets.symmetric(
-                  vertical: screenheight / 200, horizontal: screenwidth / 100),
+                  vertical: screenheight / 150, horizontal: screenwidth / 20),
               child: Column(
                 children: <Widget>[
                   Container(
                     color: onlyShow
-                        ? Colors.white
+                        ? Colors.brown[100]
                         : (selectedOffer == offers[index]
-                            ? Colors.blue[100]
+                            ? Colors.blue[200]
                             : canPickOffer(offers[index])
-                                ? Colors.blue[50]
-                                : Colors.grey[100]),
+                                ? Colors.brown[100]
+                                : Colors.white),
                     child: ListTile(
                       enabled: onlyShow ? true : canPickOffer(offers[index]),
                       selected: (selectedOffer == offers[index]),
@@ -420,7 +418,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                                 child: Text(
                               '${offers[index].discount} %',
                               textAlign: TextAlign.right,
-                              style: CustomTextStyle(
+                              style: TextStyle(
                                   color: onlyShow || canPickOffer(offers[index])
                                       ? Colors.black
                                       : Colors.grey),
