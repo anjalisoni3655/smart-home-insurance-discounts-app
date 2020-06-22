@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
     // When user clicks on logOut , global user object calls the logout function
     if (value == 'Logout') {
       String status = await globals.sdk.logout();
+      print(status);
       if (status == "logout successful") {
         Navigator.pushNamed(context, LoginScreen.id);
         //Reinitialise state of sdk on logOut

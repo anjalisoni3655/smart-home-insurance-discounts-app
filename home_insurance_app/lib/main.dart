@@ -16,7 +16,9 @@ import 'package:homeinsuranceapp/pages/payment_history.dart';
 // this is the root of our application
 void main({test = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await globals.initialise(test: test);
+
   runApp(MyApp());
 }
 
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         Profile.id: (context) => Profile(),
+        'login': (context) => LoginScreen(),
         '/home': (context) => HomePage(),
         '/myDevices': (context) => MyDevices(),
         '/loading': (context) => Loading(),
