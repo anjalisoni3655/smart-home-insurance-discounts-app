@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/pages/home2.dart';
+import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/my_devices.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         Profile.id: (context) => Profile(),
-        '/home': (context) => HomePage2(),
+        '/home': (context) => HomePage(),
         '/myDevices': (context) => MyDevices(),
         '/login': (context) => LoginScreen(),
         '/loading': (context) => Loading(),
