@@ -34,7 +34,6 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
     Map data = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: CommonAppBar(),
-
       body: Container(
         padding: EdgeInsets.symmetric(
             vertical: screenheight / 100, horizontal: screenheight / 100),
@@ -42,7 +41,6 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
             vertical: screenheight / 100, horizontal: screenwidth / 100),
         child: Center(
           child: SingleChildScrollView(
-
             child: Column(
               children: <Widget>[
                 Container(

@@ -18,7 +18,6 @@ class Contact extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               }),
-
         ),
         backgroundColor: new Color(0xFFFFFFFF),
         body: ContactUs(

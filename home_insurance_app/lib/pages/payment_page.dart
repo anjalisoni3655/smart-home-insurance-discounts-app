@@ -40,12 +40,10 @@ class _PaymentState extends State<Payment> {
     if (arguments != null) {
       purchase = new Purchase(
           arguments['selectedPolicy'],
-
           arguments['selectedOffer'] == null
               ? Offer({'No offer': 0}, 0)
               : arguments['selectedOffer'],
           arguments['structureId'] == null ? '' : arguments['structureId'],
-
           Timestamp.now(),
           arguments['userAddress']);
     }

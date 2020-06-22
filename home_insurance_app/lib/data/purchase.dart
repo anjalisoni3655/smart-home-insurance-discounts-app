@@ -16,9 +16,7 @@ class Purchase {
       this.address) {
     //Calculate discounted cost if offer is availed
 
-
     this.discountedCost = getDiscountedCost(this.policy, this.offer);
-
   }
 
   @override
