@@ -27,12 +27,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Smart Home',
       initialRoute: '/loading',
+      debugShowCheckedModeBanner: false,
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         Profile.id: (context) => Profile(),
         '/home': (context) => HomePage(),
         '/myDevices': (context) => MyDevices(),
-        '/login': (context) => LoginScreen(),
         '/loading': (context) => Loading(),
         Contact.id: (context) => Contact(),
         '/gethomedetails': (context) => HomeDetails(),

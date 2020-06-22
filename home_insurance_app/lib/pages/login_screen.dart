@@ -74,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: Center(child: Text('Smart Home')),
         backgroundColor: kAppbarColor,
+        automaticallyImplyLeading: false,
       ),
       body: Center(child: _buildBody()),
     );

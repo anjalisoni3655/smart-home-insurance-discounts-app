@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/database_utilities.dart';
 import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
@@ -35,13 +34,13 @@ class _DisplayPoliciesState extends State<DisplayPolicies> {
     Map data = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: CommonAppBar(),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-              vertical: screenheight / 100, horizontal: screenheight / 100),
-          margin: EdgeInsets.symmetric(
-              vertical: screenheight / 100, horizontal: screenwidth / 100),
-          child: Center(
+      body: Container(
+        padding: EdgeInsets.symmetric(
+            vertical: screenheight / 100, horizontal: screenheight / 100),
+        margin: EdgeInsets.symmetric(
+            vertical: screenheight / 100, horizontal: screenwidth / 100),
+        child: Center(
+          child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 Container(

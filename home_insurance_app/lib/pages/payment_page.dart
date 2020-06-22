@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/data/offer.dart';
 import 'package:homeinsuranceapp/data/purchase.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/data/offer_service.dart';
@@ -39,8 +40,10 @@ class _PaymentState extends State<Payment> {
     if (arguments != null) {
       purchase = new Purchase(
           arguments['selectedPolicy'],
-          arguments['selectedOffer'],
-          arguments['structureId'],
+          arguments['selectedOffer'] == null
+              ? Offer({'No offer': 0}, 0)
+              : arguments['selectedOffer'],
+          arguments['structureId'] == null ? '' : arguments['structureId'],
           Timestamp.now(),
           arguments['userAddress']);
     }
@@ -164,60 +167,6 @@ class _PaymentState extends State<Payment> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class TextWidget extends StatelessWidget {
-  TextWidget(
-      {Key key,
-      @required String leftText,
-      @required String rightText,
-      Color leftColor,
-      Color rightColor})
-      : _leftText = leftText,
-        _rightText = rightText,
-        _leftColor = leftColor,
-        _rightColor = rightColor,
-        super(key: key);
-
-  final String _leftText;
-  final String _rightText;
-  final Color _leftColor;
-  final Color _rightColor;
-  @override
-  Widget build(BuildContext context) {
-    final double _padding = 18.0;
-
-    return Container(
-      child: Card(
-        elevation: 2.0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Padding(
-          padding: EdgeInsets.all(_padding),
-          child: Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                _leftText,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  color: _leftColor ?? Colors.grey[800],
-                ),
-              ),
-              Text(
-                _rightText,
-                style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w500,
-                    color: _rightColor ?? Colors.brown[600]),
-              ),
-            ],
-          ),
         ),
       ),
     );

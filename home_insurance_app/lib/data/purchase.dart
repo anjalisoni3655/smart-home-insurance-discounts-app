@@ -15,6 +15,7 @@ class Purchase {
   Purchase(this.policy, this.offer, this.structureId, this.dateOfPurchase,
       this.address) {
     //Calculate discounted cost if offer is availed
+
     this.discountedCost = getDiscountedCost(this.policy, this.offer);
   }
 
