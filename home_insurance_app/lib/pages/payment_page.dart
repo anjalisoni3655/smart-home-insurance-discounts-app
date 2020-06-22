@@ -75,22 +75,22 @@ class _PaymentState extends State<Payment> {
                     margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
                     color: Colors.brown[50],
                     child: ListTile(
-                        title: Text(
-                          'Name',
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.left,
+                      title: Text(
+                        'Name',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
                         ),
-                        subtitle: Text(
-                          '${globals.user.displayName}' ?? '',
-                          key: Key('name'),
-                          style: TextStyle(
-                            fontSize: 17,
-                          ),
-                          textAlign: TextAlign.left,
+                        textAlign: TextAlign.left,
+                      ),
+                      subtitle: Text(
+                        '${globals.user.displayName}' ?? '',
+                        key: Key('name'),
+                        style: TextStyle(
+                          fontSize: 17,
                         ),
+                        textAlign: TextAlign.left,
+                      ),
                     ),
                   ),
                   Container(
