@@ -29,3 +29,27 @@ TextStyle CustomTextStyle(
     fontFamily: fontFamily,
   );
 }
+
+RaisedButton CustomRaisedButton(String route, String text, BuildContext context,
+    double screenheight, double screenwidth) {
+  return RaisedButton(
+    onPressed: () {
+      Navigator.of(context).pushNamed(route);
+    },
+    color: Colors.orange[50],
+    elevation: 10.0,
+    padding: const EdgeInsets.all(0.0),
+    shape:
+        RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+    child: Container(
+      height: screenheight / 20,
+      width: 13 * screenwidth / 20,
+      padding: const EdgeInsets.all(10.0),
+      child: Text(text,
+          textAlign: TextAlign.center,
+          style: CustomTextStyle(
+            fontSize: 20.0,
+          )),
+    ),
+  );
+}

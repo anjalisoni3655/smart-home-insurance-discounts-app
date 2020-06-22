@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final scaffoldKey =
-    GlobalKey<ScaffoldState>(); // Used for testing the drawer
+        GlobalKey<ScaffoldState>(); // Used for testing the drawer
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
     double screenheight = mediaQuery.size.height;
@@ -83,9 +83,9 @@ class _HomePageState extends State<HomePage> {
             // Container will contain a blur background image
             decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/HomePage.jpg'),
-                  fit: BoxFit.cover,
-                )),
+              image: AssetImage('assets/HomePage.jpg'),
+              fit: BoxFit.cover,
+            )),
             child: BackdropFilter(
               filter: ImageFilter.blur(
                 sigmaX: 2.0,
@@ -93,58 +93,23 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
+                  color: Colors.black.withOpacity(0.2),
                 ),
               ),
             ),
           ),
           Container(
             margin: EdgeInsets.only(
-                top:5*screenheight/7, left: screenwidth / 16, right: screenwidth / 16),
+                top: 5 * screenheight / 7,
+                left: screenwidth / 16,
+                right: screenwidth / 16),
             child: Column(
               children: <Widget>[
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/gethomedetails');
-                  },
-                  color:Colors.orange[50],
-                  elevation:10.0,
-                  padding: const EdgeInsets.all(0.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
-                  child: Container(
-                    height: screenheight / 20,
-                    width: 13 * screenwidth / 20,
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text("Purchase Insurance",
-                        textAlign: TextAlign.center,
-                        style: CustomTextStyle(
-                          fontSize: 20.0,
-                        )),
-                  ),
-                ),
+                CustomRaisedButton('/gethomedetails', "Purchase Insurance",
+                    context, screenheight, screenwidth),
                 SizedBox(height: screenheight / 50),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/showdiscounts',
-                        arguments: {'onlyShow': true});
-                  },
-                  color:Colors.orange[50],
-                  elevation:10.0,
-                  padding: const EdgeInsets.all(0.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
-                  child: Container(
-                    height: screenheight / 20,
-                    width: 13 * screenwidth / 20,
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text("Smart Device Discounts",
-                        textAlign: TextAlign.center,
-                        style: CustomTextStyle(
-                          fontSize: 20.0,
-                        )),
-                  ),
-                ),
+                CustomRaisedButton('/showdiscounts', "Smart Device Discounts",
+                    context, screenheight, screenwidth),
                 SizedBox(height: screenheight / 80),
                 Expanded(
                   child: Container(),
