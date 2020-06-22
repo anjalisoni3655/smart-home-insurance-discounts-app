@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Divider CustomDivider({double height = 0, double width = 0}) {
   return Divider(
-    color: Colors.brown,
+    color: Colors.black,
     height: height,
     thickness: height,
     indent: width,

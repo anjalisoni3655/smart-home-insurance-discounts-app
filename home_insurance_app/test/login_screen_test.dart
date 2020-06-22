@@ -21,10 +21,13 @@ void main() {
 
     verify(mockObserver.didPush(any, any));
 
-    final titleFinder = find.text('Smart Home');
+    final titleFinder = find.text('Get your smart home secured today');
+    final titleFinder2 = find.text('Smart Home Insurance');
     final messageFinder = find.text('Log in to Continue');
 
     expect(titleFinder, findsOneWidget);
+    expect(titleFinder2, findsOneWidget);
+
     expect(messageFinder, findsOneWidget);
     //Finds Button
     expect(find.byType(RaisedButton), findsOneWidget);
