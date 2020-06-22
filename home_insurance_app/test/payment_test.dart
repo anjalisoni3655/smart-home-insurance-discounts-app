@@ -42,7 +42,7 @@ void main() {
 
     // Testing whether TextWidgets are painted or not
 
-    expect(find.byType(TextWidget), findsNWidgets(6));
+    expect(find.byType(ListTile), findsNWidgets(6));
 
     // testing the RaisedButton
     expect(find.byType(RaisedButton), findsNWidgets(2));
