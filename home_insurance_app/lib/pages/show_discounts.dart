@@ -375,12 +375,12 @@ class _AllDiscountsState extends State<AllDiscounts> {
             return Padding(
               key: Key('Offer $index'),
               padding: EdgeInsets.symmetric(
-                  vertical: screenheight / 200, horizontal: screenwidth / 100),
+                  vertical: screenheight / 200, horizontal: screenwidth / 50),
               child: Column(
                 children: <Widget>[
                   Container(
                     color: onlyShow
-                        ? Colors.white
+                        ? Colors.brown[100]
                         : (selectedOffer == offers[index]
                             ? Colors.blue[100]
                             : canPickOffer(offers[index])
