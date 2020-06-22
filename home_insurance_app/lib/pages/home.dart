@@ -4,8 +4,6 @@ import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/profile.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:sdk/sdk.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
@@ -23,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     // When user clicks on logOut , global user object calls the logout function
     if (value == 'Logout') {
       String status = await globals.sdk.logout();
+      print(status);
       if (status == "logout successful") {
         Navigator.pushNamed(context, LoginScreen.id);
         //Reinitialise state of sdk on logOut

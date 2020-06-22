@@ -17,7 +17,17 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.white70,
+        appBar: AppBar(
+          title: Text('My Profile'),
+          centerTitle: true,
+          backgroundColor: kAppbarColor,
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
+        backgroundColor: Colors.white,
         body: SafeArea(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -29,14 +39,11 @@ class _ProfileState extends State<Profile> {
             ),
             Center(
               child: Text(
-                globals.user.displayName ?? '',
+                '${globals.user.displayName}',
                 key: Profile.nameKey,
-                style: kProfileNameStyle,
+                textAlign: TextAlign.center,
+                style: kProfileNameStyle.copyWith(color: Colors.black),
               ),
-            ),
-            Text(
-              'Business Analyst',
-              style: kDesignationTextStyle,
             ),
             SizedBox(
               height: 20.0,
@@ -46,6 +53,12 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                      width: 1.2,
+                      color: Colors.brown[500],
+                    )),
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                 child: ListTile(
                   leading: Icon(
@@ -58,6 +71,12 @@ class _ProfileState extends State<Profile> {
                   ),
                 )),
             Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                      width: 1.2,
+                      color: Colors.brown[500],
+                    )),
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                 child: ListTile(
                   leading: Icon(
