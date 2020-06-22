@@ -101,14 +101,13 @@ class _MyDevicesState extends State<MyDevices> {
                                 textAlign: TextAlign.center))
                         : Container(
                             height: screenheight * 0.60,
-                            width: screenwidth * 0.90,
                             child: ListView(
                               children: List.from((globals.devices.value)
                                   .map((device) => Padding(
                                         key: Key('${device['customName']}'),
                                         padding: EdgeInsets.symmetric(
-                                            vertical: screenheight / 100,
-                                            horizontal: screenwidth / 100),
+                                            vertical: screenheight / 150,
+                                            horizontal: screenwidth / 20),
                                         child: Container(
                                           padding: EdgeInsets.symmetric(vertical: screenheight/50, horizontal: screenwidth/30),
                                           color: Colors.brown[100],
@@ -122,13 +121,13 @@ class _MyDevicesState extends State<MyDevices> {
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 15
+                                                  fontSize: 17
                                                 ),
                                               ),
                                               Text(
                                                   'Type: ${deviceName[sdmToDeviceType[device['type']].index]}',
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 17,
                                                   color: Colors.grey[600]
                                                 ),
                                               ),

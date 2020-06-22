@@ -34,7 +34,6 @@ class _PurchaseHistoryState extends State<PurchaseHistory> {
 
     if (_purchaseList == null || _purchaseList.length == 0) {
       return Container(
-        padding: EdgeInsets.symmetric(vertical: screenheight/50, horizontal: screenwidth/30),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +62,6 @@ class _PurchaseHistoryState extends State<PurchaseHistory> {
             return PurchaseCard(_purchaseList[index]);
           },
           itemCount: _purchaseList.length,
-          padding: EdgeInsets.all(5.0),
         ),
       );
     }
@@ -134,7 +132,7 @@ class _PurchaseCardState extends State<PurchaseCard> {
     double screenheight = MediaQuery.of(context).size.height;
 
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
       child: Column(
         children: <Widget>[
           Container(

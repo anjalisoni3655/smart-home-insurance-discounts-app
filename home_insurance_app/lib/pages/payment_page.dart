@@ -54,7 +54,6 @@ class _PaymentState extends State<Payment> {
       backgroundColor: Colors.white,
       body: Container(
         color: Colors.brown[50],
-        padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -62,8 +62,6 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
         appBar: CommonAppBar(),
         body: Container(
           color: Colors.brown[50],
-          padding: EdgeInsets.symmetric(
-              vertical: screenheight / 80, horizontal: screenwidth / 80),
           child: Column(
             children: <Widget>[
               Expanded(
@@ -201,7 +199,6 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                             ),
                           )
                         : Container(height: 0),
-                    SizedBox(height: screenheight / 150),
                     AllDiscounts(),
                     SizedBox(height: screenheight / 30),
                   ],
@@ -376,7 +373,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
             return Padding(
               key: Key('Offer $index'),
               padding: EdgeInsets.symmetric(
-                  vertical: screenheight / 200, horizontal: screenwidth / 50),
+                  vertical: screenheight / 150, horizontal: screenwidth / 20),
               child: Column(
                 children: <Widget>[
                   Container(
@@ -420,10 +417,12 @@ class _AllDiscountsState extends State<AllDiscounts> {
                                 child: Text(
                               '${offers[index].discount} %',
                               textAlign: TextAlign.right,
-                              style: CustomTextStyle(
+                              style: TextStyle(
                                   color: onlyShow || canPickOffer(offers[index])
                                       ? Colors.black
-                                      : Colors.grey),
+                                      : Colors.grey
+
+                              ),
                             )),
                           )
                         ],
