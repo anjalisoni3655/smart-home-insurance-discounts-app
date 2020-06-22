@@ -7,16 +7,16 @@ import 'dart:developer';
 // Input: String of format: /key_1/value_1/key_2/value_2/../key_n/value_n. or key_1/value_1/key_2/value_2/../key_n/value_n
 // Output: Map = {key_1: value_1, key_2: value_2, ..., key_n: value_n}
 // Use case: to get enterprise id, structure id, device id, etc from assignee or name: enteprises/enterprise-id/structures/structure-id/... etc
-// TODO: Replace with regex
 Map<String, String> getId(String url) {
-  RegExp re = new RegExp(r'[^//]+');
-  Map ids = {};
-  Iterable matches = re.allMatches(url);
-  //  Iterate all matches
+  //This regEx contains of any symbol or character except '/'
+  RegExp pattern = new RegExp(r'[^//]+');
+  Map <String,String> ids = {};
+  //Find all substrings in url separated by '/'
+  Iterable matches = pattern.allMatches(url);
+  //  Iterate through all the matches and form key-valuuuue pair for adjacent elements in list .
   for(int i = 0 ; i < matches.length ; i+=2 ) {
     ids[matches.elementAt(i).group(0)] = matches.elementAt(i+1).group(0);
   }
-  ids.forEach((key,value) => print('$key: $value'));
   return ids;
 }
 
@@ -97,7 +97,6 @@ class AccessDevices {
       }
       return Optional.of(devices);
     } catch (error) {
-      log(error.toString());
       return Optional.empty();
     }
   }
