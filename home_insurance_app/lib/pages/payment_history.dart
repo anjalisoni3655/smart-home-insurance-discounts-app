@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/data/purchase.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
 //widget to show the payments history of a user
@@ -78,21 +79,7 @@ class _PurchaseHistoryState extends State<PurchaseHistory> {
     double screenheight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Insurances Purchased'),
-        centerTitle: true,
-        backgroundColor: kAppbarColor,
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.refresh,
-                color: Colors.white,
-              ),
-              onPressed: () async {
-                await _updatePurchaseList();
-              }),
-        ],
-      ),
+      appBar: CommonAppBar(),
       body: Container(
         color: Colors.brown[50],
         child: Column(

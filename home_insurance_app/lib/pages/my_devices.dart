@@ -47,6 +47,7 @@ class _MyDevicesState extends State<MyDevices> {
     return Scaffold(
       appBar: CommonAppBar(),
       body: Container(
+        color: Colors.brown[50],
         child: Column(
           children: <Widget>[
             Padding(
@@ -108,38 +109,35 @@ class _MyDevicesState extends State<MyDevices> {
                                         padding: EdgeInsets.symmetric(
                                             vertical: screenheight / 100,
                                             horizontal: screenwidth / 100),
-                                        child: Card(
-                                          color: Colors
-                                              .white, // If selected then color of card is teal else no change in color
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15.0),
-                                            side: BorderSide(
-                                              color: Colors.brown[100],
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                          child: ListTile(
-                                            title: Text(
-                                              //If device name is empty display Unknown
-                                              device['customName'] != ""
-                                                  ? '${device['customName']}'
-                                                  : "Unknown",
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            subtitle: Column(
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                      'Type: ${deviceName[sdmToDeviceType[device['type']].index]}'),
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(vertical: screenheight/50, horizontal: screenwidth/30),
+                                          color: Colors.brown[100],
+                                          child: Column(
+                                            children: <Widget>[
+                                              Text(
+                                                //If device name is empty display Unknown
+                                                device['customName'] != ""
+                                                    ? '${device['customName']}'
+                                                    : "Unknown",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                              Text(
+                                                  'Type: ${deviceName[sdmToDeviceType[device['type']].index]}',
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.grey[600]
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ))),
+                                      )
+                                  )
+                              ),
                             ),
                           )
                 : Container(),

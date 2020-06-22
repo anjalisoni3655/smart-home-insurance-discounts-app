@@ -50,6 +50,7 @@ class _PaymentState extends State<Payment> {
       appBar: CommonAppBar(),
       backgroundColor: Colors.white,
       body: Container(
+        color: Colors.brown[50],
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,7 +74,7 @@ class _PaymentState extends State<Payment> {
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
-                    color: Colors.brown[50],
+                    color: Colors.brown[100],
                     child: ListTile(
                       title: Text(
                         'Name',
@@ -95,7 +96,7 @@ class _PaymentState extends State<Payment> {
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
-                    color: Colors.brown[50],
+                    color: Colors.brown[100],
                     child: ListTile(
                       title: Text(
                         'Address',
@@ -114,7 +115,7 @@ class _PaymentState extends State<Payment> {
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
-                    color: Colors.brown[50],
+                    color: Colors.brown[100],
                     child: ListTile(
                       title: Text(
                           'Selected Policy',
@@ -133,7 +134,7 @@ class _PaymentState extends State<Payment> {
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
-                    color: Colors.brown[50],
+                    color: Colors.brown[100],
                     child: ListTile(
                       title: Text(
                           'Cost',
@@ -158,7 +159,7 @@ class _PaymentState extends State<Payment> {
                           children: <Widget>[
                             Container(
                               margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
-                              color: Colors.brown[50],
+                              color: Colors.brown[100],
                               child: ListTile(
                                 title: Text(
                                   'Offer Availed',
@@ -177,7 +178,7 @@ class _PaymentState extends State<Payment> {
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
-                              color: Colors.brown[50],
+                              color: Colors.brown[100],
                               child: ListTile(
                                 title: Text(
                                   'Discounted Cost',
