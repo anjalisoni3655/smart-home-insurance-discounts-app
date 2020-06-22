@@ -74,11 +74,13 @@ class AccessDevices {
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {
+        Map ids = getId(device['name']);
         devices.add({
-          'id': getId(device['name'])['devices'],
+          'id': ids['devices'],
           'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
+          'structureId': getId(device['assignee'])['structures']
         });
       }
       return Optional.of(devices);
@@ -108,6 +110,7 @@ class AccessDevices {
           'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
+          'structureId': getId(device['assignee'])['structures']
         });
       }
       return Optional.of(devices);

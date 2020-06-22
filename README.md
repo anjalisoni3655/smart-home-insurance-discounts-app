@@ -7,31 +7,15 @@ to enable home insurance providers give discounts to home owners if they have ce
 **This is not an officially supported Google product.**
 
 **To setup flutter app on android studio**:
-1. Make sure flutter SDK is installed on your laptop.
-2. Make sure flutter plugin and dart plugin has been installed on android studio. If not go to Help->Find Action->plugins and install flutter plugin.
-3. Clone the repository and open the home_insurance_app from android studio
+1. Run flutter doctor to check if flutter is installed in your laptop. If not, please refer to https://flutter.dev/docs/get-started/install for installation instructions. 
+2. Go to Find Action -> plugins -> installed. if installed shows dart and flutter then continue to next step, else go to Find Action -> plugins -> marketplace and search for flutter and add the plugin. If prompted to install dart plugin as well, accept. Otherwise search for dart plugin and install that as well. 
+3. Clone the repository and open the 'home_insurance_app'/'sdk' directory from android studio not the root directory
 4. Go to settings -> flutter and add the path to flutter SDK if not already present.
-5. Connect device/ emulator and run the app.
+5. If prompted to run 'flutter pub get' accept, else go to terminal in the IDE and run flutter pub get.
+6. Connect device device to your laptop via USB. It should show up in the top bar. 
+7. Download google-services.json (firebase access credentials) from the firebase console project page and add it to home_insurance_app/android/app.
+7. Once connected to a devices go to run tab and select run.
 
-**To setup the credentials  for the OAuth2.0 flow**
-To get the access to SDM API, one can follow the detailed instructions given in SDM API official documentation. Here is the link for the same https://developers.google.com/home/smart-device-management/consumer/get-started
-
-1.Add the latest version of flutter_config package in the pubspec.yaml file below the dev_dependencies section.
-
-2.Create a .env file in the root of the project and store all the credentials:
-
-API_URL= url used for resource picker and OAuth flow
-
-API_URL2= url used for SDM API call
-
-API_CLIENTID=some client id from the OAuth token
-
-API_CLIENTSECRET= the client secret from the OAuth token.
-
-API_SCOPE= the scope string for SDM API
-
-3.Also add this .env file in gitignore file once done and then test the app in the local device, then we can push the code to github safely.
-
-4.In order to use the google sign in services, the google-services.json file obtained after registering of app in firebase console need to be pasted in the android/app/directory.
-
-For detailed instruction on how to setup environment variables in the project follow this link:https://github.com/ByneappLLC/flutter_config
+**Common issues faced:**
+1. Flutter plugin and installing flutter SDK are different and both need to be setup. 
+2. Run flutter pub get after editing pubspec.yaml file to load the changes.

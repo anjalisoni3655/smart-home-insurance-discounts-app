@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/insurance_dao.dart';
+import 'package:homeinsuranceapp/data/offer.dart';
+import 'package:homeinsuranceapp/data/purchase.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
@@ -12,7 +14,7 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
-  Map purchase;
+  Purchase purchase;
   String userName = "";
 
   @override
@@ -36,18 +38,14 @@ class _PaymentState extends State<Payment> {
     double screenwidth = MediaQuery.of(context).size.width;
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
-      int discount = (arguments['selectedOffer'] != null)
-          ? arguments['selectedOffer'].discount
-          : 0;
-      purchase = {
-//      'structure_id': arguments['structure']['id'],
-        'address': arguments['userAddress'],
-        'policy': arguments['selectedPolicy'],
-        'offer': arguments['selectedOffer'],
-        'total_discount': arguments['selectedPolicy'].cost * 0.01 * discount,
-        'discounted_cost':
-            arguments['selectedPolicy'].cost * (1 - 0.01 * discount),
-      };
+      purchase = new Purchase(
+          arguments['selectedPolicy'],
+          arguments['selectedOffer'] == null
+              ? Offer({'No offer': 0}, 0)
+              : arguments['selectedOffer'],
+          arguments['structureId'] == null ? '' : arguments['structureId'],
+          Timestamp.now(),
+          arguments['userAddress']);
     }
 
     return Scaffold(
@@ -65,25 +63,24 @@ class _PaymentState extends State<Payment> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 TextWidget(
-                    //TODO Get the name from the user details from sdk
-                    key: Key('name'),
-                    leftText: 'Name: ',
-                    rightText: userName),
+                  key: Key('name'),
+                  leftText: 'Name: ',
+                  rightText: globals.user.displayName ?? '',
+                ),
                 TextWidget(
                   leftText: 'Address: ',
-                  rightText: '${purchase['address']}' ?? '',
+                  rightText: '${purchase.address}' ?? '',
                 ),
                 TextWidget(
                   leftText: 'Selected Policy: ',
-                  rightText: '${purchase['policy'].policyName}' ?? '',
+                  rightText: '${purchase.policy.policyName}' ?? '',
                 ),
 
                 TextWidget(
                   leftText: 'Cost: ',
-                  rightText: 'Rs. ${purchase['policy'].cost}' ?? '',
+                  rightText: 'Rs. ${purchase.policy.cost}' ?? '',
                 ),
-
-                // The discount and offer received by the user will only be shown when user has selected one .
+                // The discount and offer received by tFhe user will only be shown when user has selected one .
                 arguments['selectedOffer'] != null
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -91,17 +88,11 @@ class _PaymentState extends State<Payment> {
                         children: <Widget>[
                           TextWidget(
                             leftText: 'Offers Availed: ',
-                            rightText:
-                                '${purchase['offer'].requirements}' ?? '',
-                          ),
-                          TextWidget(
-                            leftText: 'Total Discount: ',
-                            rightText: 'Rs ${purchase['total_discount']}' ?? '',
+                            rightText: '${purchase.offer.requirements}' ?? '',
                           ),
                           TextWidget(
                             leftText: 'Discounted Cost: ',
-                            rightText:
-                                'Rs ${purchase['discounted_cost']}' ?? '',
+                            rightText: 'Rs ${purchase.discountedCost}' ?? '',
                           ),
                         ],
                       )
@@ -118,6 +109,7 @@ class _PaymentState extends State<Payment> {
                     Expanded(
                       flex: 1,
                       child: RaisedButton(
+                          key: Key('Cancel Payment'),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -143,8 +135,12 @@ class _PaymentState extends State<Payment> {
                     Expanded(
                       flex: 1,
                       child: RaisedButton(
+                          key: Key('Confirm Payment'),
                           onPressed: () {
-                            addInsurancePurchased(purchase);
+                            print('insurance purchased');
+                            print(purchase.toString());
+                            globals.purchaseDao
+                                .addPurchase(globals.user.userId, purchase);
                             Navigator.of(context).pop();
                           },
                           child: Row(
@@ -171,60 +167,6 @@ class _PaymentState extends State<Payment> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class TextWidget extends StatelessWidget {
-  TextWidget(
-      {Key key,
-      @required String leftText,
-      @required String rightText,
-      Color leftColor,
-      Color rightColor})
-      : _leftText = leftText,
-        _rightText = rightText,
-        _leftColor = leftColor,
-        _rightColor = rightColor,
-        super(key: key);
-
-  final String _leftText;
-  final String _rightText;
-  final Color _leftColor;
-  final Color _rightColor;
-  @override
-  Widget build(BuildContext context) {
-    final double _padding = 18.0;
-
-    return Container(
-      child: Card(
-        elevation: 2.0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Padding(
-          padding: EdgeInsets.all(_padding),
-          child: Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                _leftText,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  color: _leftColor ?? Colors.grey[800],
-                ),
-              ),
-              Text(
-                _rightText,
-                style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w500,
-                    color: _rightColor ?? Colors.brown[600]),
-              ),
-            ],
-          ),
         ),
       ),
     );

@@ -1,165 +1,192 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:homeinsuranceapp/data/device_type.dart';
+import 'package:homeinsuranceapp/data/offer_service.dart';
+import 'package:homeinsuranceapp/pages/common_widgets.dart';
+import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
-List<ItemVO> mainList = List();
-List<ItemVO> thermostats = [
-  ItemVO("1", "nest hub"),
-  ItemVO("2", "nest mini"),
-  ItemVO("3", "chromecast")
-];
-List<ItemVO> camera = [
-  ItemVO("1", "smoke alarm"),
-  ItemVO("2", "nest cam"),
-  ItemVO("3", "home mini")
-];
-List<ItemVO> smokeDetector = [
-  ItemVO("1", "home max"),
-  ItemVO("2", "home duo"),
-  ItemVO("3", "thermostat")
-];
-
-List<ItemVO> home = [
-  ItemVO("1", "a"),
-  ItemVO("2", "b"),
-  ItemVO("3", "c"),
-];
+import '../data/device_type.dart';
 
 class MyDevices extends StatefulWidget {
-  static const String id = 'my_devices';
   @override
-  State<StatefulWidget> createState() {
-    return _MyDevicesState();
-  }
+  _MyDevicesState createState() => _MyDevicesState();
 }
 
 class _MyDevicesState extends State<MyDevices> {
-//  @override
-// void initState() {
-//    super.initState();
-//    mainList.addAll(home);
-//  }
+  bool hasDeviceAccess;
+  bool hasDevices;
+  bool reload;
+  bool loading;
+  @override
+  void initState() {
+    reload = false;
+    loading = false;
+    hasDevices = globals.devices.isPresent;
+    super.initState();
+    hasDeviceAccess = hasAccess();
+    if (hasDeviceAccess && !hasDevices) {
+      loading = true;
+      globals.sdk.getAllDevices().then((value) {
+        setState(() {
+          loading = false;
+          if (value.isEmpty) {
+            reload = true;
+          }
+          globals.devices = value;
+        });
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    theme:
-    ThemeData.dark();
+    double screenheight = MediaQuery.of(context).size.height;
+    double screenwidth = MediaQuery.of(context).size.width;
 
-    return Material(
-      child: Stack(
-        children: <Widget>[
-          ListView.builder(
-            itemBuilder: (BuildContext context, index) {
-              return getCard(index);
-            },
-            itemCount: mainList.length,
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 20),
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                FloatingActionButton(
-                  onPressed: () {
-                    mainList.clear();
-                    setState(() {
-                      mainList.addAll(thermostats);
-                    });
-                  },
-                  heroTag: "btn1",
-                  child: new Icon(Icons.devices_other),
-                  backgroundColor: new Color(0xFFE57373),
-                ),
-                FloatingActionButton(
-                  onPressed: () {
-                    mainList.clear();
-                    setState(() {
-                      mainList.addAll(camera);
-                    });
-                  },
-                  heroTag: "btn2",
-                  child: new Icon(Icons.camera_alt),
-                  backgroundColor: new Color(0xFFE57373),
-                ),
-                FloatingActionButton(
-                  onPressed: () {
-                    mainList.clear();
-                    setState(() {
-                      mainList.addAll(smokeDetector);
-                    });
-                  },
-                  heroTag: "btn3",
-                  child: new Icon(Icons.smoke_free),
-                  backgroundColor: new Color(0xFFE57373),
-                ),
-                FloatingActionButton(
-                  onPressed: () {
-                    mainList.clear();
-                    setState(() {
-                      mainList.addAll(home);
-                    });
-                  },
-                  heroTag: "btn4",
-                  child: new Icon(Icons.home),
-                  backgroundColor: new Color(0xFFE57373),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /*
-    Get the card item for a list
-   */
-  getCard(int position) {
-    ItemVO model = mainList[position];
-    return Card(
-      child: Container(
-        color: Colors.lightBlueAccent,
-        //child: Text("Flutter CheatSheet."),
-        height: 50,
-        alignment: Alignment.center,
-        child: Row(
-          //Text("Flutter CheatSheet."),
-          mainAxisAlignment: MainAxisAlignment.center,
+    return Scaffold(
+      appBar: CommonAppBar(),
+      body: Container(
+        child: Column(
           children: <Widget>[
-//            Text(
-//              "ID:: "+model._id,
-//              style: TextStyle(fontSize: 18, color: Colors.black),
-//            ),
-            Padding(padding: EdgeInsets.only(left: 5, right: 5)),
-            Text(
-              " " + model._name,
-              style: TextStyle(fontSize: 18, color: Colors.black),
-            )
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenwidth / 100, vertical: screenheight / 100),
+              child: Text(
+                'My Devices',
+                style: CustomTextStyle(fontSize: 30.0),
+              ),
+            ),
+            CustomDivider(height: screenheight / 150, width: screenwidth / 50),
+            hasDeviceAccess
+                ? reload
+                    ? Column(
+                        children: <Widget>[
+                          Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: screenheight / 10,
+                                  horizontal: screenwidth / 10),
+                              child: Text(
+                                  'Some error occured while fetching devices. Please try again.',
+                                  style: CustomTextStyle(
+                                    color: Colors.brown,
+                                  ),
+                                  textAlign: TextAlign.center)),
+                          FloatingActionButton.extended(
+                            icon: Icon(Icons.cached),
+                            label: Text('Reload'),
+                            onPressed: () {
+                              globals.sdk.getAllDevices().then((value) {
+                                setState(() {
+                                  loading = false;
+                                  if (value.isEmpty) {
+                                    reload = true;
+                                  }
+                                  globals.devices = value;
+                                });
+                              });
+                            },
+                          )
+                        ],
+                      )
+                    : loading
+                        ? Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: screenheight / 10,
+                                horizontal: screenwidth / 10),
+                            child: Text('Loading...',
+                                style: CustomTextStyle(
+                                    color: Colors.brown, fontSize: 20),
+                                textAlign: TextAlign.center))
+                        : Container(
+                            height: screenheight * 0.60,
+                            width: screenwidth * 0.90,
+                            child: ListView(
+                              children: List.from((globals.devices.value)
+                                  .map((device) => Padding(
+                                        key: Key('${device['customName']}'),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: screenheight / 100,
+                                            horizontal: screenwidth / 100),
+                                        child: Card(
+                                          color: Colors
+                                              .white, // If selected then color of card is teal else no change in color
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                            side: BorderSide(
+                                              color: Colors.brown[100],
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          child: ListTile(
+                                            title: Text(
+                                              //If device name is empty display Unknown
+                                              device['customName'] != ""
+                                                  ? '${device['customName']}'
+                                                  : "Unknown",
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            subtitle: Column(
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                      'Type: ${deviceName[sdmToDeviceType[device['type']].index]}'),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ))),
+                            ),
+                          )
+                : Container(),
+            // The user can link to devices anytime .
+            Container(
+              child: Column(
+                children: <Widget>[
+                  !hasDeviceAccess
+                      ? Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenheight / 10,
+                              horizontal: screenwidth / 10),
+                          child: Text(
+                              'Device Access not provided. Please link devices to view your devices.',
+                              style: CustomTextStyle(
+                                color: Colors.brown,
+                              ),
+                              textAlign: TextAlign.center))
+                      : Container(),
+                  FloatingActionButton.extended(
+                    label: Text('Link Devices'),
+                    onPressed: () async {
+                      String status = await globals.sdk.requestDeviceAccess();
+                      setState(() {
+                        hasDeviceAccess = hasAccess();
+                        if (hasDeviceAccess) {
+                          loading = true;
+                          globals.sdk.getAllDevices().then((value) {
+                            setState(() {
+                              loading = false;
+                              if (value.isEmpty) {
+                                reload = true;
+                              } else {
+                                globals.devices = value;
+                              }
+                            });
+                          });
+                        }
+                      });
+                    },
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
-      margin: EdgeInsets.all(10),
     );
   }
-}
-
-/*
-Custom model
-i.e. for itemList
- */
-class ItemVO {
-  String _id, _name;
-
-  String get id => _id;
-
-  set id(String value) {
-    _id = value;
-  }
-
-  get name => _name;
-
-  set name(value) {
-    _name = value;
-  }
-
-  ItemVO(this._id, this._name);
 }
