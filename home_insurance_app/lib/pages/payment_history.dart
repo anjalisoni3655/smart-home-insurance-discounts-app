@@ -4,6 +4,7 @@ import 'package:homeinsuranceapp/data/purchase.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 
+
 //widget to show the payments history of a user
 class PurchaseHistory extends StatefulWidget {
   static const id = 'purchase_history';

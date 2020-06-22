@@ -54,6 +54,7 @@ class _LoadingState extends State<Loading> {
                   Container(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: LinearProgressIndicator()),
+
                   Text(
                     'Loading',
                     style: TextStyle(fontSize: 20),
