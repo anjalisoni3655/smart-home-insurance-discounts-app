@@ -74,7 +74,9 @@ class _PaymentState extends State<Payment> {
               child: ListView(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
+                    margin: EdgeInsets.symmetric(
+                        vertical: screenheight / 150,
+                        horizontal: screenwidth / 20),
                     color: Colors.brown[100],
                     child: ListTile(
                       title: Text(
@@ -96,17 +98,17 @@ class _PaymentState extends State<Payment> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
+                    margin: EdgeInsets.symmetric(
+                        vertical: screenheight / 150,
+                        horizontal: screenwidth / 20),
                     color: Colors.brown[100],
                     child: ListTile(
                       title: Text(
                         'Address',
                         style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold
-                        ),
+                            fontSize: 17, fontWeight: FontWeight.bold),
                       ),
-                      subtitle:  Text(
+                      subtitle: Text(
                         '${purchase.address}' ?? '',
                         style: TextStyle(
                           fontSize: 17,
@@ -115,17 +117,17 @@ class _PaymentState extends State<Payment> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
+                    margin: EdgeInsets.symmetric(
+                        vertical: screenheight / 150,
+                        horizontal: screenwidth / 20),
                     color: Colors.brown[100],
                     child: ListTile(
                       title: Text(
-                          'Selected Policy',
+                        'Selected Policy',
                         style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold
-                        ),
+                            fontSize: 17, fontWeight: FontWeight.bold),
                       ),
-                      subtitle:  Text(
+                      subtitle: Text(
                         '${purchase.policy.policyName}' ?? '',
                         style: TextStyle(
                           fontSize: 17,
@@ -134,17 +136,17 @@ class _PaymentState extends State<Payment> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
+                    margin: EdgeInsets.symmetric(
+                        vertical: screenheight / 150,
+                        horizontal: screenwidth / 20),
                     color: Colors.brown[100],
                     child: ListTile(
                       title: Text(
-                          'Cost',
+                        'Cost',
                         style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold
-                        ),
+                            fontSize: 17, fontWeight: FontWeight.bold),
                       ),
-                      subtitle:  Text(
+                      subtitle: Text(
                         'Rs. ${purchase.policy.cost}' ?? '',
                         style: TextStyle(
                           fontSize: 17,
@@ -159,17 +161,18 @@ class _PaymentState extends State<Payment> {
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: screenheight / 150,
+                                  horizontal: screenwidth / 20),
                               color: Colors.brown[100],
                               child: ListTile(
                                 title: Text(
                                   'Offer Availed',
                                   style: TextStyle(
                                       fontSize: 17,
-                                      fontWeight: FontWeight.bold
-                                  ),
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                subtitle:  Text(
+                                subtitle: Text(
                                   '${purchase.offer}' ?? '',
                                   style: TextStyle(
                                     fontSize: 17,
@@ -178,17 +181,18 @@ class _PaymentState extends State<Payment> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: screenheight / 150,
+                                  horizontal: screenwidth / 20),
                               color: Colors.brown[100],
                               child: ListTile(
                                 title: Text(
                                   'Discounted Cost',
                                   style: TextStyle(
                                       fontSize: 17,
-                                      fontWeight: FontWeight.bold
-                                  ),
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                subtitle:  Text(
+                                subtitle: Text(
                                   '${purchase.discountedCost}' ?? '',
                                   style: TextStyle(
                                     fontSize: 17,
@@ -204,7 +208,8 @@ class _PaymentState extends State<Payment> {
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.symmetric(vertical: 0, horizontal: screenwidth/30),
+                margin: EdgeInsets.symmetric(
+                    vertical: 0, horizontal: screenwidth / 30),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,

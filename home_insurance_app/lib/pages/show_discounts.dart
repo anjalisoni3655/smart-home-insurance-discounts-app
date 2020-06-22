@@ -420,9 +420,7 @@ class _AllDiscountsState extends State<AllDiscounts> {
                               style: TextStyle(
                                   color: onlyShow || canPickOffer(offers[index])
                                       ? Colors.black
-                                      : Colors.grey
-
-                              ),
+                                      : Colors.grey),
                             )),
                           )
                         ],

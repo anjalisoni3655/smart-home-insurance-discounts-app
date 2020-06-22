@@ -5,7 +5,6 @@ import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
 import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
-
 //widget to show the payments history of a user
 class PurchaseHistory extends StatefulWidget {
   static const id = 'purchase_history';
@@ -132,13 +131,16 @@ class _PurchaseCardState extends State<PurchaseCard> {
     double screenheight = MediaQuery.of(context).size.height;
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: screenheight/150, horizontal: screenwidth/20),
+      padding: EdgeInsets.symmetric(
+          vertical: screenheight / 150, horizontal: screenwidth / 20),
       child: Column(
         children: <Widget>[
           Container(
             color: Colors.brown[200],
             child: ListTile(
-              leading: Icon(Icons.arrow_drop_down_circle,),
+              leading: Icon(
+                Icons.arrow_drop_down_circle,
+              ),
               title: Text('${_purchase.policy.policyName}'),
               subtitle: Text('${_purchase.address}'),
               onTap: () {
@@ -148,130 +150,138 @@ class _PurchaseCardState extends State<PurchaseCard> {
               },
             ),
           ),
-          flag ? Container(
-            color: Colors.brown[100],
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: screenheight/100, horizontal: screenwidth/30),
-                      child: Column(
+          flag
+              ? Container(
+                  color: Colors.brown[100],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
-                          Text(
-                            'Date purchased:',
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          Text(
-                              '${_purchase.dateOfPurchase.toDate().toIso8601String().substring(0, 10)}'
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: screenheight/100, horizontal: screenwidth/100),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            'Address: ',
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          Text(
-                            '${_purchase.address}' ?? '',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: screenheight/100, horizontal: screenwidth/30),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            'Selected Policy: ',
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          Text(
-                            '${_purchase.policy.policyName}' ?? '',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: screenheight/100, horizontal: screenwidth/30),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            'Cost: ',
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          Text(
-                            'Rs. ${_purchase.policy.cost}' ?? '',
-                          ),
-                        ],
-                      ),
-                    ),
-                    _purchase.offer != null
-                        ? Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: screenheight/100, horizontal: screenwidth/30),
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                'Offers Availed',
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: screenheight / 100,
+                                horizontal: screenwidth / 30),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Date purchased:',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              Text(
-                                '${_purchase.offer}' ?? '',
-                              ),
-                            ],
+                                Text(
+                                    '${_purchase.dateOfPurchase.toDate().toIso8601String().substring(0, 10)}'),
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: screenheight/100, horizontal: screenwidth/30),
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                'Discounted Cost',
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: screenheight / 100,
+                                horizontal: screenwidth / 100),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Address: ',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              Text(
-                                'Rs. ${_purchase.discountedCost}' ?? '',
-                              ),
-                            ],
+                                Text(
+                                  '${_purchase.address}' ?? '',
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                        : Container(),
-                  ],
-                ),
-              ],
-            ),
-          ): Container(),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: screenheight / 100,
+                                horizontal: screenwidth / 30),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Selected Policy: ',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  '${_purchase.policy.policyName}' ?? '',
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: screenheight / 100,
+                                horizontal: screenwidth / 30),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Cost: ',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Rs. ${_purchase.policy.cost}' ?? '',
+                                ),
+                              ],
+                            ),
+                          ),
+                          _purchase.offer != null
+                              ? Column(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: screenheight / 100,
+                                          horizontal: screenwidth / 30),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            'Offers Availed',
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            '${_purchase.offer}' ?? '',
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: screenheight / 100,
+                                          horizontal: screenwidth / 30),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            'Discounted Cost',
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            'Rs. ${_purchase.discountedCost}' ??
+                                                '',
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

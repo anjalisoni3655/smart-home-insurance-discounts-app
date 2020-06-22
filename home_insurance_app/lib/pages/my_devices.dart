@@ -109,7 +109,9 @@ class _MyDevicesState extends State<MyDevices> {
                                             vertical: screenheight / 150,
                                             horizontal: screenwidth / 20),
                                         child: Container(
-                                          padding: EdgeInsets.symmetric(vertical: screenheight/50, horizontal: screenwidth/30),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: screenheight / 50,
+                                              horizontal: screenwidth / 30),
                                           color: Colors.brown[100],
                                           child: Column(
                                             children: <Widget>[
@@ -120,23 +122,19 @@ class _MyDevicesState extends State<MyDevices> {
                                                     : "Unknown",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 17
-                                                ),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 17),
                                               ),
                                               Text(
-                                                  'Type: ${deviceName[sdmToDeviceType[device['type']].index]}',
+                                                'Type: ${deviceName[sdmToDeviceType[device['type']].index]}',
                                                 style: TextStyle(
-                                                  fontSize: 17,
-                                                  color: Colors.grey[600]
-                                                ),
+                                                    fontSize: 17,
+                                                    color: Colors.grey[600]),
                                               ),
                                             ],
                                           ),
                                         ),
-                                      )
-                                  )
-                              ),
+                                      ))),
                             ),
                           )
                 : Container(),
