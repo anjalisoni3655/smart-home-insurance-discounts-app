@@ -20,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
     //using global sdk object named user for calling sdk login function
     try {
       String status = await globals.sdk.login();
-
       if (status == "login successful") {
         Optional<Map> userDetailsOptional = await globals.sdk.getUserDetails();
 
@@ -61,7 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       print(e);
-
     }
   }
 
@@ -108,7 +106,6 @@ class _LoginScreenState extends State<LoginScreen> {
           shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(30.0)),
         ),
-
       ],
     );
   }

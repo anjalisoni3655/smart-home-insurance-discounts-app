@@ -18,7 +18,6 @@ Future<FlutterDriver> setupAndGetDriver() async {
 
 FlutterDriver flutterDriver;
 
-
 //The app opens with the loading page . The login page should come since the user is not Signed In
 dynamic openApp() async {
   await flutterDriver.runUnsynchronized(() async {
@@ -75,11 +74,11 @@ dynamic menuBarContactUsTab() async {
   await flutterDriver.tap(appDrawer);
   SerializableFinder purchaseTab = find.byValueKey('Contact Us');
   await flutterDriver.tap(purchaseTab);
+
   await flutterDriver.waitFor(find.byType("Contact"));
 
   await goBack();
   await flutterDriver.waitFor(find.byType("HomePage"));
-
 }
 
 // Enter address and click on submit. Check if redirected to choose policy
@@ -129,10 +128,8 @@ dynamic viewSmartDiscountsAfterPolicy() async {
 
 // Click on Payment on Policy Page
 dynamic paymentAfterPolicy() async {
-
   SerializableFinder paymentButton = find.byValueKey("Payment");
   await flutterDriver.tap(paymentButton);
-
 
   await flutterDriver.waitFor(find.byType("Payment"));
 }
@@ -159,7 +156,7 @@ dynamic selectStructure() async {
 dynamic selectOffer() async {
   SerializableFinder firstOffer = find.byValueKey("Offer 0");
   await flutterDriver.tap(firstOffer);
-  SerializableFinder submitButton = find.byValueKey("Payment");
+  SerializableFinder submitButton = find.byValueKey("Go to Payment");
 
   await flutterDriver.tap(submitButton);
 
@@ -167,14 +164,12 @@ dynamic selectOffer() async {
 //      await Future.delayed(const Duration(seconds: 1));
 }
 
-
 dynamic paymentWithNoOfferSelected() async {
   SerializableFinder confirmPaymentButton = find.byValueKey('Go to Payment');
 
   await flutterDriver.tap(confirmPaymentButton);
   await flutterDriver.waitFor(find.byType("Payment"));
 }
-
 
 // Click on confirm payment on payments page. Check if redirected to home page
 dynamic confirmPayment() async {
@@ -210,7 +205,6 @@ dynamic logout() async {
     await flutterDriver.waitFor(find.byType("LoginScreen"));
   });
 }
-
 
 // Test for choosing the structure using Pick Structure button
 dynamic selectPickStructureButton() async {
@@ -272,12 +266,8 @@ void main() {
     test("Select Offer", selectOffer);
     //TODO:  Check if address, offers and policies displayed are the ones chosen.
 
-
     //  Find "Pay" button and click on it
     test("Confirm Payment", confirmPayment);
-
-    // Check if redirected to home page and Logout
-    test("Logout", logout);
   });
 
   //Test if the flow works right if the user goes to payment directly after selecting policy .
@@ -292,13 +282,11 @@ void main() {
       }
     });
 
-    test("Login Page", login);
     test("Home Page", homePageSelectPurchasePolicyTab);
     test("Enter address", enterAddress);
     test("Choose Policy", choosePolicy);
     test("Direct payment after policy", paymentAfterPolicy);
     test("Confirm Payment", confirmPayment);
-    test("Logout", logout);
   });
 
   group("Checking payment cancellation and No Offer Available Scenario ", () {
@@ -312,7 +300,6 @@ void main() {
       }
     });
 
-    test("Login Page", login);
     test("Home Page", homePageSelectPurchasePolicyTab);
     test("Enter address", enterAddress);
     test("Choose Policy", choosePolicy);
@@ -321,7 +308,6 @@ void main() {
     // Since no offer is available , directly click on payment
     test("Click on Payment", paymentWithNoOfferSelected);
     test("Cancel Payment", cancelPayment);
-    test("Logout", logout);
   });
 
   //Test for working of other tabs in menu bar
@@ -335,13 +321,10 @@ void main() {
         flutterDriver.close();
       }
     });
-
-    test("Login Page", login);
     // Select the smart device discounts tab in menu bar and check if desired page comes up
     test("View Discounts", menuBarSmartDeviceDiscountsTab);
     // Go to Contact Us page by selecting option in  menu bar .
     test("Contact Company", menuBarContactUsTab);
     test("Logout", logout);
   });
-
 }

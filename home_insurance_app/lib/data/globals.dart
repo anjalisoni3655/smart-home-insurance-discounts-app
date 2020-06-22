@@ -8,7 +8,6 @@ import 'package:optional/optional.dart';
 import 'package:sdk/sdk.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
-
 Future<void> initialise({test = false}) async {
   String _clientId;
   String _clientSecret;
@@ -33,7 +32,6 @@ Future<void> initialise({test = false}) async {
   policyDao = new PolicyDao(Firestore.instance);
   offerDao = new OfferDao(Firestore.instance);
   purchaseDao = new PurchaseDao(Firestore.instance);
-
 }
 
 SDK sdk;

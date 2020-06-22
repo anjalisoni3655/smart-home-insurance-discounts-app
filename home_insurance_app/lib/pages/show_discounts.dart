@@ -220,7 +220,7 @@ class _DisplayDiscountsState extends State<DisplayDiscounts> {
                                       child: Align(
                                         alignment: Alignment.topCenter,
                                         child: FloatingActionButton.extended(
-                                          key:Key("Pick Structure"),
+                                          key: Key("Pick Structure"),
                                           heroTag: 'home',
                                           icon: Icon(Icons.home),
                                           label: Text(
@@ -377,7 +377,6 @@ class _AllDiscountsState extends State<AllDiscounts> {
               key: Key('Offer $index'),
               padding: EdgeInsets.symmetric(
                   vertical: screenheight / 200, horizontal: screenwidth / 100),
-
               child: Column(
                 children: <Widget>[
                   Container(

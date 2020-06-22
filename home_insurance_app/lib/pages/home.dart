@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushNamed(context, LoginScreen.id);
         //Reinitialise state of sdk on logOut
         await globals.initialise(test: false);
-
       } else {
         final _snackBar = SnackBar(
           content: Text('Logout Failed'),
