@@ -21,8 +21,8 @@ void main() {
 
     verify(mockObserver.didPush(any, any));
 
-    final titleFinder = find.text('Smart Home');
-    final messageFinder = find.text('Log in to Continue');
+    final titleFinder = find.text('Get your smart home secured today!');
+    final messageFinder = find.text('Log In With Google');
 
     expect(titleFinder, findsOneWidget);
     expect(messageFinder, findsOneWidget);
