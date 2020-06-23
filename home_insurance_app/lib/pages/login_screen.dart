@@ -112,9 +112,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.w600,
                   color: Colors.grey[700]),
             ),
-            SizedBox(height: 50),
-            Text('Log in to Continue',
-                style: TextStyle(color: Colors.grey[800], fontSize: 15)),
+            
+            
             SizedBox(
               height: MediaQuery.of(context).size.width * 0.03,
             ),
