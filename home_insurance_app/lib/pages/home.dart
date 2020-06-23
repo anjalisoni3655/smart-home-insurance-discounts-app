@@ -1,39 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/pages/common_widgets.dart';
+import 'package:homeinsuranceapp/components/css.dart';
+import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
-import 'package:homeinsuranceapp/pages/login_screen.dart';
 import 'package:homeinsuranceapp/pages/profile.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:sdk/sdk.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
+import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
-  static const String id = 'home_screen';
-  static const Key popmenuButton = Key('popmenu_key');
+  static const Key popmenuButton = Key('popmenu_button_key');
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   void onClick(String value) async {
+    // When user clicks on logOut , global user object calls the logout function
     if (value == 'Logout') {
-      Navigator.pushNamed(context, LoginScreen.id);
-      final RemoteConfig _remoteConfig = await RemoteConfig.instance;
-      await _remoteConfig.fetch();
-      await _remoteConfig.activateFetched();
-
-      String _clientId = _remoteConfig.getString('client_id');
-      String _clientSecret = _remoteConfig.getString('client_secret');
-      String _enterpriseId = _remoteConfig.getString('enterprise_id');
-
-      SDK sdk = SDKBuilder.build(_clientId, _clientSecret, _enterpriseId);
-      String status = await sdk.logout();
+      String status = await globals.sdk.logout();
+      print(status);
       if (status == "logout successful") {
-        Navigator.pushReplacementNamed(context, '/login');
+        Navigator.pushNamed(context, LoginScreen.id);
+        //Reinitialise state of sdk on logOut
+        await globals.initialise(test: false);
+      } else {
+        final _snackBar = SnackBar(
+          content: Text('Logout Failed'),
+          action: SnackBarAction(
+              label: 'Retry',
+              onPressed: () async {
+                onClick('logout');
+              }),
+        );
+        _globalKey.currentState.showSnackBar(_snackBar);
+        String status = await globals.sdk.logout();
       }
     } else {
+      // user clicks on the profile option in Popup Menu Button
       Navigator.pushNamed(context, Profile.id);
     }
   }
@@ -42,23 +48,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final scaffoldKey =
         GlobalKey<ScaffoldState>(); // Used for testing the drawer
-
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
+    double screenheight = mediaQuery.size.height;
     return Scaffold(
-      key: scaffoldKey,
+      key: _globalKey,
+      backgroundColor: Colors.brown[50],
       drawer: AppDrawer(), // Sidebar
       appBar: AppBar(
+        key: Key("appBar"),
         title: Text('Home Insurance Company'),
         centerTitle: true,
-        backgroundColor: Colors.brown,
+        backgroundColor: kAppbarColor,
         actions: <Widget>[
           PopupMenuButton<String>(
+            key: Key("settings"),
             child: Icon(Icons.accessibility),
             onSelected: onClick,
             itemBuilder: (BuildContext context) {
               return {'Logout', 'My Profile'}.map((String choice) {
                 return PopupMenuItem<String>(
+                  key: Key(choice),
                   value: choice,
                   child: Text(choice),
                 );
@@ -83,35 +93,31 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  //BoxDecoration required for setting the opacity why ?
                   color: Colors.black.withOpacity(0.2),
                 ),
               ),
             ),
           ),
           Container(
-            child: Container(
-              margin: EdgeInsets.only(
-                  top: 15.0,
-                  left: screenwidth / 16,
-                  right: screenwidth / 16), //Orientation compactible
-              padding: EdgeInsets.all(15.0),
-              width: 6 * screenwidth / 7,
-              decoration: BoxDecoration(
-                color: Colors.brown.withOpacity(0.5),
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Align(
-                heightFactor: 1.0,
-                child: Text(
-                    "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available ",
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                    )),
-              ),
+            key: Key("HomeScreen"),
+            margin: EdgeInsets.only(
+                top: 4 * screenheight / 7,
+                left: screenwidth / 16,
+                right: screenwidth / 16),
+            child: Column(
+              children: <Widget>[
+                CustomRaisedButton('/gethomedetails', "Purchase Insurance",
+                    context, screenheight, screenwidth),
+                SizedBox(height: screenheight / 50),
+                CustomRaisedButton('/showdiscounts', "Smart Device Discounts",
+                    context, screenheight, screenwidth,
+                    argument: {'onlyShow': true}),
+                SizedBox(height: screenheight / 80),
+                Expanded(
+                  child: Container(),
+                  flex: 1,
+                ),
+              ],
             ),
           ),
         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/database_utilities.dart';
+import 'package:homeinsuranceapp/components/css.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 //widget for the my profile page displaying user's details
 class Profile extends StatefulWidget {
@@ -12,100 +13,79 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String name;
-  String email;
-  String photoUrl;
-
-  void getUserDetails() async {
-    String _name = await localStorage.read(key: 'name');
-    String _email = await localStorage.read(key: 'email');
-    String _photoUrl = await localStorage.read(key: 'photourl');
-    setState(() {
-      name = _name;
-      email = _email;
-      photoUrl = _photoUrl;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    getUserDetails();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.white70,
+        appBar: AppBar(
+          title: Text('My Profile'),
+          centerTitle: true,
+          backgroundColor: kAppbarColor,
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
+        backgroundColor: Colors.white,
         body: SafeArea(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CircleAvatar(
               radius: 50.0,
-              backgroundImage: NetworkImage(photoUrl ??
+              backgroundImage: NetworkImage(globals.user.photoUrl ??
                   'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI9VCNp1MXFz_NDRV_JJR-ym1EGhvHfit3lfbzfHLMkEBZlJ9T&usqp=CAU'),
             ),
             Center(
               child: Text(
-                name ?? '',
+                '${globals.user.displayName}',
                 key: Profile.nameKey,
-                style: TextStyle(
-                  fontFamily: 'Pacifico',
-                  fontSize: 40.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Text(
-              'Business Analyst',
-              style: TextStyle(
-                fontFamily: 'Source Sans Pro',
-                color: Colors.black,
-                fontSize: 20.0,
-                letterSpacing: 2.5,
-                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.center,
+                style: kProfileNameStyle.copyWith(color: Colors.black),
               ),
             ),
             SizedBox(
               height: 20.0,
               width: 150.0,
               child: Divider(
-                color: Colors.black,
+                color: kProfileIconColor,
               ),
             ),
             Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                      width: 1.2,
+                      color: Colors.brown[500],
+                    )),
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                 child: ListTile(
                   leading: Icon(
                     Icons.phone,
-                    color: Colors.black,
+                    color: kProfileIconColor,
                   ),
                   title: Text(
                     '+91xxxxxxxxxx',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Source Sans Pro',
-                      fontSize: 20.0,
-                    ),
+                    style: kNormalTextStyle,
                   ),
                 )),
             Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                      width: 1.2,
+                      color: Colors.brown[500],
+                    )),
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                 child: ListTile(
                   leading: Icon(
                     Icons.email,
-                    color: Colors.black,
+                    color: kProfileIconColor,
                   ),
                   title: Text(
-                    email ?? '',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                        fontFamily: 'Source Sans Pro'),
+                    globals.user.email ?? '',
+                    style: kNormalTextStyle,
                   ),
                 ))
           ],
