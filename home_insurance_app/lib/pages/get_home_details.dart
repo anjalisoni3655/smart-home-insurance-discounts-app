@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/policy_dao.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
-import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/components/css.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 String firstLineOfAddress;
 String secondLineOfAddress;
@@ -73,7 +72,7 @@ class _HomeDetailsState extends State<HomeDetails> {
 
   Widget _buildPincode() {
     return TextFormField(
-        key: Key("Pin-code"),
+        key: Key("Pincode"),
         decoration: InputDecoration(labelText: "Pincode"),
         keyboardType: TextInputType.number,
         validator: (String value) {
@@ -116,6 +115,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                     _buildPincode(),
                     SizedBox(height: 100),
                     RaisedButton(
+                      key: Key('Submit'),
                       color: Colors.brown,
                       textColor: Colors.white,
                       onPressed: () {
@@ -133,7 +133,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                             state,
                             pincode);
                         //Available policies corresponding to the pincode is saved in list .
-                        PolicyDao.getPolicies(pincode).then((policies) {
+                        globals.policyDao.getPolicies(pincode).then((policies) {
                           Navigator.pushReplacementNamed(
                               context, '/choosepolicy', arguments: {
                             'policies': policies,

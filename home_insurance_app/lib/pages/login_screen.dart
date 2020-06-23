@@ -18,20 +18,50 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
-    globals.sdk = await globals.initialiseSDK();
-    String status = await globals.sdk.login();
-    if (status == "login successful" || status == "already logged in") {
-      Navigator.pushNamed(context, '/home'); // Navigates to the home page
-    } else {
-      final _snackBar = SnackBar(
-        content: Text('Login Failed'),
-        action: SnackBarAction(
-            label: 'Retry',
-            onPressed: () async {
-              await userLogin();
-            }),
-      );
-      _globalKey.currentState.showSnackBar(_snackBar);
+    try {
+      await globals.initialise();
+      String status = await globals.sdk.login();
+
+      if (status == "login successful") {
+        Optional<Map> userDetailsOptional = await globals.sdk.getUserDetails();
+
+        globals.user.displayName = userDetailsOptional.value['displayName'];
+        globals.user.email = userDetailsOptional.value['email'];
+        globals.user.photoUrl = userDetailsOptional.value['photoUrl'];
+
+        final doc = await Firestore.instance
+            .collection('user')
+            .where('email', isEqualTo: globals.user.email)
+            .getDocuments();
+
+        if (doc.documents.length == 0) {
+          globals.user.userId = await uploadUserDetailsGetUID(
+            name: globals.user.displayName,
+            email: globals.user.email,
+          );
+        } else {
+          globals.user.userId = doc.documents[0].documentID;
+        }
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return HomePage();
+        }));
+      } else if (status == 'already logged in') {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return HomePage();
+        }));
+      } else {
+        final _snackBar = SnackBar(
+          content: Text('Login Failed'),
+          action: SnackBarAction(
+              label: 'Retry',
+              onPressed: () async {
+                await userLogin();
+              }),
+        );
+        _globalKey.currentState.showSnackBar(_snackBar);
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -42,80 +72,85 @@ class _LoginScreenState extends State<LoginScreen> {
       key: _globalKey,
       backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
-        title: Center(child: Text('Smart Home')),
+        title: Center(child: Text('Home Insurance Company')),
         backgroundColor: kAppbarColor,
+        automaticallyImplyLeading: false,
       ),
       body: Center(child: _buildBody()),
     );
   }
 
   Widget _buildBody() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        TypewriterAnimatedTextKit(
-          text: ['Smart Home'],
-          textStyle: kLoginScreenHeading,
+    return SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.only(bottom: 30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Text(
+              'Smart Home Insurance',
+              style: kLoginScreenHeading,
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
+            Container(
+              height: MediaQuery.of(context).size.width * 0.65,
+              width: MediaQuery.of(context).size.width * 0.65,
+              child: Image.asset(
+                'assets/home_insurance.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Get your smart home secured today!',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey[700]),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.3,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: RaisedButton(
+                key: ValueKey('login'),
+                child: Padding(
+                  padding: EdgeInsets.all(11.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Container(
+                          height: 30,
+                          width: 30,
+                          child: Image.asset(
+                            'assets/google_icon.png',
+                            fit: BoxFit.contain,
+                          )),
+                      Text("Log In With Google",
+                          style: TextStyle(
+                            color: Colors.black87,
+                          )),
+                    ],
+                  ),
+                ),
+                color: Colors.white,
+                elevation: 10.0,
+                textColor: Colors.white,
+                onPressed: () async {
+                  await userLogin();
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0)),
+              ),
+            ),
+          ],
         ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.03,
-        ),
-        Text('Log in to Continue'),
-        SizedBox(
-          height: MediaQuery.of(context).size.width * 0.04,
-        ),
-        RaisedButton(
-          key: Key('navigateToHome'),
-          child: Text("LOG IN WITH GOOGLE"),
-          color: kLoginButtonColor,
-          textColor: kLoginButtonTextColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(30.0),
-          ),
-          onPressed: () async {
-            try {
-              globals.sdk = await globals.initialiseSDK();
-              String status = await globals.sdk.login();
-
-              if (status == "login successful") {
-                Optional<Map> userDetailsOptional =
-                    await globals.sdk.getUserDetails();
-
-                globals.user.displayName =
-                    userDetailsOptional.value['displayName'];
-
-                globals.user.email = userDetailsOptional.value['email'];
-                globals.user.photoUrl = userDetailsOptional.value['photoUrl'];
-
-                final doc = await Firestore.instance
-                    .collection('user')
-                    .where('email', isEqualTo: globals.user.email)
-                    .getDocuments();
-
-                if (doc.documents.length == 0) {
-                  await uploadUserDetails(
-                    name: globals.user.displayName,
-                    email: globals.user.email,
-                  );
-                }
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return HomePage();
-                }));
-              } else if (status == 'already logged in') {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return HomePage();
-                }));
-              }
-            } catch (e) {
-              print(e);
-            }
-          },
-        ),
-      ],
+      ),
     );
   }
 }

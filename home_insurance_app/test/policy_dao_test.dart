@@ -5,6 +5,7 @@ import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 
 void main() {
   MockFirestoreInstance database;
+  PolicyDao policyDao;
   const int pincode = 123456;
   const int category = pincode % 3 + 1;
 
@@ -35,11 +36,12 @@ void main() {
       "validity": policy3.validity,
       "deactivated": true
     });
+    policyDao = new PolicyDao(database);
+
   });
 
   test('testing get policies function', () async {
-    PolicyDao.setFirestoreInstance(database);
-    List<Policy> policies = await PolicyDao.getPolicies(pincode);
+    List<Policy> policies = await policyDao.getPolicies(pincode);
 
     // Only active policies should be present.
     // Only policies of the category of pincode should be present
