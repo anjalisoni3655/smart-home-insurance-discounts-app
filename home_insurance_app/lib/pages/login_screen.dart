@@ -112,8 +112,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.w600,
                   color: Colors.grey[700]),
             ),
-            
-            
             SizedBox(
               height: MediaQuery.of(context).size.width * 0.03,
             ),
