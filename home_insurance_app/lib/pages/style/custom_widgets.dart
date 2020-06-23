@@ -31,10 +31,11 @@ TextStyle CustomTextStyle(
 }
 
 RaisedButton CustomRaisedButton(String route, String text, BuildContext context,
-    double screenheight, double screenwidth) {
+    double screenheight, double screenwidth,
+    {Map argument = null}) {
   return RaisedButton(
     onPressed: () {
-      Navigator.of(context).pushNamed(route);
+      Navigator.of(context).pushNamed(route, arguments: argument);
     },
     color: Colors.orange[50],
     elevation: 10.0,

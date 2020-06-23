@@ -110,7 +110,8 @@ class _HomePageState extends State<HomePage> {
                     context, screenheight, screenwidth),
                 SizedBox(height: screenheight / 50),
                 CustomRaisedButton('/showdiscounts', "Smart Device Discounts",
-                    context, screenheight, screenwidth),
+                    context, screenheight, screenwidth,
+                    argument: {'onlyShow': true}),
                 SizedBox(height: screenheight / 80),
                 Expanded(
                   child: Container(),
