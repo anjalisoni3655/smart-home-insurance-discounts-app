@@ -5,6 +5,7 @@ import 'package:homeinsuranceapp/data/purchase.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/data/offer_service.dart';
 import 'package:homeinsuranceapp/pages/common_widgets.dart';
+import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
 class Payment extends StatefulWidget {
   static const id = 'payment';
@@ -52,116 +53,217 @@ class _PaymentState extends State<Payment> {
       appBar: CommonAppBar(),
       backgroundColor: Colors.white,
       body: Container(
-        padding: const EdgeInsets.all(8.0),
+        color: Colors.brown[50],
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                TextWidget(
-                  key: Key('name'),
-                  leftText: 'Name: ',
-                  rightText: globals.user.displayName ?? '',
-                ),
-                TextWidget(
-                  leftText: 'Address: ',
-                  rightText: '${purchase.address}' ?? '',
-                ),
-                TextWidget(
-                  leftText: 'Selected Policy: ',
-                  rightText: '${purchase.policy.policyName}' ?? '',
-                ),
-
-                TextWidget(
-                  leftText: 'Cost: ',
-                  rightText: 'Rs. ${purchase.policy.cost}' ?? '',
-                ),
-                // The discount and offer received by tFhe user will only be shown when user has selected one .
-                arguments['selectedOffer'] != null
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          TextWidget(
-                            leftText: 'Offers Availed: ',
-                            rightText: '${purchase.offer.requirements}' ?? '',
-                          ),
-                          TextWidget(
-                            leftText: 'Discounted Cost: ',
-                            rightText: 'Rs ${purchase.discountedCost}' ?? '',
-                          ),
-                        ],
-                      )
-                    : Container(),
-              ],
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenwidth / 100, vertical: screenheight / 100),
+              child: Text(
+                'Payment',
+                style: CustomTextStyle(fontSize: 30.0),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            CustomDivider(height: screenheight / 150, width: screenwidth / 50),
+            Container(
+              height: screenheight * 0.6,
+              child: ListView(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                        vertical: screenheight / 150,
+                        horizontal: screenwidth / 20),
+                    color: Colors.brown[100],
+                    child: ListTile(
+                      title: Text(
+                        'Name',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                      subtitle: Text(
+                        '${globals.user.displayName}' ?? '',
+                        key: Key('name'),
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                        vertical: screenheight / 150,
+                        horizontal: screenwidth / 20),
+                    color: Colors.brown[100],
+                    child: ListTile(
+                      title: Text(
+                        'Address',
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        '${purchase.address}' ?? '',
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                        vertical: screenheight / 150,
+                        horizontal: screenwidth / 20),
+                    color: Colors.brown[100],
+                    child: ListTile(
+                      title: Text(
+                        'Selected Policy',
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        '${purchase.policy.policyName}' ?? '',
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                        vertical: screenheight / 150,
+                        horizontal: screenwidth / 20),
+                    color: Colors.brown[100],
+                    child: ListTile(
+                      title: Text(
+                        'Cost',
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        'Rs. ${purchase.policy.cost}' ?? '',
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // The discount and offer received by tFhe user will only be shown when user has selected one .
+                  arguments['selectedOffer'] != null
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical: screenheight / 150,
+                                  horizontal: screenwidth / 20),
+                              color: Colors.brown[100],
+                              child: ListTile(
+                                title: Text(
+                                  'Offer Availed',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(
+                                  '${purchase.offer}' ?? '',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical: screenheight / 150,
+                                  horizontal: screenwidth / 20),
+                              color: Colors.brown[100],
+                              child: ListTile(
+                                title: Text(
+                                  'Discounted Cost',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(
+                                  '${purchase.discountedCost}' ?? '',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                ],
+              ),
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.only(bottom: 10.0),
-                child: Row(
+                margin: EdgeInsets.symmetric(
+                    vertical: 0, horizontal: screenwidth / 30),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: RaisedButton(
-                          key: Key('Cancel Payment'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.cancel,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: screenwidth / 200),
-                              Text(
-                                'Cancel Payment',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          padding: EdgeInsets.all(0.0),
-                          color: Colors.lightBlueAccent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0))),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: RaisedButton(
-                          key: Key('Confirm Payment'),
-                          onPressed: () {
-                            print('insurance purchased');
-                            print(purchase.toString());
-                            globals.purchaseDao
-                                .addPurchase(globals.user.userId, purchase);
-                            Navigator.of(context).pop();
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.payment,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: screenwidth / 200),
-                              Text(
-                                'Confirm Payment',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          padding: EdgeInsets.all(screenwidth / 100),
-                          color: Colors.lightBlueAccent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0))),
-                    ),
+                    RaisedButton(
+                        key: Key('Cancel Payment'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.cancel,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: screenwidth / 200),
+                            Text(
+                              'Cancel Payment',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        padding: EdgeInsets.all(0.0),
+                        color: Colors.lightBlueAccent,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0))),
+                    RaisedButton(
+                        key: Key('Confirm Payment'),
+                        onPressed: () {
+                          print('insurance purchased');
+                          print(purchase.toString());
+                          globals.purchaseDao
+                              .addPurchase(globals.user.userId, purchase);
+                          Navigator.of(context).pop();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.payment,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: screenwidth / 200),
+                            Text(
+                              'Confirm Payment',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        padding: EdgeInsets.all(screenwidth / 100),
+                        color: Colors.lightBlueAccent,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0))),
                   ],
                 ),
               ),

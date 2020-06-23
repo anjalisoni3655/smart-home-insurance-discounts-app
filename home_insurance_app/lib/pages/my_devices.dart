@@ -47,6 +47,7 @@ class _MyDevicesState extends State<MyDevices> {
     return Scaffold(
       appBar: CommonAppBar(),
       body: Container(
+        color: Colors.brown[50],
         child: Column(
           children: <Widget>[
             Padding(
@@ -100,43 +101,37 @@ class _MyDevicesState extends State<MyDevices> {
                                 textAlign: TextAlign.center))
                         : Container(
                             height: screenheight * 0.60,
-                            width: screenwidth * 0.90,
                             child: ListView(
                               children: List.from((globals.devices.value)
                                   .map((device) => Padding(
                                         key: Key('${device['customName']}'),
                                         padding: EdgeInsets.symmetric(
-                                            vertical: screenheight / 100,
-                                            horizontal: screenwidth / 100),
-                                        child: Card(
-                                          color: Colors
-                                              .white, // If selected then color of card is teal else no change in color
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15.0),
-                                            side: BorderSide(
-                                              color: Colors.brown[100],
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                          child: ListTile(
-                                            title: Text(
-                                              //If device name is empty display Unknown
-                                              device['customName'] != ""
-                                                  ? '${device['customName']}'
-                                                  : "Unknown",
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            subtitle: Column(
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                      'Type: ${deviceName[sdmToDeviceType[device['type']].index]}'),
-                                                ),
-                                              ],
-                                            ),
+                                            vertical: screenheight / 150,
+                                            horizontal: screenwidth / 20),
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: screenheight / 50,
+                                              horizontal: screenwidth / 30),
+                                          color: Colors.brown[100],
+                                          child: Column(
+                                            children: <Widget>[
+                                              Text(
+                                                //If device name is empty display Unknown
+                                                device['customName'] != ""
+                                                    ? '${device['customName']}'
+                                                    : "Unknown",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 17),
+                                              ),
+                                              Text(
+                                                'Type: ${deviceName[sdmToDeviceType[device['type']].index]}',
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    color: Colors.grey[600]),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ))),
