@@ -26,7 +26,7 @@ void main() {
     await tester.enterText(find.byKey(Key('Second Address Line')), 'Rohini');
     await tester.enterText(find.byKey(Key('City')), 'Delhi');
     await tester.enterText(find.byKey(Key('State')), 'Delhi');
-    await tester.enterText(find.byKey(Key('Pin-code')), '110033');
+    await tester.enterText(find.byKey(Key('Pincode')), '110033');
   });
 
   test('2 .Valid address test', () {
