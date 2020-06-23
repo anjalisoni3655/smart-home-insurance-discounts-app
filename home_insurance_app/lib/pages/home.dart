@@ -56,6 +56,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.brown[50],
       drawer: AppDrawer(), // Sidebar
       appBar: AppBar(
+        key: Key("appBar"),
         title: Text('Home Insurance Company'),
         centerTitle: true,
         backgroundColor: kAppbarColor,
@@ -98,9 +99,9 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Container(
-            key:Key("HomeScreen"),
+            key: Key("HomeScreen"),
             margin: EdgeInsets.only(
-                top: 5 * screenheight / 7,
+                top: 4 * screenheight / 7,
                 left: screenwidth / 16,
                 right: screenwidth / 16),
             child: Column(

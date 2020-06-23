@@ -10,6 +10,9 @@ void main() {
       ),
     );
 
+    var homePageButtons = find.byType(RaisedButton);
+    expect(homePageButtons, findsNWidgets(2));
+
     // Test for the Pop Up Button
     var popUpButton = find.byIcon(Icons.accessibility);
     expect(popUpButton, findsOneWidget);
@@ -23,8 +26,9 @@ void main() {
     expect(childButton2, findsOneWidget);
 
     // To remove the pop up from the screen , tap anywhere else on the screen
-    var homescreen = find.byKey(Key("HomeScreen"));
-    await tester.tap(homescreen);
+    var homeScreen = find.byKey(Key("appBar"));
+    await tester.tap(homeScreen);
+
     await tester.pumpAndSettle();
     // Test for Menu Bar
     await tester.dragFrom(
