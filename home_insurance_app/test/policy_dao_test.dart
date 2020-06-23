@@ -37,7 +37,6 @@ void main() {
       "deactivated": true
     });
     policyDao = new PolicyDao(database);
-
   });
 
   test('testing get policies function', () async {
