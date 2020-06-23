@@ -10,10 +10,8 @@ void main() {
       ),
     );
 
-    var maintext = find.text(
-        "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available ");
-
-    expect(maintext, findsOneWidget);
+    var homePageButtons = find.byType(RaisedButton);
+    expect(homePageButtons, findsNWidgets(2));
 
     // Test for the Pop Up Button
     var popUpButton = find.byIcon(Icons.accessibility);
@@ -28,9 +26,10 @@ void main() {
     expect(childButton2, findsOneWidget);
 
     // To remove the pop up from the screen , tap anywhere else on the screen
-    await tester.tap(maintext);
-    await tester.pumpAndSettle();
+    var homeScreen = find.byKey(Key("appBar"));
+    await tester.tap(homeScreen);
 
+    await tester.pumpAndSettle();
     // Test for Menu Bar
     await tester.dragFrom(
         tester.getTopLeft(find.byType(MaterialApp)), Offset(300, 0));

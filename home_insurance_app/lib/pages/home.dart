@@ -5,6 +5,7 @@ import 'package:homeinsuranceapp/pages/menubar.dart';
 import 'dart:ui';
 import 'package:homeinsuranceapp/pages/profile.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
+import 'package:homeinsuranceapp/pages/style/custom_widgets.dart';
 
 // widget for the home page, that contains all menu bar options.
 class HomePage extends StatefulWidget {
@@ -47,13 +48,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final scaffoldKey =
         GlobalKey<ScaffoldState>(); // Used for testing the drawer
-
     MediaQueryData mediaQuery = MediaQuery.of(context);
     double screenwidth = mediaQuery.size.width;
+    double screenheight = mediaQuery.size.height;
     return Scaffold(
       key: _globalKey,
+      backgroundColor: Colors.brown[50],
       drawer: AppDrawer(), // Sidebar
       appBar: AppBar(
+        key: Key("appBar"),
         title: Text('Home Insurance Company'),
         centerTitle: true,
         backgroundColor: kAppbarColor,
@@ -90,31 +93,31 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  //BoxDecoration required for setting the opacity why ?
                   color: Colors.black.withOpacity(0.2),
                 ),
               ),
             ),
           ),
           Container(
-            child: Container(
-              margin: EdgeInsets.only(
-                  top: 15.0, left: screenwidth / 16, right: screenwidth / 16),
-              //Orientation compatible
-              padding: EdgeInsets.all(15.0),
-              width: 6 * screenwidth / 7,
-              decoration: BoxDecoration(
-                color: Colors.brown.withOpacity(0.5),
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Align(
-                heightFactor: 1.0,
-                child: Text(
-                  "All your protection under one roof .Take Home Insurance now and secure your future. Don't forget to exlore the exciting discounts available ",
-                  style: kHomeScreenTextStyle,
+            key: Key("HomeScreen"),
+            margin: EdgeInsets.only(
+                top: 4 * screenheight / 7,
+                left: screenwidth / 16,
+                right: screenwidth / 16),
+            child: Column(
+              children: <Widget>[
+                CustomRaisedButton('/gethomedetails', "Purchase Insurance",
+                    context, screenheight, screenwidth),
+                SizedBox(height: screenheight / 50),
+                CustomRaisedButton('/showdiscounts', "Smart Device Discounts",
+                    context, screenheight, screenwidth,
+                    argument: {'onlyShow': true}),
+                SizedBox(height: screenheight / 80),
+                Expanded(
+                  child: Container(),
+                  flex: 1,
                 ),
-              ),
+              ],
             ),
           ),
         ],
