@@ -13,23 +13,23 @@ void main() {
   Policy policy2 = new Policy("Fire Insurance", 5, 3000);
   Policy policy3 = new Policy("Theft Insurance", 7, 4000);
 
-  setUp(() {
+  setUp(() async {
     database = new MockFirestoreInstance();
-    database.collection('policy').add({
+    await database.collection('policy').add({
       "name": policy1.policyName,
       "category": category,
       "cost": policy1.cost,
       "validity": policy1.validity,
       "deactivated": false
     });
-    database.collection('policy').add({
+    await database.collection('policy').add({
       "name": policy2.policyName,
       "category": category,
       "cost": policy2.cost,
       "validity": policy2.validity,
       "deactivated": true
     });
-    database.collection('policy').add({
+    await database.collection('policy').add({
       "name": policy3.policyName,
       "category": (category) % 3 + 1,
       "cost": policy3.cost,
