@@ -19,7 +19,7 @@ void main() {
     offerDao = new OfferDao(database);
   });
 
-  test('testing get policies function', () async {
+  test('testing get offers function', () async {
     List<Offer> offers = await offerDao.getOffers();
 
     expect(offers.length, 2);

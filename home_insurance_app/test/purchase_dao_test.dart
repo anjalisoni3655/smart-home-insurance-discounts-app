@@ -12,20 +12,13 @@ void main() {
   PurchaseDao purchaseDao;
 
   Policy policy1 = new Policy('policy1Name', 6, 2000);
-  Policy policy2 = new Policy('policy2Name', 5, 3000);
   Offer offer1 = new Offer({'Camera': 1, 'Thermostat': 2}, 4);
-  Offer offer2 = new Offer({
-    'Camera': 1,
-  }, 2);
+
   UserAddress userAddress1 = new UserAddress('firstLineOfAddress_1',
       'secondLineOfAddress_1', 'city_1', 'state_1', 123456);
-  UserAddress userAddress2 = new UserAddress('firstLineOfAddress_2',
-      'secondLineOfAddress_2', 'city_2', 'state_2', 123456);
 
   Purchase purchase1 = new Purchase(
       policy1, offer1, 'structure1Id', Timestamp.now(), userAddress1);
-  Purchase purchase2 = new Purchase(
-      policy2, offer2, 'structure2Id', Timestamp.now(), userAddress2);
 
   String userId;
 
@@ -38,11 +31,28 @@ void main() {
     purchaseDao = new PurchaseDao(database);
   });
 
-  test('testing get policies function', () async {
+  test('testing get Insurance and add Innsurance function', () async {
     List<Purchase> purchases = await purchaseDao.getInsurances(userId);
-
     expect(purchases.length, 0);
 
     await purchaseDao.addPurchase(userId, purchase1);
+
+    purchases = await purchaseDao.getInsurances(userId);
+    expect(purchases.length, 1);
+    expect(purchases[0].policy.policyName, policy1.policyName);
+    expect(purchases[0].policy.validity, policy1.validity);
+    expect(purchases[0].policy.cost, policy1.cost);
+    expect(purchases[0].offer.requirements, offer1.requirements);
+    expect(purchases[0].offer.discount, offer1.discount);
+    expect(purchases[0].address.firstLineOfAddress,
+        userAddress1.firstLineOfAddress);
+    expect(purchases[0].address.secondLineOfAddress,
+        userAddress1.secondLineOfAddress);
+    expect(purchases[0].address.city, userAddress1.city);
+    expect(purchases[0].address.state, userAddress1.state);
+    expect(purchases[0].address.pincode, userAddress1.pincode);
+    expect(purchases[0].structureId, purchase1.structureId);
+    expect(purchases[0].dateOfPurchase, purchase1.dateOfPurchase);
+    expect(purchases[0].discountedCost, purchase1.discountedCost);
   });
 }
