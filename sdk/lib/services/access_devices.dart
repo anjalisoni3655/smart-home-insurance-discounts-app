@@ -7,34 +7,16 @@ import 'dart:developer';
 // Input: String of format: /key_1/value_1/key_2/value_2/../key_n/value_n. or key_1/value_1/key_2/value_2/../key_n/value_n
 // Output: Map = {key_1: value_1, key_2: value_2, ..., key_n: value_n}
 // Use case: to get enterprise id, structure id, device id, etc from assignee or name: enteprises/enterprise-id/structures/structure-id/... etc
-// TODO: Replace with regex
-Map<String, String> getId(String name) {
-  if (name[0] == '/') {
-    name = name.substring(1);
-  }
+Map<String, String> getId(String url) {
+  //This regEx contains of any symbol or character except '/'
+  RegExp pattern = new RegExp(r'[^//]+');
   Map<String, String> ids = {};
-  bool flag = false;
-  String key = '';
-  String value = '';
-  for (int i = 0; i < name.length; ++i) {
-    if (name[i] == '/') {
-      if (flag) {
-        ids[key] = value;
-        key = '';
-        value = '';
-        flag = false;
-      } else {
-        flag = true;
-      }
-    } else {
-      if (flag) {
-        value += name[i];
-      } else {
-        key += name[i];
-      }
-    }
+  //Find all substrings in url separated by '/'
+  Iterable matches = pattern.allMatches(url);
+  //  Iterate through all the matches and form key-value pair for adjacent elements in list .
+  for (int i = 0; i < matches.length; i += 2) {
+    ids[matches.elementAt(i).group(0)] = matches.elementAt(i + 1).group(0);
   }
-  ids[key] = value;
   return ids;
 }
 
@@ -74,11 +56,13 @@ class AccessDevices {
       var result = jsonDecode(response.body);
       List devices = [];
       for (var device in result['devices']) {
+        Map ids = getId(device['name']);
         devices.add({
-          'id': getId(device['name'])['devices'],
+          'id': ids['devices'],
           'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
+          'structureId': getId(device['assignee'])['structures']
         });
       }
       return Optional.of(devices);
@@ -108,6 +92,7 @@ class AccessDevices {
           'customName': device['traits']['sdm.devices.traits.DeviceInfoTrait']
               ["customName"],
           'type': device['type'],
+          'structureId': getId(device['assignee'])['structures']
         });
       }
       return Optional.of(devices);

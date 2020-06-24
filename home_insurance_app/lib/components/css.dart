@@ -26,9 +26,10 @@ const kNormalTextStyle = TextStyle(
 );
 
 /// TextStyle for the heading of the LoginScreen
-const kLoginScreenHeading = TextStyle(
-  fontSize: 45.0,
+final kLoginScreenHeading = TextStyle(
+  fontSize: 30.0,
   fontWeight: FontWeight.w900,
+  color: Colors.grey[800],
 );
 
 /// TextStyle for the HomeScreen

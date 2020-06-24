@@ -22,28 +22,30 @@ const device2Type = "sdm.devices.types.CAMERA";
 const device1 = {
   'id': device1Id,
   'customName': device1Name,
-  'type': device1Type
+  'type': device1Type,
+  'structureId': structure1Id
 };
 
 const device2 = {
   'id': device2Id,
   'customName': device2Name,
-  'type': device2Type
+  'type': device2Type,
+  'structureId': structure1Id
 };
 
 const structure1 = {'id': structure1Id, 'customName': structure1Name};
 const devicesOfStructure1 = [device1, device2];
-const allStructures = [structure1];
+const devicesOfStructure2 = [];
 
-List validOffersResult1 = [
-  new Offer({
-    '${deviceName[DeviceType.THERMOSTAT.index]}': 1,
-    '${deviceName[DeviceType.CAMERA.index]}': 1
-  }, 4),
-  new Offer({'${deviceName[DeviceType.THERMOSTAT.index]}': 1}, 1),
-  new Offer({'${deviceName[DeviceType.CAMERA.index]}': 1}, 1)
-];
-const validOffersResultEmpty = [];
+final offer1 = new Offer({
+  '${deviceName[DeviceType.THERMOSTAT.index]}': 1,
+  '${deviceName[DeviceType.DOORBELL.index]}': 1
+}, 4);
+final offer2 = new Offer({
+  '${deviceName[DeviceType.THERMOSTAT.index]}': 1,
+  '${deviceName[DeviceType.CAMERA.index]}': 1
+}, 5);
+final offer3 = new Offer({'${deviceName[DeviceType.DOORBELL.index]}': 1}, 1);
 
 // Used as an argument passed to functions that are tested
 BuildContext context;
@@ -53,78 +55,96 @@ void main() {
     globals.sdk = new MockSDK();
   });
 
-  group(
-      'Unit test for checking the business logic for returning valid offers to the user ',
-      () {
+  group('Unit test for integrating app with sdk ', () {
     //Test when authorisation through resource picker fails
     test(
-        "Test 1 - Return Empty list of Offers when authorisation through Resource picker fails",
+        "Test 1 - Check the access when authorisation through Resource picker fails",
         () async {
-      when(globals.sdk.requestDeviceAccess())
-          .thenAnswer((_) async => Future.value("authorization failed"));
-
-      expect(validOffersResultEmpty, await getAllowedOffers(context));
+      when(globals.sdk.getCredentials()).thenReturn({});
+      expect(false, hasAccess());
     });
 
-    //Test for the case when app has access to none of the user structures
-    test("Test 2 - Return Empty list of Offers when user has no structure ",
+//Test for the case SDM API call throws error while getting structures and devices .
+    test(
+        "Test 2 - Return false when error is thrown while accessing structures of the user ",
         () async {
       //Resource picker authorisation is successful
-      when(globals.sdk.requestDeviceAccess())
-          .thenAnswer((_) async => Future.value('authorization successful'));
+      when(globals.sdk.getCredentials())
+          .thenReturn({"accessToken": "access-token"});
+
+      when(globals.sdk.getAllStructures()).thenThrow(new Error());
+      when(globals.sdk.getAllDevices()).thenThrow(new Error());
+
+      expect(false, hasStructures());
+      expect(false, hasDevices());
+    });
+
+    //Test for the case when app has 0 structures and devices
+    test(
+        "Test 3 -Structures/Devices returned should be  empty  when user has no structures and devices  ",
+        () async {
+      //Resource picker authorisation is successful
+      when(globals.sdk.getCredentials())
+          .thenReturn({"accessToken": "access-token"});
 
       when(globals.sdk.getAllStructures())
           .thenAnswer((_) async => Future.value(Optional.empty()));
-
-      expect(validOffersResultEmpty, await getAllowedOffers(context));
-    });
-
-    //Test for the case when  app don't has the access token to get user structures
-    test(
-        "Test 3 - Return Empty list of Offers when error is thrown while accessing structures of the user ",
-        () async {
-      //Resource picker authorisation is successful
-      when(globals.sdk.requestDeviceAccess())
-          .thenAnswer((_) async => Future.value('authorization successful'));
-
-      when(globals.sdk.getAllStructures()).thenThrow(new Error());
-
-      expect(validOffersResultEmpty, await getAllowedOffers(context));
-    });
-
-    //Test when valid offers are returned
-    test("Test 4 - List of valid Offers is non- empty ", () async {
-      when(globals.sdk.getDevicesOfStructure('home-1-structure-id')).thenAnswer(
-          (_) async => Future.value(Optional.of(devicesOfStructure1)));
-
-      // Checking the equality of thw two list .
-      List appResponse = await getValidOffers(structure1);
-      List expectedResponse = validOffersResult1;
-      bool isSame = false;
-      if (appResponse.length == expectedResponse.length) {
-        for (int i = 0; i < appResponse.length; i++) {
-          if (!(identical(appResponse[i], expectedResponse[i]))) break;
-        }
-        isSame = true;
-      }
-      expect(true, isSame);
-    });
-
-    //Test when the  app has acess to none of the devices of structure selected by the user .
-    test("Test 5 - Get Valid Offers when structure has 0 devices ", () async {
-      when(globals.sdk.getDevicesOfStructure('home-1-structure-id'))
+      when(globals.sdk.getAllDevices())
           .thenAnswer((_) async => Future.value(Optional.empty()));
+      await linkDevices();
+      expect(false, hasStructures());
+      expect(false, hasDevices());
+    });
+  });
 
-      expect(validOffersResultEmpty, await getValidOffers(structure1));
+  //Test the canPickOffer functionality  .
+  group('Unit test for checking that the offer is valid or not', () {
+    test(
+        "Test 1 -Return false when user has none of the device present in the offer  ",
+        () async {
+      globals.devices = Optional.of(devicesOfStructure1);
+      selectedStructure = Optional.of(structure1);
+      expect(false, canPickOffer(offer3));
     });
 
-    //Test when accessing user devices fails .
     test(
-        "Test 6 - Get Valid Offers when error is thrown while getting devices of structure  ",
+        "Test 2 -Return false when user has only some devices present in the offer ",
         () async {
-      when(globals.sdk.getDevicesOfStructure('home-1-structure-id'))
-          .thenThrow(new Error());
-      expect(validOffersResultEmpty, await getValidOffers(structure1));
+      globals.devices = Optional.of(devicesOfStructure1);
+      selectedStructure = Optional.of(structure1);
+      expect(false, canPickOffer(offer1));
+    });
+
+    test(
+        "Test 3 -Return true when all user devices meet the all the offer requirements   ",
+        () async {
+      globals.devices = Optional.of(devicesOfStructure1);
+      selectedStructure = Optional.of(structure1);
+      expect(true, canPickOffer(offer2));
+    });
+  });
+
+  // test for getUserName functionality
+  group('Unit test for displaying user name ', () {
+    //Test Get userName function
+    test(
+        "Test 8 -Return true when all user devices meet the all the offer requirements   ",
+        () async {
+      when(globals.sdk.getUserDetails())
+          .thenAnswer((_) async => Future.value(Optional.empty()));
+      expect("YOUR NAME", await getUserName());
+    });
+
+    test(
+        "Test 9 -Return true when all user devices meet the all the offer requirements   ",
+        () async {
+      when(globals.sdk.getUserDetails())
+          .thenAnswer((_) async => Future.value(Optional.of({
+                'displayName': "Khushi_Gupta",
+                'email': "khushig@google.com",
+                'photoUrl': "fakeurl.com"
+              })));
+      expect("Khushi_Gupta", await getUserName());
     });
   });
 }

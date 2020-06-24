@@ -1,111 +1,112 @@
+import 'package:flutter/material.dart';
+import 'package:homeinsuranceapp/data/device_type.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/data/offer.dart';
-import 'package:homeinsuranceapp/data/company_database.dart';
-import 'package:optional/optional.dart';
-import 'package:flutter/material.dart';
 import 'package:homeinsuranceapp/pages/list_structures.dart';
-import 'package:homeinsuranceapp/data/device_type.dart';
+import 'package:optional/optional.dart';
 
-Future<List> getAllowedOffers(BuildContext context) async {
-  List<Offer> allowedOffers = [];
-  // Call the resource picker
-  bool isAuthorise = await callResourcePicker();
-  if (isAuthorise) {
-    allowedOffers = await selectStructure(context);
+Optional<List> structures = Optional.empty();
+Optional<Map> selectedStructure = Optional.empty();
+
+// Calls resource picker and fetches devices and structures
+Future<void> linkDevices() async {
+  await globals.sdk.requestDeviceAccess();
+  // If authorization was successful fetch all devices and structures at once.
+  if (hasAccess()) {
+    try {
+      structures = await globals.sdk.getAllStructures();
+      globals.devices = await globals.sdk.getAllDevices();
+    } catch (error) {
+      structures = Optional.empty();
+      globals.devices = Optional.empty();
+    }
   }
-  // In case authorisation is not successful or structure is empty , empty list is returned , else list with desired offers is returned
-  return (allowedOffers);
 }
 
-Future<List> selectStructure(BuildContext context) async {
-  List<Offer> allowedOffers = [];
-  Optional<List> response;
+Future<void> getDevices() async {
   try {
-    response = await globals.sdk.getAllStructures();
-  } catch (e) {
-    //TODO  Snackbar showing  "NO HOMES FOUND"
-    response = Optional.empty();
+    globals.devices = await globals.sdk.getAllDevices();
+  } catch (error) {
+    globals.devices = Optional.empty();
   }
-
-  if (response != Optional.empty()) {
-    List structures = response.value;
-//    Helper function to show dialogue box for displaying structure list
-    await showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          // Returns a Alert DialogueBox displaying all user structures
-          return StructureAlertBox(structures);
-        }).then((selectedStructure) async {
-//Send the structure ( id and name ) and get all offers which the user can get
-      allowedOffers = await getValidOffers(selectedStructure);
-    });
-  }
-  return (allowedOffers);
 }
 
-// Function for calling resource picker
-Future<bool> callResourcePicker() async {
-  String status = await globals.sdk.requestDeviceAccess();
-  if (status == 'authorization successful') {
-    //TODO : Redirect from the resource picker
-    return true;
-  } else {
+// If has access but doesnt have list of structures retries to fetch list of structures
+// prompts user to select structure
+Future<Optional<Map>> selectStructure(BuildContext context) async {
+  selectedStructure = Optional.empty();
+  if (!hasAccess()) {
+    return selectedStructure;
+  }
+  if (structures.isEmpty) {
+    try {
+      structures = await globals.sdk.getAllStructures();
+    } catch (error) {
+      structures = Optional.empty();
+    }
+    if (structures.isEmpty) {
+      return selectedStructure;
+    }
+  }
+  await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        // Returns a Alert DialogueBox displaying all user structures
+        return StructureAlertBox(structures.value);
+      }).then((structure) async {
+    selectedStructure = Optional.of(structure);
+  });
+  return selectedStructure;
+}
+
+// given an offer returns whether this offer is valid considering the devices that the user has
+bool canPickOffer(Offer offer) {
+  if (globals.devices.isEmpty) return false;
+  if (selectedStructure.isEmpty) return false;
+
+  Map<DeviceType, int> userDeviceCount = {
+    DeviceType.SMOKE_CO_DETECTOR: 0,
+    DeviceType.THERMOSTAT: 0,
+    DeviceType.CAMERA: 0,
+    DeviceType.DOORBELL: 0
+  };
+
+  for (Map device in globals.devices.value) {
+    if (device['structureId'] != selectedStructure.value['id']) {
+      continue;
+    }
+    userDeviceCount[sdmToDeviceType[device['type']]]++;
+  }
+
+  for (String deviceName in offer.requirements.keys) {
+    DeviceType deviceType = getDeviceType[deviceName];
+    if (offer.requirements[deviceName] > userDeviceCount[deviceType]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool hasAccess() {
+  Map response = globals.sdk.getCredentials();
+  if (response["accessToken"] == null) {
     return false;
+  } else {
+    return true;
   }
 }
 
-// Returns the List of valid offers that user is eligible to get
-Future<List> getValidOffers(Map structure) async {
-  List<Offer> allowedOffers = [];
-  List<Offer> allOffers = CompanyDataBase.availableOffers;
+bool hasDevices() {
+  return globals.devices.isPresent;
+}
 
-  Optional<List> response;
-  try {
-    response = await globals.sdk.getDevicesOfStructure(structure["id"]);
-  } catch (e) {
-    //TODO - Snackbar showing NO ACCESS TO DEVICES
-    response = Optional.empty();
-  }
+bool hasStructures() {
+  return structures.isPresent;
+}
 
-  if (response != Optional.empty()) {
-    List devices = response.value;
-    //Stores all unique 'types' of devices along with their respective count
-    Map<String, int> userDevices = {};
-    for (int i = 0; i < devices.length; i++) {
-//    Remove "sdm.devices.types." from the type trait of the device
-      String type = devices[i]["type"].substring(18, devices[i]["type"].length);
-      if (userDevices.containsKey(type)) {
-        userDevices[type]++;
-      }
-
-//    if device type is not present , create a new key in map
-      else {
-        userDevices[type] = 1;
-      }
-    }
-
-//  Check which offer is valid . If valid add it to the list of allowed Offers .
-    bool isValid = true;
-
-    for (int i = 0; i < allOffers.length; i++) {
-      isValid = true;
-      for (var k in allOffers[i].requirements.keys) {
-        // Since k is the string  value separately to each enum  which is  of type "First letter Capital" and others small.
-        String t = k.toUpperCase();
-        int count = userDevices[t] == null ? 0 : userDevices[t];
-        if (count < allOffers[i].requirements[k]) {
-          isValid = false;
-          break;
-        }
-      }
-      if (isValid == true) {
-        allowedOffers.add(allOffers[i]);
-      }
-    }
-  }
-// In case devices of the particular structure is 0 , empty list is returned .
-  return (allowedOffers);
+bool isStructureSelected() {
+  return selectedStructure.isPresent;
 }
 
 // Returns User name to payment page
@@ -119,11 +120,16 @@ Future<String> getUserName() async {
   }
 }
 
-bool hasAccess() {
-  Map response = globals.sdk.getCredentials();
-  if (response["accessToken"] == null) {
-    return false;
-  } else {
-    return true;
+// return a sorted list of offers (selectable first)
+List<Offer> sortOffers(List<Offer> offers) {
+  List<Offer> selectableOffers = [];
+  List<Offer> unselectableOffers = [];
+  for (Offer offer in offers) {
+    if (canPickOffer(offer)) {
+      selectableOffers.add(offer);
+    } else {
+      unselectableOffers.add(offer);
+    }
   }
+  return selectableOffers + unselectableOffers;
 }

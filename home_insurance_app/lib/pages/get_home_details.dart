@@ -1,14 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/data/policy_dao.dart';
 import 'package:homeinsuranceapp/data/user_home_details.dart';
-import 'package:homeinsuranceapp/data/policy.dart';
 import 'package:homeinsuranceapp/components/css.dart';
+import 'package:homeinsuranceapp/data/globals.dart' as globals;
 
 String firstLineOfAddress;
 String secondLineOfAddress;
 String city;
 String state;
 int pincode;
+
+String validateAddress(String value) {
+  if (value.isEmpty) {
+    return 'This Field cannot be empty';
+  } else if (value.contains(RegExp(r'[A-Z]')) ||
+      value.contains(RegExp(r'[a-z]')) ||
+      value.contains(RegExp(r'-,/\\()'))) {
+    return null;
+  } else {
+    return 'Please enter a valid address';
+  }
+}
+
+String validatePincode(String pincode) {
+  Pattern pattern = r'[.,|_]';
+  RegExp regex = RegExp(pattern);
+  if (pincode.isEmpty) {
+    return 'This field cannot be empty';
+  } else {
+    if (regex.hasMatch(pincode)) {
+      return 'Please enter a valid pincode';
+    } else {
+      int pin = int.parse(pincode);
+      if (pin > 100000 && pin < 999999) {
+        // Check the no.of digits is 6
+        return null;
+      } else
+        return 'Please enter a valid pincode';
+    }
+  }
+}
 
 // Widget for getting , validating and storing User Address
 class HomeDetails extends StatefulWidget {
@@ -18,15 +48,12 @@ class HomeDetails extends StatefulWidget {
 
 class _HomeDetailsState extends State<HomeDetails> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   Widget _buildAddressFirstLine() {
     return TextFormField(
         key: Key("First Address Line"),
         decoration: InputDecoration(labelText: "First Line Of Address"),
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'Address is Required';
-          }
-        },
+        validator: validateAddress,
         onSaved: (String value) {
           firstLineOfAddress = value;
         });
@@ -38,6 +65,7 @@ class _HomeDetailsState extends State<HomeDetails> {
         decoration: InputDecoration(
             labelText:
                 "Second Line Of Address"), //validator is not required as this field can be left empty
+        validator: validateAddress,
         onSaved: (String value) {
           secondLineOfAddress = value;
         });
@@ -47,11 +75,7 @@ class _HomeDetailsState extends State<HomeDetails> {
     return TextFormField(
         key: Key("City"),
         decoration: InputDecoration(labelText: " City "),
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'City is Required';
-          }
-        },
+        validator: validateAddress,
         onSaved: (String value) {
           city = value;
         });
@@ -61,11 +85,7 @@ class _HomeDetailsState extends State<HomeDetails> {
     return TextFormField(
         key: Key("State"),
         decoration: InputDecoration(labelText: "State/Union Territory"),
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'State/Union Territory is Required';
-          }
-        },
+        validator: validateAddress,
         onSaved: (String value) {
           state = value;
         });
@@ -76,13 +96,7 @@ class _HomeDetailsState extends State<HomeDetails> {
         key: Key("Pincode"),
         decoration: InputDecoration(labelText: "Pincode"),
         keyboardType: TextInputType.number,
-        validator: (String value) {
-          int pin = int.tryParse(value);
-          if (value.isEmpty || pin < 100000 || pin > 999999) {
-            // Check the no.of digits is 6
-            return 'Please enter a valid pincode';
-          }
-        },
+        validator: validatePincode,
         onSaved: (String value) {
           pincode = int.tryParse(value);
         });
@@ -116,6 +130,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                     _buildPincode(),
                     SizedBox(height: 100),
                     RaisedButton(
+                      key: Key('Submit'),
                       color: Colors.brown,
                       textColor: Colors.white,
                       onPressed: () {
@@ -133,7 +148,7 @@ class _HomeDetailsState extends State<HomeDetails> {
                             state,
                             pincode);
                         //Available policies corresponding to the pincode is saved in list .
-                        PolicyDao.getPolicies(pincode).then((policies) {
+                        globals.policyDao.getPolicies(pincode).then((policies) {
                           Navigator.pushReplacementNamed(
                               context, '/choosepolicy', arguments: {
                             'policies': policies,
