@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:homeinsuranceapp/pages/contact.dart';
 import 'package:homeinsuranceapp/pages/payment_history.dart';
 
