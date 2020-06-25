@@ -31,7 +31,6 @@ Future<void> getDevices() async {
   }
 }
 
-
 // prompts user to select structure
 Future<Optional<Map>> selectStructure(BuildContext context) async {
   selectedStructure = Optional.empty();
