@@ -31,7 +31,7 @@ Future<void> getDevices() async {
   }
 }
 
-// If has access but doesnt have list of structures retries to fetch list of structures
+
 // prompts user to select structure
 Future<Optional<Map>> selectStructure(BuildContext context) async {
   selectedStructure = Optional.empty();
