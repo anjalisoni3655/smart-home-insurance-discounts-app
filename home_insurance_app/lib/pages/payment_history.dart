@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:homeinsuranceapp/components/css.dart';
 import 'package:homeinsuranceapp/data/purchase.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
 import 'package:homeinsuranceapp/pages/common_widgets.dart';

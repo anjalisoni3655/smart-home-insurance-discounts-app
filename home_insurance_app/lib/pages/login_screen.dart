@@ -83,9 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
       key: _globalKey,
       backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
-        title: Center(child: Text('Home Insurance Company')),
+        title: Center(child: Text('Smart Home')),
         backgroundColor: kAppbarColor,
-        automaticallyImplyLeading: false,
       ),
       body: Center(child: _buildBody()),
     );

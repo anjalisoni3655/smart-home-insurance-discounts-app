@@ -16,9 +16,7 @@ import 'package:homeinsuranceapp/pages/payment_history.dart';
 // this is the root of our application
 void main({test = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await globals.initialise(test: test);
-
   runApp(MyApp());
 }
 
