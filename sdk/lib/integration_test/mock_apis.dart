@@ -76,7 +76,9 @@ void defineResponse(MockClient mockClient, MockResponse mockResponse) {
   // Naming enterprises, structures and devices
   const url =
       'https://staging-smartdevicemanagement.sandbox.googleapis.com/v1/';
+
   const enterpriseId = 'enterpriseId';
+
   const structure1Id = 'home-1-structure-id';
   const structure1Name = 'home-1';
   const structure2Id = 'home-2-structure-id';

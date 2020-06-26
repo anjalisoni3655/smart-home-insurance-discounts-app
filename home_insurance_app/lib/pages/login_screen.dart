@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:homeinsuranceapp/data/database_utilities.dart';
@@ -6,6 +7,7 @@ import 'package:homeinsuranceapp/pages/home.dart';
 import 'package:optional/optional.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:homeinsuranceapp/data/globals.dart' as globals;
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 // widget for login with google
 class LoginScreen extends StatefulWidget {
@@ -15,6 +17,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final FirebaseMessaging _messaging = FirebaseMessaging();
+  @override
+  void initState() {
+    super.initState();
+    _messaging.getToken().then((token) {
+      print(token);
+    });
+  }
+
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   Future<void> userLogin() async {
     //using global sdk object named user for calling sdk login function
@@ -72,9 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
       key: _globalKey,
       backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
-        title: Center(child: Text('Home Insurance Company')),
+        title: Center(child: Text('Smart Home')),
         backgroundColor: kAppbarColor,
-        automaticallyImplyLeading: false,
       ),
       body: Center(child: _buildBody()),
     );

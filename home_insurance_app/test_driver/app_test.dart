@@ -50,7 +50,6 @@ dynamic login() async {
 dynamic homePageSelectPurchasePolicyTab() async {
   SerializableFinder appDrawer = find.byTooltip('Open navigation menu');
   await flutterDriver.tap(appDrawer);
-
   SerializableFinder purchaseTab = find.byValueKey("Purchase Policy");
   await flutterDriver.tap(purchaseTab);
   await flutterDriver.waitFor(find.byType("HomeDetails"));
@@ -104,7 +103,6 @@ dynamic enterAddress() async {
   await flutterDriver.enterText("122101");
 
   SerializableFinder submitButton = find.byValueKey("Submit");
-
   await flutterDriver.tap(submitButton);
 
   await flutterDriver.waitFor(find.byType("DisplayPolicies"));
@@ -136,7 +134,6 @@ dynamic paymentAfterPolicy() async {
 // Click on add devices on Show Discounts page
 dynamic addDevices() async {
   SerializableFinder addDevicesButton = find.byValueKey("Link Devices");
-
   await flutterDriver.tap(addDevicesButton);
 }
 
@@ -146,16 +143,16 @@ dynamic selectStructure() async {
   await flutterDriver.tap(secondStructure);
 
   SerializableFinder submitButton = find.byValueKey("Submit");
-
   await flutterDriver.tap(submitButton);
 }
 
 // Select first offer that appears after selecting devices. Select Go to payment (submit selection)
+// TODO: if no offer present select go to payment directly
 dynamic selectOffer() async {
   SerializableFinder firstOffer = find.byValueKey("Offer 0");
   await flutterDriver.tap(firstOffer);
-  SerializableFinder submitButton = find.byValueKey("Go to Payment");
 
+  SerializableFinder submitButton = find.byValueKey("Payment");
   await flutterDriver.tap(submitButton);
 
   await flutterDriver.waitFor(find.byType("Payment"));
@@ -174,6 +171,7 @@ dynamic confirmPayment() async {
   await flutterDriver.scroll(
       find.byType("MaterialApp"), 0, -100, const Duration(milliseconds: 100));
   SerializableFinder confirmPaymentButton = find.byValueKey("Confirm Payment");
+
   await flutterDriver.tap(confirmPaymentButton);
 
   await flutterDriver.waitFor(find.byType("HomePage"));
@@ -324,6 +322,7 @@ void main() {
     test("View Discounts", menuBarSmartDeviceDiscountsTab);
     // Go to Contact Us page by selecting option in  menu bar .
     test("Contact Company", menuBarContactUsTab);
+
     test("Logout", logout);
   });
 }
